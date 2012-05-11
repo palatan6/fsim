@@ -6,6 +6,7 @@ using CalculatorModules;
 using CalculatorModules.Base_Controls;
 using CalculatorModules.BeltFiltersWithReversibleTrays;
 using CalculatorModules.Hydrocyclone;
+using CalculatorModules.CakeWashing;
 
 namespace Calculator
 {
@@ -93,7 +94,8 @@ namespace Calculator
                                                            new fsPkeFromPcRcControl())
                                                    });
             AddGroupToTree("Cake Washing", node.Nodes, new[]
-                                               {
+                                               {   new KeyValuePair<string, fsCalculatorControl>(
+                                                       "Calculation of Cake Washing", new fsCakeWashingControl()),
                                                    new KeyValuePair<string, fsCalculatorControl>(
                                                        "Cake Wash Out Content X", new fsCakeWashOutContentControl())
                                                });

@@ -97,7 +97,7 @@ namespace Units
                     return unit;
                 }
             }
-            throw new Exception("Desiren name doesn't correspond to any units.");
+            throw new Exception("Desired name doesn't correspond to any units.");
         }
     }
 

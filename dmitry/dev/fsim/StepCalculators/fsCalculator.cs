@@ -15,8 +15,8 @@ namespace StepCalculators
      *     Equations:     set of equations that can be used for calculating values from m_parameters
      *     
      * In derivative classes user must override 
-     *     InitParametersAndConstants():    here he must to initialize all constants and parameters
-     *     InitEquations():                 here he must to add all corresponding equations
+     *     InitParametersAndConstants():    here he must initialize all constants and parameters
+     *     InitEquations():                 here he must add all corresponding equations
      *     
      * Then calculator can be used with public methods
      * 
@@ -39,7 +39,7 @@ namespace StepCalculators
                 }
             }
 
-            #region Update Hander
+            #region Update Handler
 
             int startCount = m_variables.Values.Sum(p => p.IsProcessed ? 1 : 0);
             int currentCount = startCount;

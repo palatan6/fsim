@@ -109,7 +109,7 @@ namespace CalculatorModules
 
         protected virtual void UpdateGroupsInputInfoFromCalculationOptions()
         {
-            throw new Exception("You should set up groups input info in this method. Override this methodin your class.");
+            throw new Exception("You should set up groups input info in this method. Override this method in your class.");
         }
 
         protected virtual void UpdateEquationsFromCalculationOptions()
