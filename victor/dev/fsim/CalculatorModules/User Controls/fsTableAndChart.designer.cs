@@ -33,7 +33,6 @@
             this.yAxisSplitContainer = new System.Windows.Forms.SplitContainer();
             this.label4 = new System.Windows.Forms.Label();
             this.m_xAxisComboBox = new System.Windows.Forms.ComboBox();
-            this.y2AxisConfigure = new System.Windows.Forms.Button();
             this.yAxisConfigure = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.m_yAxisList = new System.Windows.Forms.ListView();
@@ -107,7 +106,6 @@
             // 
             this.yAxisSplitContainer.Panel1.Controls.Add(this.label4);
             this.yAxisSplitContainer.Panel1.Controls.Add(this.m_xAxisComboBox);
-            this.yAxisSplitContainer.Panel1.Controls.Add(this.y2AxisConfigure);
             this.yAxisSplitContainer.Panel1.Controls.Add(this.yAxisConfigure);
             // 
             // yAxisSplitContainer.Panel2
@@ -136,23 +134,13 @@
             this.m_xAxisComboBox.TabIndex = 11;
             this.m_xAxisComboBox.SelectedIndexChanged += new System.EventHandler(this.XAxisComboBoxSelectedIndexChanged);
             // 
-            // y2AxisConfigure
-            // 
-            this.y2AxisConfigure.Location = new System.Drawing.Point(76, 42);
-            this.y2AxisConfigure.Name = "y2AxisConfigure";
-            this.y2AxisConfigure.Size = new System.Drawing.Size(72, 23);
-            this.y2AxisConfigure.TabIndex = 3;
-            this.y2AxisConfigure.Text = "Y2...";
-            this.y2AxisConfigure.UseVisualStyleBackColor = true;
-            this.y2AxisConfigure.Click += new System.EventHandler(this.Y2AxisConfigureClick);
-            // 
             // yAxisConfigure
             // 
-            this.yAxisConfigure.Location = new System.Drawing.Point(3, 42);
+            this.yAxisConfigure.Location = new System.Drawing.Point(48, 33);
             this.yAxisConfigure.Name = "yAxisConfigure";
-            this.yAxisConfigure.Size = new System.Drawing.Size(69, 23);
+            this.yAxisConfigure.Size = new System.Drawing.Size(97, 23);
             this.yAxisConfigure.TabIndex = 10;
-            this.yAxisConfigure.Text = "Y...";
+            this.yAxisConfigure.Text = "Configure Y Axis";
             this.yAxisConfigure.UseVisualStyleBackColor = true;
             this.yAxisConfigure.Click += new System.EventHandler(this.YAxisConfigureClick);
             // 
@@ -368,7 +356,6 @@
         private fmDataGrid.fmNumericalTextBox rangeTo;
         private fmDataGrid.fmNumericalTextBox rangeFrom;
         private System.Windows.Forms.Button yAxisConfigure;
-        private System.Windows.Forms.Button y2AxisConfigure;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.SplitContainer splitContainer1;

@@ -61,7 +61,6 @@
             this.groupBox1.Size = new System.Drawing.Size(497, 398);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Parameters";
             // 
             // splitContainer1
             // 

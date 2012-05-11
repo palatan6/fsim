@@ -63,12 +63,6 @@
     <Compile Include="Dialogs\MachineDialog.designer.cs">
       <DependentUpon>MachineDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\PrecisionDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\PrecisionDialog.Designer.cs">
-      <DependentUpon>PrecisionDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\ShowHideParametersDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,10 +93,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Dialogs\MachineDialog.resx">
       <DependentUpon>MachineDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\PrecisionDialog.resx">
-      <DependentUpon>PrecisionDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ShowHideParametersDialog.resx">

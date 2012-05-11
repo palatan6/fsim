@@ -24,14 +24,34 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
             Close();
         }
 
-        internal List<fsParameterIdentifier> GetCheckedParameters()
+        internal List<fsParameterIdentifier> GetCheckedYAxisParameters()
         {
-            return fsTablesAndChartsParametersSelectionControl1.GetCheckedParameters();
+            return y1SelectionControl.GetCheckedYAxisParameters();
         }
 
-        internal void AssignParameters(List<fsYAxisParameterWithChecking> list)
+        internal List<fsParameterIdentifier> GetCheckedY2AxisParameters()
         {
-            fsTablesAndChartsParametersSelectionControl1.AssignParameters(list);
+            return y2SelectionControl.GetCheckedYAxisParameters();
+        }
+
+        internal void AssignYAxisParameters(List<fsYAxisParameterWithChecking> list)
+        {
+            y1SelectionControl.AssignYAxisParameters(list);
+        }
+
+        internal void AssignY2AxisParameters(List<fsYAxisParameterWithChecking> list)
+        {
+            y2SelectionControl.AssignYAxisParameters(list);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+        }
+
+        private void fsTablesAndChartsParametersSelectionDialog_Load(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = y2SelectionControl.GetCheckedYAxisParameters().Count == 0;
         }
     }
 }

@@ -191,9 +191,9 @@ namespace Calculator
 
         private void precisionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var precisionDialog = new PrecisionDialog();
-            precisionDialog.ShowDialog();
-            GetCurrentActiveModule().RecalculateAndRedraw();
+//             var precisionDialog = new PrecisionDialog();
+//             precisionDialog.ShowDialog();
+//             GetCurrentActiveModule().RecalculateAndRedraw();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,11 +9,27 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
 {
     public partial class fsTablesAndChartsParametersSelectionControl : UserControl
     {
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [Bindable(true)]
+        public override string Text
+        {
+            get
+            {
+                return groupBox1.Text;
+            }
+            set
+            {
+                groupBox1.Text = value;
+            }
+        }
+
         #region Data
 
-        private List<fsYAxisParameterWithChecking> m_parameters;
+        private List<fsYAxisParameterWithChecking> m_yAxisParameters;
 
-        private Dictionary<ListViewItem, fsYAxisParameterWithChecking> m_itemToParameter =
+        private Dictionary<ListViewItem, fsYAxisParameterWithChecking> m_itemToYParameter =
             new Dictionary<ListViewItem, fsYAxisParameterWithChecking>();
 
         private readonly Dictionary<fsYAxisParameter.fsYParameterKind, Color> m_kindToColor =
@@ -32,27 +49,35 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
 
         #region Public Methods
 
-        public void AssignParameters(List<fsYAxisParameterWithChecking> parameters)
+        public void AssignYAxisParameters(List<fsYAxisParameterWithChecking> parameters)
         {
-            m_parameters = new List<fsYAxisParameterWithChecking>();
-            foreach (var selectionParameter in parameters)
+            AssignYAxisParameters(parameters, ref m_yAxisParameters, ref m_itemToYParameter);
+        }
+
+        private void AssignYAxisParameters(
+            IEnumerable<fsYAxisParameterWithChecking> externalParameters,
+            ref List<fsYAxisParameterWithChecking> internalParameters,
+            ref Dictionary<ListViewItem, fsYAxisParameterWithChecking> internalItemToParameter)
+        {
+            internalParameters = new List<fsYAxisParameterWithChecking>();
+            foreach (var selectionParameter in externalParameters)
             {
-                m_parameters.Add(new fsYAxisParameterWithChecking(selectionParameter));
+                internalParameters.Add(new fsYAxisParameterWithChecking(selectionParameter));
             }
 
-            m_itemToParameter = new Dictionary<ListViewItem, fsYAxisParameterWithChecking>();
+            internalItemToParameter = new Dictionary<ListViewItem, fsYAxisParameterWithChecking>();
             materialVariablesListView.Items.Clear();
             otherVariablesListView.Items.Clear();
 
-            AddParametersToLists(fsYAxisParameter.fsYParameterKind.InputParameter);
-            AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter);
-            AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter);
+            AddParametersToLists(fsYAxisParameter.fsYParameterKind.InputParameter, internalParameters, internalItemToParameter);
+            AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter, internalParameters, internalItemToParameter);
+            AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter, internalParameters, internalItemToParameter);
         }
 
-        internal List<fsParameterIdentifier> GetCheckedParameters()
+        internal List<fsParameterIdentifier> GetCheckedYAxisParameters()
         {
-            ApplyChecks(m_itemToParameter);
-            return (from yParameter in m_parameters where yParameter.IsChecked select yParameter.Identifier).ToList();
+            ApplyChecks(m_itemToYParameter);
+            return (from yParameter in m_yAxisParameters where yParameter.IsChecked select yParameter.Identifier).ToList();
         }
 
         #endregion
@@ -77,7 +102,10 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
             }
         }
 
-        private void AddParametersToLists(fsYAxisParameter.fsYParameterKind kindToAdd)
+        private void AddParametersToLists(
+            fsYAxisParameter.fsYParameterKind kindToAdd,
+            IEnumerable<fsYAxisParameterWithChecking> yAxisParameters,
+            Dictionary<ListViewItem, fsYAxisParameterWithChecking> itemToYParameter)
         {
             var materialParameters = new[]
                                              {
@@ -113,7 +141,7 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
 
                                              };
 
-            foreach (fsYAxisParameterWithChecking selectionParameter in m_parameters)
+            foreach (fsYAxisParameterWithChecking selectionParameter in yAxisParameters)
             {
                 if (selectionParameter.Kind == kindToAdd)
                 {
@@ -139,7 +167,7 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
                     }
 
                     listView.Items.Add(newItem);
-                    m_itemToParameter[newItem] = selectionParameter;
+                    itemToYParameter[newItem] = selectionParameter;
                 }
             }
         }

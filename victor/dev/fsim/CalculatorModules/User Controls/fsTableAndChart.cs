@@ -587,12 +587,15 @@ namespace CalculatorModules.User_Controls
         private void YAxisConfigureClick(object sender, EventArgs e)
         {
             var selectionForm = new fsTablesAndChartsParametersSelectionDialog();
-            selectionForm.AssignParameters(GetSelectionParametersWithCheking(m_yAxisList));
+            selectionForm.AssignYAxisParameters(GetSelectionParametersWithCheking(m_yAxisList));
+            selectionForm.AssignY2AxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
             selectionForm.ShowDialog();
             if (selectionForm.DialogResult == DialogResult.OK)
             {
                 m_yAxisParameters.Clear();
-                m_yAxisParameters.AddRange(selectionForm.GetCheckedParameters());
+                m_yAxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
+                m_y2AxisParameters.Clear();
+                m_y2AxisParameters.AddRange(selectionForm.GetCheckedY2AxisParameters());
                 RefreshAndRecalculateAll();
             }
         }
@@ -600,12 +603,12 @@ namespace CalculatorModules.User_Controls
         private void Y2AxisConfigureClick(object sender, EventArgs e)
         {
             var selectionForm = new fsTablesAndChartsParametersSelectionDialog();
-            selectionForm.AssignParameters(GetSelectionParametersWithCheking(m_y2AxisList));
+            selectionForm.AssignYAxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
             selectionForm.ShowDialog();
             if (selectionForm.DialogResult == DialogResult.OK)
             {
                 m_y2AxisParameters.Clear();
-                m_y2AxisParameters.AddRange(selectionForm.GetCheckedParameters());
+                m_y2AxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
                 RefreshAndRecalculateAll();
             }
         }
