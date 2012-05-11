@@ -170,12 +170,20 @@
     <Compile Include="User Controls\fsTableAndChart.designer.cs">
       <DependentUpon>fsTableAndChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionControl.Designer.cs">
+      <DependentUpon>fsTablesAndChartsParametersSelectionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionDialog.Designer.cs">
       <DependentUpon>fsTablesAndChartsParametersSelectionDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="User Controls\Help Dialogs\fsYAxisParameter.cs" />
+    <Compile Include="User Controls\Help Dialogs\fsYAxisParameterWithChecking.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Base Controls\OptionsAndCommentsCalculatorControl.resx">
@@ -248,6 +256,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\fsTableAndChart.resx">
       <DependentUpon>fsTableAndChart.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionControl.resx">
+      <DependentUpon>fsTablesAndChartsParametersSelectionControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionDialog.resx">

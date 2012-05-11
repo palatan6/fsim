@@ -76,11 +76,11 @@ namespace CalculatorModules.User_Controls
         {
             RefreshInputAndReadIterationParameter();
             CalculateData();
-            RefreshOutputAndReadXYParameters();
+            RefreshOutputAndReadXyParameters();
             RedrawTableAndChart();
         }
 
-        private void RefreshOutputAndReadXYParameters()
+        private void RefreshOutputAndReadXyParameters()
         {
             RefreshXAxisList(m_xAxisComboBox);
             RefreshYAxisList(m_yAxisParameters, m_yAxisList);
@@ -272,11 +272,10 @@ namespace CalculatorModules.User_Controls
 
             string oldText = xAxisComboBox.Text;
             xAxisComboBox.Items.Clear();
-            IEnumerable<fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter> classifyiedParameters =
-                GetSelectionParameters(m_values.Keys);
-            foreach (fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter classifyiedParameter in classifyiedParameters)
+            IEnumerable<fsYAxisParameter> classifyiedParameters = GetSelectionParameters(m_values.Keys);
+            foreach (fsYAxisParameter classifyiedParameter in classifyiedParameters)
             {
-                if (classifyiedParameter.Kind == fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter)
+                if (classifyiedParameter.Kind == fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter)
                 {
                     xAxisComboBox.Items.Add(classifyiedParameter.Identifier.Name);
                 }
@@ -293,21 +292,21 @@ namespace CalculatorModules.User_Controls
             var constResultsList = new List<KeyValuePair<string, bool>>();
             var variableResultsList = new List<KeyValuePair<string, bool>>();
 
-            foreach (fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter selectionParameter in GetSelectionParameters(parameters))
+            foreach (fsYAxisParameter selectionParameter in GetSelectionParameters(parameters))
             {
                 string parameterName = selectionParameter.Identifier.Name;
                 bool isChecked = IsContains(yAxisListView.CheckedItems, parameterName)
                                  || !IsContains(yAxisListView.Items, parameterName);
                 var pair = new KeyValuePair<string, bool>(parameterName, isChecked);
-                if (selectionParameter.Kind == fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind.InputParameter)
+                if (selectionParameter.Kind == fsYAxisParameter.fsYParameterKind.InputParameter)
                 {
                     inputList.Add(pair);
                 }
-                if (selectionParameter.Kind == fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter)
+                if (selectionParameter.Kind == fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter)
                 {
                     constResultsList.Add(pair);
                 }
-                if (selectionParameter.Kind == fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter)
+                if (selectionParameter.Kind == fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter)
                 {
                     variableResultsList.Add(pair);
                 }
@@ -541,7 +540,7 @@ namespace CalculatorModules.User_Controls
                 RefreshRangesBoxes();
                 RefreshInputsBox();
                 CalculateData();
-                RefreshOutputAndReadXYParameters();
+                RefreshOutputAndReadXyParameters();
                 m_xAxisComboBox.Text = m_iterationParameter.Name;  // set the same x axis parameter as iteration parameter
                                                                 // we should assign text after RefreshOutputAndReadXYParameters
                                                                 // because it may happen that before RefreshOutputAndReadXYParameters there are no
@@ -565,7 +564,7 @@ namespace CalculatorModules.User_Controls
             m_values[m_iterationParameter].Range.From = fsValue.StringToValue(rangeFrom.Text) *
                                                     m_values[m_iterationParameter].Unit.Coefficient;
             CalculateData();
-            RefreshOutputAndReadXYParameters();
+            RefreshOutputAndReadXyParameters();
             RedrawTableAndChart();
         }
 
@@ -574,14 +573,14 @@ namespace CalculatorModules.User_Controls
             m_values[m_iterationParameter].Range.To = fsValue.StringToValue(rangeTo.Text) *
                                                   m_values[m_iterationParameter].Unit.Coefficient;
             CalculateData();
-            RefreshOutputAndReadXYParameters();
+            RefreshOutputAndReadXyParameters();
             RedrawTableAndChart();
         }
 
         private void DetalizationBoxTextChanged(object sender, EventArgs e)
         {
             CalculateData();
-            RefreshOutputAndReadXYParameters();
+            RefreshOutputAndReadXyParameters();
             RedrawTableAndChart();
         }
 
@@ -613,16 +612,14 @@ namespace CalculatorModules.User_Controls
 
         #region Selection Parameters Help
 
-        private List<fsTablesAndChartsParametersSelectionDialog.fsYAxisParameterWithChecking> GetSelectionParametersWithCheking(ListView yAxisList)
+        private List<fsYAxisParameterWithChecking> GetSelectionParametersWithCheking(ListView yAxisList)
         {
             var selectionParameters =
-                   new List<fsTablesAndChartsParametersSelectionDialog.fsYAxisParameterWithChecking>();
-            foreach (
-                fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter yParameter in
-                    GetSelectionParameters(m_values.Keys))
+                   new List<fsYAxisParameterWithChecking>();
+            foreach (fsYAxisParameter yParameter in GetSelectionParameters(m_values.Keys))
             {
                 selectionParameters.Add(
-                    new fsTablesAndChartsParametersSelectionDialog.fsYAxisParameterWithChecking(
+                    new fsYAxisParameterWithChecking(
                         yParameter.Identifier,
                         yParameter.Kind,
                         IsContains(yAxisList.Items, yParameter.Identifier.Name)));
@@ -630,42 +627,28 @@ namespace CalculatorModules.User_Controls
             return selectionParameters;
         }
 
-        private IEnumerable<fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter> GetSelectionParameters(IEnumerable<fsParameterIdentifier> parameters)
+        private IEnumerable<fsYAxisParameter> GetSelectionParameters(IEnumerable<fsParameterIdentifier> parameters)
         {
-            var selectionParameters = new List<fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter>();
+            var selectionParameters = new List<fsYAxisParameter>();
             foreach (fsParameterIdentifier parameter in parameters)
             {
                 fsParametersGroup group = m_parameterToGroup[parameter];
-                fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind kind;
+                fsYAxisParameter.fsYParameterKind kind;
                 if (group == m_parameterToGroup[m_iterationParameter])
                 {
-                    kind =
-                        fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind.
-                            CalculatedVariableParameter;
+                    kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
                 }
                 else if (group.IsInput && parameter == group.Representator)
                 {
-                    kind =
-                        fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind.
-                            InputParameter;
+                    kind = fsYAxisParameter.fsYParameterKind.InputParameter;
                 }
                 else
                 {
-                    if (IsConstantList(m_data[parameter]))
-                    {
-                        kind =
-                        fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind.
-                            CalculatedConstantParameter;
-                    }
-                    else
-                    {
-                        kind =
-                        fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter.fsYParameterKind.
-                            CalculatedVariableParameter;
-                    }
+                    kind = IsConstantList(m_data[parameter])
+                        ? fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter
+                        : fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
                 }
-                selectionParameters.Add(
-                    new fsTablesAndChartsParametersSelectionDialog.fsYAxisParameter(parameter, kind));
+                selectionParameters.Add(new fsYAxisParameter(parameter, kind));
             }
             return selectionParameters;
         }
