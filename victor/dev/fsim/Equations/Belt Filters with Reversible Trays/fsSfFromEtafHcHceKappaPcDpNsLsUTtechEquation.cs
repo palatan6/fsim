@@ -66,17 +66,18 @@ namespace Equations.Belt_Filters_with_Reversible_Trays
 
         private void SfFormula()
         {
-            fsValue nom = m_etaf.Value * m_hc.Value * (m_hc.Value + 2 * m_hce.Value);
+            fsValue num = m_etaf.Value * m_hc.Value * (m_hc.Value + 2 * m_hce.Value);
             fsValue den = 2 * m_kappa.Value * m_Pc.Value * m_Dp.Value * m_ns.Value *
                           (m_ls.Value / m_u.Value - m_ttech.Value);
-            m_sf.Value = nom / den;
+            m_sf.Value = num / den;
         }
 
         private void UFormula()
         {
-            fsValue nom = 2 * m_sf.Value * m_kappa.Value * m_Pc.Value * m_Dp.Value * m_ns.Value;
-            fsValue den = m_etaf.Value * m_hc.Value * (m_hc.Value + 2 * m_hce.Value);
-            m_u.Value = m_ls.Value / (nom / den + m_ttech.Value);
+            fsValue num = m_etaf.Value * m_hc.Value * (m_hc.Value + 2 * m_hce.Value);
+            fsValue den = 2 * m_sf.Value * m_kappa.Value * m_Pc.Value * m_Dp.Value * m_ns.Value;
+            fsValue lsOverU = m_ttech.Value + num / den;
+            m_u.Value = m_ls.Value / lsOverU;
         }
 
         #endregion

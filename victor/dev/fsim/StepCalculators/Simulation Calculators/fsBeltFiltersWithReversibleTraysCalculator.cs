@@ -98,9 +98,13 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsProductEquation(nsf, ns, sf));
             Equations.Add(new fsFrom0AndDpEquation(Pc, pc0, pressureDifference, nc));
             Equations.Add(new fsTechnicalTimeFrom0Equation(ttech, ttech0, filterAreaAs, lambda));
+            Equations.Add(new fsProductEquation(filterArea, filterLength, machineWidth));
             Equations.Add(new fsProductsEquation(
                 new[] { filterAreaAs, lsOverB },
                 new[] { ls, ls }));
+            Equations.Add(new fsProductsEquation(
+                new[] { filterArea },
+                new[] { lOverB, machineWidth, machineWidth }));
             Equations.Add(new fsProductEquation(filterLength, ns, ls));
             Equations.Add(new fsProductEquation(filterLength, tc, u));
             Equations.Add(new fsDivisionInverseEquation(tc, n));

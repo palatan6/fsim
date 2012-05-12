@@ -5,6 +5,7 @@ using Parameters;
 using StepCalculators;
 using StepCalculators.Material_Calculators;
 using StepCalculators.Simulation_Calculators;
+using Value;
 
 namespace CalculatorModules.BeltFiltersWithReversibleTrays
 {
@@ -41,11 +42,35 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
             AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationComboBox);
 
             UpdateGroupsInputInfoFromCalculationOptions();
+
+            AssignDefaultValues();
+
             UpdateEquationsFromCalculationOptions();
             SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea, fsParameterIdentifier.SpecificFiltrationTime);
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid, calculationComboBox);
+        }
+
+        private void AssignDefaultValues()
+        {
+            Values[fsParameterIdentifier.MotherLiquidViscosity].Value = new fsValue(1e-3);
+            Values[fsParameterIdentifier.MotherLiquidDensity].Value = new fsValue(1000);
+            Values[fsParameterIdentifier.SolidsDensity].Value = new fsValue(1500);
+            Values[fsParameterIdentifier.SuspensionSolidsMassFraction].Value = new fsValue(15e-2);
+            Values[fsParameterIdentifier.Ne].Value = new fsValue(0.05);
+            Values[fsParameterIdentifier.CakePorosity0].Value = new fsValue(55e-2);
+            Values[fsParameterIdentifier.CakeCompressibility].Value = new fsValue(0.3);
+            Values[fsParameterIdentifier.CakePermeability0].Value = new fsValue(1.5e-13);
+            Values[fsParameterIdentifier.FilterMediumResistanceHce0].Value = new fsValue(3e-3);
+
+            Values[fsParameterIdentifier.FilterArea].Value = new fsValue(1);
+            Values[fsParameterIdentifier.ns].Value = new fsValue(12);
+            Values[fsParameterIdentifier.nsf].Value = new fsValue(3);
+            Values[fsParameterIdentifier.StandardTechnicalTime].Value = new fsValue(2);
+            Values[fsParameterIdentifier.PressureDifference].Value = new fsValue(0.7e5);
+            Values[fsParameterIdentifier.u].Value = new fsValue(2.0/60);
+            Values[fsParameterIdentifier.lambda].Value = new fsValue(0.1);
         }
 
         #region Routine Methods
@@ -144,6 +169,9 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                 fsParameterIdentifier.StandardTechnicalTime,
                 fsParameterIdentifier.TechnicalTime);
 
+            fsParametersGroup lambdaGroup = AddGroup(
+                fsParameterIdentifier.lambda);
+
             fsParametersGroup dpGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);
 
@@ -165,9 +193,6 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                 fsParameterIdentifier.Qms,
                 fsParameterIdentifier.Qsus,
                 fsParameterIdentifier.SuspensionMassFlowrate);
-
-            fsParametersGroup lambdaGroup = AddGroup(
-                fsParameterIdentifier.lambda);
 
             fsParametersGroup resultsGroup = AddOnlyCalculatedGroup(
                 fsParameterIdentifier.MeanHeightRate,
@@ -194,10 +219,10 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                            nsGroup,
                            geometryGroup,
                            timeGroup,
+                           lambdaGroup,
                            dpGroup,
                            specificTimeGroup,
                            timeQGroup,
-                           lambdaGroup,
                            resultsGroup
                        };
         }
@@ -221,6 +246,9 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                 fsParameterIdentifier.StandardTechnicalTime,
                 fsParameterIdentifier.TechnicalTime);
 
+            fsParametersGroup lambdaGroup = AddGroup(
+                fsParameterIdentifier.lambda);
+
             fsParametersGroup dpGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);
 
@@ -239,9 +267,6 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                 fsParameterIdentifier.FiltrationTime,
                 fsParameterIdentifier.qft,
                 fsParameterIdentifier.qmft);
-
-            fsParametersGroup lambdaGroup = AddGroup(
-                fsParameterIdentifier.lambda);
 
             fsParametersGroup resultsGroup = AddOnlyCalculatedGroup(
                 fsParameterIdentifier.FilterArea,
@@ -272,10 +297,10 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                            nsGroup,
                            geometryGroup,
                            timeGroup,
+                           lambdaGroup,
                            dpGroup,
                            cycleGroup,
                            filtrationGroup,
-                           lambdaGroup,
                            resultsGroup
                        };
         }
