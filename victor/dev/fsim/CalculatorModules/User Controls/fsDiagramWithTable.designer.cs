@@ -76,11 +76,13 @@ namespace CalculatorModules.User_Controls
             // 
             // table
             // 
+            this.table.AllowUserToAddRows = false;
+            this.table.AllowUserToDeleteRows = false;
             this.table.AllowUserToResizeRows = false;
             this.table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.table.Dock = System.Windows.Forms.DockStyle.Fill;
             this.table.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.table.HighLightCurrentRow = false;
+            this.table.HighLightCurrentRow = true;
             this.table.Location = new System.Drawing.Point(0, 0);
             this.table.Name = "table";
             this.table.RowHeadersVisible = false;

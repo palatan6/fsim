@@ -174,5 +174,13 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
 
         #endregion
 
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            foreach (ListViewItem item in m_itemToYParameter.Keys)
+            {
+                item.Checked = false;
+            }
+        }
+
     }
 }
