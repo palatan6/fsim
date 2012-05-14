@@ -50,7 +50,7 @@ namespace StepCalculators.Simulation_Calculators
 
             IEquationParameter pressureDifference = AddVariable(fsParameterIdentifier.PressureDifference);
 
-            IEquationParameter Pc = AddVariable(fsParameterIdentifier.CakePermeability);
+            IEquationParameter pc = AddVariable(fsParameterIdentifier.CakePermeability);
 
             IEquationParameter ttech0 = AddVariable(fsParameterIdentifier.StandardTechnicalTime);
             IEquationParameter ttech = AddVariable(fsParameterIdentifier.TechnicalTime);
@@ -96,7 +96,7 @@ namespace StepCalculators.Simulation_Calculators
                 new[] { rhoCd, filterArea, cakeHeigth }));
             Equations.Add(new fsProductEquation(lOverB, ns, lsOverB));
             Equations.Add(new fsProductEquation(nsf, ns, sf));
-            Equations.Add(new fsFrom0AndDpEquation(Pc, pc0, pressureDifference, nc));
+            Equations.Add(new fsFrom0AndDpEquation(pc, pc0, pressureDifference, nc));
             Equations.Add(new fsTechnicalTimeFrom0Equation(ttech, ttech0, filterAreaAs, lambda));
             Equations.Add(new fsProductEquation(filterArea, filterLength, machineWidth));
             Equations.Add(new fsProductsEquation(
@@ -108,20 +108,20 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsProductEquation(filterLength, ns, ls));
             Equations.Add(new fsProductEquation(filterLength, tc, u));
             Equations.Add(new fsDivisionInverseEquation(tc, n));
-            Equations.Add(new fsCakeHeightFromDpTf(cakeHeigth, hce0, Pc, kappa, pressureDifference, filtrationTime, etaf));
+            Equations.Add(new fsCakeHeightFromDpTf(cakeHeigth, hce0, pc, kappa, pressureDifference, filtrationTime, etaf));
             Equations.Add(new fsSumEquation(ns, nsf, nsr));
             Equations.Add(new fsSumEquation(tc, tr, filtrationTime));
             Equations.Add(new fsSumEquation(constantOne, sr, sf));
-            Equations.Add(new fsProductEquation(tr, tc, sr));
-            Equations.Add(new fsProductEquation(filtrationTime, tc, sf));
+            Equations.Add(new fsTrSrTtechNsTcEquation(sr, tr, tc, ns, ttech));
+            Equations.Add(new fsTfSfTtechNsTcEquation(sf, filtrationTime, tc, ns, ttech));
             Equations.Add(new fsProductEquation(ls, lsOverB, machineWidth));
             Equations.Add(new fsSfFromEtafHcHceKappaPcDpNsLsUTtechEquation(
-                sf, etaf, cakeHeigth, hce0, kappa, Pc, pressureDifference, ns, ls, u, ttech));
+                sf, etaf, cakeHeigth, hce0, kappa, pc, pressureDifference, ns, ls, u, ttech));
             Equations.Add(new fsUFromLsOverBQmsHcDpTtech0LambdaNsfMaterialEquation(
-                u, lambda, nsf, lsOverB, Qms, rhoCd, cakeHeigth, etaf, hce0, kappa, Pc, pressureDifference, ttech0));
+                u, lambda, nsf, lsOverB, Qms, rhoCd, cakeHeigth, etaf, hce0, kappa, pc, pressureDifference, ttech0));
             Equations.Add(new fsProductsEquation(
                 new[] { qft, etaf, hcAdd2Hce },
-                new[] { constantTwo, Pc, pressureDifference }));
+                new[] { constantTwo, pc, pressureDifference }));
             Equations.Add(new fsProductEquation(qmft, qft, rhoF));
 
             #region Only Calculated Parameters
@@ -133,7 +133,7 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsProductEquation(cakeHeigth, tc, hcOverTc));
             Equations.Add(new fsProductsEquation(
                 new[] { diffHeightrate, etaf, hcAddHce },
-                new[] { kappa, pressureDifference, Pc }));
+                new[] { kappa, pressureDifference, pc }));
 
             IEquationParameter Ms = AddVariable(fsParameterIdentifier.SolidsMass);
             IEquationParameter Vs = AddVariable(fsParameterIdentifier.SolidsVolume);

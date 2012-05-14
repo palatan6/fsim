@@ -46,7 +46,9 @@
   <ItemGroup>
     <Compile Include="Belt Filters with Reversible Trays\fsAreaOfBeltWithReversibleTraysEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsSfFromEtafHcHceKappaPcDpNsLsUTtechEquation.cs" />
+    <Compile Include="Belt Filters with Reversible Trays\fsTfSfTtechNsTcEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsTechnicalTimeFrom0Equation.cs" />
+    <Compile Include="Belt Filters with Reversible Trays\fsTrSrTtechNsTcEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsUFromLsOverBQmsHcDpTtech0LambdaNsfMaterialEquation.cs" />
     <Compile Include="Cake Formation\fsCakeHeightFrom_Dp_tfEquation.cs" />
     <Compile Include="Hydrocyclone\fsCOverflowEquation.cs" />
