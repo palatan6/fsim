@@ -5,6 +5,13 @@ using Parameters;
 
 namespace StepCalculators
 {
+    /*
+     * 
+     * This calculator used in some of small modules. It isn't a general solution.
+     * And it isn't used somewhere else.
+     * 
+     * */
+
     public class fsCakePorosityCalculator : fsCalculator
     {
         readonly fsCalculatorVariable m_machineArea;

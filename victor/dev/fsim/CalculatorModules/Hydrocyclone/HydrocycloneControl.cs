@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using Parameters;
 using StepCalculators;
-using StepCalculators.Material_Calculators;
 using StepCalculators.Simulation_Calculators;
 using Value;
 

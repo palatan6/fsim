@@ -5,41 +5,34 @@ namespace StepCalculators
 {
     public class fsPermeabilityCalculator : fsCalculator
     {
-        readonly fsCalculatorConstant m_rhoS;
-        readonly fsCalculatorConstant m_eps;
-        readonly fsCalculatorVariable m_pc0;
-        readonly fsCalculatorVariable m_rc0;
-        readonly fsCalculatorVariable m_alpha0;
-        readonly fsCalculatorVariable m_nc;
-        readonly fsCalculatorVariable m_pressure;
-        readonly fsCalculatorVariable m_pc;
-        readonly fsCalculatorVariable m_rc;
-        readonly fsCalculatorVariable m_alpha;
-
         public fsPermeabilityCalculator()
         {
             #region Parameters Initialization
 
-            m_rhoS = AddConstant(fsParameterIdentifier.SolidsDensity);
-            m_eps = AddConstant(fsParameterIdentifier.CakePorosity);
-            m_pc0 = AddVariable(fsParameterIdentifier.CakePermeability0);
-            m_rc0 = AddVariable(fsParameterIdentifier.CakeResistance0);
-            m_alpha0 = AddVariable(fsParameterIdentifier.CakeResistanceAlpha0);
-            m_nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
-            m_pressure = AddVariable(fsParameterIdentifier.PressureDifference);
-            m_pc = AddVariable(fsParameterIdentifier.CakePermeability);
-            m_rc = AddVariable(fsParameterIdentifier.CakeResistance);
-            m_alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
+            fsCalculatorConstant rhoS = AddConstant(fsParameterIdentifier.SolidsDensity);
+            fsCalculatorConstant eps0 = AddConstant(fsParameterIdentifier.CakePorosity0);
+            fsCalculatorConstant eps = AddConstant(fsParameterIdentifier.CakePorosity);
+
+            fsCalculatorVariable nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
+            fsCalculatorVariable pressure = AddVariable(fsParameterIdentifier.PressureDifference);
+
+            fsCalculatorVariable pc0 = AddVariable(fsParameterIdentifier.CakePermeability0);
+            fsCalculatorVariable rc0 = AddVariable(fsParameterIdentifier.CakeResistance0);
+            fsCalculatorVariable alpha0 = AddVariable(fsParameterIdentifier.CakeResistanceAlpha0);
+
+            fsCalculatorVariable pc = AddVariable(fsParameterIdentifier.CakePermeability);
+            fsCalculatorVariable rc = AddVariable(fsParameterIdentifier.CakeResistance);
+            fsCalculatorVariable alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
 
             #endregion
 
             #region Equations Initialization
 
-            AddEquation(new fsDivisionInverseEquation(m_pc0, m_rc0));
-            AddEquation(new fsAlphaPcEquation(m_alpha0, m_pc0, m_eps, m_rhoS));
-            AddEquation(new fsFrom0AndDpEquation(m_pc, m_pc0, m_pressure, m_nc));
-            AddEquation(new fsDivisionInverseEquation(m_pc, m_rc));
-            AddEquation(new fsAlphaPcEquation(m_alpha, m_pc, m_eps, m_rhoS));
+            AddEquation(new fsDivisionInverseEquation(pc0, rc0));
+            AddEquation(new fsAlphaPcEquation(alpha0, pc0, eps0, rhoS));
+            AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
+            AddEquation(new fsDivisionInverseEquation(pc, rc));
+            AddEquation(new fsAlphaPcEquation(alpha, pc, eps, rhoS));
 
             #endregion
         }

@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel;
-using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
-using StepCalculators.Material_Calculators;
 using StepCalculators.Simulation_Calculators;
 using Value;
 
@@ -30,8 +28,8 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
             #region Calculators
             
             Calculators.Add(new fsDensityConcentrationCalculator());
-            Calculators.Add(new fsEpsKappaNeDpCalculator());
-            Calculators.Add(new fsPc0Rc0Alpha0Calculator());
+            Calculators.Add(new fsPorosityCalculator());
+            Calculators.Add(new fsPermeabilityCalculator());
             Calculators.Add(new fsRm0Hce0Calculator());
             Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
 
@@ -66,6 +64,7 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
 
             Values[fsParameterIdentifier.FilterArea].Value = new fsValue(1);
             Values[fsParameterIdentifier.ns].Value = new fsValue(12);
+            Values[fsParameterIdentifier.ls].Value = new fsValue(0.2);
             Values[fsParameterIdentifier.nsf].Value = new fsValue(3);
             Values[fsParameterIdentifier.StandardTechnicalTime].Value = new fsValue(2);
             Values[fsParameterIdentifier.PressureDifference].Value = new fsValue(0.7e5);
@@ -126,7 +125,10 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
             fsParametersGroup pcrcGroup = AddGroup(
                 fsParameterIdentifier.CakePermeability0,
                 fsParameterIdentifier.CakeResistance0,
-                fsParameterIdentifier.CakeResistanceAlpha0);
+                fsParameterIdentifier.CakeResistanceAlpha0,
+                fsParameterIdentifier.CakePermeability,
+                fsParameterIdentifier.CakeResistance,
+                fsParameterIdentifier.CakeResistanceAlpha);
 
             fsParametersGroup ncGroup = AddGroup(
                 fsParameterIdentifier.CakeCompressibility);

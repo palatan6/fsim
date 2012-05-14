@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Equations;
+﻿using Equations;
 using Parameters;
 using Equations.Material.Cake_Moisture_Content_Rf_Equations;
 using Equations.Material.Eps_Kappa_Equations;
 using Value;
 
-namespace StepCalculators.Material_Calculators
+namespace StepCalculators
 {
-    public class fsEpsKappaNeDpCalculator : fsCalculator
+    /*
+     * It's a general solution for calculating of
+     * Pc0, rc0, alpha0, Pc, rc, alpha fromm Dp and nc
+     * 
+     * */
+
+    public class fsPorosityCalculator : fsCalculator
     {
-        public fsEpsKappaNeDpCalculator()
+        public fsPorosityCalculator()
         {
             #region Parameters Initialization
 
             fsCalculatorConstant ne = AddConstant(fsParameterIdentifier.Ne);
             fsCalculatorConstant pressureDifference = AddConstant(fsParameterIdentifier.PressureDifference);
             fsCalculatorConstant volumeConcentration = AddConstant(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
-            fsCalculatorConstant suspensionSolidsMassFraction = AddConstant(fsParameterIdentifier.SuspensionSolidsMassFraction);
             fsCalculatorConstant solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
             fsCalculatorConstant filtrateDensity = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
 

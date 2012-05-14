@@ -50,14 +50,10 @@
     <Compile Include="fsCalculator.cs" />
     <Compile Include="Machine Area Calculators\fsConcaveCakeAreaEquation.cs" />
     <Compile Include="Machine Area Calculators\fsConvexCakeAreaEquation.cs" />
-    <Compile Include="Material Calculators\fsEpsKappaNeDpCalculator.cs" />
     <Compile Include="Simulation Calculators\fsBeltFiltersWithReversibleTraysCalculator.cs" />
     <Compile Include="Simulation Calculators\fsHydrocycloneCalculator.cs" />
     <Compile Include="Small Calculators\fsCakePorosityCalculator.cs" />
     <Compile Include="Material Calculators\fsDensityConcentrationCalculator.cs" />
-    <Compile Include="Material Calculators\fsEps0Kapp0Calculator.cs" />
-    <Compile Include="Material Calculators\fsEpsKappaCalculator.cs" />
-    <Compile Include="Material Calculators\fsPc0rc0alpha0Calculator.cs" />
     <Compile Include="Material Calculators\fsRm0hce0Calculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Small Calculators\fsCakeWashOutContentCalculator.cs" />
@@ -68,6 +64,7 @@
     <Compile Include="Small Calculators\fsMsusHcPlainAreaCalculator.cs" />
     <Compile Include="Small Calculators\fsPermeabilityCalculator.cs" />
     <Compile Include="Small Calculators\fsPkeFromPcRcCalculator.cs" />
+    <Compile Include="Small Calculators\fsPorosityCalculator.cs" />
     <Compile Include="Small Calculators\fsRfFromCakeSaturationCalculator.cs" />
     <Compile Include="Small Calculators\fsRfFromWetDryCakeCalculator.cs" />
     <Compile Include="Small Calculators\fsSuspensionSolidsMassFractionCalculator.cs" />

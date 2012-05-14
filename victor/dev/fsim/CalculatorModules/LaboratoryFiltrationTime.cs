@@ -12,8 +12,8 @@ namespace CalculatorModules
             InitializeComponent();
 
             Calculators.Add(new fsDensityConcentrationCalculator());
-            Calculators.Add(new fsEps0Kappa0Calculator());
-            Calculators.Add(new fsPc0Rc0Alpha0Calculator());
+            Calculators.Add(new fsPorosityCalculator());
+            Calculators.Add(new fsPermeabilityCalculator());
             Calculators.Add(new fsLaboratoryFiltrationCalculator());
 
             fsParametersGroup filtrateGroup = AddGroup(

@@ -61,8 +61,8 @@ namespace WinFormsCakeFormationSample
         {
             materialData.m_calculatorList.Add(new fsDensityConcentrationCalculator());
 
-            cakeFormationData.m_calculatorList.Add(new fsEps0Kappa0Calculator());
-            cakeFormationData.m_calculatorList.Add(new fsPc0Rc0Alpha0Calculator());
+            cakeFormationData.m_calculatorList.Add(new fsPorosityCalculator());
+            cakeFormationData.m_calculatorList.Add(new fsPermeabilityCalculator());
             cakeFormationData.m_calculatorList.Add(new fsRm0Hce0Calculator());
             cakeFormationData.m_calculatorList.Add(new fsCakeFormationDpConstCalculator());
 
