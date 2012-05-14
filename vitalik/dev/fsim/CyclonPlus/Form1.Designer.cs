@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainCyclonPlusForm));
             this.panelProjectMain = new System.Windows.Forms.Panel();
             this.fmDataGridProject = new fmDataGrid.fmDataGrid();
             this.ColumnProjCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -68,10 +67,8 @@
             this.buttonCreateSimul = new System.Windows.Forms.Button();
             this.checkBoxByCheckingSimul = new System.Windows.Forms.CheckBox();
             this.panelTop = new System.Windows.Forms.Panel();
-            this.splitter1 = new System.Windows.Forms.Splitter();
-            this.splitter2 = new System.Windows.Forms.Splitter();
+            this.splitContainerTopTables = new System.Windows.Forms.SplitContainer();
             this.splitContainerProjSusp = new System.Windows.Forms.SplitContainer();
-            this.buttonTest = new System.Windows.Forms.Button();
             this.hydrocycloneControl1 = new CalculatorModules.Hydrocyclone.HydrocycloneControl();
             this.panelProjectMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fmDataGridProject)).BeginInit();
@@ -86,6 +83,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.fmDataGridSimul)).BeginInit();
             this.panelSimulTop.SuspendLayout();
             this.panelTop.SuspendLayout();
+            this.splitContainerTopTables.Panel1.SuspendLayout();
+            this.splitContainerTopTables.Panel2.SuspendLayout();
+            this.splitContainerTopTables.SuspendLayout();
             this.splitContainerProjSusp.Panel1.SuspendLayout();
             this.splitContainerProjSusp.Panel2.SuspendLayout();
             this.splitContainerProjSusp.SuspendLayout();
@@ -98,7 +98,7 @@
             this.panelProjectMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelProjectMain.Location = new System.Drawing.Point(0, 0);
             this.panelProjectMain.Name = "panelProjectMain";
-            this.panelProjectMain.Size = new System.Drawing.Size(262, 190);
+            this.panelProjectMain.Size = new System.Drawing.Size(266, 190);
             this.panelProjectMain.TabIndex = 0;
             // 
             // fmDataGridProject
@@ -118,7 +118,7 @@
             this.fmDataGridProject.RowHeadersVisible = false;
             this.fmDataGridProject.RowTemplate.Height = 18;
             this.fmDataGridProject.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fmDataGridProject.Size = new System.Drawing.Size(262, 151);
+            this.fmDataGridProject.Size = new System.Drawing.Size(266, 151);
             this.fmDataGridProject.TabIndex = 1;
             this.fmDataGridProject.CellValueChangedByUser += new System.Windows.Forms.DataGridViewCellEventHandler(this.fmDataGridProject_CellValueChangedByUser);
             // 
@@ -140,7 +140,7 @@
             this.panelProjectTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelProjectTop.Location = new System.Drawing.Point(0, 0);
             this.panelProjectTop.Name = "panelProjectTop";
-            this.panelProjectTop.Size = new System.Drawing.Size(262, 39);
+            this.panelProjectTop.Size = new System.Drawing.Size(266, 39);
             this.panelProjectTop.TabIndex = 0;
             // 
             // buttonDelProject
@@ -200,7 +200,7 @@
             this.panelSuspMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSuspMain.Location = new System.Drawing.Point(0, 0);
             this.panelSuspMain.Name = "panelSuspMain";
-            this.panelSuspMain.Size = new System.Drawing.Size(267, 190);
+            this.panelSuspMain.Size = new System.Drawing.Size(262, 190);
             this.panelSuspMain.TabIndex = 1;
             // 
             // fmDataGridSusp
@@ -220,7 +220,7 @@
             this.fmDataGridSusp.RowHeadersVisible = false;
             this.fmDataGridSusp.RowTemplate.Height = 18;
             this.fmDataGridSusp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fmDataGridSusp.Size = new System.Drawing.Size(267, 151);
+            this.fmDataGridSusp.Size = new System.Drawing.Size(262, 151);
             this.fmDataGridSusp.TabIndex = 1;
             this.fmDataGridSusp.CellValueChangedByUser += new System.Windows.Forms.DataGridViewCellEventHandler(this.fmDataGridSusp_CellValueChangedByUser);
             // 
@@ -240,7 +240,7 @@
             this.panelSuspTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSuspTop.Location = new System.Drawing.Point(0, 0);
             this.panelSuspTop.Name = "panelSuspTop";
-            this.panelSuspTop.Size = new System.Drawing.Size(267, 39);
+            this.panelSuspTop.Size = new System.Drawing.Size(262, 39);
             this.panelSuspTop.TabIndex = 0;
             // 
             // buttonDelSusp
@@ -297,10 +297,10 @@
             // 
             this.panelSeriesMain.Controls.Add(this.fmDataGridSeries);
             this.panelSeriesMain.Controls.Add(this.panelSeriesTop);
-            this.panelSeriesMain.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSeriesMain.Location = new System.Drawing.Point(536, 0);
+            this.panelSeriesMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSeriesMain.Location = new System.Drawing.Point(0, 0);
             this.panelSeriesMain.Name = "panelSeriesMain";
-            this.panelSeriesMain.Size = new System.Drawing.Size(257, 190);
+            this.panelSeriesMain.Size = new System.Drawing.Size(262, 190);
             this.panelSeriesMain.TabIndex = 2;
             // 
             // fmDataGridSeries
@@ -322,7 +322,7 @@
             this.fmDataGridSeries.RowHeadersVisible = false;
             this.fmDataGridSeries.RowTemplate.Height = 18;
             this.fmDataGridSeries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fmDataGridSeries.Size = new System.Drawing.Size(257, 151);
+            this.fmDataGridSeries.Size = new System.Drawing.Size(262, 151);
             this.fmDataGridSeries.TabIndex = 1;
             this.fmDataGridSeries.CellValueChangedByUser += new System.Windows.Forms.DataGridViewCellEventHandler(this.fmDataGridSeries_CellValueChangedByUser);
             // 
@@ -354,7 +354,7 @@
             this.panelSeriesTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSeriesTop.Location = new System.Drawing.Point(0, 0);
             this.panelSeriesTop.Name = "panelSeriesTop";
-            this.panelSeriesTop.Size = new System.Drawing.Size(257, 39);
+            this.panelSeriesTop.Size = new System.Drawing.Size(262, 39);
             this.panelSeriesTop.TabIndex = 0;
             // 
             // buttonDelSeries
@@ -409,6 +409,8 @@
             // 
             // panelSimulMain
             // 
+            this.panelSimulMain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelSimulMain.Controls.Add(this.fmDataGridSimul);
             this.panelSimulMain.Controls.Add(this.panelSimulTop);
             this.panelSimulMain.Location = new System.Drawing.Point(15, 204);
@@ -511,34 +513,34 @@
             // 
             // panelTop
             // 
-            this.panelTop.Controls.Add(this.splitter1);
-            this.panelTop.Controls.Add(this.panelSeriesMain);
-            this.panelTop.Controls.Add(this.splitter2);
-            this.panelTop.Controls.Add(this.splitContainerProjSusp);
+            this.panelTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelTop.Controls.Add(this.splitContainerTopTables);
             this.panelTop.Location = new System.Drawing.Point(12, 8);
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(798, 190);
             this.panelTop.TabIndex = 8;
             // 
-            // splitter1
+            // splitContainerTopTables
             // 
-            this.splitter1.Location = new System.Drawing.Point(793, 0);
-            this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 190);
-            this.splitter1.TabIndex = 13;
-            this.splitter1.TabStop = false;
+            this.splitContainerTopTables.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerTopTables.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerTopTables.Name = "splitContainerTopTables";
             // 
-            // splitter2
+            // splitContainerTopTables.Panel1
             // 
-            this.splitter2.Location = new System.Drawing.Point(533, 0);
-            this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(3, 190);
-            this.splitter2.TabIndex = 2;
-            this.splitter2.TabStop = false;
+            this.splitContainerTopTables.Panel1.Controls.Add(this.splitContainerProjSusp);
+            // 
+            // splitContainerTopTables.Panel2
+            // 
+            this.splitContainerTopTables.Panel2.Controls.Add(this.panelSeriesMain);
+            this.splitContainerTopTables.Size = new System.Drawing.Size(798, 190);
+            this.splitContainerTopTables.SplitterDistance = 532;
+            this.splitContainerTopTables.TabIndex = 14;
             // 
             // splitContainerProjSusp
             // 
-            this.splitContainerProjSusp.Dock = System.Windows.Forms.DockStyle.Left;
+            this.splitContainerProjSusp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerProjSusp.Location = new System.Drawing.Point(0, 0);
             this.splitContainerProjSusp.Name = "splitContainerProjSusp";
             // 
@@ -549,25 +551,15 @@
             // splitContainerProjSusp.Panel2
             // 
             this.splitContainerProjSusp.Panel2.Controls.Add(this.panelSuspMain);
-            this.splitContainerProjSusp.Size = new System.Drawing.Size(533, 190);
-            this.splitContainerProjSusp.SplitterDistance = 262;
+            this.splitContainerProjSusp.Size = new System.Drawing.Size(532, 190);
+            this.splitContainerProjSusp.SplitterDistance = 266;
             this.splitContainerProjSusp.TabIndex = 12;
-            // 
-            // buttonTest
-            // 
-            this.buttonTest.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonTest.Location = new System.Drawing.Point(876, 287);
-            this.buttonTest.Name = "buttonTest";
-            this.buttonTest.Size = new System.Drawing.Size(133, 28);
-            this.buttonTest.TabIndex = 9;
-            this.buttonTest.Text = "test";
-            this.buttonTest.UseVisualStyleBackColor = true;
-            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
             // hydrocycloneControl1
             // 
-            this.hydrocycloneControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.hydrocycloneControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.hydrocycloneControl1.Location = new System.Drawing.Point(12, 344);
             this.hydrocycloneControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.hydrocycloneControl1.Name = "hydrocycloneControl1";
@@ -580,13 +572,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1386, 747);
             this.Controls.Add(this.hydrocycloneControl1);
-            this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelSimulMain);
             this.Name = "MainCyclonPlusForm";
             this.Text = "CyclonPlus";
             this.Load += new System.EventHandler(this.MainCyclonPlusForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainCyclonPlusForm_FormClosing);
+            this.MaximumSizeChanged += new System.EventHandler(this.MainCyclonPlusForm_MaximumSizeChanged);
             this.panelProjectMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fmDataGridProject)).EndInit();
             this.panelProjectTop.ResumeLayout(false);
@@ -604,6 +596,9 @@
             this.panelSimulTop.ResumeLayout(false);
             this.panelSimulTop.PerformLayout();
             this.panelTop.ResumeLayout(false);
+            this.splitContainerTopTables.Panel1.ResumeLayout(false);
+            this.splitContainerTopTables.Panel2.ResumeLayout(false);
+            this.splitContainerTopTables.ResumeLayout(false);
             this.splitContainerProjSusp.Panel1.ResumeLayout(false);
             this.splitContainerProjSusp.Panel2.ResumeLayout(false);
             this.splitContainerProjSusp.ResumeLayout(false);
@@ -652,11 +647,9 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnSeriesCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnSusp;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnProject;
-        private System.Windows.Forms.Button buttonTest;
         private System.Windows.Forms.SplitContainer splitContainerProjSusp;
-        private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.Splitter splitter2;
         private CalculatorModules.Hydrocyclone.HydrocycloneControl hydrocycloneControl1;
+        private System.Windows.Forms.SplitContainer splitContainerTopTables;
     }
 }
 

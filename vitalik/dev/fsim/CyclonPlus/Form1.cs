@@ -24,7 +24,7 @@ namespace CyclonPlus
         public MainCyclonPlusForm()
         {
             InitializeComponent();
-
+            
             initializeDbComponent();
             connectToCyclonPlusMdb();
             fmDGVDesign();
@@ -1622,6 +1622,11 @@ namespace CyclonPlus
                     return HydrocycloneControl.fsCalculationOption.Dp;
                     break;
             }
+        }
+
+        private void MainCyclonPlusForm_MaximumSizeChanged(object sender, EventArgs e)
+        {
+
         }
     }
 
