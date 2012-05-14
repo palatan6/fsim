@@ -31,14 +31,14 @@
             this.comboBoxCalculationOption = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView_Result3 = new System.Windows.Forms.DataGridView();
-            this.splitContainerTwoTables = new System.Windows.Forms.SplitContainer();
-            this.fsParametersWithValuesTable1 = new fsUIControls.fsParametersWithValuesTable();
-            this.fsParametersWithValuesTable2 = new fsUIControls.fsParametersWithValuesTable();
             this.ParameterColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnitsColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FeedColumn = new fmDataGrid.fmDataGridViewNumericalTextBoxColumn();
             this.UnderflowColumn = new fmDataGrid.fmDataGridViewNumericalTextBoxColumn();
             this.OverflowColumn = new fmDataGrid.fmDataGridViewNumericalTextBoxColumn();
+            this.splitContainerTwoTables = new System.Windows.Forms.SplitContainer();
+            this.fsParametersWithValuesTable1 = new fsUIControls.fsParametersWithValuesTable();
+            this.fsParametersWithValuesTable2 = new fsUIControls.fsParametersWithValuesTable();
             this.panelRight.SuspendLayout();
             this.leftTopPanel.SuspendLayout();
             this.calculationOptionsPanel.SuspendLayout();
@@ -108,41 +108,6 @@
             this.dataGridView_Result3.Size = new System.Drawing.Size(472, 161);
             this.dataGridView_Result3.TabIndex = 5;
             // 
-            // splitContainerTwoTables
-            // 
-            this.splitContainerTwoTables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerTwoTables.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerTwoTables.Name = "splitContainerTwoTables";
-            // 
-            // splitContainerTwoTables.Panel1
-            // 
-            this.splitContainerTwoTables.Panel1.Controls.Add(this.fsParametersWithValuesTable1);
-            // 
-            // splitContainerTwoTables.Panel2
-            // 
-            this.splitContainerTwoTables.Panel2.Controls.Add(this.fsParametersWithValuesTable2);
-            this.splitContainerTwoTables.Size = new System.Drawing.Size(472, 255);
-            this.splitContainerTwoTables.SplitterDistance = 236;
-            this.splitContainerTwoTables.TabIndex = 6;
-            // 
-            // fsParametersWithValuesTable1
-            // 
-            this.fsParametersWithValuesTable1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fsParametersWithValuesTable1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.fsParametersWithValuesTable1.Location = new System.Drawing.Point(0, 0);
-            this.fsParametersWithValuesTable1.Name = "fsParametersWithValuesTable1";
-            this.fsParametersWithValuesTable1.Size = new System.Drawing.Size(236, 255);
-            this.fsParametersWithValuesTable1.TabIndex = 4;
-            // 
-            // fsParametersWithValuesTable2
-            // 
-            this.fsParametersWithValuesTable2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fsParametersWithValuesTable2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.fsParametersWithValuesTable2.Location = new System.Drawing.Point(0, 0);
-            this.fsParametersWithValuesTable2.Name = "fsParametersWithValuesTable2";
-            this.fsParametersWithValuesTable2.Size = new System.Drawing.Size(232, 255);
-            this.fsParametersWithValuesTable2.TabIndex = 5;
-            // 
             // ParameterColumn3
             // 
             this.ParameterColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -183,6 +148,41 @@
             this.OverflowColumn.ReadOnly = true;
             this.OverflowColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
+            // splitContainerTwoTables
+            // 
+            this.splitContainerTwoTables.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerTwoTables.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerTwoTables.Name = "splitContainerTwoTables";
+            // 
+            // splitContainerTwoTables.Panel1
+            // 
+            this.splitContainerTwoTables.Panel1.Controls.Add(this.fsParametersWithValuesTable1);
+            // 
+            // splitContainerTwoTables.Panel2
+            // 
+            this.splitContainerTwoTables.Panel2.Controls.Add(this.fsParametersWithValuesTable2);
+            this.splitContainerTwoTables.Size = new System.Drawing.Size(472, 255);
+            this.splitContainerTwoTables.SplitterDistance = 236;
+            this.splitContainerTwoTables.TabIndex = 6;
+            // 
+            // fsParametersWithValuesTable1
+            // 
+            this.fsParametersWithValuesTable1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fsParametersWithValuesTable1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.fsParametersWithValuesTable1.Location = new System.Drawing.Point(0, 0);
+            this.fsParametersWithValuesTable1.Name = "fsParametersWithValuesTable1";
+            this.fsParametersWithValuesTable1.Size = new System.Drawing.Size(236, 255);
+            this.fsParametersWithValuesTable1.TabIndex = 4;
+            // 
+            // fsParametersWithValuesTable2
+            // 
+            this.fsParametersWithValuesTable2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fsParametersWithValuesTable2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.fsParametersWithValuesTable2.Location = new System.Drawing.Point(0, 0);
+            this.fsParametersWithValuesTable2.Name = "fsParametersWithValuesTable2";
+            this.fsParametersWithValuesTable2.Size = new System.Drawing.Size(232, 255);
+            this.fsParametersWithValuesTable2.TabIndex = 5;
+            // 
             // HydrocycloneControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -202,7 +202,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBoxCalculationOption;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView_Result3;
         private System.Windows.Forms.SplitContainer splitContainerTwoTables;
@@ -213,5 +212,6 @@
         private fmDataGrid.fmDataGridViewNumericalTextBoxColumn FeedColumn;
         private fmDataGrid.fmDataGridViewNumericalTextBoxColumn UnderflowColumn;
         private fmDataGrid.fmDataGridViewNumericalTextBoxColumn OverflowColumn;
+        public System.Windows.Forms.ComboBox comboBoxCalculationOption;
     }
 }

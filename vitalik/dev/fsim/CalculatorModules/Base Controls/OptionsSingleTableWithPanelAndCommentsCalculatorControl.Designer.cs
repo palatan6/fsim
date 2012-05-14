@@ -108,7 +108,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainerMain;
-        protected fsUIControls.fsParametersWithValuesTable dataGrid;
         protected System.Windows.Forms.Panel panelRight;
+        public fsUIControls.fsParametersWithValuesTable dataGrid;
     }
 }

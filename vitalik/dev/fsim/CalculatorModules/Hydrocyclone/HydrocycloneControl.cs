@@ -19,7 +19,7 @@ namespace CalculatorModules.Hydrocyclone
     {
         #region Calculation Option
 
-        private enum fsCalculationOption
+        public enum fsCalculationOption
         {
             [Description("Dp")]
             Dp,
@@ -289,8 +289,8 @@ namespace CalculatorModules.Hydrocyclone
 
         #endregion
 
-
-
+        
+   
     }
-    }
+}
 

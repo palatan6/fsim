@@ -46,7 +46,7 @@ namespace CalculatorModules
         #region Routines
 
         protected List<fsCalculator> Calculators { get; set; }
-        protected List<fsParametersGroup> Groups { get; private set; }
+        public List<fsParametersGroup> Groups { get; set; }
         protected Dictionary<fsParameterIdentifier, fsParametersGroup> ParameterToGroup { get; private set; }
 
         protected void EstablishCalculationOption(Enum option)
@@ -306,5 +306,24 @@ namespace CalculatorModules
         }
 
         #endregion
+
+
+        public fsValue GetValue(fsParameterIdentifier parameter)
+        {
+            return Values[parameter].Value;
+        }
+
+        public void SetValue(fsParameterIdentifier parameter, fsValue value)
+        {
+            Values[parameter].Value = value;
+        }
+
+        public void ChangeCalculationOption(Enum option)
+        {
+            EstablishCalculationOption(option);
+            UpdateGroupsInputInfoFromCalculationOptions();
+            Recalculate();
+            UpdateUIFromData();
+        }
     }
 }
