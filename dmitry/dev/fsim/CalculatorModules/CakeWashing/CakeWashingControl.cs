@@ -3,6 +3,9 @@ using System.ComponentModel;
 using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
+using StepCalculators;
+using StepCalculators.Material_Calculators;
+using StepCalculators.Simulation_Calculators;
 
 
 namespace CalculatorModules.CakeWashing
@@ -12,6 +15,16 @@ namespace CalculatorModules.CakeWashing
         public fsCakeWashingControl()
         {
             InitializeComponent();
+
+            #region Calculators
+
+            Calculators.Add(new fsDensityConcentrationCalculator());
+            Calculators.Add(new fsEpsKappaNeDpCalculator());
+            Calculators.Add(new fsPc0Rc0Alpha0Calculator());
+            Calculators.Add(new fsRm0Hce0Calculator());
+            Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
+
+            #endregion
 
             var colors = new[]
                              {
@@ -86,6 +99,28 @@ namespace CalculatorModules.CakeWashing
             }
 
             #endregion
+
+            //SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea, fsParameterIdentifier.SpecificFiltrationTime);
+            Recalculate();
+            UpdateUIFromData();
+            ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid);
         }
+
+            #region Routine Methods
+
+            protected override void UpdateGroupsInputInfoFromCalculationOptions()
+            {
+            }
+
+            protected override void UpdateEquationsFromCalculationOptions()
+            {
+            }
+
+            protected override void UpdateUIFromData()
+            {
+                base.UpdateUIFromData();
+            }
+
+            #endregion
     }
 }
