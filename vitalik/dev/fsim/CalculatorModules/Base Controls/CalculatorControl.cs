@@ -46,7 +46,7 @@ namespace CalculatorModules
         #region Routines
 
         protected List<fsCalculator> Calculators { get; set; }
-        public List<fsParametersGroup> Groups { get; set; }
+        public List<fsParametersGroup> Groups { get; private set; }
         protected Dictionary<fsParameterIdentifier, fsParametersGroup> ParameterToGroup { get; private set; }
 
         protected void EstablishCalculationOption(Enum option)
