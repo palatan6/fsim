@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4CDD18C6-BF61-4381-AEF5-AC7E7631A760}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Calculator</RootNamespace>
+    <AssemblyName>Calculator</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="fmDataGrid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\fmDataGrid\obj\Debug\fmDataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.5.23178, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\fmZedControl\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dialogs\MachineDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\MachineDialog.designer.cs">
+      <DependentUpon>MachineDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\PrecisionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\PrecisionDialog.Designer.cs">
+      <DependentUpon>PrecisionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ShowHideParametersDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ShowHideParametersDialog.Designer.cs">
+      <DependentUpon>ShowHideParametersDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\UnitsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\UnitsDialog.designer.cs">
+      <DependentUpon>UnitsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Module.cs">
+    </Compile>
+    <Compile Include="ModulesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModulesForm.Designer.cs">
+      <DependentUpon>ModulesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Dialogs\MachineDialog.resx">
+      <DependentUpon>MachineDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\PrecisionDialog.resx">
+      <DependentUpon>PrecisionDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ShowHideParametersDialog.resx">
+      <DependentUpon>ShowHideParametersDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\UnitsDialog.resx">
+      <DependentUpon>UnitsDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModulesForm.resx">
+      <DependentUpon>ModulesForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Section.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CalculatorModules\CalculatorModules.csproj">
+      <Project>{932508DA-54C6-4ADD-ACB6-D19F1C7BBE45}</Project>
+      <Name>CalculatorModules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fmZedControl\fmZedGraph.csproj">
+      <Project>{6AA10204-B802-462B-AC8B-D012081866BA}</Project>
+      <Name>fmZedGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fsUIControls\fsUIControls.csproj">
+      <Project>{D2C13C87-0D9A-416E-8091-58DDDEE2BCEA}</Project>
+      <Name>fsUIControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Parameters\Parameters.csproj">
+      <Project>{67A1D000-12E6-439C-BC89-23C4059BC855}</Project>
+      <Name>Parameters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StepCalculators\StepCalculators.csproj">
+      <Project>{95DCD086-DBE7-4361-BE61-C62FB904659E}</Project>
+      <Name>StepCalculators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Units\Units.csproj">
+      <Project>{2687A39A-2905-4632-A57E-5F98C3142423}</Project>
+      <Name>Units</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Value\Value.csproj">
+      <Project>{CD1BD2A7-AB61-4A58-B1F9-9A3DF9A0E9F2}</Project>
+      <Name>Value</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
