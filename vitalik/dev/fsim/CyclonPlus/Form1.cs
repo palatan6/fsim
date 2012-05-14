@@ -1628,8 +1628,26 @@ namespace CyclonPlus
         {
 
         }
+
+        private void MainCyclonPlusForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                panelTop.Dock = DockStyle.Top;
+                panelSimulMain.Dock = DockStyle.Top;
+                hydrocycloneControl1.Dock = DockStyle.Fill;
+            }
+            else
+            {
+                panelTop.Dock = DockStyle.None;
+                panelSimulMain.Dock = DockStyle.None;
+                hydrocycloneControl1.Dock = DockStyle.None;
+            }
+        }
+        
     }
 
 
 }
+
 

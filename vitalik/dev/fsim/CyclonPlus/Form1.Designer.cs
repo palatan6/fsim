@@ -200,7 +200,7 @@
             this.panelSuspMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSuspMain.Location = new System.Drawing.Point(0, 0);
             this.panelSuspMain.Name = "panelSuspMain";
-            this.panelSuspMain.Size = new System.Drawing.Size(262, 190);
+            this.panelSuspMain.Size = new System.Drawing.Size(263, 190);
             this.panelSuspMain.TabIndex = 1;
             // 
             // fmDataGridSusp
@@ -220,7 +220,7 @@
             this.fmDataGridSusp.RowHeadersVisible = false;
             this.fmDataGridSusp.RowTemplate.Height = 18;
             this.fmDataGridSusp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fmDataGridSusp.Size = new System.Drawing.Size(262, 151);
+            this.fmDataGridSusp.Size = new System.Drawing.Size(263, 151);
             this.fmDataGridSusp.TabIndex = 1;
             this.fmDataGridSusp.CellValueChangedByUser += new System.Windows.Forms.DataGridViewCellEventHandler(this.fmDataGridSusp_CellValueChangedByUser);
             // 
@@ -240,7 +240,7 @@
             this.panelSuspTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSuspTop.Location = new System.Drawing.Point(0, 0);
             this.panelSuspTop.Name = "panelSuspTop";
-            this.panelSuspTop.Size = new System.Drawing.Size(262, 39);
+            this.panelSuspTop.Size = new System.Drawing.Size(263, 39);
             this.panelSuspTop.TabIndex = 0;
             // 
             // buttonDelSusp
@@ -300,7 +300,7 @@
             this.panelSeriesMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSeriesMain.Location = new System.Drawing.Point(0, 0);
             this.panelSeriesMain.Name = "panelSeriesMain";
-            this.panelSeriesMain.Size = new System.Drawing.Size(262, 190);
+            this.panelSeriesMain.Size = new System.Drawing.Size(261, 190);
             this.panelSeriesMain.TabIndex = 2;
             // 
             // fmDataGridSeries
@@ -322,7 +322,7 @@
             this.fmDataGridSeries.RowHeadersVisible = false;
             this.fmDataGridSeries.RowTemplate.Height = 18;
             this.fmDataGridSeries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fmDataGridSeries.Size = new System.Drawing.Size(262, 151);
+            this.fmDataGridSeries.Size = new System.Drawing.Size(261, 151);
             this.fmDataGridSeries.TabIndex = 1;
             this.fmDataGridSeries.CellValueChangedByUser += new System.Windows.Forms.DataGridViewCellEventHandler(this.fmDataGridSeries_CellValueChangedByUser);
             // 
@@ -354,7 +354,7 @@
             this.panelSeriesTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSeriesTop.Location = new System.Drawing.Point(0, 0);
             this.panelSeriesTop.Name = "panelSeriesTop";
-            this.panelSeriesTop.Size = new System.Drawing.Size(262, 39);
+            this.panelSeriesTop.Size = new System.Drawing.Size(261, 39);
             this.panelSeriesTop.TabIndex = 0;
             // 
             // buttonDelSeries
@@ -535,7 +535,7 @@
             // 
             this.splitContainerTopTables.Panel2.Controls.Add(this.panelSeriesMain);
             this.splitContainerTopTables.Size = new System.Drawing.Size(798, 190);
-            this.splitContainerTopTables.SplitterDistance = 532;
+            this.splitContainerTopTables.SplitterDistance = 533;
             this.splitContainerTopTables.TabIndex = 14;
             // 
             // splitContainerProjSusp
@@ -551,7 +551,7 @@
             // splitContainerProjSusp.Panel2
             // 
             this.splitContainerProjSusp.Panel2.Controls.Add(this.panelSuspMain);
-            this.splitContainerProjSusp.Size = new System.Drawing.Size(532, 190);
+            this.splitContainerProjSusp.Size = new System.Drawing.Size(533, 190);
             this.splitContainerProjSusp.SplitterDistance = 266;
             this.splitContainerProjSusp.TabIndex = 12;
             // 
@@ -577,6 +577,7 @@
             this.Name = "MainCyclonPlusForm";
             this.Text = "CyclonPlus";
             this.Load += new System.EventHandler(this.MainCyclonPlusForm_Load);
+            this.SizeChanged += new System.EventHandler(this.MainCyclonPlusForm_SizeChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainCyclonPlusForm_FormClosing);
             this.MaximumSizeChanged += new System.EventHandler(this.MainCyclonPlusForm_MaximumSizeChanged);
             this.panelProjectMain.ResumeLayout(false);
