@@ -123,6 +123,7 @@ namespace StepCalculators.Simulation_Calculators
                 new[] { qft, etaf, hcAdd2Hce },
                 new[] { constantTwo, pc, pressureDifference }));
             Equations.Add(new fsProductEquation(qmft, qft, rhoF));
+            Equations.Add(new fsHcQmsEquation(cakeHeigth, Qms, filterArea, rhoCd, hce0, ns, ttech, kappa, pc, pressureDifference, sf, etaf));
 
             #region Only Calculated Parameters
 

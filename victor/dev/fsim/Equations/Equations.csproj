@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Belt Filters with Reversible Trays\fsAreaOfBeltWithReversibleTraysEquation.cs" />
+    <Compile Include="Belt Filters with Reversible Trays\fsHcQmsEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsSfFromEtafHcHceKappaPcDpNsLsUTtechEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsTfSfTtechNsTcEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsTechnicalTimeFrom0Equation.cs" />
