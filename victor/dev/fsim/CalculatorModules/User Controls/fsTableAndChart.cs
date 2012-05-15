@@ -129,7 +129,7 @@ namespace CalculatorModules.User_Controls
                 if (group.Parameters.Contains(m_iterationParameter))
                     continue;
 
-                if (group.IsInput)
+                if (!group.IsOnlyCalculated && group.IsInput)
                 {
                     fsParameterIdentifier parameter = group.Representator;
                     string line = parameter.Name
