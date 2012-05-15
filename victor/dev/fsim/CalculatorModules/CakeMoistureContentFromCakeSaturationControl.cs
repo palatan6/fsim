@@ -54,10 +54,10 @@ namespace CalculatorModules
 
             for (int i = 0; i < groups.Length; ++i)
             {
-                groups[i].IsInput = true;
+                groups[i].SetIsInputFlag(true);
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
-            rfGroup.IsInput = false;
+            rfGroup.SetIsInputFlag(false);
             ParameterToCell[fsParameterIdentifier.CakeMoistureContent].ReadOnly = true;
 
             fsMisc.FillList(calculationOptionComboBox.Items, typeof (fsCalculationOption));

@@ -17,7 +17,7 @@ namespace CalculatorModules
             foreach (fsParameterIdentifier parameter in values.Keys)
             {
                 fsParametersGroup group = parameterToGroup[parameter];
-                localValues[parameter] = !group.IsOnlyCalculated && group.IsInput && parameter == group.Representator
+                localValues[parameter] = group.GetIsInputFlag() && parameter == group.Representator
                                              ? new fsCalculatorParameter(parameter, true, values[parameter].Value)
                                              : new fsCalculatorParameter(parameter);
             }

@@ -75,10 +75,10 @@ namespace CalculatorModules
 
             for (int i = 0; i < groups.Length; ++i)
             {
-                groups[i].IsInput = true;
+                groups[i].SetIsInputFlag(true);
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
-            resultsGroup.IsInput = false;
+            resultsGroup.SetIsInputFlag(false);
             ParameterToCell[fsParameterIdentifier.SolidsMassInSuspension].ReadOnly = true;
             ParameterToCell[fsParameterIdentifier.LiquidMassInSuspension].ReadOnly = true;
 

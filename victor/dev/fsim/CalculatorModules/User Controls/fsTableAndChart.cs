@@ -129,13 +129,13 @@ namespace CalculatorModules.User_Controls
                 if (group.Parameters.Contains(m_iterationParameter))
                     continue;
 
-                if (!group.IsOnlyCalculated && group.IsInput)
+                if (group.GetIsInputFlag())
                 {
                     fsParameterIdentifier parameter = group.Representator;
                     string line = parameter.Name
                         + "\t" + m_values[parameter].Unit.Name
                         + "\t" + m_values[parameter].GetValueInUnits();
-                    if (group.Kind == fsParametersGroup.ParametersGroupKind.MaterialParameters)
+                    if (group.Kind == fsParametersGroup.fsParametersGroupKind.MaterialParameters)
                     {
                         materialInputData.Add(line);
                     }
@@ -160,7 +160,7 @@ namespace CalculatorModules.User_Controls
             iterationList.Items.Clear();
             foreach (fsParametersGroup group in m_groups)
             {
-                if (group.IsInput)
+                if (group.GetIsInputFlag())
                 {
                     foreach (fsParameterIdentifier parameter in group.Parameters)
                     {
@@ -641,7 +641,7 @@ namespace CalculatorModules.User_Controls
                 {
                     kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
                 }
-                else if (group.IsInput && parameter == group.Representator)
+                else if (group.GetIsInputFlag() && parameter == group.Representator)
                 {
                     kind = fsYAxisParameter.fsYParameterKind.InputParameter;
                 }

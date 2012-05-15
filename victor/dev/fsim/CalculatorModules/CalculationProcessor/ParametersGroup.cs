@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Parameters;
 
 namespace CalculatorModules
@@ -7,13 +8,13 @@ namespace CalculatorModules
     {
         #region Constructors
 
-        public fsParametersGroup()
+        public fsParametersGroup(bool isOnlyCalcuated)
         {
             Parameters = new List<fsParameterIdentifier>();
             Representator = null;
             IsInput = false;
-            IsOnlyCalculated = false;
-            Kind = ParametersGroupKind.MachiningSettingsParameters;
+            IsOnlyCalculated = isOnlyCalcuated;
+            Kind = fsParametersGroupKind.MachiningSettingsParameters;
         }
 
         public fsParametersGroup(fsParametersGroup other)
@@ -29,15 +30,33 @@ namespace CalculatorModules
 
         public List<fsParameterIdentifier> Parameters { get; private set; }
         public fsParameterIdentifier Representator { get; set; }
-        public bool IsInput { get; set; }
-        public bool IsOnlyCalculated { get; set; }
+        private bool IsInput { get; set; }
+        private bool IsOnlyCalculated { get; set; }
 
-        public enum ParametersGroupKind
+        public void SetIsInputFlag(bool isInput)
+        {
+            if (IsOnlyCalculated)
+                throw new Exception("Attempt to change input flag of only calculated group.");
+
+            IsInput = isInput;
+        }
+
+        public bool GetIsInputFlag()
+        {
+            return IsOnlyCalculated ? false : IsInput;
+        }
+
+        public bool GetIsOnlyCalculatedFlag()
+        {
+            return IsOnlyCalculated;
+        }
+
+        public enum fsParametersGroupKind
         {
             MaterialParameters,
             MachiningSettingsParameters
         }
 
-        public ParametersGroupKind Kind { get; set; }
+        public fsParametersGroupKind Kind { get; set; }
     }
 }

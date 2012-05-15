@@ -127,8 +127,11 @@ namespace CalculatorModules
 
         protected void SetGroupInput(fsParametersGroup group, bool value)
         {
-            group.IsInput = value;
-            bool isReadOnly = !group.IsInput || group.IsOnlyCalculated;
+            if (!group.GetIsOnlyCalculatedFlag())
+            {
+                group.SetIsInputFlag(value);
+            }
+            bool isReadOnly = !group.GetIsInputFlag();
             foreach (fsParameterIdentifier parameter in group.Parameters)
             {
                 ParameterToCell[parameter].ReadOnly = isReadOnly;
@@ -137,7 +140,12 @@ namespace CalculatorModules
 
         public fsParametersGroup AddGroup(params fsParameterIdentifier[] parameters)
         {
-            var group = new fsParametersGroup();
+            return AddGroup(false, parameters);
+        }
+
+        public fsParametersGroup AddGroup(bool isOnlyCalculated, params fsParameterIdentifier[] parameters)
+        {
+            var group = new fsParametersGroup(isOnlyCalculated);
             foreach (fsParameterIdentifier parameter in parameters)
             {
                 group.Parameters.Add(parameter);
@@ -150,8 +158,7 @@ namespace CalculatorModules
 
         public fsParametersGroup AddOnlyCalculatedGroup(params fsParameterIdentifier[] parameters)
         {
-            fsParametersGroup group = AddGroup(parameters);
-            group.IsOnlyCalculated = true;
+            fsParametersGroup group = AddGroup(true, parameters);
             return group;
         }
 
@@ -167,7 +174,7 @@ namespace CalculatorModules
             dataGrid.Rows.Clear();
             for (int i = 0; i < groups.Length; ++i)
             {
-                groups[i].Kind = fsParametersGroup.ParametersGroupKind.MaterialParameters;
+                groups[i].Kind = fsParametersGroup.fsParametersGroupKind.MaterialParameters;
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
                 SetGroupInput(groups[i], true);
             }
@@ -260,7 +267,7 @@ namespace CalculatorModules
             foreach (var pair in ParameterToCell)
             {
                 fsParametersGroup group = ParameterToGroup[pair.Key];
-                if (!group.IsOnlyCalculated && group.IsInput)
+                if (group.GetIsInputFlag())
                 {
                     pair.Value.Style.ForeColor = group.Representator == pair.Key
                                                      ? Color.Blue

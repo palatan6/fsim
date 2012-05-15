@@ -50,10 +50,10 @@ namespace CalculatorModules
 
             for (int i = 0; i < groups.Length; ++i)
             {
-                groups[i].IsInput = true;
+                groups[i].SetIsInputFlag(true);
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
-            porosityGroup.IsInput = false;
+            porosityGroup.SetIsInputFlag(false);
             ParameterToCell[fsParameterIdentifier.CakePorosity].ReadOnly = true;
 
             SetRowColor(dataGrid, ParameterToCell[fsParameterIdentifier.FilterArea].RowIndex,

@@ -90,7 +90,7 @@ namespace CalculatorModules.CakeWashing
 
             for (int i = 0; i < materialGroups.Length; ++i)
             {
-                materialGroups[i].Kind = fsParametersGroup.ParametersGroupKind.MaterialParameters;
+                materialGroups[i].Kind = fsParametersGroup.fsParametersGroupKind.MaterialParameters;
                 AddGroupToUI(materialParametersDataGrid, materialGroups[i], colors[i % colors.Length]);
                 SetGroupInput(materialGroups[i], true);
             }
