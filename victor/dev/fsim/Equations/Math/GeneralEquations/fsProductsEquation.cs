@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Parameters;
 using Value;
 
@@ -44,11 +41,31 @@ namespace Equations
             {
                 return false;
             }
-            result.Value = fsValue.Pow(rightProduct / leftProduct, 1.0 / resultDegreeCount);
+
+            // Let's make r^d * a = b, where d > 0
+            int d = resultDegreeCount;
+            fsValue a = leftProduct;
+            fsValue b = rightProduct;
+            if (resultDegreeCount < 0)
+            {
+                a = rightProduct;
+                b = leftProduct;
+                d = -resultDegreeCount;
+            }
+            fsValue bOverA = b / a;
+            int sign = 1;
+            if (bOverA.Value < 0 && d % 2 == 1)
+            {
+                bOverA = -bOverA;
+                sign = -1;
+            }
+            result.Value = bOverA == fsValue.Zero
+                ? fsValue.Zero
+                : sign * fsValue.Pow(bOverA, 1.0 / d);
             return true;
         }
 
-        private int Count(IEnumerable<IEquationParameter> parametersList, IEquationParameter parameter)
+        private static int Count(IEnumerable<IEquationParameter> parametersList, IEquationParameter parameter)
         {
             int result = 0;
             foreach (IEquationParameter p in parametersList)
