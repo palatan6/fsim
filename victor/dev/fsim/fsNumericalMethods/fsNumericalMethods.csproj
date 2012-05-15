@@ -48,6 +48,7 @@
     <Compile Include="fsBisectionMethod.cs" />
     <Compile Include="fsFunction.cs" />
     <Compile Include="fsMathEquations.cs" />
+    <Compile Include="fsQuadraticEquation.cs" />
     <Compile Include="fsTernaryMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

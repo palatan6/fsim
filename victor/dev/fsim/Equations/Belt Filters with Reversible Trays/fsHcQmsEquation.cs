@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Parameters;
 using Value;
+using fsNumericalMethods;
 
 namespace Equations.Belt_Filters_with_Reversible_Trays
 {
@@ -11,13 +12,12 @@ namespace Equations.Belt_Filters_with_Reversible_Trays
     {
         /*
          * 
-         * hc = C1 + sqrt(C1^2 + C2)
+         * a * hc^2 + b * hc + c = 0
          * 
-         * where,
-         *     C1 = K * A * rhoCd / Qms - hce
-         *     C2 = K * 2 * ns * ttech
-         * and
-         *     K = kappa * pc * Dp * sf / etaF
+         * a = Qms
+         * b = 2 * hce * Qms - rhoCd * sf * C1 * A
+         * c = sf * ns * ttech * C1
+         * C1 = 2 * pc * kappa * Dp / etaF
          * 
          *   */
 
@@ -77,10 +77,26 @@ namespace Equations.Belt_Filters_with_Reversible_Trays
 
         private void HcFormula()
         {
-            fsValue K = m_kappa.Value * m_pc.Value * m_Dp.Value * m_sf.Value / m_etaF.Value;
-            fsValue C1 = K * m_A.Value * m_rhoCd.Value / m_Qms.Value - m_hce.Value;
-            fsValue C2 = K * 2 * m_ns.Value * m_ttech.Value;
-            m_hc.Value = C1 + fsValue.Sqrt(C1 * C1 + C2);
+            fsValue C1 = 2 * m_pc.Value * m_kappa.Value * m_Dp.Value / m_etaF.Value;
+            fsValue a = m_Qms.Value;
+            fsValue b = 2 * m_hce.Value * m_Qms.Value - m_rhoCd.Value * m_sf.Value * C1 * m_A.Value;
+            fsValue c = m_Qms.Value * m_sf.Value * m_ns.Value * m_ttech.Value * C1;
+            fsValue x1, x2;
+            if (fsQuadraticEquation.Solve(a, b, c, out x1, out x2))
+            {
+                if (x1.Value > x2.Value)
+                {
+                    fsValue temp = x1;
+                    x1 = x2;
+                    x2 = temp;
+                }
+                // we select the biggest one solution
+                m_hc.Value = x2.Value > 0 ? x2 : x1;
+            }
+            else
+            {
+                m_hc.Value = new fsValue();
+            }
         }
 
         
