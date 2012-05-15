@@ -182,5 +182,21 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
             }
         }
 
+        private void checkBox1_CheckedChanged(object sender, System.EventArgs e)
+        {
+            ShowHideConstantParameters();
+        }
+
+        private void ShowHideConstantParameters()
+        {
+            MachineSettingsSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
+            MaterialParametersSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
+        }
+
+        private void fsTablesAndChartsParametersSelectionControl_Load(object sender, System.EventArgs e)
+        {
+            ShowHideConstantParameters();
+        }
+
     }
 }
