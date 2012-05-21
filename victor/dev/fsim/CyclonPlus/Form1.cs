@@ -1611,16 +1611,12 @@ namespace CyclonPlus
             {
                 case "Dp":
                     return HydrocycloneControl.fsCalculationOption.Dp;
-                    break;
                 case "n":
                     return HydrocycloneControl.fsCalculationOption.n;
-                    break;
                 case "Q":
                     return HydrocycloneControl.fsCalculationOption.Q;
-                    break;
                 default:
                     return HydrocycloneControl.fsCalculationOption.Dp;
-                    break;
             }
         }
     }

@@ -1,6 +1,6 @@
-﻿namespace CalculatorModules.BeltFiltersWithReversibleTrays
+﻿namespace CalculatorModules.Cake_Fromation
 {
-    sealed partial class fsBeltFilterWithReversibleTrayControl
+    sealed partial class ContinuousModularBeltFilterControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -38,16 +38,16 @@
             // 
             // tablesSplitContainer
             // 
-            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 496);
+            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 341);
             this.tablesSplitContainer.SplitterDistance = 140;
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(143, 496);
+            this.dataGrid.Size = new System.Drawing.Size(143, 341);
             // 
             // materialParametersDataGrid
             // 
-            this.materialParametersDataGrid.Size = new System.Drawing.Size(140, 496);
+            this.materialParametersDataGrid.Size = new System.Drawing.Size(140, 341);
             // 
             // leftTopPanel
             // 
@@ -60,14 +60,13 @@
             // tablesPanel
             // 
             this.tablesPanel.Location = new System.Drawing.Point(0, 64);
-            this.tablesPanel.Size = new System.Drawing.Size(287, 496);
+            this.tablesPanel.Size = new System.Drawing.Size(287, 341);
             // 
-            // fsBeltFilterWithReversibleTrayControl
+            // ContinuousModularBeltFilterControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "fsBeltFilterWithReversibleTrayControl";
-            this.Size = new System.Drawing.Size(287, 560);
+            this.Name = "ContinuousModularBeltFilterControl";
             this.tablesSplitContainer.Panel1.ResumeLayout(false);
             this.tablesSplitContainer.Panel2.ResumeLayout(false);
             this.tablesSplitContainer.ResumeLayout(false);

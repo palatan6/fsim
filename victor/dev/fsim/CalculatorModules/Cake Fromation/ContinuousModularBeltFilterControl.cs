@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 using CalculatorModules.Base_Controls;
-using CalculatorModules.Cake_Fromation;
 using Parameters;
 using StepCalculators;
 using StepCalculators.Simulation_Calculators;
 using Value;
 
-namespace CalculatorModules.BeltFiltersWithReversibleTrays
+namespace CalculatorModules.Cake_Fromation
 {
-    public sealed partial class fsBeltFilterWithReversibleTrayControl : CakeFormationBaseControl
+    public sealed partial class ContinuousModularBeltFilterControl : CakeFormationBaseControl
     {
-        public fsBeltFilterWithReversibleTrayControl()
+        public ContinuousModularBeltFilterControl()
         {
             InitializeComponent();
         }
@@ -100,13 +105,6 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                 fsParameterIdentifier.l_over_b,
                 fsParameterIdentifier.As);
 
-            fsParametersGroup timeGroup = AddGroup(
-                fsParameterIdentifier.StandardTechnicalTime,
-                fsParameterIdentifier.TechnicalTime);
-
-            fsParametersGroup lambdaGroup = AddGroup(
-                fsParameterIdentifier.lambda);
-
             fsParametersGroup dpGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);
 
@@ -153,8 +151,6 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                            AbGroup,
                            nsGroup,
                            geometryGroup,
-                           timeGroup,
-                           lambdaGroup,
                            dpGroup,
                            specificTimeGroup,
                            timeQGroup,
@@ -162,7 +158,7 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                        };
         }
 
-        override protected fsParametersGroup[] MakeMachiningDesignGroups()
+        private fsParametersGroup[] MakeMachiningDesignGroups()
         {
             fsParametersGroup qsusGroup = AddGroup(
                 fsParameterIdentifier.Qms,
@@ -176,13 +172,6 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                 fsParameterIdentifier.ls_over_b,
                 fsParameterIdentifier.l_over_b,
                 fsParameterIdentifier.ls);
-
-            fsParametersGroup timeGroup = AddGroup(
-                fsParameterIdentifier.StandardTechnicalTime,
-                fsParameterIdentifier.TechnicalTime);
-
-            fsParametersGroup lambdaGroup = AddGroup(
-                fsParameterIdentifier.lambda);
 
             fsParametersGroup dpGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);
@@ -231,8 +220,6 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                            qsusGroup,
                            nsGroup,
                            geometryGroup,
-                           timeGroup,
-                           lambdaGroup,
                            dpGroup,
                            cycleGroup,
                            filtrationGroup,
@@ -241,4 +228,3 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
         }
     }
 }
-
