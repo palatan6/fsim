@@ -1,6 +1,6 @@
 ﻿namespace CalculatorModules.Cake_Fromation
 {
-    partial class CakeFormationBaseControl
+    partial class fsCakeFormationBaseControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -79,7 +79,7 @@
             this.materialParametersDisplayCheckBox.TabIndex = 5;
             this.materialParametersDisplayCheckBox.Text = "Show Material Parameters";
             this.materialParametersDisplayCheckBox.UseVisualStyleBackColor = true;
-            this.materialParametersDisplayCheckBox.CheckedChanged += new System.EventHandler(this.materialParametersDisplayCheckBox_CheckedChanged);
+            this.materialParametersDisplayCheckBox.CheckedChanged += new System.EventHandler(this.MaterialParametersDisplayCheckBoxCheckedChanged);
             // 
             // label1
             // 
@@ -105,7 +105,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "CakeFormationBaseControl";
+            this.Name = "fsCakeFormationBaseControl";
             this.Size = new System.Drawing.Size(287, 405);
             this.tablesSplitContainer.Panel1.ResumeLayout(false);
             this.tablesSplitContainer.Panel2.ResumeLayout(false);
@@ -122,6 +122,6 @@
 
         private System.Windows.Forms.CheckBox materialParametersDisplayCheckBox;
         private System.Windows.Forms.Label label1;
-        protected System.Windows.Forms.ComboBox calculationComboBox;
+        private System.Windows.Forms.ComboBox calculationComboBox;
     }
 }

@@ -1,34 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using CalculatorModules.Base_Controls;
-using Parameters;
-using StepCalculators;
-using StepCalculators.Simulation_Calculators;
-using Value;
+﻿using Parameters;
 
 namespace CalculatorModules.Cake_Fromation
 {
-    public sealed partial class ContinuousModularBeltFilterControl : CakeFormationBaseControl
+    public sealed partial class fsContinuousModularBeltFilterControl : fsCakeFormationBaseControl
     {
-        public ContinuousModularBeltFilterControl()
+        public fsContinuousModularBeltFilterControl()
         {
             InitializeComponent();
         }
 
         protected override void AddCakeFormationCalculator()
         {
-            Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
+            // nothing yet  Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
         }
 
         override protected fsParametersGroup[] MakeMachiningStandardGroups()
         {
-            fsParametersGroup AbGroup = AddGroup(
+            fsParametersGroup abGroup = AddGroup(
                fsParameterIdentifier.FilterArea,
                fsParameterIdentifier.MachineWidth);
 
@@ -85,7 +73,7 @@ namespace CalculatorModules.Cake_Fromation
 
             return new[]
                        {
-                           AbGroup,
+                           abGroup,
                            nsGroup,
                            geometryGroup,
                            dpGroup,

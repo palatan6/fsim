@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
@@ -13,11 +7,11 @@ using Value;
 
 namespace CalculatorModules.Cake_Fromation
 {
-    public partial class CakeFormationBaseControl : fsOptionsDoubleTableAndCommentsCalculatorControl
+    public partial class fsCakeFormationBaseControl : fsOptionsDoubleTableAndCommentsCalculatorControl
     {
         #region Calculation Option
 
-        protected enum fsCalculationOption
+        private enum fsCalculationOption
         {
             [Description("Standard Calculation")]
             StandardCalculation,
@@ -27,7 +21,7 @@ namespace CalculatorModules.Cake_Fromation
 
         #endregion
 
-        public CakeFormationBaseControl()
+        public fsCakeFormationBaseControl()
         {
             InitializeComponent();
 
@@ -56,12 +50,17 @@ namespace CalculatorModules.Cake_Fromation
             ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid, calculationComboBox);
         }
 
+        protected override sealed void Recalculate()
+        {
+            base.Recalculate();
+        }
+
         protected virtual void AddCakeFormationCalculator()
         {
             throw new Exception("Implement AddCakeFormationCalculator with specific cake formation calculator in deriviative class.");
         }
 
-        private void materialParametersDisplayCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void MaterialParametersDisplayCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             tablesSplitContainer.Panel1Collapsed = !materialParametersDisplayCheckBox.Checked;
         }
@@ -79,20 +78,27 @@ namespace CalculatorModules.Cake_Fromation
             Values[fsParameterIdentifier.FilterMediumResistanceHce0].Value = new fsValue(3e-3);
 
             Values[fsParameterIdentifier.FilterArea].Value = new fsValue(1);
-            Values[fsParameterIdentifier.ns].Value = new fsValue(12);
-            Values[fsParameterIdentifier.ls].Value = new fsValue(0.2);
-            Values[fsParameterIdentifier.nsf].Value = new fsValue(3);
             Values[fsParameterIdentifier.PressureDifference].Value = new fsValue(0.7e5);
-            Values[fsParameterIdentifier.u].Value = new fsValue(2.0 / 60);
+            
+            // u
+            if (Values.ContainsKey(fsParameterIdentifier.u))
+            {
+                Values[fsParameterIdentifier.u].Value = new fsValue(2.0 / 60);
+            }
             
             // ttech0 and lambda
             if (Values.ContainsKey(fsParameterIdentifier.StandardTechnicalTime))
             {
                 Values[fsParameterIdentifier.StandardTechnicalTime].Value = new fsValue(2);
-            }
-            if (Values.ContainsKey(fsParameterIdentifier.lambda))
-            {
                 Values[fsParameterIdentifier.lambda].Value = new fsValue(0.1);
+            }
+
+            // ns, ls, nsf
+            if (Values.ContainsKey(fsParameterIdentifier.ns))
+            {
+                Values[fsParameterIdentifier.ns].Value = new fsValue(12);
+                Values[fsParameterIdentifier.ls].Value = new fsValue(0.2);
+                Values[fsParameterIdentifier.nsf].Value = new fsValue(3);
             }
         }
 
@@ -112,7 +118,17 @@ namespace CalculatorModules.Cake_Fromation
             AddGroupsToUI(dataGrid, MakeMachiningDesignGroups());
         }
 
-        protected fsParametersGroup[] MakeMaterialGroups()
+        protected virtual fsParametersGroup[] MakeMachiningStandardGroups()
+        {
+            throw new Exception("MakeMachiningStandardGroups should be implemented in deriviative class.");
+        }
+
+        protected virtual fsParametersGroup[] MakeMachiningDesignGroups()
+        {
+            throw new Exception("MakeMachiningDesignGroups should be implemented in deriviative class.");
+        }
+
+        private fsParametersGroup[] MakeMaterialGroups()
         {
             fsParametersGroup etafGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidViscosity);
@@ -174,19 +190,8 @@ namespace CalculatorModules.Cake_Fromation
                            hce0Group,
                        };
         }
-
-        virtual protected fsParametersGroup[] MakeMachiningStandardGroups()
-        {
-            throw new Exception("MakeMachiningStandardGroups should be implemented in deriviative class.");
-        }
-
-
-        virtual protected fsParametersGroup[] MakeMachiningDesignGroups()
-        {
-            throw new Exception("MakeMachiningDesignGroups should be implemented in deriviative class.");
-        }
-
-        protected override void UpdateGroupsInputInfoFromCalculationOptions()
+        
+        protected override sealed void UpdateGroupsInputInfoFromCalculationOptions()
         {
             var calculationOption = (fsCalculationOption)CalculationOptions[typeof(fsCalculationOption)];
             if (calculationOption == fsCalculationOption.FilterDesign)
@@ -199,7 +204,7 @@ namespace CalculatorModules.Cake_Fromation
             }
         }
 
-        protected override void UpdateEquationsFromCalculationOptions()
+        protected override sealed void UpdateEquationsFromCalculationOptions()
         {
         }
 

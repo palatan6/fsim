@@ -1,19 +1,17 @@
-﻿using CalculatorModules.Cake_Fromation;
-using Parameters;
-using StepCalculators.Simulation_Calculators;
+﻿using Parameters;
 
-namespace CalculatorModules.BeltFiltersWithReversibleTrays
+namespace CalculatorModules.Cake_Fromation
 {
-    public sealed partial class fsBeltFilterWithReversibleTrayControl : fsCakeFormationBaseControl
+    public partial class fsContinuousNonModularBeltFilterControl : fsCakeFormationBaseControl
     {
-        public fsBeltFilterWithReversibleTrayControl()
+        public fsContinuousNonModularBeltFilterControl()
         {
             InitializeComponent();
         }
 
         protected override void AddCakeFormationCalculator()
         {
-            Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
+            // do nothing here while we don't have specific calculator
         }
 
         override protected fsParametersGroup[] MakeMachiningStandardGroups()
@@ -22,30 +20,15 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                fsParameterIdentifier.FilterArea,
                fsParameterIdentifier.MachineWidth);
 
-            fsParametersGroup nsGroup = AddGroup(
-                fsParameterIdentifier.ns);
-
             fsParametersGroup geometryGroup = AddGroup(
-                fsParameterIdentifier.ls,
-                fsParameterIdentifier.ls_over_b,
                 fsParameterIdentifier.FilterLength,
-                fsParameterIdentifier.l_over_b,
-                fsParameterIdentifier.As);
-
-            fsParametersGroup timeGroup = AddGroup(
-                fsParameterIdentifier.StandardTechnicalTime,
-                fsParameterIdentifier.TechnicalTime);
-
-            fsParametersGroup lambdaGroup = AddGroup(
-                fsParameterIdentifier.lambda);
+                fsParameterIdentifier.l_over_b);
 
             fsParametersGroup dpGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);
 
             fsParametersGroup specificTimeGroup = AddGroup(
-                fsParameterIdentifier.nsf,
                 fsParameterIdentifier.SpecificFiltrationTime,
-                fsParameterIdentifier.nsr,
                 fsParameterIdentifier.SpecificResidualTime,
                 fsParameterIdentifier.ResidualTime);
 
@@ -83,10 +66,7 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
             return new[]
                        {
                            abGroup,
-                           nsGroup,
                            geometryGroup,
-                           timeGroup,
-                           lambdaGroup,
                            dpGroup,
                            specificTimeGroup,
                            timeQGroup,
@@ -101,20 +81,8 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                 fsParameterIdentifier.Qsus,
                 fsParameterIdentifier.SuspensionMassFlowrate);
 
-            fsParametersGroup nsGroup = AddGroup(
-                fsParameterIdentifier.ns);
-
             fsParametersGroup geometryGroup = AddGroup(
-                fsParameterIdentifier.ls_over_b,
-                fsParameterIdentifier.l_over_b,
-                fsParameterIdentifier.ls);
-
-            fsParametersGroup timeGroup = AddGroup(
-                fsParameterIdentifier.StandardTechnicalTime,
-                fsParameterIdentifier.TechnicalTime);
-
-            fsParametersGroup lambdaGroup = AddGroup(
-                fsParameterIdentifier.lambda);
+                fsParameterIdentifier.l_over_b);
 
             fsParametersGroup dpGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);
@@ -123,8 +91,6 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
                 fsParameterIdentifier.u,
                 fsParameterIdentifier.RotationalSpeed,
                 fsParameterIdentifier.CycleTime,
-                fsParameterIdentifier.nsf,
-                fsParameterIdentifier.nsr,
                 fsParameterIdentifier.SpecificFiltrationTime,
                 fsParameterIdentifier.SpecificResidualTime,
                 fsParameterIdentifier.ResidualTime);
@@ -137,7 +103,6 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
 
             fsParametersGroup resultsGroup = AddOnlyCalculatedGroup(
                 fsParameterIdentifier.FilterArea,
-                fsParameterIdentifier.As,
                 fsParameterIdentifier.MachineWidth,
                 fsParameterIdentifier.FilterLength,
                 fsParameterIdentifier.MeanHeightRate,
@@ -161,10 +126,7 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
             return new[]
                        {
                            qsusGroup,
-                           nsGroup,
                            geometryGroup,
-                           timeGroup,
-                           lambdaGroup,
                            dpGroup,
                            cycleGroup,
                            filtrationGroup,
@@ -173,4 +135,3 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
         }
     }
 }
-

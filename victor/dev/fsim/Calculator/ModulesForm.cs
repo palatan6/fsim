@@ -118,7 +118,13 @@ namespace Calculator
                                                      new fsBeltFilterWithReversibleTrayControl()),
                                                  new KeyValuePair<string, fsCalculatorControl>(
                                                      "Continuous Belt Filters (modular)",
-                                                     new ContinuousModularBeltFilterControl())
+                                                     new fsContinuousModularBeltFilterControl()),
+                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                     "Continuous Belt Filters (non modular)",
+                                                     new fsContinuousNonModularBeltFilterControl()),
+                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                     "Other",
+                                                     new fsCommonCakeFormationControl())
                                              });
         }
 

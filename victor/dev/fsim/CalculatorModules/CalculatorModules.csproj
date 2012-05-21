@@ -94,11 +94,23 @@
     <Compile Include="Cake Fromation\CakeFormationBaseControl.Designer.cs">
       <DependentUpon>CakeFormationBaseControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cake Fromation\CommonCakeFormationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\CommonCakeFormationControl.Designer.cs">
+      <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cake Fromation\ContinuousModularBeltFilterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Cake Fromation\ContinuousModularBeltFilterControl.Designer.cs">
       <DependentUpon>ContinuousModularBeltFilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Fromation\ContinuousNonModularBeltFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\ContinuousNonModularBeltFilterControl.Designer.cs">
+      <DependentUpon>ContinuousNonModularBeltFilterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CakeMoistureContentFromCakeSaturationControl.cs">
       <SubType>UserControl</SubType>

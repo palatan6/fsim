@@ -1,6 +1,6 @@
 ﻿namespace CalculatorModules.Cake_Fromation
 {
-    sealed partial class ContinuousModularBeltFilterControl
+    sealed partial class fsContinuousModularBeltFilterControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -66,7 +66,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "ContinuousModularBeltFilterControl";
+            this.Name = "fsContinuousModularBeltFilterControl";
             this.tablesSplitContainer.Panel1.ResumeLayout(false);
             this.tablesSplitContainer.Panel2.ResumeLayout(false);
             this.tablesSplitContainer.ResumeLayout(false);
