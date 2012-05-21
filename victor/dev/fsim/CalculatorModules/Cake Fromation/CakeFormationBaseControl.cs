@@ -112,9 +112,67 @@ namespace CalculatorModules.Cake_Fromation
             AddGroupsToUI(dataGrid, MakeMachiningDesignGroups());
         }
 
-        virtual protected fsParametersGroup[] MakeMaterialGroups()
+        protected fsParametersGroup[] MakeMaterialGroups()
         {
-            throw new Exception("MakeMaterialGroups should be implemented in deriviative class.");
+            fsParametersGroup etafGroup = AddGroup(
+                fsParameterIdentifier.MotherLiquidViscosity);
+
+            fsParametersGroup rhofGroup = AddGroup(
+                fsParameterIdentifier.MotherLiquidDensity);
+
+            fsParametersGroup densitiesGroup = AddGroup(
+                fsParameterIdentifier.SolidsDensity,
+                fsParameterIdentifier.SuspensionDensity);
+
+            fsParametersGroup cGroup = AddGroup(
+                fsParameterIdentifier.SuspensionSolidsMassFraction,
+                fsParameterIdentifier.SuspensionSolidsVolumeFraction,
+                fsParameterIdentifier.SuspensionSolidsConcentration);
+
+            fsParametersGroup neGroup = AddGroup(
+                fsParameterIdentifier.Ne);
+
+            fsParametersGroup epsGroup = AddGroup(
+                fsParameterIdentifier.CakePorosity0,
+                fsParameterIdentifier.Kappa0,
+                fsParameterIdentifier.DryCakeDensity0,
+                fsParameterIdentifier.CakeWetDensity0,
+                fsParameterIdentifier.CakeWetMassSolidsFractionRs0,
+                fsParameterIdentifier.CakeMoistureContentRf0,
+                fsParameterIdentifier.CakePorosity,
+                fsParameterIdentifier.Kappa,
+                fsParameterIdentifier.DryCakeDensity,
+                fsParameterIdentifier.CakeWetDensity,
+                fsParameterIdentifier.CakeWetMassSolidsFractionRs,
+                fsParameterIdentifier.CakeMoistureContentRf);
+
+            fsParametersGroup pcrcGroup = AddGroup(
+                fsParameterIdentifier.CakePermeability0,
+                fsParameterIdentifier.CakeResistance0,
+                fsParameterIdentifier.CakeResistanceAlpha0,
+                fsParameterIdentifier.CakePermeability,
+                fsParameterIdentifier.CakeResistance,
+                fsParameterIdentifier.CakeResistanceAlpha);
+
+            fsParametersGroup ncGroup = AddGroup(
+                fsParameterIdentifier.CakeCompressibility);
+
+            fsParametersGroup hce0Group = AddGroup(
+                fsParameterIdentifier.FilterMediumResistanceHce0,
+                fsParameterIdentifier.FilterMediumResistanceRm0);
+
+            return new[]
+                       {
+                           etafGroup,
+                           rhofGroup,
+                           densitiesGroup,
+                           cGroup,
+                           neGroup,
+                           epsGroup,
+                           pcrcGroup,
+                           ncGroup,
+                           hce0Group,
+                       };
         }
 
         virtual protected fsParametersGroup[] MakeMachiningStandardGroups()
