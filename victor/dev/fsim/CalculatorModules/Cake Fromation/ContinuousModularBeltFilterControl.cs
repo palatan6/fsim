@@ -1,4 +1,5 @@
 ﻿using Parameters;
+using StepCalculators.Simulation_Calculators.Cake_Formation;
 
 namespace CalculatorModules.Cake_Fromation
 {
@@ -11,7 +12,7 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void AddCakeFormationCalculator()
         {
-            // nothing yet  Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
+            Calculators.Add(new fsContinuousModularBeltFilterCalculator());
         }
 
         override protected fsParametersGroup[] MakeMachiningStandardGroups()

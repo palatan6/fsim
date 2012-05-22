@@ -46,10 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cake Formation\fsCakeFormationDpConstCalculator.cs" />
     <Compile Include="fsCalculator.cs" />
     <Compile Include="Machine Area Calculators\fsConcaveCakeAreaEquation.cs" />
     <Compile Include="Machine Area Calculators\fsConvexCakeAreaEquation.cs" />
+    <Compile Include="Simulation Calculators\Cake Formation\fsCakeFormationDpConstCalculator.cs" />
+    <Compile Include="Simulation Calculators\Cake Formation\fsContinuousModularBeltFilterCalculator.cs" />
+    <Compile Include="Simulation Calculators\Cake Formation\fsContinuousNonModularBeltFilterCalculator.cs" />
     <Compile Include="Simulation Calculators\fsBeltFiltersWithReversibleTraysCalculator.cs" />
     <Compile Include="Simulation Calculators\fsHydrocycloneCalculator.cs" />
     <Compile Include="Small Calculators\fsCakePorosityCalculator.cs" />

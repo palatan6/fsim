@@ -32,22 +32,20 @@
             this.tablesSplitContainer.Panel2.SuspendLayout();
             this.tablesSplitContainer.SuspendLayout();
             this.leftTopPanel.SuspendLayout();
-            this.calculationOptionsPanel.SuspendLayout();
             this.tablesPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // tablesSplitContainer
             // 
             this.tablesSplitContainer.Size = new System.Drawing.Size(287, 496);
-            this.tablesSplitContainer.SplitterDistance = 140;
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(143, 496);
+            this.dataGrid.Size = new System.Drawing.Size(144, 496);
             // 
             // materialParametersDataGrid
             // 
-            this.materialParametersDataGrid.Size = new System.Drawing.Size(140, 496);
+            this.materialParametersDataGrid.Size = new System.Drawing.Size(139, 496);
             // 
             // leftTopPanel
             // 
@@ -72,8 +70,6 @@
             this.tablesSplitContainer.Panel2.ResumeLayout(false);
             this.tablesSplitContainer.ResumeLayout(false);
             this.leftTopPanel.ResumeLayout(false);
-            this.calculationOptionsPanel.ResumeLayout(false);
-            this.calculationOptionsPanel.PerformLayout();
             this.tablesPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

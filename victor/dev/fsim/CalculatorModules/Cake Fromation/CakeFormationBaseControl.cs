@@ -67,38 +67,38 @@ namespace CalculatorModules.Cake_Fromation
 
         private void AssignDefaultValues()
         {
-            Values[fsParameterIdentifier.MotherLiquidViscosity].Value = new fsValue(1e-3);
-            Values[fsParameterIdentifier.MotherLiquidDensity].Value = new fsValue(1000);
-            Values[fsParameterIdentifier.SolidsDensity].Value = new fsValue(1500);
-            Values[fsParameterIdentifier.SuspensionSolidsMassFraction].Value = new fsValue(15e-2);
-            Values[fsParameterIdentifier.Ne].Value = new fsValue(0.05);
-            Values[fsParameterIdentifier.CakePorosity0].Value = new fsValue(55e-2);
-            Values[fsParameterIdentifier.CakeCompressibility].Value = new fsValue(0.3);
-            Values[fsParameterIdentifier.CakePermeability0].Value = new fsValue(1.5e-13);
-            Values[fsParameterIdentifier.FilterMediumResistanceHce0].Value = new fsValue(3e-3);
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidViscosity, new fsValue(1e-3));
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidDensity, new fsValue(1000));
+            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(1500));
+            SetDefaultValue(fsParameterIdentifier.SuspensionSolidsMassFraction, new fsValue(15e-2));
+            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0.05));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity0, new fsValue(55e-2));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.3));
+            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(1.5e-13));
+            SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce0, new fsValue(3e-3));
 
-            Values[fsParameterIdentifier.FilterArea].Value = new fsValue(1);
-            Values[fsParameterIdentifier.PressureDifference].Value = new fsValue(0.7e5);
+            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(1));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(0.7e5));
             
-            // u
-            if (Values.ContainsKey(fsParameterIdentifier.u))
-            {
-                Values[fsParameterIdentifier.u].Value = new fsValue(2.0 / 60);
-            }
+            // tc (u)
+            SetDefaultValue(fsParameterIdentifier.CycleTime, new fsValue(72));
             
             // ttech0 and lambda
-            if (Values.ContainsKey(fsParameterIdentifier.StandardTechnicalTime))
-            {
-                Values[fsParameterIdentifier.StandardTechnicalTime].Value = new fsValue(2);
-                Values[fsParameterIdentifier.lambda].Value = new fsValue(0.1);
-            }
+            SetDefaultValue(fsParameterIdentifier.StandardTechnicalTime, new fsValue(2));
+            SetDefaultValue(fsParameterIdentifier.lambda, new fsValue(0.1));
 
             // ns, ls, nsf
-            if (Values.ContainsKey(fsParameterIdentifier.ns))
+            SetDefaultValue(fsParameterIdentifier.ns, new fsValue(12));
+            SetDefaultValue(fsParameterIdentifier.FilterLength, new fsValue(2.4));
+            SetDefaultValue(fsParameterIdentifier.SpecificFiltrationTime, new fsValue(0.25));
+        }
+
+        private void SetDefaultValue(fsParameterIdentifier identifier, fsValue value)
+        {
+            if (Values.ContainsKey(identifier))
             {
-                Values[fsParameterIdentifier.ns].Value = new fsValue(12);
-                Values[fsParameterIdentifier.ls].Value = new fsValue(0.2);
-                Values[fsParameterIdentifier.nsf].Value = new fsValue(3);
+                ParameterToGroup[identifier].Representator = identifier;
+                Values[identifier].Value = value;
             }
         }
 

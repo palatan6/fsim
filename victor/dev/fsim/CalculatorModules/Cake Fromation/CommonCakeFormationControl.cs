@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Parameters;
+using StepCalculators.Simulation_Calculators.Cake_Formation;
 
 namespace CalculatorModules.Cake_Fromation
 {
@@ -19,7 +20,7 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void AddCakeFormationCalculator()
         {
-            // do nothing here while we don't have specific calculator
+            Calculators.Add(new fsContinuousNonModularBeltFilterCalculator());
         }
 
         override protected fsParametersGroup[] MakeMachiningStandardGroups()

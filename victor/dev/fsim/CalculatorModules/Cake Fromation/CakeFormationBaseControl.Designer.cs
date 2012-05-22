@@ -41,32 +41,32 @@
             // 
             // tablesSplitContainer
             // 
-            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 339);
+            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 341);
             this.tablesSplitContainer.SplitterDistance = 139;
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(144, 339);
+            this.dataGrid.Size = new System.Drawing.Size(144, 341);
             // 
             // materialParametersDataGrid
             // 
-            this.materialParametersDataGrid.Size = new System.Drawing.Size(139, 339);
+            this.materialParametersDataGrid.Size = new System.Drawing.Size(139, 341);
             // 
             // leftTopPanel
             // 
-            this.leftTopPanel.Size = new System.Drawing.Size(287, 66);
+            this.leftTopPanel.Size = new System.Drawing.Size(287, 64);
             // 
             // calculationOptionsPanel
             // 
             this.calculationOptionsPanel.Controls.Add(this.materialParametersDisplayCheckBox);
             this.calculationOptionsPanel.Controls.Add(this.label1);
             this.calculationOptionsPanel.Controls.Add(this.calculationComboBox);
-            this.calculationOptionsPanel.Size = new System.Drawing.Size(236, 66);
+            this.calculationOptionsPanel.Size = new System.Drawing.Size(236, 64);
             // 
             // tablesPanel
             // 
-            this.tablesPanel.Location = new System.Drawing.Point(0, 66);
-            this.tablesPanel.Size = new System.Drawing.Size(287, 339);
+            this.tablesPanel.Location = new System.Drawing.Point(0, 64);
+            this.tablesPanel.Size = new System.Drawing.Size(287, 341);
             // 
             // materialParametersDisplayCheckBox
             // 
@@ -101,7 +101,7 @@
             this.calculationComboBox.Size = new System.Drawing.Size(146, 21);
             this.calculationComboBox.TabIndex = 3;
             // 
-            // CakeFormationBaseControl
+            // fsCakeFormationBaseControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

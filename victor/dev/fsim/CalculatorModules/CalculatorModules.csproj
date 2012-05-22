@@ -240,8 +240,16 @@
       <DependentUpon>CakeFormationBaseControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cake Fromation\CommonCakeFormationControl.resx">
+      <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\ContinuousModularBeltFilterControl.resx">
       <DependentUpon>ContinuousModularBeltFilterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cake Fromation\ContinuousNonModularBeltFilterControl.resx">
+      <DependentUpon>ContinuousNonModularBeltFilterControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CakeMoistureContentFromCakeSaturationControl.resx">
       <DependentUpon>CakeMoistureContentFromCakeSaturationControl.cs</DependentUpon>

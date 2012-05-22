@@ -162,14 +162,14 @@ namespace Calculator
             SelectedCalculatorControlName = treeView1.SelectedNode.Text;
             currentModuleTitleLabel.Text = SelectedCalculatorControlName;
 
-            if (SelectedCalculatorControl != null)
-            {
-                SelectedCalculatorControl.Parent = null;
-            }
-
+            fsCalculatorControl prevCalculatorControl = SelectedCalculatorControl;
             SelectedCalculatorControl = m_modules[SelectedCalculatorControlName];
             SelectedCalculatorControl.Parent = modulePanel;
             SelectedCalculatorControl.Dock = DockStyle.Fill;
+            if (prevCalculatorControl != null)
+            {
+                prevCalculatorControl.Parent = null;
+            }
         }
     }
 }
