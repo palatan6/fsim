@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{932508DA-54C6-4ADD-ACB6-D19F1C7BBE45}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CalculatorModules</RootNamespace>
+    <AssemblyName>CalculatorModules</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="fsUIControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\fsUIControls\obj\Debug\fsUIControls.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.5.23178, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\fmZedControl\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base Controls\CalculatorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Base Controls\OptionsAndCommentsCalculatorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Base Controls\OptionsAndCommentsCalculatorControl.Designer.cs">
+      <DependentUpon>OptionsAndCommentsCalculatorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Base Controls\OptionsDoubleTableAndCommentsCalculatorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Base Controls\OptionsDoubleTableAndCommentsCalculatorControl.designer.cs">
+      <DependentUpon>OptionsDoubleTableAndCommentsCalculatorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Base Controls\OptionsSingleTableAndCommentsCalculatorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Base Controls\OptionsSingleTableAndCommentsCalculatorControl.Designer.cs">
+      <DependentUpon>OptionsSingleTableAndCommentsCalculatorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Base Controls\OptionsSingleTableWithPanelAndCommentsCalculatorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Base Controls\OptionsSingleTableWithPanelAndCommentsCalculatorControl.Designer.cs">
+      <DependentUpon>OptionsSingleTableWithPanelAndCommentsCalculatorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BeltFiltersWithReversibleTrays\BeltFilterWithReversibleTrayControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BeltFiltersWithReversibleTrays\BeltFilterWithReversibleTrayControl.Designer.cs">
+      <DependentUpon>BeltFilterWithReversibleTrayControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Fromation\CakeFormationBaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\CakeFormationBaseControl.Designer.cs">
+      <DependentUpon>CakeFormationBaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Fromation\CommonCakeFormationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\CommonCakeFormationControl.Designer.cs">
+      <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Fromation\ContinuousModularBeltFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\ContinuousModularBeltFilterControl.Designer.cs">
+      <DependentUpon>ContinuousModularBeltFilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Fromation\ContinuousNonModularBeltFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\ContinuousNonModularBeltFilterControl.Designer.cs">
+      <DependentUpon>ContinuousNonModularBeltFilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakeMoistureContentFromCakeSaturationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakeMoistureContentFromCakeSaturationControl.designer.cs">
+      <DependentUpon>CakeMoistureContentFromCakeSaturationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakeMoistureContentFromWetAndDryCakeMassControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakeMoistureContentFromWetAndDryCakeMassControl.designer.cs">
+      <DependentUpon>CakeMoistureContentFromWetAndDryCakeMassControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakePorossityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakePorossityControl.designer.cs">
+      <DependentUpon>CakePorossityControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakeWashOutContentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakeWashOutContentControl.designer.cs">
+      <DependentUpon>CakeWashOutContentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CalculationProcessor\CalculationProcessor.cs" />
+    <Compile Include="CalculationProcessor\ParametersGroup.cs" />
+    <Compile Include="DensityConcentrationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DensityConcentrationControl.designer.cs">
+      <DependentUpon>DensityConcentrationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fsMisc.cs" />
+    <Compile Include="Hydrocyclone\HydrocycloneControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Hydrocyclone\HydrocycloneControl.Designer.cs">
+      <DependentUpon>HydrocycloneControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LaboratoryFiltrationTime.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LaboratoryFiltrationTime.designer.cs">
+      <DependentUpon>LaboratoryFiltrationTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MsusAndHcControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MsusAndHcControl.designer.cs">
+      <DependentUpon>MsusAndHcControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PermeabilityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PermeabilityControl.Designer.cs">
+      <DependentUpon>PermeabilityControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PkeFromPcRcControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PkeFromPcRcControl.Designer.cs">
+      <DependentUpon>PkeFromPcRcControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuspensionSolidsMassFractionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SuspensionSolidsMassFractionControl.Designer.cs">
+      <DependentUpon>SuspensionSolidsMassFractionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\fsDiagramWithTable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\fsDiagramWithTable.designer.cs">
+      <DependentUpon>fsDiagramWithTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\fsTableAndChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\fsTableAndChart.designer.cs">
+      <DependentUpon>fsTableAndChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionControl.Designer.cs">
+      <DependentUpon>fsTablesAndChartsParametersSelectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionDialog.Designer.cs">
+      <DependentUpon>fsTablesAndChartsParametersSelectionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakeWashing\CakeWashingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakeWashing\CakeWashingControl.Designer.cs">
+      <DependentUpon>CakeWashingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Help Dialogs\fsYAxisParameter.cs" />
+    <Compile Include="User Controls\Help Dialogs\fsYAxisParameterWithChecking.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Base Controls\OptionsAndCommentsCalculatorControl.resx">
+      <DependentUpon>OptionsAndCommentsCalculatorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base Controls\OptionsDoubleTableAndCommentsCalculatorControl.resx">
+      <DependentUpon>OptionsDoubleTableAndCommentsCalculatorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base Controls\OptionsSingleTableAndCommentsCalculatorControl.resx">
+      <DependentUpon>OptionsSingleTableAndCommentsCalculatorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base Controls\OptionsSingleTableWithPanelAndCommentsCalculatorControl.resx">
+      <DependentUpon>OptionsSingleTableWithPanelAndCommentsCalculatorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BeltFiltersWithReversibleTrays\BeltFilterWithReversibleTrayControl.resx">
+      <DependentUpon>BeltFilterWithReversibleTrayControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cake Fromation\CakeFormationBaseControl.resx">
+      <DependentUpon>CakeFormationBaseControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cake Fromation\ContinuousModularBeltFilterControl.resx">
+      <DependentUpon>ContinuousModularBeltFilterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakeMoistureContentFromCakeSaturationControl.resx">
+      <DependentUpon>CakeMoistureContentFromCakeSaturationControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakeMoistureContentFromWetAndDryCakeMassControl.resx">
+      <DependentUpon>CakeMoistureContentFromWetAndDryCakeMassControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakePorossityControl.resx">
+      <DependentUpon>CakePorossityControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakeWashOutContentControl.resx">
+      <DependentUpon>CakeWashOutContentControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DensityConcentrationControl.resx">
+      <DependentUpon>DensityConcentrationControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hydrocyclone\HydrocycloneControl.resx">
+      <DependentUpon>HydrocycloneControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaboratoryFiltrationTime.resx">
+      <DependentUpon>LaboratoryFiltrationTime.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MsusAndHcControl.resx">
+      <DependentUpon>MsusAndHcControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PermeabilityControl.resx">
+      <DependentUpon>PermeabilityControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PkeFromPcRcControl.resx">
+      <DependentUpon>PkeFromPcRcControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SuspensionSolidsMassFractionControl.resx">
+      <DependentUpon>SuspensionSolidsMassFractionControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\fsDiagramWithTable.resx">
+      <DependentUpon>fsDiagramWithTable.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\fsTableAndChart.resx">
+      <DependentUpon>fsTableAndChart.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionControl.resx">
+      <DependentUpon>fsTablesAndChartsParametersSelectionControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionDialog.resx">
+      <DependentUpon>fsTablesAndChartsParametersSelectionDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakeWashing\CakeWashingControl.resx">
+      <DependentUpon>CakeWashingControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\fmDataGrid\fmDataGrid.csproj">
+      <Project>{30A5CD2D-C64C-402B-A957-3885E498A97C}</Project>
+      <Name>fmDataGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fmZedControl\fmZedGraph.csproj">
+      <Project>{6AA10204-B802-462B-AC8B-D012081866BA}</Project>
+      <Name>fmZedGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Parameters\Parameters.csproj">
+      <Project>{67A1D000-12E6-439C-BC89-23C4059BC855}</Project>
+      <Name>Parameters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StepCalculators\StepCalculators.csproj">
+      <Project>{95DCD086-DBE7-4361-BE61-C62FB904659E}</Project>
+      <Name>StepCalculators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Units\Units.csproj">
+      <Project>{2687A39A-2905-4632-A57E-5F98C3142423}</Project>
+      <Name>Units</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Value\Value.csproj">
+      <Project>{CD1BD2A7-AB61-4A58-B1F9-9A3DF9A0E9F2}</Project>
+      <Name>Value</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
