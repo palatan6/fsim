@@ -14,7 +14,7 @@ namespace Equations.Belt_Filters_with_Reversible_Trays
         /*
          *      u
          *  --------------------------------------------------------- = sqrt(f1 / f2 * nsf)
-         *   sqrt(1 - f3 * f1^(2*lambda - 1) / u^(2 * (lamda - 1)))
+         *   sqrt(1 - f3 * f1^(2*lambda - 1) / u^(2 * (lambda - 1)))
          *   
          *   */
 
