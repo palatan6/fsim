@@ -67,7 +67,7 @@ namespace CalculatorModules
                                  pressureGroup,
                                  areaGroup,
                                  cakeFormationGroup,
-                                 resultsGroup,
+                                 resultsGroup
                                };
 
             var colors = new[]
