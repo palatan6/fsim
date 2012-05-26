@@ -33,7 +33,10 @@ namespace CalculatorModules
             fsParametersGroup pc0Rc0Alpha0Group = AddGroup(
                 fsParameterIdentifier.CakePermeability0,
                 fsParameterIdentifier.CakeResistance0,
-                fsParameterIdentifier.CakeResistanceAlpha0);
+                fsParameterIdentifier.CakeResistanceAlpha0,
+                fsParameterIdentifier.CakePermeability,
+                fsParameterIdentifier.CakeResistance,
+                fsParameterIdentifier.CakeResistanceAlpha);
             fsParametersGroup ncGroup = AddGroup(
                 fsParameterIdentifier.CakeCompressibility);
             fsParametersGroup hceGroup = AddGroup(
@@ -64,8 +67,8 @@ namespace CalculatorModules
                                  pressureGroup,
                                  areaGroup,
                                  cakeFormationGroup,
-                                 resultsGroup
-                             };
+                                 resultsGroup,
+                               };
 
             var colors = new[]
                              {
