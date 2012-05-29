@@ -14,10 +14,21 @@ namespace CalculatorModules.Cake_Fromation
         {
             InitializeComponent();
 
-            AddModule("Belt Filter With Reversible Tray", new fsBeltFilterWithReversibleTrayControl());
-            AddModule("Continuous Belt Filter (modular)", new fsContinuousModularBeltFilterControl());
-            AddModule("Continuous Belt Filter (non-modular)", new fsContinuousNonModularBeltFilterControl());
-            AddModule("Other", new fsCommonCakeFormationControl());
+            AddModule(new fsContinuousNonModularBeltFilterControl(), "Continuous Belt Filters (Non Modular)");
+            AddModule(new fsContinuousModularBeltFilterControl(), "Continuous Belt Filters (Modular)");
+            AddModule(new fsBeltFilterWithReversibleTrayControl(), "Belt Filter With Reversible Tray");
+            AddModule(new fsCommonCakeFormationControl(),
+                "Drum Filters",
+                "Disc Filters",
+                "Pan Filters",
+                "Rotary Pressure Filters",
+                "Nutsche Filters",
+                "Pressure Leaf Filters",
+                "Filter Presses",
+                "Filter Press Automats",
+                "Pneuma Press",
+                "Laboratory Pressure Nutsche Filter",
+                "Laboratory Vacuum Filter");
             ChangeAndShowCurrentModule();
         }
 
@@ -33,11 +44,16 @@ namespace CalculatorModules.Cake_Fromation
 
         #region Internal Routines
 
-        private void AddModule(string moduleName, fsCakeFormationBaseControl moduleControl)
+        private void AddModule(
+            fsCakeFormationBaseControl moduleControl,
+            params string [] moduleNames)
         {
-            comboBox1.Items.Add(moduleName);
+            foreach (string moduleName in moduleNames)
+            {
+                comboBox1.Items.Add(moduleName);
+                m_moduleNameToControl.Add(moduleName, moduleControl);
+            }
             comboBox1.SelectedItem = comboBox1.Items[0];
-            m_moduleNameToControl.Add(moduleName, moduleControl);
         }
 
         private void ComboBox1SelectedIndexChanged(object sender, EventArgs e)
@@ -51,13 +67,10 @@ namespace CalculatorModules.Cake_Fromation
 
             foreach (var keyValue in m_moduleNameToControl)
             {
-                if (keyValue.Key != comboBox1.Text)
-                {
-                    keyValue.Value.Parent = null;
-                }
-                else
+                if (keyValue.Key == comboBox1.Text)
                 {
                     m_currentModule = keyValue.Value;
+                    break;
                 }
             }
 
@@ -72,6 +85,14 @@ namespace CalculatorModules.Cake_Fromation
                     m_currentModule.SetMaterialParametersTableVisible(lastModule.GetMaterialParametersTableVisible());
                     m_currentModule.SetDiagramVisible(lastModule.GetDiagramVisible());
                     m_currentModule.SetValues(lastModule.GetValues());
+                }
+            }
+
+            foreach (fsCakeFormationBaseControl module in m_moduleNameToControl.Values)
+            {
+                if (module != m_currentModule)
+                {
+                    module.Parent = null;
                 }
             }
         }
