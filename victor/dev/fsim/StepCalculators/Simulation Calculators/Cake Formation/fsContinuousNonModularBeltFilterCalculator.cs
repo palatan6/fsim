@@ -85,6 +85,7 @@ namespace StepCalculators.Simulation_Calculators.Cake_Formation
 
             Equations.Add(new fsAreaOfBeltWithReversibleTraysEquation(filterArea, lsOverB, constantOne, Qms, rhoCd, u, cakeHeigth));
 
+            Equations.Add(new fsProductEquation(filtrationTime, tc, sf));
             Equations.Add(new fsProductEquation(Qms, rhoS, Qs));
             Equations.Add(new fsProductEquation(Qmsus, rhoSus, Qsus));
             Equations.Add(new fsProductEquation(Qs, Qsus, cv));
