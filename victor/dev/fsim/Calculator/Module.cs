@@ -25,6 +25,7 @@ namespace Calculator
                             Height = m_calculatorControl.Height + 10
                         };
                 m_calculatorControl.Parent = Form;
+                m_calculatorControl.ControlToResizeForExpanding = Form;
                 m_calculatorControl.Dock = DockStyle.Fill;
                 Form.Show();
             }

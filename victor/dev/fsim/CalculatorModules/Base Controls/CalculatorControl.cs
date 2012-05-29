@@ -43,6 +43,8 @@ namespace CalculatorModules
             ParameterToGroup = new Dictionary<fsParameterIdentifier, fsParametersGroup>();
         }
 
+        public virtual Control ControlToResizeForExpanding { get; set; }
+
         #region Routines
 
         protected List<fsCalculator> Calculators { get; set; }

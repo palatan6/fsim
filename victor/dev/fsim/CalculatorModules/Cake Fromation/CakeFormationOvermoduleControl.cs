@@ -21,6 +21,16 @@ namespace CalculatorModules.Cake_Fromation
             ChangeAndShowCurrentModule();
         }
 
+        public override Control ControlToResizeForExpanding
+        {
+            get { return base.ControlToResizeForExpanding; }
+            set
+            {
+                base.ControlToResizeForExpanding = value;
+                m_currentModule.ControlToResizeForExpanding = ControlToResizeForExpanding;
+            }
+        }
+
         #region Internal Routines
 
         private void AddModule(string moduleName, fsCakeFormationBaseControl moduleControl)

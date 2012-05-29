@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using Parameters;
 
 namespace CalculatorModules
@@ -22,27 +23,29 @@ namespace CalculatorModules
         {
             m_isDiagramVisible = isVisible;
 
+            Control controlToResize = ControlToResizeForExpanding ?? Parent;
+
             if (isVisible)
             {
                 rightPanel.Visible = true;
                 showHideCommnetsButton.Text = @"<";
-                if (Parent != null)
+                if (controlToResize != null)
                 {
                     splitContainer1.Panel2Collapsed = false;
                     int w = splitContainer1.Width;
                     int a = splitContainer1.Panel1.Width;
                     int s = splitContainer1.SplitterWidth;
                     int newWidth = (2 * w * w + s * a) / (2 * a);
-                    Parent.Width += newWidth - w;
+                    controlToResize.Width += newWidth - w;
                 }   
             }
             else
             {
                 rightPanel.Visible = false;
                 showHideCommnetsButton.Text = @">";
-                if (Parent != null)
+                if (controlToResize != null)
                 {
-                    Parent.Width -= splitContainer1.Panel2.Width + splitContainer1.SplitterWidth;
+                    controlToResize.Width -= splitContainer1.Panel2.Width + splitContainer1.SplitterWidth;
                 }
                 splitContainer1.Panel2Collapsed = true;
                 rightPanel.Width = 0;
