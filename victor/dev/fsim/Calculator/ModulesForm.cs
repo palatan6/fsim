@@ -52,6 +52,30 @@ namespace Calculator
             }
         }
 
+        private void AddSimulationGroup(TreeNodeCollection treeNodeCollection)
+        {
+            string name = "Simulation Modules";
+            TreeNode node = treeNodeCollection.Add(name);
+            AddGroupToTree("Cake Formation", node.Nodes, new[]
+                                             {
+                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                     "Cake Formation Overmodule",
+                                                     new fsCakeFormationOvermoduleControl()),
+                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                     "Belt Filters with Reversible Trays",
+                                                     new fsBeltFilterWithReversibleTrayControl()),
+                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                     "Continuous Belt Filters (modular)",
+                                                     new fsContinuousModularBeltFilterControl()),
+                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                     "Continuous Belt Filters (non modular)",
+                                                     new fsContinuousNonModularBeltFilterControl()),
+                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                     "Other",
+                                                     new fsCommonCakeFormationControl())
+                                             });
+        }
+
         private void AddHelpGroup(TreeNodeCollection treeNodeCollection)
         {
             string name = "Help Modules";
@@ -107,27 +131,6 @@ namespace Calculator
                                                });
         }
 
-        private void AddSimulationGroup(TreeNodeCollection treeNodeCollection)
-        {
-            string name = "Simulation Modules";
-            TreeNode node = treeNodeCollection.Add(name);
-            AddGroupToTree("Cake Formation", node.Nodes, new[]
-                                             {
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Belt Filters with Reversible Trays",
-                                                     new fsBeltFilterWithReversibleTrayControl()),
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Continuous Belt Filters (modular)",
-                                                     new fsContinuousModularBeltFilterControl()),
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Continuous Belt Filters (non modular)",
-                                                     new fsContinuousNonModularBeltFilterControl()),
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Other",
-                                                     new fsCommonCakeFormationControl())
-                                             });
-        }
-
         private void AddGroupToTree(
             string nodeName,
             TreeNodeCollection treeNodeCollection,
@@ -140,7 +143,7 @@ namespace Calculator
                 AddModuleToTree(node, pair.Key, calculatorControl);
                 if (calculatorControl is fsOptionsSingleTableAndCommentsCalculatorControl)
                 {
-                    (calculatorControl as fsOptionsSingleTableAndCommentsCalculatorControl).AllowCommentsView = false;
+                    (calculatorControl as fsOptionsSingleTableAndCommentsCalculatorControl).AllowDiagramView = false;
                 }
             }
             treeNodeCollection.Add(node);

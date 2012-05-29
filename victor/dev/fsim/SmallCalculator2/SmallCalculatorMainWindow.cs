@@ -90,7 +90,7 @@ namespace SmallCalculator2
                 AddModuleToTree(node, pair.Key, calculatorControl);
                 if (calculatorControl is fsOptionsSingleTableAndCommentsCalculatorControl)
                 {
-                    (calculatorControl as fsOptionsSingleTableAndCommentsCalculatorControl).AllowCommentsView = false;
+                    (calculatorControl as fsOptionsSingleTableAndCommentsCalculatorControl).AllowDiagramView = false;
                 }
             }
             treeView1.Nodes.Add(node);

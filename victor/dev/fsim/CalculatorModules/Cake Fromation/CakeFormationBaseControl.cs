@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using CalculatorModules.Base_Controls;
 using Parameters;
+using ParametersIdentifiers;
 using StepCalculators;
 using Value;
 
@@ -11,7 +13,7 @@ namespace CalculatorModules.Cake_Fromation
     {
         #region Calculation Option
 
-        private enum fsCalculationOption
+        public enum fsCakeFormationCalculationOption
         {
             [Description("Standard Calculation")]
             StandardCalculation,
@@ -35,9 +37,9 @@ namespace CalculatorModules.Cake_Fromation
 
             #endregion
 
-            fsMisc.FillList(calculationComboBox.Items, typeof(fsCalculationOption));
-            EstablishCalculationOption(fsCalculationOption.StandardCalculation);
-            AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationComboBox);
+            fsMisc.FillList(calculationComboBox.Items, typeof(fsCakeFormationCalculationOption));
+            EstablishCalculationOption(fsCakeFormationCalculationOption.StandardCalculation);
+            AssignCalculationOptionAndControl(typeof(fsCakeFormationCalculationOption), calculationComboBox);
 
             UpdateGroupsInputInfoFromCalculationOptions();
 
@@ -193,8 +195,8 @@ namespace CalculatorModules.Cake_Fromation
         
         protected override sealed void UpdateGroupsInputInfoFromCalculationOptions()
         {
-            var calculationOption = (fsCalculationOption)CalculationOptions[typeof(fsCalculationOption)];
-            if (calculationOption == fsCalculationOption.FilterDesign)
+            var calculationOption = (fsCakeFormationCalculationOption)CalculationOptions[typeof(fsCakeFormationCalculationOption)];
+            if (calculationOption == fsCakeFormationCalculationOption.FilterDesign)
             {
                 CreateDesignGroups();
             }
@@ -209,5 +211,52 @@ namespace CalculatorModules.Cake_Fromation
         }
 
         #endregion
+
+        public fsCakeFormationCalculationOption GetCalculationOption()
+        {
+            return (fsCakeFormationCalculationOption) CalculationOptions[typeof (fsCakeFormationCalculationOption)];
+        }
+
+        internal void SetCalculationOption(fsCakeFormationCalculationOption cakeFormationCalculationOption)
+        {
+            if (GetCalculationOption() != cakeFormationCalculationOption)
+            {
+                EstablishCalculationOption(cakeFormationCalculationOption);
+                UpdateGroupsInputInfoFromCalculationOptions();
+                UpdateEquationsFromCalculationOptions();
+                Recalculate();
+                UpdateUIFromData();
+            }
+        }
+
+        internal bool GetMaterialParametersTableVisible()
+        {
+            return materialParametersDisplayCheckBox.Checked;
+        }
+
+        internal void SetMaterialParametersTableVisible(bool isVisible)
+        {
+            materialParametersDisplayCheckBox.Checked = isVisible;
+        }
+
+        internal ICollection<fsSimulationModuleParameter> GetValues()
+        {
+            return Values.Values;
+        }
+
+        internal void SetValues(ICollection<fsSimulationModuleParameter> collection)
+        {
+            foreach (fsSimulationModuleParameter parameter in collection)
+            {
+                if (Values.ContainsKey(parameter.Identifier))
+                {
+                    fsSimulationModuleParameter internalParameter = Values[parameter.Identifier];
+                    internalParameter.Value = parameter.Value;
+                }
+            }
+
+            Recalculate();
+            UpdateUIFromData();
+        }
     }
 }

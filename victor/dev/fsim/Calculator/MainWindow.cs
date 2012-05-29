@@ -77,7 +77,7 @@ namespace Calculator
                 if (modulesForm.SelectedCalculatorControl is fsOptionsSingleTableAndCommentsCalculatorControl)
                 {
                     (modulesForm.SelectedCalculatorControl as fsOptionsSingleTableAndCommentsCalculatorControl).
-                        AllowCommentsView = true;
+                        AllowDiagramView = true;
                 }
                 ++m_counter;
                 var module = new fsModule("#" + m_counter + " - " + modulesForm.SelectedCalculatorControlName,

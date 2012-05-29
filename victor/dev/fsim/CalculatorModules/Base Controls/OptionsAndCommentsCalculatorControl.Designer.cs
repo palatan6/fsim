@@ -34,14 +34,14 @@ namespace CalculatorModules
             this.tablesPanel = new System.Windows.Forms.Panel();
             this.leftTopPanel = new System.Windows.Forms.Panel();
             this.calculationOptionsPanel = new System.Windows.Forms.Panel();
-            this.showHideCommentsPanel = new System.Windows.Forms.Panel();
+            this.showHideDiagramPanel = new System.Windows.Forms.Panel();
             this.showHideCommnetsButton = new System.Windows.Forms.Button();
             this.rightPanel = new System.Windows.Forms.Panel();
             this.fsTableAndChart1 = new CalculatorModules.User_Controls.fsTableAndChart();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.leftPanel.SuspendLayout();
             this.leftTopPanel.SuspendLayout();
-            this.showHideCommentsPanel.SuspendLayout();
+            this.showHideDiagramPanel.SuspendLayout();
             this.rightPanel.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -69,7 +69,7 @@ namespace CalculatorModules
             // leftTopPanel
             // 
             this.leftTopPanel.Controls.Add(this.calculationOptionsPanel);
-            this.leftTopPanel.Controls.Add(this.showHideCommentsPanel);
+            this.leftTopPanel.Controls.Add(this.showHideDiagramPanel);
             this.leftTopPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.leftTopPanel.Location = new System.Drawing.Point(0, 0);
             this.leftTopPanel.Name = "leftTopPanel";
@@ -86,12 +86,12 @@ namespace CalculatorModules
             // 
             // showHideCommentsPanel
             // 
-            this.showHideCommentsPanel.Controls.Add(this.showHideCommnetsButton);
-            this.showHideCommentsPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.showHideCommentsPanel.Location = new System.Drawing.Point(216, 0);
-            this.showHideCommentsPanel.Name = "showHideCommentsPanel";
-            this.showHideCommentsPanel.Size = new System.Drawing.Size(51, 48);
-            this.showHideCommentsPanel.TabIndex = 1;
+            this.showHideDiagramPanel.Controls.Add(this.showHideCommnetsButton);
+            this.showHideDiagramPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.showHideDiagramPanel.Location = new System.Drawing.Point(216, 0);
+            this.showHideDiagramPanel.Name = "showHideCommentsPanel";
+            this.showHideDiagramPanel.Size = new System.Drawing.Size(51, 48);
+            this.showHideDiagramPanel.TabIndex = 1;
             // 
             // showHideCommnetsButton
             // 
@@ -151,7 +151,7 @@ namespace CalculatorModules
             this.Size = new System.Drawing.Size(787, 300);
             this.leftPanel.ResumeLayout(false);
             this.leftTopPanel.ResumeLayout(false);
-            this.showHideCommentsPanel.ResumeLayout(false);
+            this.showHideDiagramPanel.ResumeLayout(false);
             this.rightPanel.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -166,7 +166,7 @@ namespace CalculatorModules
         protected System.Windows.Forms.Panel leftTopPanel;
         private System.Windows.Forms.Panel rightPanel;
         protected System.Windows.Forms.Panel calculationOptionsPanel;
-        private System.Windows.Forms.Panel showHideCommentsPanel;
+        private System.Windows.Forms.Panel showHideDiagramPanel;
         private System.Windows.Forms.Button showHideCommnetsButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private fsTableAndChart fsTableAndChart1;

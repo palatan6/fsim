@@ -658,80 +658,81 @@ namespace CyclonPlus
 
         private void createProj()
         {
-            if (cpCmProj.Count > 0)
-            {
-                try
-                {
-                    DataRow row = projectsTable.NewRow();
-                    row["project_name"] = "project_";
-                    projectsTable.Rows.Add(row);
-                    cpDaProj.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaProj_RowUpdated);
-                    fmDataGridProject.CurrentCell = fmDataGridProject.Rows[fmDataGridProject.Rows.Count - 1].Cells[0];
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("error: \n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                finally
-                {
-                    cpOleDbConnection.Close();
-                }
-            }
-            else
-            {
-                try
-                {
-                    DataRow rowProj = projectsTable.NewRow();
-                    rowProj["project_name"] = "First project";
-                    projectsTable.Rows.Add(rowProj);
-                    cpDaProj.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaProj_RowUpdated);
-                    DataRowView drvPr = (DataRowView)cpCmProj.Current;
-                    DataRow rowSusp = suspensionsTable.NewRow();
-                    rowSusp["id_project"] = (Int32)drvPr.Row["id_project"];
-                    rowSusp["suspension_name"] = "First suspension";
-                    suspensionsTable.Rows.Add(rowSusp);
-                    cpDaSusp.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSusp_RowUpdated);
-                    DataRowView drvSusp = (DataRowView)cpCmSusp.Current;
-                    DataRow rowSeries = seriesTable.NewRow();
-                    rowSeries["id_suspension"] = (Int32)drvSusp.Row["id_suspension"];
-                    rowSeries["series_name"] = "First series";
-                    seriesTable.Rows.Add(rowSeries);
-                    cpDaSeries.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSeries_RowUpdated);
-                    DataRowView drvSer = (DataRowView)cpCmSeries.Current;
-                    DataRow rowSimul = simulationsTable.NewRow();
-                    rowSimul["id_series"] = (Int32)drvSer.Row["id_series"];
-                    rowSimul["simulation_name"] = "First simulation";
-                    simulationsTable.Rows.Add(rowSimul);
-                    cpDaSimul.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSimul_RowUpdated);
-                    for (int c = 0; c < hydrocycloneControl1.Groups.Count; c++)
-                    {
-                        DataRow rowGroup = groupsTable.NewRow();
-                        rowGroup["id_simulation"] = (Int32)rowSimul["id_simulation"];
-                        rowGroup["representator"] = (String)hydrocycloneControl1.Groups[c].Representator.Name;
-                        groupsTable.Rows.Add(rowGroup);
-                        cpDaGroups.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaGroups_RowUpdated);
-                        for (int par = 0; par < hydrocycloneControl1.Groups[c].Parameters.Count; par++)
-                        {
-                            fsValue val = hydrocycloneControl1.GetValue(hydrocycloneControl1.Groups[c].Parameters[par]);
-                            DataRow rowVal = valuesTable.NewRow();
-                            rowVal["value_name"] = (String)hydrocycloneControl1.Groups[c].Parameters[par].Name;
-                            rowVal["defined"] = (Boolean)true;
-                            rowVal["valueOfParam"] = 0;
-                            rowVal["id_group"] = (Int32)rowGroup["id_group"];
-                            valuesTable.Rows.Add(rowVal);
-                            cpDaValues.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaValues_RowUpdated);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("error: \n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                finally
-                {
-                    cpOleDbConnection.Close();
-                }
-            }
+            throw new Exception("Method commented out.");
+//             if (cpCmProj.Count > 0)
+//             {
+//                 try
+//                 {
+//                     DataRow row = projectsTable.NewRow();
+//                     row["project_name"] = "project_";
+//                     projectsTable.Rows.Add(row);
+//                     cpDaProj.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaProj_RowUpdated);
+//                     fmDataGridProject.CurrentCell = fmDataGridProject.Rows[fmDataGridProject.Rows.Count - 1].Cells[0];
+//                 }
+//                 catch (Exception ex)
+//                 {
+//                     MessageBox.Show("error: \n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//                 }
+//                 finally
+//                 {
+//                     cpOleDbConnection.Close();
+//                 }
+//             }
+//             else
+//             {
+//                 try
+//                 {
+//                     DataRow rowProj = projectsTable.NewRow();
+//                     rowProj["project_name"] = "First project";
+//                     projectsTable.Rows.Add(rowProj);
+//                     cpDaProj.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaProj_RowUpdated);
+//                     DataRowView drvPr = (DataRowView)cpCmProj.Current;
+//                     DataRow rowSusp = suspensionsTable.NewRow();
+//                     rowSusp["id_project"] = (Int32)drvPr.Row["id_project"];
+//                     rowSusp["suspension_name"] = "First suspension";
+//                     suspensionsTable.Rows.Add(rowSusp);
+//                     cpDaSusp.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSusp_RowUpdated);
+//                     DataRowView drvSusp = (DataRowView)cpCmSusp.Current;
+//                     DataRow rowSeries = seriesTable.NewRow();
+//                     rowSeries["id_suspension"] = (Int32)drvSusp.Row["id_suspension"];
+//                     rowSeries["series_name"] = "First series";
+//                     seriesTable.Rows.Add(rowSeries);
+//                     cpDaSeries.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSeries_RowUpdated);
+//                     DataRowView drvSer = (DataRowView)cpCmSeries.Current;
+//                     DataRow rowSimul = simulationsTable.NewRow();
+//                     rowSimul["id_series"] = (Int32)drvSer.Row["id_series"];
+//                     rowSimul["simulation_name"] = "First simulation";
+//                     simulationsTable.Rows.Add(rowSimul);
+//                     cpDaSimul.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSimul_RowUpdated);
+//                     for (int c = 0; c < hydrocycloneControl1.Groups.Count; c++)
+//                     {
+//                         DataRow rowGroup = groupsTable.NewRow();
+//                         rowGroup["id_simulation"] = (Int32)rowSimul["id_simulation"];
+//                         rowGroup["representator"] = (String)hydrocycloneControl1.Groups[c].Representator.Name;
+//                         groupsTable.Rows.Add(rowGroup);
+//                         cpDaGroups.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaGroups_RowUpdated);
+//                         for (int par = 0; par < hydrocycloneControl1.Groups[c].Parameters.Count; par++)
+//                         {
+//                             fsValue val = hydrocycloneControl1.GetValue(hydrocycloneControl1.Groups[c].Parameters[par]);
+//                             DataRow rowVal = valuesTable.NewRow();
+//                             rowVal["value_name"] = (String)hydrocycloneControl1.Groups[c].Parameters[par].Name;
+//                             rowVal["defined"] = (Boolean)true;
+//                             rowVal["valueOfParam"] = 0;
+//                             rowVal["id_group"] = (Int32)rowGroup["id_group"];
+//                             valuesTable.Rows.Add(rowVal);
+//                             cpDaValues.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaValues_RowUpdated);
+//                         }
+//                     }
+//                 }
+//                 catch (Exception ex)
+//                 {
+//                     MessageBox.Show("error: \n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//                 }
+//                 finally
+//                 {
+//                     cpOleDbConnection.Close();
+//                 }
+//             }
         }
 
         private void createSuspension()
@@ -784,107 +785,109 @@ namespace CyclonPlus
 
         private void createSimulation()
         {
-            if (cpCmSeries.Count > 0)
-            {
-                cpOleDbConnection.Open();
-                cpOleDbCommand.Transaction = cpOleDbConnection.BeginTransaction();
-                try
-                {
-                    DataRowView drv = (DataRowView)cpCmSeries.Current;
-                    DataRow row = simulationsTable.NewRow();
-                    row["id_series"] = drv.Row["id_series"];
-                    row["simulation_name"] = "simulation_";
-                    row["options"] = "Dp";
-                    simulationsTable.Rows.Add(row);
-                    cpDaSimul.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSimul_RowUpdated);
-                    for (int c = 0; c < hydrocycloneControl1.Groups.Count; c++)
-                    {
-                        DataRow rowGroup = groupsTable.NewRow();
-                        rowGroup["id_simulation"] = (Int32)row["id_simulation"];
-                        rowGroup["representator"] = (String)hydrocycloneControl1.Groups[c].Representator.Name;
-                        groupsTable.Rows.Add(rowGroup);
-                        cpDaGroups.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaGroups_RowUpdated);
-                        for (int par = 0; par < hydrocycloneControl1.Groups[c].Parameters.Count; par++)
-                        {
-                            fsValue val = hydrocycloneControl1.GetValue(hydrocycloneControl1.Groups[c].Parameters[par]);
-                            DataRow rowVal = valuesTable.NewRow();
-                            rowVal["value_name"] = (String)hydrocycloneControl1.Groups[c].Parameters[par].Name;
-                            rowVal["defined"] = (Boolean)true;
-                            rowVal["valueOfParam"] = (Double)val.Value;
-                            rowVal["id_group"] = (Int32)rowGroup["id_group"];
-                            valuesTable.Rows.Add(rowVal);
-                            cpDaValues.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaValues_RowUpdated);
-                        }
-                    }
-                    fmDataGridSimul.CurrentCell = fmDataGridSimul.Rows[fmDataGridSimul.Rows.Count - 1].Cells[2];
-                    cpOleDbCommand.Transaction.Commit();
-                    cpOleDbConnection.Close();
-                    hydrocycloneControl1.dataGrid.Enabled = true;
-                }
-                catch (Exception ex)
-                {
-                    cpOleDbCommand.Transaction.Rollback();
-                    MessageBox.Show("error: \n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                finally
-                {
-                    cpOleDbConnection.Close();
-                }
-            }
-            else
-                MessageBox.Show("You should add a " + tables.series, "CyclonPlus", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            throw new Exception("Method commented out.");
+//             if (cpCmSeries.Count > 0)
+//             {
+//                 cpOleDbConnection.Open();
+//                 cpOleDbCommand.Transaction = cpOleDbConnection.BeginTransaction();
+//                 try
+//                 {
+//                     DataRowView drv = (DataRowView)cpCmSeries.Current;
+//                     DataRow row = simulationsTable.NewRow();
+//                     row["id_series"] = drv.Row["id_series"];
+//                     row["simulation_name"] = "simulation_";
+//                     row["options"] = "Dp";
+//                     simulationsTable.Rows.Add(row);
+//                     cpDaSimul.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSimul_RowUpdated);
+//                     for (int c = 0; c < hydrocycloneControl1.Groups.Count; c++)
+//                     {
+//                         DataRow rowGroup = groupsTable.NewRow();
+//                         rowGroup["id_simulation"] = (Int32)row["id_simulation"];
+//                         rowGroup["representator"] = (String)hydrocycloneControl1.Groups[c].Representator.Name;
+//                         groupsTable.Rows.Add(rowGroup);
+//                         cpDaGroups.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaGroups_RowUpdated);
+//                         for (int par = 0; par < hydrocycloneControl1.Groups[c].Parameters.Count; par++)
+//                         {
+//                             fsValue val = hydrocycloneControl1.GetValue(hydrocycloneControl1.Groups[c].Parameters[par]);
+//                             DataRow rowVal = valuesTable.NewRow();
+//                             rowVal["value_name"] = (String)hydrocycloneControl1.Groups[c].Parameters[par].Name;
+//                             rowVal["defined"] = (Boolean)true;
+//                             rowVal["valueOfParam"] = (Double)val.Value;
+//                             rowVal["id_group"] = (Int32)rowGroup["id_group"];
+//                             valuesTable.Rows.Add(rowVal);
+//                             cpDaValues.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaValues_RowUpdated);
+//                         }
+//                     }
+//                     fmDataGridSimul.CurrentCell = fmDataGridSimul.Rows[fmDataGridSimul.Rows.Count - 1].Cells[2];
+//                     cpOleDbCommand.Transaction.Commit();
+//                     cpOleDbConnection.Close();
+//                     hydrocycloneControl1.dataGrid.Enabled = true;
+//                 }
+//                 catch (Exception ex)
+//                 {
+//                     cpOleDbCommand.Transaction.Rollback();
+//                     MessageBox.Show("error: \n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//                 }
+//                 finally
+//                 {
+//                     cpOleDbConnection.Close();
+//                 }
+//             }
+//             else
+//                 MessageBox.Show("You should add a " + tables.series, "CyclonPlus", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void cloneSimulation()
         {
-            if (cpCmSimul.Count > 0)
-            {
-                cpOleDbConnection.Open();
-                cpOleDbCommand.Transaction = cpOleDbConnection.BeginTransaction();
-                try
-                {
-                    DataRowView drv = (DataRowView)cpCmSeries.Current;
-                    DataRow row = simulationsTable.NewRow();
-                    row["id_series"] = drv.Row["id_series"];
-                    row["simulation_name"] = "simulation_";
-                    row["options"] = "Dp";
-                    simulationsTable.Rows.Add(row);
-                    cpDaSimul.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSimul_RowUpdated);
-                    for (int c = 0; c < hydrocycloneControl1.Groups.Count; c++)
-                    {
-                        DataRow rowGroup = groupsTable.NewRow();
-                        rowGroup["id_simulation"] = (Int32)row["id_simulation"];
-                        rowGroup["representator"] = (String)hydrocycloneControl1.Groups[c].Representator.Name;
-                        groupsTable.Rows.Add(rowGroup);
-                        cpDaGroups.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaGroups_RowUpdated);
-                        for (int par = 0; par < hydrocycloneControl1.Groups[c].Parameters.Count; par++)
-                        {
-                            fsValue val = hydrocycloneControl1.GetValue(hydrocycloneControl1.Groups[c].Parameters[par]);
-                            DataRow rowVal = valuesTable.NewRow();
-                            rowVal["value_name"] = (String)hydrocycloneControl1.Groups[c].Parameters[par].Name;
-                            rowVal["defined"] = (Boolean)val.Defined;
-                            rowVal["valueOfParam"] = (Double)val.Value;
-                            rowVal["id_group"] = (Int32)rowGroup["id_group"];
-                            valuesTable.Rows.Add(rowVal);
-                            cpDaValues.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaValues_RowUpdated);
-                        }
-                    }
-                    fmDataGridSimul.CurrentCell = fmDataGridSimul.Rows[fmDataGridSimul.Rows.Count - 1].Cells[2];
-                    cpOleDbCommand.Transaction.Commit();
-                    cpOleDbConnection.Close();
-                }
-                catch (Exception ex)
-                {
-                    cpOleDbCommand.Transaction.Rollback();
-                    MessageBox.Show("error: \n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                finally
-                {
-                    cpOleDbConnection.Close();
-                }
-            }
-            else
-                MessageBox.Show("You should add a " + simulationsTable.TableName, "CyclonPlus", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            throw new Exception("Method commented out.");
+//             if (cpCmSimul.Count > 0)
+//             {
+//                 cpOleDbConnection.Open();
+//                 cpOleDbCommand.Transaction = cpOleDbConnection.BeginTransaction();
+//                 try
+//                 {
+//                     DataRowView drv = (DataRowView)cpCmSeries.Current;
+//                     DataRow row = simulationsTable.NewRow();
+//                     row["id_series"] = drv.Row["id_series"];
+//                     row["simulation_name"] = "simulation_";
+//                     row["options"] = "Dp";
+//                     simulationsTable.Rows.Add(row);
+//                     cpDaSimul.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaSimul_RowUpdated);
+//                     for (int c = 0; c < hydrocycloneControl1.Groups.Count; c++)
+//                     {
+//                         DataRow rowGroup = groupsTable.NewRow();
+//                         rowGroup["id_simulation"] = (Int32)row["id_simulation"];
+//                         rowGroup["representator"] = (String)hydrocycloneControl1.Groups[c].Representator.Name;
+//                         groupsTable.Rows.Add(rowGroup);
+//                         cpDaGroups.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaGroups_RowUpdated);
+//                         for (int par = 0; par < hydrocycloneControl1.Groups[c].Parameters.Count; par++)
+//                         {
+//                             fsValue val = hydrocycloneControl1.GetValue(hydrocycloneControl1.Groups[c].Parameters[par]);
+//                             DataRow rowVal = valuesTable.NewRow();
+//                             rowVal["value_name"] = (String)hydrocycloneControl1.Groups[c].Parameters[par].Name;
+//                             rowVal["defined"] = (Boolean)val.Defined;
+//                             rowVal["valueOfParam"] = (Double)val.Value;
+//                             rowVal["id_group"] = (Int32)rowGroup["id_group"];
+//                             valuesTable.Rows.Add(rowVal);
+//                             cpDaValues.RowUpdated += new OleDbRowUpdatedEventHandler(cpDaValues_RowUpdated);
+//                         }
+//                     }
+//                     fmDataGridSimul.CurrentCell = fmDataGridSimul.Rows[fmDataGridSimul.Rows.Count - 1].Cells[2];
+//                     cpOleDbCommand.Transaction.Commit();
+//                     cpOleDbConnection.Close();
+//                 }
+//                 catch (Exception ex)
+//                 {
+//                     cpOleDbCommand.Transaction.Rollback();
+//                     MessageBox.Show("error: \n" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//                 }
+//                 finally
+//                 {
+//                     cpOleDbConnection.Close();
+//                 }
+//             }
+//             else
+//                 MessageBox.Show("You should add a " + simulationsTable.TableName, "CyclonPlus", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         void cpDaValues_RowUpdated(object sender, OleDbRowUpdatedEventArgs e)
@@ -1555,26 +1558,27 @@ namespace CyclonPlus
 
         private void fmDataGridSimul_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (cpCmSimul.Count > 0)
-            {
-                int curRowIndex = e.RowIndex;
-                DataRow[] tableGroup = groupsTable.Select("id_simulation = " + fmDataGridSimul.Rows[curRowIndex].Cells["id_simulation"].Value.ToString());
-                for (int c = 0; c < tableGroup.Length; c++)
-                {
-                    fsParametersGroup fspgNew = hydrocycloneControl1.Groups[c];
-                    fspgNew.Representator = FindParamIdentifNameFromGroups(tableGroup[c]["representator"].ToString());
-                    DataRow[] tableValue = valuesTable.Select("id_group = " + tableGroup[c]["id_group"].ToString());
-                    for (int v = 0; v < hydrocycloneControl1.Groups[c].Parameters.Count; v++)
-                    {
-                        Double value = Convert.ToDouble(tableValue[v]["valueOfParam"]);
-                        bool defined = Convert.ToBoolean(tableValue[v]["defined"]);
-                        hydrocycloneControl1.SetValue(hydrocycloneControl1.Groups[c].Parameters[v], new fsValue(value, defined));
-                    }
-                }
-                String option = fmDataGridSimul.Rows[curRowIndex].Cells["options"].Value.ToString();
-                hydrocycloneControl1.ChangeCalculationOption((CalculatorModules.Hydrocyclone.HydrocycloneControl.fsCalculationOption)findCalculationOption(option));
-                hydrocycloneControl1.comboBoxCalculationOption.SelectedItem = option;
-            }
+            throw new Exception("Method commented out.");
+//             if (cpCmSimul.Count > 0)
+//             {
+//                 int curRowIndex = e.RowIndex;
+//                 DataRow[] tableGroup = groupsTable.Select("id_simulation = " + fmDataGridSimul.Rows[curRowIndex].Cells["id_simulation"].Value.ToString());
+//                 for (int c = 0; c < tableGroup.Length; c++)
+//                 {
+//                     fsParametersGroup fspgNew = hydrocycloneControl1.Groups[c];
+//                     fspgNew.Representator = FindParamIdentifNameFromGroups(tableGroup[c]["representator"].ToString());
+//                     DataRow[] tableValue = valuesTable.Select("id_group = " + tableGroup[c]["id_group"].ToString());
+//                     for (int v = 0; v < hydrocycloneControl1.Groups[c].Parameters.Count; v++)
+//                     {
+//                         Double value = Convert.ToDouble(tableValue[v]["valueOfParam"]);
+//                         bool defined = Convert.ToBoolean(tableValue[v]["defined"]);
+//                         hydrocycloneControl1.SetValue(hydrocycloneControl1.Groups[c].Parameters[v], new fsValue(value, defined));
+//                     }
+//                 }
+//                 String option = fmDataGridSimul.Rows[curRowIndex].Cells["options"].Value.ToString();
+//                 hydrocycloneControl1.ChangeCalculationOption((CalculatorModules.Hydrocyclone.HydrocycloneControl.fsCalculationOption)findCalculationOption(option));
+//                 hydrocycloneControl1.comboBoxCalculationOption.SelectedItem = option;
+//             }
         }
 
         private void No_simulations()
@@ -1594,15 +1598,16 @@ namespace CyclonPlus
 
         public fsParameterIdentifier FindParamIdentifNameFromGroups(String nameOfParamIdentif)
         {
-            for (int c = 0; c < hydrocycloneControl1.Groups.Count; c++)
-            {
-                for (int par = 0; par < hydrocycloneControl1.Groups[c].Parameters.Count; par++)
-                {
-                    if (hydrocycloneControl1.Groups[c].Parameters[par].Name == nameOfParamIdentif)
-                        return hydrocycloneControl1.Groups[c].Parameters[par];
-                }
-            }
-            return new fsParameterIdentifier("");
+            throw new Exception("Method commented out.");
+//             for (int c = 0; c < hydrocycloneControl1.Groups.Count; c++)
+//             {
+//                 for (int par = 0; par < hydrocycloneControl1.Groups[c].Parameters.Count; par++)
+//                 {
+//                     if (hydrocycloneControl1.Groups[c].Parameters[par].Name == nameOfParamIdentif)
+//                         return hydrocycloneControl1.Groups[c].Parameters[par];
+//                 }
+//             }
+//             return new fsParameterIdentifier("");
         }
 
         public Enum findCalculationOption(String option)
