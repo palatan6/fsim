@@ -21,6 +21,11 @@ namespace CalculatorModules
 
         public void SetDiagramVisible(bool isVisible)
         {
+            if (m_isDiagramVisible == isVisible)
+            {
+                return;
+            }
+
             m_isDiagramVisible = isVisible;
 
             Control controlToResize = ControlToResizeForExpanding ?? Parent;

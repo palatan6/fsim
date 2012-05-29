@@ -38,7 +38,10 @@ namespace CalculatorModules.Cake_Fromation
             set
             {
                 base.ControlToResizeForExpanding = value;
-                m_currentModule.ControlToResizeForExpanding = ControlToResizeForExpanding;
+                foreach (fsCalculatorControl module in m_moduleNameToControl.Values)
+                {
+                    module.ControlToResizeForExpanding = ControlToResizeForExpanding;
+                }
             }
         }
 
