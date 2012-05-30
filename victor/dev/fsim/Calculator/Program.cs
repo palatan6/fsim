@@ -18,11 +18,14 @@ namespace Calculator
             fsCharacteristic.Time.CurrentUnit = fsUnit.Second;
             fsCharacteristic.CakeHeight.CurrentUnit = fsUnit.MilliMeter;
             fsCharacteristic.MachineGeometryLength.CurrentUnit = fsUnit.Meter;
-            fsCharacteristic.Area.CurrentUnit = fsUnit.SquareSantiMeter;
-            fsCharacteristic.Mass.CurrentUnit = fsUnit.Gramme;
-            fsCharacteristic.Volume.CurrentUnit = fsUnit.MilliLiter;
-            fsCharacteristic.MassFlowrate.CurrentUnit = fsUnit.TonPerHour;
-            fsCharacteristic.VolumeFlowrate.CurrentUnit = fsUnit.CubicMeterPerHour;
+            fsCharacteristic.Area.CurrentUnit = fsUnit.SquareMeter;
+            fsCharacteristic.Mass.CurrentUnit = fsUnit.KiloGramme;
+            fsCharacteristic.Volume.CurrentUnit = fsUnit.Liter;
+            fsCharacteristic.MassFlowrate.CurrentUnit = fsUnit.KiloGrammePerMin;
+            fsCharacteristic.VolumeFlowrate.CurrentUnit = fsUnit.LiterPerMinute;
+            fsCharacteristic.Frequency.CurrentUnit = fsUnit.PerMinute;
+            fsCharacteristic.SpecificMassFlowrate.CurrentUnit = fsUnit.KiloGrammePerSquaredMeterPerMin;
+            fsCharacteristic.SpecificVolumeFlowrate.CurrentUnit = fsUnit.LiterPerSquaredMeterPerMin;
 
             Application.Run(new fsMainWindow());
         }
