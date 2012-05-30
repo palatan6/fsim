@@ -8,7 +8,7 @@ using Value;
 
 namespace CalculatorModules.Hydrocyclone
 {
-    public partial class HydrocycloneControl : OptionsSingleTableWithPanelAndCommentsCalculatorControl
+    public partial class fsHydrocycloneControl : fsOptionsSingleTableWithPanelAndCommentsCalculatorControl
     {
         #region Calculation Option
 
@@ -24,7 +24,7 @@ namespace CalculatorModules.Hydrocyclone
 
         #endregion
 
-        public HydrocycloneControl()
+        public fsHydrocycloneControl()
         {
             InitializeComponent();
 

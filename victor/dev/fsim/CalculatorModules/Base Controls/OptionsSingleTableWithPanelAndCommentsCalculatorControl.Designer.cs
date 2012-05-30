@@ -1,6 +1,6 @@
 ﻿namespace CalculatorModules
 {
-    partial class OptionsSingleTableWithPanelAndCommentsCalculatorControl
+    partial class fsOptionsSingleTableWithPanelAndCommentsCalculatorControl
     {
         /// <summary> 
         /// Требуется переменная конструктора.
@@ -94,7 +94,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "OptionsSingleTableWithPanelAndCommentsCalculatorControl";
+            this.Name = "fsOptionsSingleTableWithPanelAndCommentsCalculatorControl";
             this.Size = new System.Drawing.Size(837, 475);
             this.leftTopPanel.ResumeLayout(false);
             this.tablesPanel.ResumeLayout(false);

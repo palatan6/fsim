@@ -7,7 +7,7 @@
             InitializeComponent();
         }
 
-        protected override void StopGridsEdit()
+        protected internal override void StopGridsEdit()
         {
             dataGrid.EndEdit();
         }

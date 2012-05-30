@@ -1,6 +1,6 @@
 ﻿namespace CalculatorModules.Hydrocyclone
 {
-    partial class HydrocycloneControl
+    partial class fsHydrocycloneControl
     {
         /// <summary> 
         /// Требуется переменная конструктора.
@@ -187,7 +187,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "HydrocycloneControl";
+            this.Name = "fsHydrocycloneControl";
             this.panelRight.ResumeLayout(false);
             this.leftTopPanel.ResumeLayout(false);
             this.calculationOptionsPanel.ResumeLayout(false);

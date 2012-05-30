@@ -72,7 +72,7 @@
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.splitContainerProjSusp = new System.Windows.Forms.SplitContainer();
             this.buttonTest = new System.Windows.Forms.Button();
-            this.hydrocycloneControl1 = new CalculatorModules.Hydrocyclone.HydrocycloneControl();
+            this.hydrocycloneControl1 = new CalculatorModules.Hydrocyclone.fsHydrocycloneControl();
             this.panelProjectMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fmDataGridProject)).BeginInit();
             this.panelProjectTop.SuspendLayout();
@@ -656,7 +656,7 @@
         private System.Windows.Forms.SplitContainer splitContainerProjSusp;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Splitter splitter2;
-        private CalculatorModules.Hydrocyclone.HydrocycloneControl hydrocycloneControl1;
+        private CalculatorModules.Hydrocyclone.fsHydrocycloneControl hydrocycloneControl1;
     }
 }
 

@@ -300,7 +300,7 @@ namespace CalculatorModules
 
         #endregion
 
-        public void SetUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
+        public virtual void SetUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
         {
             StopGridsEdit();
 
@@ -319,7 +319,7 @@ namespace CalculatorModules
             Recalculate();
         }
 
-        protected virtual void StopGridsEdit()
+        protected internal virtual void StopGridsEdit()
         {
             throw new Exception("You must implement StopGridsEdit in derivative class.");
         }

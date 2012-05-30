@@ -1615,13 +1615,13 @@ namespace CyclonPlus
             switch (option)
             {
                 case "Dp":
-                    return HydrocycloneControl.fsCalculationOption.Dp;
+                    return fsHydrocycloneControl.fsCalculationOption.Dp;
                 case "n":
-                    return HydrocycloneControl.fsCalculationOption.n;
+                    return fsHydrocycloneControl.fsCalculationOption.n;
                 case "Q":
-                    return HydrocycloneControl.fsCalculationOption.Q;
+                    return fsHydrocycloneControl.fsCalculationOption.Q;
                 default:
-                    return HydrocycloneControl.fsCalculationOption.Dp;
+                    return fsHydrocycloneControl.fsCalculationOption.Dp;
             }
         }
     }

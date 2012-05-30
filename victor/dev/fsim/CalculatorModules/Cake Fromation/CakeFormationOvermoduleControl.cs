@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CalculatorModules.BeltFiltersWithReversibleTrays;
+using Units;
 
 namespace CalculatorModules.Cake_Fromation
 {
     public partial class fsCakeFormationOvermoduleControl : fsCalculatorControl
     {
         private readonly Dictionary<string, fsCakeFormationBaseControl> m_moduleNameToControl = new Dictionary<string, fsCakeFormationBaseControl>();
-        private fsCakeFormationBaseControl m_currentModule;
+        private fsCakeFormationBaseControl m_currentCalculatorControl;
 
         public fsCakeFormationOvermoduleControl()
         {
             InitializeComponent();
 
-            AddModule(new fsContinuousNonModularBeltFilterControl(), "Continuous Belt Filters (Non Modular)");
-            AddModule(new fsContinuousModularBeltFilterControl(), "Continuous Belt Filters (Modular)");
-            AddModule(new fsBeltFilterWithReversibleTrayControl(), "Belt Filter With Reversible Tray");
-            AddModule(new fsCommonCakeFormationControl(),
+            AddCalculatorControl(new fsContinuousNonModularBeltFilterControl(), "Continuous Belt Filters (Non Modular)");
+            AddCalculatorControl(new fsContinuousModularBeltFilterControl(), "Continuous Belt Filters (Modular)");
+            AddCalculatorControl(new fsBeltFilterWithReversibleTrayControl(), "Belt Filter With Reversible Tray");
+            AddCalculatorControl(new fsCommonCakeFormationControl(),
                 "Drum Filters",
                 "Disc Filters",
                 "Pan Filters",
@@ -29,7 +30,7 @@ namespace CalculatorModules.Cake_Fromation
                 "Pneuma Press",
                 "Laboratory Pressure Nutsche Filter",
                 "Laboratory Vacuum Filter");
-            ChangeAndShowCurrentModule();
+            ChangeAndShowCurrentCalculatorControl();
         }
 
         public override Control ControlToResizeForExpanding
@@ -38,64 +39,72 @@ namespace CalculatorModules.Cake_Fromation
             set
             {
                 base.ControlToResizeForExpanding = value;
-                foreach (fsCalculatorControl module in m_moduleNameToControl.Values)
+                foreach (fsCakeFormationBaseControl calculatorControl in m_moduleNameToControl.Values)
                 {
-                    module.ControlToResizeForExpanding = ControlToResizeForExpanding;
+                    calculatorControl.ControlToResizeForExpanding = ControlToResizeForExpanding;
                 }
+            }
+        }
+
+        public override void SetUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
+        {
+            foreach (fsCakeFormationBaseControl calculatorControl in m_moduleNameToControl.Values)
+            {
+                calculatorControl.SetUnits(dictionary);
             }
         }
 
         #region Internal Routines
 
-        private void AddModule(
-            fsCakeFormationBaseControl moduleControl,
+        private void AddCalculatorControl(
+            fsCakeFormationBaseControl calculatorControl,
             params string [] moduleNames)
         {
             foreach (string moduleName in moduleNames)
             {
                 comboBox1.Items.Add(moduleName);
-                m_moduleNameToControl.Add(moduleName, moduleControl);
+                m_moduleNameToControl.Add(moduleName, calculatorControl);
             }
             comboBox1.SelectedItem = comboBox1.Items[0];
         }
 
         private void ComboBox1SelectedIndexChanged(object sender, EventArgs e)
         {
-            ChangeAndShowCurrentModule();
+            ChangeAndShowCurrentCalculatorControl();
         }
 
-        private void ChangeAndShowCurrentModule()
+        private void ChangeAndShowCurrentCalculatorControl()
         {
-            fsCakeFormationBaseControl lastModule = m_currentModule;
+            fsCakeFormationBaseControl lastCalculatorControl = m_currentCalculatorControl;
 
             foreach (var keyValue in m_moduleNameToControl)
             {
                 if (keyValue.Key == comboBox1.Text)
                 {
-                    m_currentModule = keyValue.Value;
+                    m_currentCalculatorControl = keyValue.Value;
                     break;
                 }
             }
 
-            if (m_currentModule != null)
+            if (m_currentCalculatorControl != null)
             {
-                m_currentModule.Parent = panel1;
-                m_currentModule.Dock = DockStyle.Fill;
+                m_currentCalculatorControl.Parent = panel1;
+                m_currentCalculatorControl.Dock = DockStyle.Fill;
 
-                if (lastModule != null)
+                if (lastCalculatorControl != null)
                 {
-                    m_currentModule.SetCalculationOption(lastModule.GetCalculationOption());
-                    m_currentModule.SetMaterialParametersTableVisible(lastModule.GetMaterialParametersTableVisible());
-                    m_currentModule.SetDiagramVisible(lastModule.GetDiagramVisible());
-                    m_currentModule.SetValues(lastModule.GetValues());
+                    m_currentCalculatorControl.SetCalculationOption(lastCalculatorControl.GetCalculationOption());
+                    m_currentCalculatorControl.SetMaterialParametersTableVisible(lastCalculatorControl.GetMaterialParametersTableVisible());
+                    m_currentCalculatorControl.SetDiagramVisible(lastCalculatorControl.GetDiagramVisible());
+                    m_currentCalculatorControl.SetValues(lastCalculatorControl.GetValues());
                 }
             }
 
-            foreach (fsCakeFormationBaseControl module in m_moduleNameToControl.Values)
+            foreach (fsCakeFormationBaseControl calculatorControl in m_moduleNameToControl.Values)
             {
-                if (module != m_currentModule)
+                if (calculatorControl != m_currentCalculatorControl)
                 {
-                    module.Parent = null;
+                    calculatorControl.Parent = null;
                 }
             }
         }
