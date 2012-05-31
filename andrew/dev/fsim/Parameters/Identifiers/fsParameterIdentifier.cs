@@ -69,6 +69,9 @@ namespace Parameters
                                                                                             fsCharacteristic.
                                                                                                 CakeResistanceAlpha);
 
+        //public static fsParameterIdentifier K_is_a_new_parametr = new fsParameterIdentifier("K", "K full name", fsCharacteristic.)
+
+
         public static fsParameterIdentifier FilterArea = 
             new fsParameterIdentifier("A", "Filter Area", fsCharacteristic.Area);
 
@@ -151,6 +154,12 @@ namespace Parameters
 
         public static fsParameterIdentifier SpecificSuspensionVolume =
             new fsParameterIdentifier("vsus", "Specific susp volume", fsCharacteristic.SpecificVolume);
+
+        public static fsParameterIdentifier FiltrateVolume =
+            new fsParameterIdentifier("Vf", "Fitrate Volume", fsCharacteristic.Volume);
+
+        public static fsParameterIdentifier CakeVolume =
+            new fsParameterIdentifier("Vc", "Cake Mass", fsCharacteristic.Volume);
 
         public static fsParameterIdentifier SuspensionMassFlowrate = 
             new fsParameterIdentifier("Qmsus", fsCharacteristic.MassFlowrate);

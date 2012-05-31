@@ -25,9 +25,13 @@ namespace CalculatorModules
                 fsParameterIdentifier.SuspensionSolidsMassFraction,
                 fsParameterIdentifier.SuspensionSolidsVolumeFraction,
                 fsParameterIdentifier.SuspensionSolidsConcentration);
+            fsParametersGroup neGroup = AddGroup(
+                fsParameterIdentifier.Ne);
             fsParametersGroup epsKappaGroup = AddGroup(
-                fsParameterIdentifier.CakePorosity0,
-                fsParameterIdentifier.Kappa0);
+                fsParameterIdentifier.CakePorosity,
+                fsParameterIdentifier.DryCakeDensity,
+                fsParameterIdentifier.Kappa,
+                fsParameterIdentifier.CakeMoistureContentRf);
             fsParametersGroup viscosityGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidViscosity);
             fsParametersGroup pc0Rc0Alpha0Group = AddGroup(
@@ -36,19 +40,31 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakeResistanceAlpha0,
                 fsParameterIdentifier.CakePermeability,
                 fsParameterIdentifier.CakeResistance,
-                fsParameterIdentifier.CakeResistanceAlpha);
+                fsParameterIdentifier.CakeResistanceAlpha
+                //,fsParameterIdentifier.K
+                );
             fsParametersGroup ncGroup = AddGroup(
                 fsParameterIdentifier.CakeCompressibility);
             fsParametersGroup hceGroup = AddGroup(
-                fsParameterIdentifier.FilterMediumResistanceHce0);
+                fsParameterIdentifier.FilterMediumResistanceHce0,
+                fsParameterIdentifier.FilterMediumResistanceRm0);
             fsParametersGroup pressureGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);
             fsParametersGroup areaGroup = AddGroup(
                 fsParameterIdentifier.FilterArea);
             fsParametersGroup cakeFormationGroup = AddGroup(
-                fsParameterIdentifier.CakeHeight,
                 fsParameterIdentifier.FiltrationTime,
-                fsParameterIdentifier.SuspensionMass);
+                fsParameterIdentifier.CakeHeight,
+                fsParameterIdentifier.SuspensionMass,
+                fsParameterIdentifier.FiltrateMass,
+                fsParameterIdentifier.CakeMass,
+                fsParameterIdentifier.SolidsMass,
+                fsParameterIdentifier.qmft,
+                fsParameterIdentifier.SuspensionVolume,
+                fsParameterIdentifier.FiltrateVolume,
+                fsParameterIdentifier.CakeVolume,
+                fsParameterIdentifier.SolidsVolume,
+                fsParameterIdentifier.qft);
             fsParametersGroup resultsGroup = AddGroup(
                 fsParameterIdentifier.SolidsMassInSuspension,
                 fsParameterIdentifier.LiquidMassInSuspension);
@@ -59,6 +75,7 @@ namespace CalculatorModules
                                  filtrateGroup,
                                  solidsGroup,
                                  concentrationGroup,
+                                 neGroup,
                                  epsKappaGroup,
                                  viscosityGroup,
                                  pc0Rc0Alpha0Group,
