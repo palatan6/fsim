@@ -15,7 +15,9 @@ namespace CalculatorModules
             Calculators.Add(new fsPorosityCalculator());
             Calculators.Add(new fsPermeabilityCalculator());
             Calculators.Add(new fsLaboratoryFiltrationCalculator());
-
+            
+            fsParametersGroup ncGroup = AddGroup(
+                fsParameterIdentifier.CakeCompressibility);
             fsParametersGroup filtrateGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidDensity);
             fsParametersGroup solidsGroup = AddGroup(
@@ -45,8 +47,6 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakePermeability,
                 fsParameterIdentifier.CakeResistance,
                 fsParameterIdentifier.CakeResistanceAlpha);
-            fsParametersGroup ncGroup = AddGroup(
-                fsParameterIdentifier.CakeCompressibility);
             fsParametersGroup hceGroup = AddGroup(
                 fsParameterIdentifier.FilterMediumResistanceHce0,
                 fsParameterIdentifier.FilterMediumResistanceRm0);
@@ -74,10 +74,10 @@ namespace CalculatorModules
 
             var groups = new[]
                              {
+                                 neGroup,
                                  filtrateGroup,
                                  solidsGroup,
                                  concentrationGroup,
-                                 neGroup,
                                  epsKappaGroup,
                                  viscosityGroup,
                                  pc0Rc0Alpha0Group,
@@ -119,6 +119,14 @@ namespace CalculatorModules
         protected override void UpdateGroupsInputInfoFromCalculationOptions()
         {
             // this control hasn't calculation options
+        }
+
+        protected override void UpdateUIFromData()
+        {
+            ParameterToCell[fsParameterIdentifier.Ne].OwningRow.Visible = false;
+            ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = false;
+            ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Visible = false;
+            ParameterToCell[fsParameterIdentifier.Kappa0].OwningRow.Visible = false;
         }
     }
 }
