@@ -28,6 +28,10 @@ namespace CalculatorModules
             fsParametersGroup neGroup = AddGroup(
                 fsParameterIdentifier.Ne);
             fsParametersGroup epsKappaGroup = AddGroup(
+                fsParameterIdentifier.CakePorosity0,
+                fsParameterIdentifier.DryCakeDensity0,
+                fsParameterIdentifier.Kappa0,
+                fsParameterIdentifier.CakeMoistureContentRf0,
                 fsParameterIdentifier.CakePorosity,
                 fsParameterIdentifier.DryCakeDensity,
                 fsParameterIdentifier.Kappa,
@@ -40,9 +44,7 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakeResistanceAlpha0,
                 fsParameterIdentifier.CakePermeability,
                 fsParameterIdentifier.CakeResistance,
-                fsParameterIdentifier.CakeResistanceAlpha
-                //,fsParameterIdentifier.K
-                );
+                fsParameterIdentifier.CakeResistanceAlpha);
             fsParametersGroup ncGroup = AddGroup(
                 fsParameterIdentifier.CakeCompressibility);
             fsParametersGroup hceGroup = AddGroup(
