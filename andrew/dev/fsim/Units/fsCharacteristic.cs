@@ -281,6 +281,13 @@ namespace Units
             }
         );
 
+        public static fsCharacteristic PracticalCakePermeability = new fsCharacteristic(
+            "Practical Cake Permeability",
+            new[] {
+                fsUnit.SquareSantiMeterPerBarPerMinute
+            }
+        );
+
         #endregion
     }
 }

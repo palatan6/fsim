@@ -2,6 +2,7 @@
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
+using Value;
 
 namespace CalculatorModules
 {
@@ -15,9 +16,10 @@ namespace CalculatorModules
             Calculators.Add(new fsPorosityCalculator());
             Calculators.Add(new fsPermeabilityCalculator());
             Calculators.Add(new fsLaboratoryFiltrationCalculator());
-            
-            fsParametersGroup ncGroup = AddGroup(
-                fsParameterIdentifier.CakeCompressibility);
+
+
+            #region Groups
+
             fsParametersGroup filtrateGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidDensity);
             fsParametersGroup solidsGroup = AddGroup(
@@ -29,6 +31,8 @@ namespace CalculatorModules
                 fsParameterIdentifier.SuspensionSolidsConcentration);
             fsParametersGroup neGroup = AddGroup(
                 fsParameterIdentifier.Ne);
+            fsParametersGroup ncGroup = AddGroup(
+                fsParameterIdentifier.CakeCompressibility);
             fsParametersGroup epsKappaGroup = AddGroup(
                 fsParameterIdentifier.CakePorosity0,
                 fsParameterIdentifier.DryCakeDensity0,
@@ -46,14 +50,15 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakeResistanceAlpha0,
                 fsParameterIdentifier.CakePermeability,
                 fsParameterIdentifier.CakeResistance,
-                fsParameterIdentifier.CakeResistanceAlpha);
+                fsParameterIdentifier.CakeResistanceAlpha,
+                fsParameterIdentifier.PracticalCakePermeability);
             fsParametersGroup hceGroup = AddGroup(
                 fsParameterIdentifier.FilterMediumResistanceHce0,
                 fsParameterIdentifier.FilterMediumResistanceRm0);
-            fsParametersGroup pressureGroup = AddGroup(
-                fsParameterIdentifier.PressureDifference);
             fsParametersGroup areaGroup = AddGroup(
                 fsParameterIdentifier.FilterArea);
+            fsParametersGroup pressureGroup = AddGroup(
+                fsParameterIdentifier.PressureDifference);
             fsParametersGroup cakeFormationGroup = AddGroup(
                 fsParameterIdentifier.FiltrationTime,
                 fsParameterIdentifier.CakeHeight,
@@ -67,27 +72,22 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakeVolume,
                 fsParameterIdentifier.SolidsVolume,
                 fsParameterIdentifier.qft);
-            fsParametersGroup resultsGroup = AddGroup(
-                fsParameterIdentifier.SolidsMassInSuspension,
-                fsParameterIdentifier.LiquidMassInSuspension);
-
-
+            
             var groups = new[]
                              {
-                                 neGroup,
+                                 viscosityGroup,
                                  filtrateGroup,
                                  solidsGroup,
                                  concentrationGroup,
                                  epsKappaGroup,
-                                 viscosityGroup,
-                                 pc0Rc0Alpha0Group,
+                                 neGroup,
                                  ncGroup,
+                                 pc0Rc0Alpha0Group,
                                  hceGroup,
-                                 pressureGroup,
                                  areaGroup,
+                                 pressureGroup,
                                  cakeFormationGroup,
-                                 resultsGroup
-                               };
+                             };
 
             var colors = new[]
                              {
@@ -100,9 +100,15 @@ namespace CalculatorModules
                 groups[i].SetIsInputFlag(true);
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
-            resultsGroup.SetIsInputFlag(false);
-            ParameterToCell[fsParameterIdentifier.SolidsMassInSuspension].ReadOnly = true;
-            ParameterToCell[fsParameterIdentifier.LiquidMassInSuspension].ReadOnly = true;
+            
+            ParameterToCell[fsParameterIdentifier.Ne].OwningRow.Visible = false;
+            ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = false;
+            ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Visible = false;
+            ParameterToCell[fsParameterIdentifier.Kappa0].OwningRow.Visible = false;
+
+            #endregion
+
+            AssignDefaultValues();
 
             UpdateGroupsInputInfoFromCalculationOptions();
             UpdateEquationsFromCalculationOptions();
@@ -110,6 +116,12 @@ namespace CalculatorModules
             UpdateUIFromData();
             ConnectUIWithDataUpdating(dataGrid);
         }
+
+        private void AssignDefaultValues()
+        {
+            Values[fsParameterIdentifier.Ne].Value = new fsValue(0);
+        }
+
 
         protected override void UpdateEquationsFromCalculationOptions()
         {
@@ -119,14 +131,6 @@ namespace CalculatorModules
         protected override void UpdateGroupsInputInfoFromCalculationOptions()
         {
             // this control hasn't calculation options
-        }
-
-        protected override void UpdateUIFromData()
-        {
-            ParameterToCell[fsParameterIdentifier.Ne].OwningRow.Visible = false;
-            ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = false;
-            ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Visible = false;
-            ParameterToCell[fsParameterIdentifier.Kappa0].OwningRow.Visible = false;
         }
     }
 }

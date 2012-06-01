@@ -68,6 +68,10 @@ namespace Parameters
         public static fsParameterIdentifier CakeResistanceAlpha = new fsParameterIdentifier("alpha", "Cake Resistance",
                                                                                             fsCharacteristic.
                                                                                                 CakeResistanceAlpha);
+
+        public static fsParameterIdentifier PracticalCakePermeability =
+            new fsParameterIdentifier("K", "Practical cake permeability", fsCharacteristic.PracticalCakePermeability);
+        
         public static fsParameterIdentifier FilterArea = 
             new fsParameterIdentifier("A", "Filter Area", fsCharacteristic.Area);
 
