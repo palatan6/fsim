@@ -100,7 +100,6 @@ namespace CalculatorModules
                 groups[i].SetIsInputFlag(true);
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
-            //resultsGroup.SetIsInputFlag(false);
             
             ParameterToCell[fsParameterIdentifier.Ne].OwningRow.Visible = false;
             ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = false;

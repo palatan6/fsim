@@ -42,7 +42,6 @@ namespace StepCalculators
             m_area = AddConstant(fsParameterIdentifier.FilterArea);
             m_nc = AddConstant(fsParameterIdentifier.CakeCompressibility);
             m_rhosus = AddConstant(fsParameterIdentifier.SuspensionDensity);
-            //m_rhosus = AddVariable(fsParameterIdentifier.SuspensionDensity);
             m_eps0 = AddConstant(fsParameterIdentifier.CakePorosity0);
             m_solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
             m_cm = AddConstant(fsParameterIdentifier.SuspensionSolidsMassFraction);
@@ -57,7 +56,6 @@ namespace StepCalculators
             m_mf = AddVariable(fsParameterIdentifier.FiltrateMass);
             m_mc = AddVariable(fsParameterIdentifier.CakeMass);
             m_ms = AddVariable(fsParameterIdentifier.SolidsMass);
-
 
             #endregion
 
