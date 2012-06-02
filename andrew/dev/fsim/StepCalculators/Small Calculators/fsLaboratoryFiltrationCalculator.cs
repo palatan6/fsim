@@ -5,8 +5,7 @@ namespace StepCalculators
 {
     public class fsLaboratoryFiltrationCalculator : fsCalculator
     {
-
-        readonly fsCalculatorConstant m_hce0;
+        readonly fsCalculatorVariable m_hce0;
         readonly fsCalculatorConstant m_viscosity;
         readonly fsCalculatorConstant m_pc0;
         readonly fsCalculatorConstant m_kappa0;
@@ -22,28 +21,43 @@ namespace StepCalculators
         readonly fsCalculatorVariable m_suspensionMass;
         readonly fsCalculatorVariable m_solidsMass;
         readonly fsCalculatorVariable m_liquidMass;
+        readonly fsCalculatorVariable m_Rm0;
+        readonly fsCalculatorVariable m_mf;
+        readonly fsCalculatorVariable m_ms;
+        readonly fsCalculatorVariable m_mc;
+        readonly fsCalculatorConstant m_rhosus;
+        readonly fsCalculatorConstant m_kappa;
+        readonly fsCalculatorConstant m_rho;
 
         public fsLaboratoryFiltrationCalculator()
         {
             #region Parameters Initialization
 
-            m_hce0 = AddConstant(fsParameterIdentifier.FilterMediumResistanceHce0);
+            m_rho = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
+            m_hce0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceHce0);
             m_viscosity = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
             m_pc0 = AddConstant(fsParameterIdentifier.CakePermeability0);
             m_kappa0 = AddConstant(fsParameterIdentifier.Kappa0);
             m_pressure = AddConstant(fsParameterIdentifier.PressureDifference);
             m_area = AddConstant(fsParameterIdentifier.FilterArea);
             m_nc = AddConstant(fsParameterIdentifier.CakeCompressibility);
-            AddConstant(fsParameterIdentifier.SuspensionDensity);
+            m_rhosus = AddConstant(fsParameterIdentifier.SuspensionDensity);
+            //m_rhosus = AddVariable(fsParameterIdentifier.SuspensionDensity);
             m_eps0 = AddConstant(fsParameterIdentifier.CakePorosity0);
             m_solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
             m_cm = AddConstant(fsParameterIdentifier.SuspensionSolidsMassFraction);
+            m_kappa = AddConstant(fsParameterIdentifier.Kappa);
             m_pc = AddVariable(fsParameterIdentifier.CakePermeability);
             m_hc = AddVariable(fsParameterIdentifier.CakeHeight);
             m_formationTime = AddVariable(fsParameterIdentifier.FiltrationTime);
             m_solidsMass = AddVariable(fsParameterIdentifier.SolidsMassInSuspension);
             m_liquidMass = AddVariable(fsParameterIdentifier.LiquidMassInSuspension);
             m_suspensionMass = AddVariable(fsParameterIdentifier.SuspensionMass);
+            m_Rm0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceRm0);
+            m_mf = AddVariable(fsParameterIdentifier.FiltrateMass);
+            m_mc = AddVariable(fsParameterIdentifier.CakeMass);
+            m_ms = AddVariable(fsParameterIdentifier.SolidsMass);
+
 
             #endregion
 
@@ -54,6 +68,9 @@ namespace StepCalculators
             AddEquation(new fsSuspensionMassFromHcEpsPlainAreaEquation(m_suspensionMass, m_eps0, m_solidsDensity, m_area, m_hc, m_cm));
             AddEquation(new fsProductEquation(m_solidsMass, m_suspensionMass, m_cm));
             AddEquation(new fsSumEquation(m_suspensionMass, m_solidsMass, m_liquidMass));
+            AddEquation(new fsRm0FromHcePc0(m_Rm0, m_hce0, m_pc0));
+            AddEquation(new fsMsusFromHcRhosusAKappa(m_suspensionMass, m_rhosus, m_area, m_hc, m_kappa));
+            AddEquation(new fsMfFromHc(m_mf, m_rho, m_area, m_hc, m_kappa));
 
             #endregion
         }

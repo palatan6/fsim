@@ -52,6 +52,9 @@
     <Compile Include="Belt Filters with Reversible Trays\fsTrSrTtechNsTcEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsUFromLsOverBQmsHcDpTtech0LambdaNsfMaterialEquation.cs" />
     <Compile Include="Cake Formation\fsCakeHeightFrom_Dp_tfEquation.cs" />
+    <Compile Include="Cake Formation\fsMfFromHc.cs" />
+    <Compile Include="Cake Formation\fsMsusFromHcRhosusAKappa.cs" />
+    <Compile Include="Cake Formation\fsRm0FromHcePc0.cs" />
     <Compile Include="Hydrocyclone\fsCOverflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsCUnderflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsDFromxRed50QnDuOverDEquation.cs" />
@@ -64,6 +67,7 @@
     <Compile Include="Hydrocyclone\fsReducedTotalEfficiencyEquation.cs" />
     <Compile Include="Hydrocyclone\fsReynoldsFromXRed50Equation.cs" />
     <Compile Include="Hydrocyclone\fsTotalEfficiencyEquation.cs" />
+    <Compile Include="Cake Formation\fsKFromPcEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentFromCakeSaturationEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentFromDensitiesAndPorosityEquation.cs" />

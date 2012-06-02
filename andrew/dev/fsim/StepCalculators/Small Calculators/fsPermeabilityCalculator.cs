@@ -24,6 +24,11 @@ namespace StepCalculators
             fsCalculatorVariable rc = AddVariable(fsParameterIdentifier.CakeResistance);
             fsCalculatorVariable alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
 
+            fsCalculatorVariable K = AddVariable(fsParameterIdentifier.PracticalCakePermeability);
+            fsCalculatorVariable hc = AddVariable(fsParameterIdentifier.CakeHeight);
+            fsCalculatorVariable eta = AddVariable(fsParameterIdentifier.MotherLiquidViscosity);
+            fsCalculatorVariable hce0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceHce0);
+
             #endregion
 
             #region Equations Initialization
@@ -33,7 +38,8 @@ namespace StepCalculators
             AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
             AddEquation(new fsDivisionInverseEquation(pc, rc));
             AddEquation(new fsAlphaPcEquation(alpha, pc, eps, rhoS));
-
+            AddEquation(new fsKFromPcEquation(K, hc, pc, eta, hce0));
+            
             #endregion
         }
     }

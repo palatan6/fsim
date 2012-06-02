@@ -37,7 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="For Calculators\fsCalculatorConstant.cs" />
-    <Compile Include="For Calculators\fsCalculatorVariable.cs" />
+    <Compile Include="Interfaces\fsCalculatorVariable.cs" />
     <Compile Include="fsCalculatorParameter.cs" />
     <Compile Include="fsJustValueParameter.cs" />
     <Compile Include="fsSimulationModuleParameter.cs" />
