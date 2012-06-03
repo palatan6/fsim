@@ -1,4 +1,4 @@
-﻿using CalculatorModules.Cake_Fromation;
+﻿using CalculatorModules.Cake_Formation;
 using Parameters;
 using StepCalculators.Simulation_Calculators;
 
@@ -51,7 +51,7 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
 
             fsParametersGroup timeQGroup = AddGroup(
                 fsParameterIdentifier.u,
-                fsParameterIdentifier.RotationalSpeed,
+                fsParameterIdentifier.CycleFrequency,
                 fsParameterIdentifier.CycleTime,
                 fsParameterIdentifier.CakeHeight,
                 fsParameterIdentifier.FiltrationTime,
@@ -121,7 +121,7 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
 
             fsParametersGroup cycleGroup = AddGroup(
                 fsParameterIdentifier.u,
-                fsParameterIdentifier.RotationalSpeed,
+                fsParameterIdentifier.CycleFrequency,
                 fsParameterIdentifier.CycleTime,
                 fsParameterIdentifier.nsf,
                 fsParameterIdentifier.nsr,

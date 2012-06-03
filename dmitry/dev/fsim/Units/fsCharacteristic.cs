@@ -54,7 +54,7 @@ namespace Units
             "Length",
             new[] {
                 fsUnit.MilliMeter,
-                fsUnit.SantiMeter,
+                fsUnit.CentiMeter,
                 fsUnit.DeciMeter,
                 fsUnit.Meter
             }
@@ -64,7 +64,7 @@ namespace Units
             "Cake Height",
             new[] {
                 fsUnit.MilliMeter,
-                fsUnit.SantiMeter,
+                fsUnit.CentiMeter,
                 fsUnit.DeciMeter,
                 fsUnit.Meter
             }
@@ -75,7 +75,7 @@ namespace Units
             new[] {
                 fsUnit.Meter,
                 fsUnit.DeciMeter,
-                fsUnit.SantiMeter,
+                fsUnit.CentiMeter,
                 fsUnit.MilliMeter
             }
         );
@@ -83,7 +83,7 @@ namespace Units
         public static fsCharacteristic Area = new fsCharacteristic(
             "Area",
             new[] {
-                fsUnit.SquareSantiMeter,
+                fsUnit.SquareCentiMeter,
                 fsUnit.SquareDeciMeter,
                 fsUnit.SquareMeter,
             }
@@ -147,11 +147,19 @@ namespace Units
             }
         );
 
+        public static fsCharacteristic CakeWashOutConcentration = new fsCharacteristic(
+            "Cake wash out concentration",
+            new[]{
+                fsUnit.GrammePerLiter,
+                fsUnit.KiloGrammePerCubicMeter
+            }
+        );
+
         public static fsCharacteristic Density = new fsCharacteristic(
             "Density",
             new[] {
                 fsUnit.KiloGrammePerCubicMeter,
-                fsUnit.GrammePerCubicSantiMeter
+                fsUnit.GrammePerCubicCentiMeter
             }
         );
 
@@ -251,6 +259,14 @@ namespace Units
             }
         );
 
+        public static fsCharacteristic PracticalCakePermeability = new fsCharacteristic(
+            "Practical cake permeability",
+            new[] {
+                fsUnit.SquareCentimeterPerBarMin,
+                fsUnit.SquareMeterPerPaSec
+            }
+        );
+
         public static fsCharacteristic CakeResistance = new fsCharacteristic(
             "Cake resistance",
             new[] {
@@ -278,6 +294,14 @@ namespace Units
                 fsUnit.Micrometer,
                 fsUnit.MilliMeter,
                 fsUnit.Meter
+            }
+        );
+
+        public static fsCharacteristic WashRatioWv = new fsCharacteristic(
+            "Wash ratio",
+            new[] {
+                fsUnit.LiterPerKiloGramme,
+                fsUnit.CubicMeterPerKiloGramme
             }
         );
 

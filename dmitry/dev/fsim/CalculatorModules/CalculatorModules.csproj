@@ -88,28 +88,28 @@
     <Compile Include="BeltFiltersWithReversibleTrays\BeltFilterWithReversibleTrayControl.Designer.cs">
       <DependentUpon>BeltFilterWithReversibleTrayControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cake Fromation\CakeFormationBaseControl.cs">
+    <Compile Include="Cake Formation\CakeFormationBaseControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Cake Fromation\CakeFormationBaseControl.Designer.cs">
+    <Compile Include="Cake Formation\CakeFormationBaseControl.Designer.cs">
       <DependentUpon>CakeFormationBaseControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cake Fromation\CommonCakeFormationControl.cs">
+    <Compile Include="Cake Formation\CommonCakeFormationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Cake Fromation\CommonCakeFormationControl.Designer.cs">
+    <Compile Include="Cake Formation\CommonCakeFormationControl.Designer.cs">
       <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cake Fromation\ContinuousModularBeltFilterControl.cs">
+    <Compile Include="Cake Formation\ContinuousModularBeltFilterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Cake Fromation\ContinuousModularBeltFilterControl.Designer.cs">
+    <Compile Include="Cake Formation\ContinuousModularBeltFilterControl.Designer.cs">
       <DependentUpon>ContinuousModularBeltFilterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cake Fromation\ContinuousNonModularBeltFilterControl.cs">
+    <Compile Include="Cake Formation\ContinuousNonModularBeltFilterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Cake Fromation\ContinuousNonModularBeltFilterControl.Designer.cs">
+    <Compile Include="Cake Formation\ContinuousNonModularBeltFilterControl.Designer.cs">
       <DependentUpon>ContinuousNonModularBeltFilterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CakeMoistureContentFromCakeSaturationControl.cs">
@@ -236,11 +236,11 @@
       <DependentUpon>BeltFilterWithReversibleTrayControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cake Fromation\CakeFormationBaseControl.resx">
+    <EmbeddedResource Include="Cake Formation\CakeFormationBaseControl.resx">
       <DependentUpon>CakeFormationBaseControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cake Fromation\ContinuousModularBeltFilterControl.resx">
+    <EmbeddedResource Include="Cake Formation\ContinuousModularBeltFilterControl.resx">
       <DependentUpon>ContinuousModularBeltFilterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CakeMoistureContentFromCakeSaturationControl.resx">

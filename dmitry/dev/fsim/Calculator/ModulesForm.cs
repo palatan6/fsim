@@ -7,7 +7,7 @@ using CalculatorModules.Base_Controls;
 using CalculatorModules.BeltFiltersWithReversibleTrays;
 using CalculatorModules.Hydrocyclone;
 using CalculatorModules.CakeWashing;
-using CalculatorModules.Cake_Fromation;
+using CalculatorModules.Cake_Formation;
 
 namespace Calculator
 {

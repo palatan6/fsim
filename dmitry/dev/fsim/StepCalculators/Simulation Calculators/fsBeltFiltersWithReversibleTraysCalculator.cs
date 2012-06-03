@@ -37,7 +37,7 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter lsOverB = AddVariable(fsParameterIdentifier.ls_over_b);
 
             IEquationParameter u = AddVariable(fsParameterIdentifier.u);
-            IEquationParameter n = AddVariable(fsParameterIdentifier.RotationalSpeed);
+            IEquationParameter n = AddVariable(fsParameterIdentifier.CycleFrequency);
             IEquationParameter tc = AddVariable(fsParameterIdentifier.CycleTime);
             IEquationParameter nsf = AddVariable(fsParameterIdentifier.nsf);
             IEquationParameter nsr = AddVariable(fsParameterIdentifier.nsr);

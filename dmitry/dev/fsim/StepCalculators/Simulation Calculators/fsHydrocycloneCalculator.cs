@@ -34,8 +34,8 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter numberOfCyclones = AddVariable(fsParameterIdentifier.NumberOfCyclones);
             IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
 
-            IEquationParameter Q = AddVariable(fsParameterIdentifier.FeedVolumeFlowRate);
-            IEquationParameter Qm = AddVariable(fsParameterIdentifier.FeedSolidsMassFlowRate);
+            IEquationParameter Q = AddVariable(fsParameterIdentifier.VolumeFlowRate);
+            IEquationParameter Qm = AddVariable(fsParameterIdentifier.MassFlowRate);
             IEquationParameter Qms = AddVariable(fsParameterIdentifier.Qms);
 
             IEquationParameter Cu = AddVariable(fsParameterIdentifier.UnderflowSolidsConcentration);

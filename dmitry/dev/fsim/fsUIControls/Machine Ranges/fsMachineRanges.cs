@@ -97,7 +97,7 @@ namespace CalculatorModules.Machine_Ranges
                                                              fsUnit.Bar, 0.1, 10),
                                         new fsParameterRange(fsParameterIdentifier.CakeHeight,
                                                              fsUnit.MilliMeter, 1, 1000),
-                                        new fsParameterRange(fsParameterIdentifier.RotationalSpeed,
+                                        new fsParameterRange(fsParameterIdentifier.CycleFrequency,
                                                              fsUnit.PerMinute, 0.1, 5),
                                         new fsParameterRange(fsParameterIdentifier.CycleTime,
                                                              fsUnit.Minute, 1, 600),
@@ -126,7 +126,7 @@ namespace CalculatorModules.Machine_Ranges
                                 new[]
                                     {
                                         new fsParameterRange(fsParameterIdentifier.FilterArea,
-                                                             fsUnit.SquareSantiMeter, 0.001, 200),
+                                                             fsUnit.SquareCentiMeter, 0.001, 200),
                                         new fsParameterRange(fsParameterIdentifier.CakeHeight,
                                                              fsUnit.MilliMeter, 1, 70),
                                         new fsParameterRange(fsParameterIdentifier.CycleTime,
@@ -142,7 +142,7 @@ namespace CalculatorModules.Machine_Ranges
                                 new[]
                                     {
                                         new fsParameterRange(fsParameterIdentifier.FilterArea,
-                                                             fsUnit.SquareSantiMeter, 0.001, 200),
+                                                             fsUnit.SquareCentiMeter, 0.001, 200),
                                         new fsParameterRange(fsParameterIdentifier.PressureDifference,
                                                              fsUnit.Bar, 0.1, 0.9),
                                         new fsParameterRange(fsParameterIdentifier.CycleTime,

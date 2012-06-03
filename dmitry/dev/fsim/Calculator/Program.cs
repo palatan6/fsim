@@ -18,7 +18,7 @@ namespace Calculator
             fsCharacteristic.Time.CurrentUnit = fsUnit.Second;
             fsCharacteristic.CakeHeight.CurrentUnit = fsUnit.MilliMeter;
             fsCharacteristic.MachineGeometryLength.CurrentUnit = fsUnit.Meter;
-            fsCharacteristic.Area.CurrentUnit = fsUnit.SquareSantiMeter;
+            fsCharacteristic.Area.CurrentUnit = fsUnit.SquareCentiMeter;
             fsCharacteristic.Mass.CurrentUnit = fsUnit.Gramme;
             fsCharacteristic.Volume.CurrentUnit = fsUnit.MilliLiter;
             fsCharacteristic.MassFlowrate.CurrentUnit = fsUnit.TonPerHour;

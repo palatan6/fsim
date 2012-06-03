@@ -104,7 +104,7 @@ namespace WinFormsCakeFormationSample
                 fsParameterIdentifier.FilterArea,
                 fsParameterIdentifier.PressureDifference,
                 fsParameterIdentifier.CycleTime,
-                fsParameterIdentifier.RotationalSpeed,
+                fsParameterIdentifier.CycleFrequency,
                 fsParameterIdentifier.SpecificFiltrationTime,
                 fsParameterIdentifier.FiltrationTime,
                 fsParameterIdentifier.CakeHeight,
@@ -198,7 +198,7 @@ namespace WinFormsCakeFormationSample
 
             UpdateInputs(cell,
                 fsParameterIdentifier.CycleTime,
-                fsParameterIdentifier.RotationalSpeed);
+                fsParameterIdentifier.CycleFrequency);
 
             UpdateInputs(cell,
                 fsParameterIdentifier.FiltrationTime,

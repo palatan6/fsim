@@ -210,7 +210,7 @@ namespace fsUIControls
                     new[]
                     {
                         new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Frequency, fsUnit.PerMinute),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Area, fsUnit.SquareSantiMeter),
+                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Area, fsUnit.SquareCentiMeter),
                         new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Mass, fsUnit.Gramme),
                         new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Volume, fsUnit.MilliLiter),
                         new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.MassFlowrate, fsUnit.KiloGrammePerHour),

@@ -60,7 +60,7 @@ namespace StepCalculators
             AddEquation(new fsCylinderAreaEquation(m_filterArea, m_filterDiameter, m_filterB));
             AddEquation(new fsProductEquation(m_filterB, m_filterDiameter, m_filterBOverDiameter));
 
-            AddEquation(new fsSuspensionMassFromHcEpsConcaveCylindircAreaEquation(m_suspensionMass, m_porosity, m_solidsDensity, m_filterArea, m_filterDiameter, m_cakeHeight, m_solidsMassFraction));
+            AddEquation(new fsSuspensionMassFromHcEpsConcaveCylindricAreaEquation(m_suspensionMass, m_porosity, m_solidsDensity, m_filterArea, m_filterDiameter, m_cakeHeight, m_solidsMassFraction));
             //AddEquation(new fsSuspensionVolumeFromHcEpsConvexCylindircAreaEquation(m_suspensionVolume, m_porosity, m_filterArea, m_cakeHeight, m_solidsVolumeFraction));
             //AddEquation(new fsSuspensionVolumeFromHcKappaConvexCylindircAreaEquation(m_suspensionVolume, m_kappa, m_filterArea, m_cakeHeight));
 

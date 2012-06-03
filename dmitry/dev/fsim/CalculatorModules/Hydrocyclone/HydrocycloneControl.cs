@@ -85,8 +85,8 @@ namespace CalculatorModules.Hydrocyclone
                 fsParameterIdentifier.PressureDifference);   //Dp
 
             fsParametersGroup qGroup = AddGroup(
-                fsParameterIdentifier.FeedVolumeFlowRate,       //Q
-                fsParameterIdentifier.FeedSolidsMassFlowRate,   //Qm
+                fsParameterIdentifier.VolumeFlowRate,       //Q
+                fsParameterIdentifier.MassFlowRate,   //Qm
                 fsParameterIdentifier.Qms);                     //Qms
 
             fsParametersGroup alpha1Group = AddGroup(
@@ -220,7 +220,7 @@ namespace CalculatorModules.Hydrocyclone
             Values[fsParameterIdentifier.rf].Value = new fsValue(5e-2);
             Values[fsParameterIdentifier.ReducedCutSize].Value = new fsValue(100e-6);
             Values[fsParameterIdentifier.NumberOfCyclones].Value = new fsValue(3);
-            Values[fsParameterIdentifier.FeedVolumeFlowRate].Value = new fsValue(16900/3600.0);
+            Values[fsParameterIdentifier.VolumeFlowRate].Value = new fsValue(16900/3600.0);
 
             Values[fsParameterIdentifier.Alpha1].Value = new fsValue(0.0474);
             Values[fsParameterIdentifier.Alpha2].Value = new fsValue(0.742);
@@ -253,14 +253,14 @@ namespace CalculatorModules.Hydrocyclone
                     calculateGroup = ParameterToGroup[fsParameterIdentifier.NumberOfCyclones];
                     break;
                 case fsCalculationOption.Q:
-                    calculateGroup = ParameterToGroup[fsParameterIdentifier.FeedVolumeFlowRate];
+                    calculateGroup = ParameterToGroup[fsParameterIdentifier.VolumeFlowRate];
                     break;
             }
             var groups = new[]
                 {
                     ParameterToGroup[fsParameterIdentifier.PressureDifference],
                     ParameterToGroup[fsParameterIdentifier.NumberOfCyclones],
-                    ParameterToGroup[fsParameterIdentifier.FeedVolumeFlowRate]
+                    ParameterToGroup[fsParameterIdentifier.VolumeFlowRate]
                 };
             foreach (fsParametersGroup group in groups)
             {
