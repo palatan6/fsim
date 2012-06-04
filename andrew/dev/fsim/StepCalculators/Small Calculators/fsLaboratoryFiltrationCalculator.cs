@@ -9,6 +9,7 @@ namespace StepCalculators
         {
             #region Parameters Initialization
 
+            fsCalculatorConstant m_rhos = AddConstant(fsParameterIdentifier.SolidsDensity);
             fsCalculatorConstant m_rho = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
             fsCalculatorConstant m_eps = AddConstant(fsParameterIdentifier.CakePorosity);
             fsCalculatorConstant m_viscosity = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
@@ -39,7 +40,6 @@ namespace StepCalculators
             fsCalculatorVariable m_vc = AddVariable(fsParameterIdentifier.CakeVolume);
             fsCalculatorVariable m_vs = AddVariable(fsParameterIdentifier.SolidsVolume);
             fsCalculatorVariable m_qft = AddVariable(fsParameterIdentifier.qft);
-            fsCalculatorVariable m_rhos = AddVariable(fsParameterIdentifier.SolidsDensity);
             fsCalculatorVariable m_hce0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceHce0);
             
             #endregion
