@@ -285,7 +285,7 @@ namespace Units
             "Practical Cake Permeability",
             new[] {
                 fsUnit.SquaredSantiMeterPerBarPerMinute,
-                fsUnit.SquaredMeterPerPascalSecond
+                fsUnit.SquaredMeterPerPascalPerSecond
             }
         );
 

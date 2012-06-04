@@ -13,6 +13,10 @@ namespace StepCalculators
             fsCalculatorConstant eps0 = AddConstant(fsParameterIdentifier.CakePorosity0);
             fsCalculatorConstant eps = AddConstant(fsParameterIdentifier.CakePorosity);
 
+            fsCalculatorConstant hc = AddConstant(fsParameterIdentifier.CakeHeight);
+            fsCalculatorConstant eta = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
+            fsCalculatorConstant hce0 = AddConstant(fsParameterIdentifier.FilterMediumResistanceHce0);
+                        
             fsCalculatorVariable nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
             fsCalculatorVariable pressure = AddVariable(fsParameterIdentifier.PressureDifference);
 
@@ -25,10 +29,7 @@ namespace StepCalculators
             fsCalculatorVariable alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
 
             fsCalculatorVariable K = AddVariable(fsParameterIdentifier.PracticalCakePermeability);
-            fsCalculatorVariable hc = AddVariable(fsParameterIdentifier.CakeHeight);
-            fsCalculatorVariable eta = AddVariable(fsParameterIdentifier.MotherLiquidViscosity);
-            fsCalculatorVariable hce0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceHce0);
-
+            
             #endregion
 
             #region Equations Initialization

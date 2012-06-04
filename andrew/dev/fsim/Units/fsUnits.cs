@@ -82,7 +82,7 @@ namespace Units
         public static fsUnit CubicMeterPerSquaredMeter = new fsUnit("m3/m2", 1);
         public static fsUnit LiterPerSquaredMeter = new fsUnit("l/m2", 1e-3);
         public static fsUnit Micrometer = new fsUnit("um", 1e-6);
-        public static fsUnit SquaredMeterPerPascalSecond = new fsUnit("m2/(Pa s)", 1);
+        public static fsUnit SquaredMeterPerPascalPerSecond = new fsUnit("m2/(Pa s)", 1);
         public static fsUnit SquaredSantiMeterPerBarPerMinute = new fsUnit("cm2/(bar min)", 1e-10 / 6);
 
         #endregion
