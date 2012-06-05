@@ -140,10 +140,6 @@ namespace Calculator
             {
                 fsCalculatorControl calculatorControl = pair.Value;
                 AddModuleToTree(node, pair.Key, calculatorControl);
-                if (calculatorControl is fsOptionsAndCommentsCalculatorControl)
-                {
-                    (calculatorControl as fsOptionsAndCommentsCalculatorControl).AllowDiagramView = false;
-                }
             }
             treeNodeCollection.Add(node);
         }
