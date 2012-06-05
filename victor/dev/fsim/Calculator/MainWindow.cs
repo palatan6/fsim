@@ -13,6 +13,7 @@ namespace Calculator
     {
         private readonly List<fsModule> m_modules = new List<fsModule>();
         private int m_counter;
+        private fsModule m_currentModule;
 
         public fsMainWindow()
         {
@@ -21,18 +22,26 @@ namespace Calculator
 
         private void RebuildWindowsList()
         {
-            DataGridViewCell cell = windowsDataGrid.CurrentCell;
-            string currentWindowName = cell == null || cell.Value == null
+            string currentModuleName = m_currentModule == null
                                            ? ""
-                                           : cell.Value.ToString();
-            windowsDataGrid.Rows.Clear();
+                                           : m_currentModule.Name;
+
+            // Last to elements of Modules menu are splitter ("-") and "Add Module..."
+            // so we while there are more than two elements
+            while (modulesToolStripMenuItem.DropDownItems.Count > 2)
+            {
+                modulesToolStripMenuItem.DropDownItems.RemoveAt(0);
+            }
+
             foreach (fsModule module in m_modules)
             {
-                int ind = windowsDataGrid.Rows.Add(module.Name);
-                if (module.Name == currentWindowName)
+                int lastIndex = modulesToolStripMenuItem.DropDownItems.Count - 1 - 2;
+                var menuItem = new ToolStripMenuItem(module.Name, null, ModuleMenuItemClick);
+                if (menuItem.Text == currentModuleName)
                 {
-                    windowsDataGrid.CurrentCell = windowsDataGrid[0, ind];
+                    menuItem.Checked = true;
                 }
+                modulesToolStripMenuItem.DropDownItems.Insert(lastIndex + 1, menuItem);
             }
         }
 
@@ -50,58 +59,39 @@ namespace Calculator
             }
         }
 
-        private void WindowsDataGridCurrentCellChanged(object sender, EventArgs e)
+        private void ModuleMenuItemClick(object sender, EventArgs e)
         {
-            var dataGrid = (DataGridView) sender;
-            DataGridViewCell cell = dataGrid.CurrentCell;
-            if (cell != null && cell.Value != null)
-            {
-                string text = cell.Value.ToString();
-                foreach (fsModule module in m_modules)
-                {
-                    if (module.Name == text)
-                    {
-                        module.Form.Activate();
-                        dataGrid.Focus();
-                    }
-                }
-            }
+            SetCurrentModule((sender as ToolStripMenuItem).Text);
         }
 
-        private void AddModuleButtonClick(object sender, EventArgs e)
+        private void SetCurrentModule(string checkedModuleName)
         {
-            var modulesForm = new fsModulesForm();
-            modulesForm.ShowDialog();
-            if (modulesForm.DialogResult == DialogResult.OK)
+            if (m_currentModule != null && m_currentModule.Name == checkedModuleName)
+                return;
+
+            foreach (ToolStripItem toolStripItem in modulesToolStripMenuItem.DropDownItems)
             {
-                if (modulesForm.SelectedCalculatorControl is fsOptionsSingleTableAndCommentsCalculatorControl)
+                if (toolStripItem is ToolStripMenuItem)
                 {
-                    (modulesForm.SelectedCalculatorControl as fsOptionsSingleTableAndCommentsCalculatorControl).
-                        AllowDiagramView = true;
+                    var menuItem = (ToolStripMenuItem) toolStripItem;
+                    menuItem.Checked = menuItem.Text == checkedModuleName;
                 }
-                ++m_counter;
-                var module = new fsModule("#" + m_counter + " - " + modulesForm.SelectedCalculatorControlName,
-                                          modulesForm.SelectedCalculatorControl);
-                m_modules.Add(module);
-                module.Form.MdiParent = this;
-                module.Form.Closed += FormClose;
-                module.Form.Activated += FormActivated;
-                RebuildWindowsList();
-                windowsDataGrid.CurrentCell = windowsDataGrid[0, windowsDataGrid.RowCount - 1];
+            }
+
+            foreach (fsModule module in m_modules)
+            {
+                if (module.Name == checkedModuleName)
+                {
+                    m_currentModule = module;
+                    m_currentModule.Form.Activate();
+                    break;
+                }
             }
         }
 
         private void FormActivated(object sender, EventArgs e)
         {
-            var form = (Form) sender;
-            foreach (DataGridViewRow row in windowsDataGrid.Rows)
-            {
-                DataGridViewCell currentCell = row.Cells[0];
-                if (currentCell.Value.ToString() == form.Text)
-                {
-                    windowsDataGrid.CurrentCell = currentCell;
-                }
-            }
+            SetCurrentModule((sender as Form).Text);
         }
 
         private void WindowTilesToolStripMenuItemClick(object sender, EventArgs e)
@@ -131,7 +121,7 @@ namespace Calculator
 
         private void MainWindowLoad(object sender, EventArgs e)
         {
-            addModuleButton.PerformClick();
+            addModuleToolStripMenuItem.PerformClick();
         }
 
         private void UnitsToolStripMenuItemClick(object sender, EventArgs e)
@@ -158,11 +148,7 @@ namespace Calculator
 
         private fsModule GetCurrentActiveModule()
         {
-            DataGridViewCell cell = windowsDataGrid.CurrentCell;
-            string currentWindowName = cell == null || cell.Value == null
-                                           ? ""
-                                           : cell.Value.ToString();
-            return m_modules.FirstOrDefault(module => module.Name == currentWindowName);
+            return m_currentModule;
         }
 
         private void MachineTypeToolStripMenuItemClick(object sender, EventArgs e)
@@ -194,6 +180,29 @@ namespace Calculator
             var precisionDialog = new PrecisionDialog();
             precisionDialog.ShowDialog();
             GetCurrentActiveModule().RecalculateAndRedraw();
+        }
+
+        private void addModuleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var modulesForm = new fsModulesForm();
+            modulesForm.ShowDialog();
+            if (modulesForm.DialogResult == DialogResult.OK)
+            {
+                if (modulesForm.SelectedCalculatorControl is fsOptionsSingleTableAndCommentsCalculatorControl)
+                {
+                    (modulesForm.SelectedCalculatorControl as fsOptionsSingleTableAndCommentsCalculatorControl).
+                        AllowDiagramView = true;
+                }
+                ++m_counter;
+                var module = new fsModule("#" + m_counter + " - " + modulesForm.SelectedCalculatorControlName,
+                                          modulesForm.SelectedCalculatorControl);
+                m_modules.Add(module);
+                module.Form.MdiParent = this;
+                module.Form.Closed += FormClose;
+                module.Form.Activated += FormActivated;
+                m_currentModule = module;
+                RebuildWindowsList();
+            }
         }
     }
 }
