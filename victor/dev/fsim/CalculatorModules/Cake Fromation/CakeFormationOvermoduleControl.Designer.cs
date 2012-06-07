@@ -50,7 +50,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 52);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(268, 290);
+            this.panel1.Size = new System.Drawing.Size(268, 748);
             this.panel1.TabIndex = 1;
             // 
             // panel2
@@ -79,7 +79,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Name = "fsCakeFormationOvermoduleControl";
-            this.Size = new System.Drawing.Size(268, 342);
+            this.Size = new System.Drawing.Size(268, 800);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);

@@ -200,6 +200,16 @@ namespace Calculator
                 module.Form.MdiParent = this;
                 module.Form.Closed += FormClose;
                 module.Form.Activated += FormActivated;
+                int mdiAreaHeight = ClientSize.Height - menuStrip1.Bounds.Height - 4;
+                if (module.Form.Bounds.Y + module.Form.Bounds.Height > mdiAreaHeight)
+                {
+                    var rect = new System.Drawing.Rectangle(
+                        module.Form.Bounds.X,
+                        module.Form.Bounds.Y,
+                        module.Form.Bounds.Width,
+                        mdiAreaHeight - module.Form.Bounds.Y);
+                    module.Form.Bounds = rect;
+                }
                 m_currentModule = module;
                 RebuildWindowsList();
             }
