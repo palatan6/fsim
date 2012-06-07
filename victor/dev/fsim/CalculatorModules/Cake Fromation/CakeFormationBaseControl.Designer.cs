@@ -41,16 +41,16 @@
             // 
             // tablesSplitContainer
             // 
-            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 341);
+            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 736);
             this.tablesSplitContainer.SplitterDistance = 139;
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(144, 341);
+            this.dataGrid.Size = new System.Drawing.Size(144, 736);
             // 
             // materialParametersDataGrid
             // 
-            this.materialParametersDataGrid.Size = new System.Drawing.Size(139, 341);
+            this.materialParametersDataGrid.Size = new System.Drawing.Size(139, 736);
             // 
             // leftTopPanel
             // 
@@ -66,7 +66,7 @@
             // tablesPanel
             // 
             this.tablesPanel.Location = new System.Drawing.Point(0, 64);
-            this.tablesPanel.Size = new System.Drawing.Size(287, 341);
+            this.tablesPanel.Size = new System.Drawing.Size(287, 736);
             // 
             // materialParametersDisplayCheckBox
             // 
@@ -106,7 +106,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "fsCakeFormationBaseControl";
-            this.Size = new System.Drawing.Size(287, 405);
+            this.Size = new System.Drawing.Size(287, 800);
             this.tablesSplitContainer.Panel1.ResumeLayout(false);
             this.tablesSplitContainer.Panel2.ResumeLayout(false);
             this.tablesSplitContainer.ResumeLayout(false);
