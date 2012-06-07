@@ -85,6 +85,7 @@ namespace CalculatorModules.User_Controls
             this.table.HighLightCurrentRow = true;
             this.table.Location = new System.Drawing.Point(0, 0);
             this.table.Name = "table";
+            this.table.ReadOnly = true;
             this.table.RowHeadersVisible = false;
             this.table.RowTemplate.Height = 18;
             this.table.Size = new System.Drawing.Size(467, 177);
