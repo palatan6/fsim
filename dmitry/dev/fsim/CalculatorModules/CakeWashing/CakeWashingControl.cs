@@ -15,11 +15,13 @@ namespace CalculatorModules.CakeWashing
 
             #region Calculators
 
-            Calculators.Add(new fsDensityConcentrationCalculator());
-            Calculators.Add(new fsPorosityCalculator());
-            Calculators.Add(new fsPermeabilityCalculator());
-            Calculators.Add(new fsRm0Hce0Calculator());
-            Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
+            Calculators.Add(new fsCakeWashingCalculator());
+
+            //Calculators.Add(new fsDensityConcentrationCalculator());
+            //Calculators.Add(new fsPorosityCalculator());
+            //Calculators.Add(new fsPermeabilityCalculator());
+            //Calculators.Add(new fsRm0Hce0Calculator());
+            //Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
 
             #endregion
 
@@ -94,8 +96,10 @@ namespace CalculatorModules.CakeWashing
                 fsParameterIdentifier.WashIndexFor0,
                 fsParameterIdentifier.WashIndexFor);
 
-            fsParametersGroup awGroup = AddGroup(
-                fsParameterIdentifier.AdaptationPar1,
+            fsParametersGroup aw1Group = AddGroup(
+                fsParameterIdentifier.AdaptationPar1);
+
+            fsParametersGroup aw2Group = AddGroup(
                 fsParameterIdentifier.AdaptationPar2);
 
 
@@ -117,7 +121,8 @@ namespace CalculatorModules.CakeWashing
                                 etawGroup,
                                 cwGroup,
                                 dnGroup,
-                                awGroup
+                                aw1Group,
+                                aw2Group
                              };
 
             for (int i = 0; i < materialGroups.Length; ++i)

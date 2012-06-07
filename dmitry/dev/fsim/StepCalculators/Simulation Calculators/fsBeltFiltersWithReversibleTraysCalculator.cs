@@ -66,7 +66,7 @@ namespace StepCalculators.Simulation_Calculators
             #region Help Parameters and Constants
 
             var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) {Value = fsValue.One};
-            var constantTwo = new fsCalculatorConstant(new fsParameterIdentifier("1")) {Value = new fsValue(2)};
+            var constantTwo = new fsCalculatorConstant(new fsParameterIdentifier("2")) {Value = new fsValue(2)};
             
             IEquationParameter hcAddHce = AddVariable(new fsParameterIdentifier("hc + hce"));
             Equations.Add(new fsSumEquation(hcAddHce, cakeHeigth, hce0));

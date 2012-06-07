@@ -202,7 +202,7 @@ namespace fmCalculationLibrary.Equations
             breakPoints.Insert(0, Zero);
             breakPoints.Add(Infinity);
 
-            const int interations = 100;  // precision is 1e20 / 2^100 ~~ 1e-11
+            const int iterations = 100;  // precision is 1e20 / 2^100 ~~ 1e-11
 
             var result = new List<fsValue>();
 
@@ -210,7 +210,7 @@ namespace fmCalculationLibrary.Equations
             {
                 fsValue localRoot = fsBisectionMethod.FindRoot(
                     new fsFunctionC1Xp1C2Xp2C3P3C4(c1, p1, c2, p2, c3, p3, c4),
-                    breakPoints[i - 1], breakPoints[i], interations);
+                    breakPoints[i - 1], breakPoints[i], iterations);
                 if (localRoot.Defined)
                     result.Add(localRoot);
             }

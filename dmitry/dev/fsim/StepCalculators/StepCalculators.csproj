@@ -51,6 +51,7 @@
     <Compile Include="Machine Area Calculators\fsConcaveCakeAreaEquation.cs" />
     <Compile Include="Machine Area Calculators\fsConvexCakeAreaEquation.cs" />
     <Compile Include="Simulation Calculators\fsBeltFiltersWithReversibleTraysCalculator.cs" />
+    <Compile Include="Simulation Calculators\fsCakeWashingCalculator.cs" />
     <Compile Include="Simulation Calculators\fsHydrocycloneCalculator.cs" />
     <Compile Include="Small Calculators\fsCakePorosityCalculator.cs" />
     <Compile Include="Material Calculators\fsDensityConcentrationCalculator.cs" />

@@ -44,7 +44,7 @@ namespace Value
                 return 0;
             }
 
-            throw new ArgumentException("object is not a fmValue");
+            throw new ArgumentException("object is not a fsValue");
         }
 
         #endregion
@@ -169,7 +169,7 @@ namespace Value
                 return new fsValue((double) obj);
             }
 
-            throw new Exception("Can't convert object to fmValue");
+            throw new Exception("Can't convert object to fsValue");
         }
 
         public static bool operator <(fsValue op1, fsValue op2)
@@ -386,6 +386,13 @@ namespace Value
         {
             var res = new fsValue {Defined = op.Defined};
             res.Value = res.Defined ? normaldistr.erf(op.Value) : 1;
+            return res;
+        }
+
+        public static fsValue Erfc(fsValue op)
+        {
+            var res = new fsValue { Defined = op.Defined };
+            res.Value = res.Defined ? 1 - fsValue.Erf(op) : 1;
             return res;
         }
 

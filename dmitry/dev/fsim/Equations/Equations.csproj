@@ -52,6 +52,9 @@
     <Compile Include="Belt Filters with Reversible Trays\fsTrSrTtechNsTcEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsUFromLsOverBQmsHcDpTtech0LambdaNsfMaterialEquation.cs" />
     <Compile Include="Cake Formation\fsCakeHeightFrom_Dp_tfEquation.cs" />
+    <Compile Include="Cake Washing\fsIfMoreOrLessThenOneEquation.cs" />
+    <Compile Include="Cake Washing\fsMwfVcWfEquation.cs" />
+    <Compile Include="Cake Washing\fsWfTwEquation.cs" />
     <Compile Include="Hydrocyclone\fsCOverflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsCUnderflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsDFromxRed50QnDuOverDEquation.cs" />

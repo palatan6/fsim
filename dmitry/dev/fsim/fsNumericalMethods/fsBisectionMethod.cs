@@ -67,7 +67,7 @@ namespace fsNumericalMethods
                 fsValue value = function.Eval(middle);
 
                 if (!value.Defined)
-                    throw new Exception("Function given to BisectionMethod not defind in point " + middle.Value);
+                    throw new Exception("Function given to BisectionMethod is not defined at point " + middle.Value);
 
                 fsValue midSign = fsValue.Sign(value, eps);
                 if (midSign.Value == 0 || midSign == endSign)
@@ -127,9 +127,9 @@ namespace fsNumericalMethods
                 fsValue val2 = function.Eval(mid2);
 
                 if (!val1.Defined)
-                    throw new Exception("Function given to FindBreakInUnimodalFunction not defind in point " + mid1.Value);
+                    throw new Exception("Function given to FindBreakInUnimodalFunction is not defined at point " + mid1.Value);
                 if (!val2.Defined)
-                    throw new Exception("Function given to FindBreakInUnimodalFunction not defind in point " + mid2.Value);
+                    throw new Exception("Function given to FindBreakInUnimodalFunction is not defined at point " + mid2.Value);
 
                 if (fsValue.Sign(val1, eps) != initialSign)
                     return mid1;
