@@ -90,7 +90,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.inputsTextBox);
             this.splitContainer2.Panel2.Controls.Add(this.label6);
             this.splitContainer2.Size = new System.Drawing.Size(151, 366);
-            this.splitContainer2.SplitterDistance = 224;
+            this.splitContainer2.SplitterDistance = 143;
             this.splitContainer2.TabIndex = 11;
             // 
             // yAxisSplitContainer
@@ -111,7 +111,7 @@
             // yAxisSplitContainer.Panel2
             // 
             this.yAxisSplitContainer.Panel2.Controls.Add(this.splitContainer1);
-            this.yAxisSplitContainer.Size = new System.Drawing.Size(151, 224);
+            this.yAxisSplitContainer.Size = new System.Drawing.Size(151, 143);
             this.yAxisSplitContainer.SplitterDistance = 68;
             this.yAxisSplitContainer.TabIndex = 9;
             // 
@@ -157,7 +157,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.m_y2AxisList);
-            this.splitContainer1.Size = new System.Drawing.Size(151, 152);
+            this.splitContainer1.Size = new System.Drawing.Size(151, 71);
             this.splitContainer1.SplitterDistance = 72;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -169,7 +169,7 @@
             this.m_yAxisList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_yAxisList.Location = new System.Drawing.Point(0, 0);
             this.m_yAxisList.Name = "m_yAxisList";
-            this.m_yAxisList.Size = new System.Drawing.Size(72, 152);
+            this.m_yAxisList.Size = new System.Drawing.Size(72, 71);
             this.m_yAxisList.TabIndex = 9;
             this.m_yAxisList.UseCompatibleStateImageBehavior = false;
             this.m_yAxisList.View = System.Windows.Forms.View.Details;
@@ -187,7 +187,7 @@
             this.m_y2AxisList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_y2AxisList.Location = new System.Drawing.Point(0, 0);
             this.m_y2AxisList.Name = "m_y2AxisList";
-            this.m_y2AxisList.Size = new System.Drawing.Size(75, 152);
+            this.m_y2AxisList.Size = new System.Drawing.Size(75, 71);
             this.m_y2AxisList.TabIndex = 2;
             this.m_y2AxisList.UseCompatibleStateImageBehavior = false;
             this.m_y2AxisList.View = System.Windows.Forms.View.Details;
@@ -206,7 +206,7 @@
             this.inputsTextBox.Name = "inputsTextBox";
             this.inputsTextBox.ReadOnly = true;
             this.inputsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.inputsTextBox.Size = new System.Drawing.Size(151, 125);
+            this.inputsTextBox.Size = new System.Drawing.Size(151, 206);
             this.inputsTextBox.TabIndex = 1;
             // 
             // label6
