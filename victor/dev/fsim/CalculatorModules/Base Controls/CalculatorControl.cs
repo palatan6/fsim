@@ -176,7 +176,6 @@ namespace CalculatorModules
             dataGrid.Rows.Clear();
             for (int i = 0; i < groups.Length; ++i)
             {
-                groups[i].Kind = fsParametersGroup.fsParametersGroupKind.MaterialParameters;
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
                 SetGroupInput(groups[i], true);
             }

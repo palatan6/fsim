@@ -180,7 +180,7 @@ namespace CalculatorModules.Cake_Fromation
                 fsParameterIdentifier.FilterMediumResistanceHce0,
                 fsParameterIdentifier.FilterMediumResistanceRm0);
 
-            return new[]
+            var materialGroups = new fsParametersGroup[]
                        {
                            etafGroup,
                            rhofGroup,
@@ -192,6 +192,11 @@ namespace CalculatorModules.Cake_Fromation
                            ncGroup,
                            hce0Group,
                        };
+            foreach (fsParametersGroup group in materialGroups)
+            {
+                group.Kind = fsParametersGroup.fsParametersGroupKind.MaterialParameters;
+            }
+            return materialGroups;
         }
         
         protected override sealed void UpdateGroupsInputInfoFromCalculationOptions()
