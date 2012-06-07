@@ -51,8 +51,16 @@ namespace CalculatorModules.User_Controls
 
         private void RefreshTable()
         {
-            table.ColumnCount = 0;
-            AddArrayToTable(m_xAxis);
+            int selectedRowIndex = 0;
+            int selectedColIndex = 0;
+            if (table.CurrentCell != null)
+            {
+                selectedRowIndex = table.CurrentCell.RowIndex;
+                selectedColIndex = table.CurrentCell.ColumnIndex;
+            }
+
+            table.ColumnCount = 1;
+            WriteArrayToLastColumnInTable(m_xAxis);
             foreach (fsNamedArray curve in m_yAxis)
             {
                 AddArrayToTable(curve);
@@ -61,11 +69,26 @@ namespace CalculatorModules.User_Controls
             {
                 AddArrayToTable(curve);
             }
+
+            if (selectedRowIndex >= table.RowCount)
+            {
+                selectedRowIndex = table.RowCount - 1;
+            }
+            if (selectedColIndex >= table.ColumnCount)
+            {
+                selectedColIndex = table.ColumnCount - 1;
+            }
+            table.CurrentCell = table[selectedColIndex, selectedRowIndex];
         }
 
         private void AddArrayToTable(fsNamedArray curve)
         {
             table.ColumnCount++;
+            WriteArrayToLastColumnInTable(curve);
+        }
+
+        private void WriteArrayToLastColumnInTable(fsNamedArray curve)
+        {
             table.RowCount = Math.Max(table.RowCount, curve.Array.Length);
             DataGridViewColumn column = table.Columns[table.ColumnCount - 1];
             column.SortMode = DataGridViewColumnSortMode.NotSortable;
