@@ -95,8 +95,12 @@ namespace CalculatorModules.Cake_Fromation
                 {
                     m_currentCalculatorControl.SetCalculationOption(lastCalculatorControl.GetCalculationOption());
                     m_currentCalculatorControl.SetMaterialParametersTableVisible(lastCalculatorControl.GetMaterialParametersTableVisible());
-                    m_currentCalculatorControl.SetDiagramVisible(lastCalculatorControl.GetDiagramVisible());
                     m_currentCalculatorControl.SetValues(lastCalculatorControl.GetValues());
+
+                    Control owningControl = m_currentCalculatorControl.ControlToResizeForExpanding;
+                    m_currentCalculatorControl.ControlToResizeForExpanding = null;
+                    m_currentCalculatorControl.SetDiagramVisible(lastCalculatorControl.GetDiagramVisible());
+                    m_currentCalculatorControl.ControlToResizeForExpanding = owningControl;
                 }
             }
 
