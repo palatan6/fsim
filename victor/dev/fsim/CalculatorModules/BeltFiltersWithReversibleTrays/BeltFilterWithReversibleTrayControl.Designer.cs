@@ -65,7 +65,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "fsBeltFilterWithReversibleTrayControl";
-            this.Size = new System.Drawing.Size(287, 560);
+            this.Size = new System.Drawing.Size(287, 800);
             this.tablesSplitContainer.Panel1.ResumeLayout(false);
             this.tablesSplitContainer.Panel2.ResumeLayout(false);
             this.tablesSplitContainer.ResumeLayout(false);
