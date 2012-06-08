@@ -7,7 +7,6 @@ namespace Equations
         #region Parameters
 
         private readonly IEquationParameter qft;
-        private readonly IEquationParameter rho;
         private readonly IEquationParameter pc;
         private readonly IEquationParameter Dp;
         private readonly IEquationParameter eta;

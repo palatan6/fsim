@@ -1,5 +1,7 @@
 ﻿using Equations;
+using Equations.Belt_Filters_with_Reversible_Trays;
 using Parameters;
+using Value;
 
 namespace StepCalculators
 {
@@ -9,60 +11,86 @@ namespace StepCalculators
         {
             #region Parameters Initialization
 
-            fsCalculatorConstant m_rhos = AddConstant(fsParameterIdentifier.SolidsDensity);
-            fsCalculatorConstant m_rho = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
-            fsCalculatorConstant m_eps = AddConstant(fsParameterIdentifier.CakePorosity);
-            fsCalculatorConstant m_viscosity = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
-            fsCalculatorConstant m_pc0 = AddConstant(fsParameterIdentifier.CakePermeability0);
-            fsCalculatorConstant m_kappa0 = AddConstant(fsParameterIdentifier.Kappa0);
-            fsCalculatorConstant m_pressure = AddConstant(fsParameterIdentifier.PressureDifference);
-            fsCalculatorConstant m_area = AddConstant(fsParameterIdentifier.FilterArea);
-            fsCalculatorConstant m_nc = AddConstant(fsParameterIdentifier.CakeCompressibility);
-            fsCalculatorConstant m_rhosus = AddConstant(fsParameterIdentifier.SuspensionDensity);
-            fsCalculatorConstant m_eps0 = AddConstant(fsParameterIdentifier.CakePorosity0);
-            fsCalculatorConstant m_solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
-            fsCalculatorConstant m_cm = AddConstant(fsParameterIdentifier.SuspensionSolidsMassFraction);
-            fsCalculatorConstant m_kappa = AddConstant(fsParameterIdentifier.Kappa);
-            fsCalculatorVariable m_pc = AddVariable(fsParameterIdentifier.CakePermeability);
-            fsCalculatorVariable m_hc = AddVariable(fsParameterIdentifier.CakeHeight);
-            fsCalculatorVariable m_formationTime = AddVariable(fsParameterIdentifier.FiltrationTime);
-            fsCalculatorVariable m_solidsMass = AddVariable(fsParameterIdentifier.SolidsMassInSuspension);
-            fsCalculatorVariable m_liquidMass = AddVariable(fsParameterIdentifier.LiquidMassInSuspension);
-            fsCalculatorVariable m_suspensionMass = AddVariable(fsParameterIdentifier.SuspensionMass);
-            fsCalculatorVariable m_Rm0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceRm0);
-            fsCalculatorVariable m_mf = AddVariable(fsParameterIdentifier.FiltrateMass);
-            fsCalculatorVariable m_mc = AddVariable(fsParameterIdentifier.CakeMass);
-            fsCalculatorVariable m_ms = AddVariable(fsParameterIdentifier.SolidsMass);
-            fsCalculatorVariable m_qmft = AddVariable(fsParameterIdentifier.qmft);
-            fsCalculatorVariable m_Dp = AddVariable(fsParameterIdentifier.PressureDifference);
-            fsCalculatorVariable m_vsus = AddVariable(fsParameterIdentifier.SuspensionVolume);
-            fsCalculatorVariable m_vf = AddVariable(fsParameterIdentifier.FiltrateVolume);
-            fsCalculatorVariable m_vc = AddVariable(fsParameterIdentifier.CakeVolume);
-            fsCalculatorVariable m_vs = AddVariable(fsParameterIdentifier.SolidsVolume);
-            fsCalculatorVariable m_qft = AddVariable(fsParameterIdentifier.qft);
-            fsCalculatorVariable m_hce0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceHce0);
+            fsCalculatorConstant rho = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
+            fsCalculatorConstant eps = AddConstant(fsParameterIdentifier.CakePorosity);
+            fsCalculatorConstant viscosity = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
+            fsCalculatorConstant pc0 = AddConstant(fsParameterIdentifier.CakePermeability0);
+            fsCalculatorConstant kappa0 = AddConstant(fsParameterIdentifier.Kappa0);
+            fsCalculatorConstant pressure = AddConstant(fsParameterIdentifier.PressureDifference);
+            IEquationParameter area = AddConstant(fsParameterIdentifier.FilterArea);
+            fsCalculatorConstant nc = AddConstant(fsParameterIdentifier.CakeCompressibility);
+            fsCalculatorConstant rhosus = AddConstant(fsParameterIdentifier.SuspensionDensity);
+            fsCalculatorConstant eps0 = AddConstant(fsParameterIdentifier.CakePorosity0);
+            fsCalculatorConstant solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
+            fsCalculatorConstant cm = AddConstant(fsParameterIdentifier.SuspensionSolidsMassFraction);
+            IEquationParameter kappa = AddConstant(fsParameterIdentifier.Kappa);
+            fsCalculatorVariable pc = AddVariable(fsParameterIdentifier.CakePermeability);
+            IEquationParameter hc = AddVariable(fsParameterIdentifier.CakeHeight);
+            fsCalculatorVariable formationTime = AddVariable(fsParameterIdentifier.FiltrationTime);
+            fsCalculatorVariable solidsMass = AddVariable(fsParameterIdentifier.SolidsMassInSuspension);
+            fsCalculatorVariable liquidMass = AddVariable(fsParameterIdentifier.LiquidMassInSuspension);
+            fsCalculatorVariable suspensionMass = AddVariable(fsParameterIdentifier.SuspensionMass);
+            fsCalculatorVariable Rm0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceRm0);
+            fsCalculatorVariable mf = AddVariable(fsParameterIdentifier.FiltrateMass);
+            fsCalculatorVariable mc = AddVariable(fsParameterIdentifier.CakeMass);
+            fsCalculatorVariable ms = AddVariable(fsParameterIdentifier.SolidsMass);
+            fsCalculatorVariable qmft = AddVariable(fsParameterIdentifier.qmft);
+            fsCalculatorVariable Dp = AddVariable(fsParameterIdentifier.PressureDifference);
+            IEquationParameter vsus = AddVariable(fsParameterIdentifier.SuspensionVolume);
+            fsCalculatorVariable vf = AddVariable(fsParameterIdentifier.FiltrateVolume);
+            fsCalculatorVariable vc = AddVariable(fsParameterIdentifier.CakeVolume);
+            fsCalculatorVariable vs = AddVariable(fsParameterIdentifier.SolidsVolume);
+            fsCalculatorVariable qft = AddVariable(fsParameterIdentifier.qft);
+            fsCalculatorVariable hce0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceHce0);
+            fsCalculatorVariable K = AddVariable(fsParameterIdentifier.PracticalCakePermeability);
+
+            var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) { Value = fsValue.One };
+
+            IEquationParameter onePlusKappa = AddVariable(new fsParameterIdentifier("1 + kappa"));
+            Equations.Add(new fsSumEquation(onePlusKappa, constantOne, kappa));
+            IEquationParameter oneMinusEps = AddVariable(new fsParameterIdentifier("1 - eps"));
+            Equations.Add(new fsSumEquation(constantOne, oneMinusEps, eps));
             
             #endregion
 
             #region Equations Initialization
 
-            AddEquation(new fsFrom0AndDpEquation(m_pc, m_pc0, m_pressure, m_nc));
-            AddEquation(new fsCakeHeightFromDpTf(m_hc, m_hce0, m_pc, m_kappa0, m_pressure, m_formationTime, m_viscosity));
-            AddEquation(new fsSuspensionMassFromHcEpsPlainAreaEquation(m_suspensionMass, m_eps0, m_solidsDensity, m_area, m_hc, m_cm));
-            AddEquation(new fsProductEquation(m_solidsMass, m_suspensionMass, m_cm));
-            AddEquation(new fsSumEquation(m_suspensionMass, m_solidsMass, m_liquidMass));
-            AddEquation(new fsRm0FromHcePc0Equation(m_Rm0, m_hce0, m_pc0));
-            AddEquation(new fsMsusFromHcRhosusAKappaEquation(m_suspensionMass, m_rhosus, m_area, m_hc, m_kappa));
-            AddEquation(new fsMfFromHcEquation(m_mf, m_rho, m_area, m_hc, m_kappa));
-            AddEquation(new fsMcFromHcEquation(m_mc, m_area, m_hc, m_rhos, m_eps, m_rho));
-            AddEquation(new fsMsFromHcEquation(m_ms, m_area, m_hc, m_rhos, m_eps));
-            AddEquation(new fsQmftFromHcRhoEtaDpEquation(m_qmft, m_rho, m_pc, m_Dp, m_viscosity, m_hc, m_hce0));
-            AddEquation(new fsVsusFromHcAKappaEquation(m_vsus, m_area, m_hc, m_kappa));
-            AddEquation(new fsVfFromHcEquation(m_vf, m_area, m_hc, m_kappa));
-            AddEquation(new fsVcFromHcEquation(m_vc, m_area, m_hc));
-            AddEquation(new fsVsFromHcEquation(m_vs, m_area, m_hc, m_eps));
-            AddEquation(new fsQftFromHcEtaDpEquation(m_qft, m_pc, m_Dp, m_viscosity, m_hc, m_hce0));
+            AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
+            AddEquation(new fsCakeHeightFromDpTf(hc, hce0, pc, kappa0, pressure, formationTime, viscosity));
+            AddEquation(new fsSuspensionMassFromHcEpsPlainAreaEquation(suspensionMass, eps0, solidsDensity, area, hc, cm));
+            AddEquation(new fsProductEquation(solidsMass, suspensionMass, cm));
+            AddEquation(new fsSumEquation(suspensionMass, solidsMass, liquidMass));
+            //AddEquation(new fsRm0FromHcePc0Equation(Rm0, hce0, pc0));
+            //AddEquation(new fsMsusFromHcRhosusAKappaEquation(suspensionMass, rhosus, area, hc, kappa));
+            //AddEquation(new fsMfFromHcEquation(mf, rho, area, hc, kappa));
+            AddEquation(new fsMcFromHcEquation(mc, area, hc, solidsDensity, eps, rho));
+            //AddEquation(new fsMsFromHcEquation(ms, area, hc, solidsDensity, eps));
+            AddEquation(new fsQmftFromHcRhoEtaDpEquation(qmft, rho, pc, Dp, viscosity, hc, hce0));
+            //AddEquation(new fsVsusFromHcAKappaEquation(vsus, area, hc, kappa));
+            //AddEquation(new fsVfFromHcEquation(vf, area, hc, kappa));
+            //AddEquation(new fsVcFromHcEquation(vc, area, hc));
+            AddEquation(new fsVsFromHcEquation(vs, area, hc, eps));
+            AddEquation(new fsQftFromHcEtaDpEquation(qft, pc, Dp, viscosity, hc, hce0));
+            AddEquation(new fsKFromPcEquation(K, hc, pc, viscosity, hce0));
 
+            Equations.Add(new fsProductsEquation(
+                new[] { area, hc, onePlusKappa },
+                new[] { vsus, kappa }));
+            Equations.Add(new fsProductEquation(hce0, pc0, Rm0));
+            Equations.Add(new fsProductsEquation(
+                new[] { suspensionMass, kappa},
+                new[] { rhosus, area, hc, onePlusKappa }));
+            Equations.Add(new fsProductsEquation(
+                new[] { mf, kappa },
+                new[] { rho, area, hc }));
+            Equations.Add(new fsProductsEquation(
+                new[] { ms },
+                new[] { area, hc, solidsDensity, oneMinusEps }));
+            Equations.Add(new fsProductsEquation(
+                new[] { vf, kappa },
+                new[] { area, hc }));
+            Equations.Add(new fsProductEquation(vc, area, hc));
+            
             #endregion
         }
     }
