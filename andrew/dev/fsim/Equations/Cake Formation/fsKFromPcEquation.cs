@@ -39,11 +39,17 @@ namespace Equations
         protected override void InitFormulas()
         {
             AddFormula(K, KFormula);
+            AddFormula(pc, PcFormula);
         }
 
         private void KFormula()
         {
             K.Value = (hc.Value * pc.Value) / (eta.Value * (hc.Value + hce0.Value));
+        }
+
+        private void PcFormula()
+        {
+            pc.Value = (K.Value * eta.Value * (hc.Value + hce0.Value)) / hc.Value;
         }
 
     }

@@ -44,6 +44,13 @@ namespace StepCalculators
             IEquationParameter hce0 = AddVariable(fsParameterIdentifier.FilterMediumResistanceHce0);
             IEquationParameter K = AddVariable(fsParameterIdentifier.PracticalCakePermeability);
 
+            IEquationParameter rc0 = AddVariable(fsParameterIdentifier.CakeResistance0);
+            IEquationParameter pc0 = AddVariable(fsParameterIdentifier.CakePermeability0);
+            IEquationParameter alpha0 = AddVariable(fsParameterIdentifier.CakeResistanceAlpha0);
+            IEquationParameter rc = AddVariable(fsParameterIdentifier.CakeResistance);
+            IEquationParameter alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
+
+
             #endregion
 
             #region Help Parameters
@@ -89,6 +96,12 @@ namespace StepCalculators
             Equations.Add(new fsProductsEquation(
                 new[] { vs },
                 new[] { area, hc, oneMinusEps }));
+
+            AddEquation(new fsDivisionInverseEquation(pc0, rc0));
+            AddEquation(new fsAlphaPcEquation(alpha0, pc0, eps0, solidsDensity));
+            AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
+            AddEquation(new fsDivisionInverseEquation(pc, rc));
+            AddEquation(new fsAlphaPcEquation(alpha, pc, eps, solidsDensity));
             
             #endregion
         }

@@ -14,7 +14,6 @@ namespace CalculatorModules
 
             Calculators.Add(new fsDensityConcentrationCalculator());
             Calculators.Add(new fsPorosityCalculator());
-            Calculators.Add(new fsPermeabilityCalculator());
             Calculators.Add(new fsLaboratoryFiltrationCalculator());
 
 
