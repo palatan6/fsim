@@ -17,12 +17,6 @@ namespace CalculatorModules.CakeWashing
 
             Calculators.Add(new fsCakeWashingCalculator());
 
-            //Calculators.Add(new fsDensityConcentrationCalculator());
-            //Calculators.Add(new fsPorosityCalculator());
-            //Calculators.Add(new fsPermeabilityCalculator());
-            //Calculators.Add(new fsRm0Hce0Calculator());
-            //Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
-
             #endregion
 
             var colors = new[]
@@ -233,7 +227,7 @@ namespace CalculatorModules.CakeWashing
 
             #endregion
 
-            //SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea, fsParameterIdentifier.SpecificFiltrationTime);
+            //SetDefaultDiagram(fsParameterIdentifier.WashTime, fsParameterIdentifier.WetCakeMass, fsParameterIdentifier.WashLiquidMassFlowRate);
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid);

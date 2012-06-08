@@ -235,15 +235,15 @@ namespace Parameters
             new fsParameterIdentifier("C", "Suspension Solids Concentration", fsCharacteristic.SolidsConcentration);
 
         public static fsParameterIdentifier CakePorosity0 = 
-            new fsParameterIdentifier("eps0", "Cake Porosity 0", fsCharacteristic.Concentration);
+            new fsParameterIdentifier("eps0", "Cake Porosity for Dp0 = 1 bar", fsCharacteristic.Concentration);
 
         public static fsParameterIdentifier Kappa0 = new fsParameterIdentifier("kappa0");
 
         public static fsParameterIdentifier Ne = 
             new fsParameterIdentifier("ne", "Cake Volume Reduction Factor", fsCharacteristic.NoUnits);
 
-        public static fsParameterIdentifier CakePermeability0 = 
-            new fsParameterIdentifier("Pc0", "Cake Permeability0", fsCharacteristic.CakePermeability);
+        public static fsParameterIdentifier CakePermeability0 =
+            new fsParameterIdentifier("Pc0", "Cake Permeability for Dp0 = 1 bar", fsCharacteristic.CakePermeability);
 
         public static fsParameterIdentifier CakeCompressibility = 
             new fsParameterIdentifier("nc", "Cake Compressibility");
@@ -261,7 +261,7 @@ namespace Parameters
         #region Densities
 
         public static fsParameterIdentifier DryCakeDensity0 =
-            new fsParameterIdentifier("rho_cd0", "Dry cake density (Dp=1 bar)", fsCharacteristic.Density);
+            new fsParameterIdentifier("rho_cd0", "Dry cake density for Dp0 = 1 bar", fsCharacteristic.Density);
 
         public static fsParameterIdentifier DryCakeDensity =
             new fsParameterIdentifier("rho_cd", "Dry cake density", fsCharacteristic.Density);
@@ -292,7 +292,7 @@ namespace Parameters
         #region Resistances
 
         public static fsParameterIdentifier CakeResistanceAlpha0 =
-            new fsParameterIdentifier("alpha0", "Cake Resistance0", fsCharacteristic.CakeResistanceAlpha);
+            new fsParameterIdentifier("alpha0", "Cake Resistance for Dp0 = 1 bar", fsCharacteristic.CakeResistanceAlpha);
 
         public static fsParameterIdentifier CakeResistanceAlpha =
             new fsParameterIdentifier("alpha", "Cake Resistance", fsCharacteristic.CakeResistanceAlpha);
@@ -310,7 +310,7 @@ namespace Parameters
            new fsParameterIdentifier("Rm", "Filter Medium Resistance Rm", fsCharacteristic.FilterMediumResistance);
 
         public static fsParameterIdentifier CakeResistance0 =
-            new fsParameterIdentifier("rc0", "Cake Resistance0", fsCharacteristic.CakeResistance);
+            new fsParameterIdentifier("rc0", "Cake Resistance for Dp0 = 1 bar", fsCharacteristic.CakeResistance);
 
         public static fsParameterIdentifier CakeResistance =
             new fsParameterIdentifier("rc", "Cake Resistance", fsCharacteristic.CakeResistance);
@@ -449,7 +449,7 @@ namespace Parameters
             new fsParameterIdentifier("RF", "Cake Moisture Content", fsCharacteristic.Concentration);
 
         public static fsParameterIdentifier CakeMoistureContentRf0 =
-            new fsParameterIdentifier("Rf0", "Cake Moisture Content 0", fsCharacteristic.Concentration);
+            new fsParameterIdentifier("Rf0", "Cake Moisture Content for Dp0 = 1 bar", fsCharacteristic.Concentration);
 
         public static fsParameterIdentifier CakeMoistureContentRfw0 =
             new fsParameterIdentifier("Rfw0", "Cake Moisture Content When Starting Cake Washing", fsCharacteristic.Concentration);

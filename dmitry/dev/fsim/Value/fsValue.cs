@@ -392,7 +392,7 @@ namespace Value
         public static fsValue Erfc(fsValue op)
         {
             var res = new fsValue { Defined = op.Defined };
-            res.Value = res.Defined ? 1 - fsValue.Erf(op) : 1;
+            res.Value = res.Defined ? normaldistr.erfc(op.Value) : 1;
             return res;
         }
 
