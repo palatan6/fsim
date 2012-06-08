@@ -15,7 +15,6 @@ namespace StepCalculators
             IEquationParameter eps = AddConstant(fsParameterIdentifier.CakePorosity);
             IEquationParameter viscosity = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
             IEquationParameter kappa0 = AddConstant(fsParameterIdentifier.Kappa0);
-            IEquationParameter pressure = AddConstant(fsParameterIdentifier.PressureDifference);
             IEquationParameter area = AddConstant(fsParameterIdentifier.FilterArea);
             IEquationParameter rhosus = AddConstant(fsParameterIdentifier.SuspensionDensity);
             IEquationParameter eps0 = AddConstant(fsParameterIdentifier.CakePorosity0);
@@ -48,6 +47,8 @@ namespace StepCalculators
             IEquationParameter rc = AddVariable(fsParameterIdentifier.CakeResistance);
             IEquationParameter alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
             IEquationParameter nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
+            IEquationParameter pressure = AddVariable(fsParameterIdentifier.PressureDifference);
+
 
 
             #endregion
