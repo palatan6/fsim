@@ -212,7 +212,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Deselect All";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1Click);
             // 
             // ShowConstantsCheckBox
             // 
@@ -223,7 +223,7 @@
             this.ShowConstantsCheckBox.TabIndex = 1;
             this.ShowConstantsCheckBox.Text = "Show constant parameters";
             this.ShowConstantsCheckBox.UseVisualStyleBackColor = true;
-            this.ShowConstantsCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.ShowConstantsCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox1CheckedChanged);
             // 
             // fsTablesAndChartsParametersSelectionControl
             // 
@@ -232,7 +232,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "fsTablesAndChartsParametersSelectionControl";
             this.Size = new System.Drawing.Size(500, 404);
-            this.Load += new System.EventHandler(this.fsTablesAndChartsParametersSelectionControl_Load);
+            this.Load += new System.EventHandler(this.TablesAndChartsParametersSelectionControlLoad);
             this.groupBox1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

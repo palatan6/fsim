@@ -338,7 +338,7 @@ namespace CalculatorModules
 
         #region Show/Hide parameters
 
-        public void ShowAndHideParameters(Dictionary<fsParameterIdentifier, bool> parametersToShowAndHide)
+        virtual public void ShowAndHideParameters(Dictionary<fsParameterIdentifier, bool> parametersToShowAndHide)
         {
             foreach (fsParameterIdentifier identifier in parametersToShowAndHide.Keys)
             {
@@ -346,7 +346,7 @@ namespace CalculatorModules
             }
         }
 
-        public Dictionary<fsParameterIdentifier, bool> GetInvolvedParametersWithVisibleStatus()
+        virtual public Dictionary<fsParameterIdentifier, bool> GetInvolvedParametersWithVisibleStatus()
         {
             var involvedParameters = new Dictionary<fsParameterIdentifier, bool>();
             foreach (var pair in ParameterToCell)

@@ -50,6 +50,14 @@ namespace CalculatorModules
                 showHideCommnetsButton.Text = @">";
                 if (controlToResize != null)
                 {
+                    if (controlToResize is Form)
+                    {
+                        var formToResize = (Form) controlToResize;
+                        if (formToResize.WindowState == FormWindowState.Maximized)
+                        {
+                            formToResize.WindowState = FormWindowState.Normal;
+                        }
+                    }
                     controlToResize.Width -= splitContainer1.Panel2.Width + splitContainer1.SplitterWidth;
                 }
                 splitContainer1.Panel2Collapsed = true;

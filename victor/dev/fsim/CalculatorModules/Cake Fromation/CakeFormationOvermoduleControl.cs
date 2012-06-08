@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CalculatorModules.BeltFiltersWithReversibleTrays;
+using Parameters;
 using Units;
 
 namespace CalculatorModules.Cake_Fromation
@@ -52,6 +53,16 @@ namespace CalculatorModules.Cake_Fromation
             {
                 calculatorControl.SetUnits(dictionary);
             }
+        }
+
+        public override Dictionary<fsParameterIdentifier, bool> GetInvolvedParametersWithVisibleStatus()
+        {
+            return m_currentCalculatorControl.GetInvolvedParametersWithVisibleStatus();
+        }
+
+        public override void ShowAndHideParameters(Dictionary<fsParameterIdentifier, bool> parametersToShowAndHide)
+        {
+            m_currentCalculatorControl.ShowAndHideParameters(parametersToShowAndHide);
         }
 
         #region Internal Routines
