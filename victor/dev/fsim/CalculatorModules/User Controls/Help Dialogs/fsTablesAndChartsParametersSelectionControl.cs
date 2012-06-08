@@ -72,6 +72,17 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
             AddParametersToLists(fsYAxisParameter.fsYParameterKind.InputParameter, internalParameters, internalItemToParameter);
             AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter, internalParameters, internalItemToParameter);
             AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter, internalParameters, internalItemToParameter);
+
+            CheckShowConstantsCheckBoxIfNeeded(internalParameters);
+        }
+
+        private void CheckShowConstantsCheckBoxIfNeeded(IEnumerable<fsYAxisParameterWithChecking> internalParameters)
+        {
+            if (internalParameters.Any(parameterWithChecking => parameterWithChecking.IsChecked
+                    && parameterWithChecking.Kind != fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter))
+            {
+                ShowConstantsCheckBox.Checked = true;
+            }
         }
 
         internal List<fsParameterIdentifier> GetCheckedYAxisParameters()
@@ -174,7 +185,7 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
 
         #endregion
 
-        private void button1_Click(object sender, System.EventArgs e)
+        private void Button1Click(object sender, System.EventArgs e)
         {
             foreach (ListViewItem item in m_itemToYParameter.Keys)
             {
@@ -182,7 +193,7 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, System.EventArgs e)
+        private void CheckBox1CheckedChanged(object sender, System.EventArgs e)
         {
             ShowHideConstantParameters();
         }
@@ -193,7 +204,7 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
             MaterialParametersSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
         }
 
-        private void fsTablesAndChartsParametersSelectionControl_Load(object sender, System.EventArgs e)
+        private void TablesAndChartsParametersSelectionControlLoad(object sender, System.EventArgs e)
         {
             ShowHideConstantParameters();
         }

@@ -46,12 +46,30 @@ namespace CalculatorModules.User_Controls.Help_Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+            SetY2Visible(splitContainer1.Panel2Collapsed);
+            
         }
 
         private void fsTablesAndChartsParametersSelectionDialog_Load(object sender, EventArgs e)
         {
-            splitContainer1.Panel2Collapsed = y2SelectionControl.GetCheckedYAxisParameters().Count == 0;
+            SetY2Visible(y2SelectionControl.GetCheckedYAxisParameters().Count != 0);
+        }
+
+        private void SetY2Visible(bool isVisible)
+        {
+            if (isVisible == !splitContainer1.Panel2Collapsed)
+                return;
+
+            if (isVisible)
+            {
+                splitContainer1.Panel2Collapsed = false;
+                Width = Width * 2;
+            }
+            else
+            {
+                splitContainer1.Panel2Collapsed = true;
+                Width = Width / 2;
+            }
         }
     }
 }
