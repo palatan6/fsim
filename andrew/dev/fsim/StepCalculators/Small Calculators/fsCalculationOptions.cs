@@ -8,6 +8,26 @@ namespace StepCalculators
 {
     public class fsCalculationOptions
     {
+        public enum fsFiltersKindOption
+        {
+            [Description("Batch Filters")]
+            BatchFilterCalculations,
+            [Description("Continuous Filters")]
+            ContinuousFilterCalculations
+        }
+
+        public enum fsSimulationsOption
+        {
+            [Description("Default")]
+            DefaultSimulationsCalculations,
+            [Description("Medium Resistance considered")]
+            MrSimulationsCalculations,
+            [Description("Medium Resistance and cake compressibility considered")]
+            MrAndCcSimulationsCalculations,
+            [Description("Show also ne")]
+            ShowAllSimulationsCalculations
+        }
+
         public enum fsSaltContentOption
         {
             [Description("Neglected")]

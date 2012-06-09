@@ -359,6 +359,15 @@ namespace CalculatorModules
 
         #endregion
 
+        protected void SetDefaultValue(fsParameterIdentifier identifier, fsValue value)
+        {
+            if (Values.ContainsKey(identifier))
+            {
+                ParameterToGroup[identifier].Representator = identifier;
+                Values[identifier].Value = value;
+            }
+        }
+
         public void RecalculateAndRedraw()
         {
             Recalculate();

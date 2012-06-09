@@ -118,6 +118,12 @@
     <Compile Include="Cake Fromation\ContinuousNonModularBeltFilterControl.Designer.cs">
       <DependentUpon>ContinuousNonModularBeltFilterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CakeFormationAnalysisControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakeFormationAnalysisControl.Designer.cs">
+      <DependentUpon>CakeFormationAnalysisControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CakeMoistureContentFromCakeSaturationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

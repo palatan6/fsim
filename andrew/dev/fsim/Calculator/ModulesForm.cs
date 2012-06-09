@@ -103,7 +103,9 @@ namespace Calculator
             AddGroupToTree("Cake Formation", node.Nodes, new[]
                                                  {
                                                      new KeyValuePair<string, fsCalculatorControl>(
-                                                         "Calculations Cake Formation", new fsLaboratoryFiltrationTime())
+                                                         "Calculations Cake Formation", new fsLaboratoryFiltrationTime()),
+                                                     new KeyValuePair<string, fsCalculatorControl>(
+                                                         "Cake Formation Analysis", new CakeFormationAnalysisControl())
                                                  });
             AddGroupToTree("Cake Deliquoring", node.Nodes, new[]
                                                    {

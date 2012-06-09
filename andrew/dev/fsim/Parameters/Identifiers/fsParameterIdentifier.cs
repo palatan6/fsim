@@ -303,6 +303,15 @@ namespace Parameters
         public static fsParameterIdentifier CakeResistanceAlpha0 = 
             new fsParameterIdentifier("alpha0", "Cake Resistance0", fsCharacteristic.CakeResistanceAlpha);
 
+        public static fsParameterIdentifier CakePlusMediumPermeability =
+           new fsParameterIdentifier("Pc*", "'Cake + Medium' Permeability", fsCharacteristic.CakePermeability);
+
+        public static fsParameterIdentifier CakePlusMediumResistance =
+            new fsParameterIdentifier("rc*", "'Cake + Medium' Resistance", fsCharacteristic.CakeResistance);
+
+        public static fsParameterIdentifier CakePlusMediumResistanceAlpha =
+            new fsParameterIdentifier("alpha*", "'Cake + Medium' Resistance", fsCharacteristic.CakeResistanceAlpha);
+
         public static fsParameterIdentifier FilterMediumResistanceHce0 = 
             new fsParameterIdentifier("hce0", "Filter Medium Resistance hce0", fsCharacteristic.CakeHeight);
 
