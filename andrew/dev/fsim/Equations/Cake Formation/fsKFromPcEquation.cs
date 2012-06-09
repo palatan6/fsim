@@ -14,7 +14,7 @@ namespace Equations
 
         #endregion
 
-        //K = (hc*pc)/(eta*(hc+ hce0))
+        //K = (hc*pc)/(eta*(hc+ 2*hce0))
 
         public fsKFromPcEquation(
             IEquationParameter PracticalCakePermeability,
@@ -44,12 +44,12 @@ namespace Equations
 
         private void KFormula()
         {
-            K.Value = (hc.Value * pc.Value) / (eta.Value * (hc.Value + hce0.Value));
+            K.Value = (hc.Value * pc.Value) / (eta.Value * (hc.Value + 2 * hce0.Value));
         }
 
         private void PcFormula()
         {
-            pc.Value = (K.Value * eta.Value * (hc.Value + hce0.Value)) / hc.Value;
+            pc.Value = (K.Value * eta.Value * (hc.Value + 2 * hce0.Value)) / hc.Value;
         }
 
     }

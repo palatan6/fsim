@@ -74,6 +74,7 @@ namespace StepCalculators
             AddEquation(new fsMcFromHcEquation(mc, area, hc, solidsDensity, eps, rho));
             AddEquation(new fsQmftFromHcRhoEtaDpEquation(qmft, rho, pc, Dp, viscosity, hc, hce0));
             AddEquation(new fsQftFromHcEtaDpEquation(qft, pc, Dp, viscosity, hc, hce0));
+            AddEquation(new fsHcFromTfAndKEquation(hc, kappa, pressure, formationTime, K));
             AddEquation(new fsKFromPcEquation(K, hc, pc, viscosity, hce0));
 
             Equations.Add(new fsProductsEquation(
