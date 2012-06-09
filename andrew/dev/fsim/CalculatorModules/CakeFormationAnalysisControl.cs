@@ -18,7 +18,7 @@ namespace CalculatorModules.Cake_Fromation
             Calculators.Add(new fsDensityConcentrationCalculator());
             Calculators.Add(new fsTimeCalculator());
             Calculators.Add(new fsPorosityCalculator());
-            Calculators.Add(new fsLaboratoryFiltrationCalculator());
+            Calculators.Add(new fsAnalysisFiltrationCalculator());
 
             #region Groups
 
@@ -142,7 +142,6 @@ namespace CalculatorModules.Cake_Fromation
             SetDefaultValue(fsParameterIdentifier.SpecificFiltrationTime, new fsValue(1));
             SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0));
             SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce0, new fsValue(0));
-            SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceRm0, new fsValue(0));
             SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0));            
         }
 
