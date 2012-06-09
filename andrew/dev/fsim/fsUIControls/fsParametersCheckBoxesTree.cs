@@ -70,6 +70,13 @@ namespace fsUIControls
                     fsParameterIdentifier.CakeResistance0,
                     fsParameterIdentifier.CakeResistanceAlpha0
                 });
+            AddGroupToTree("n, tc, tr", treeView1.Nodes,
+                new[]
+                {
+                    fsParameterIdentifier.NumberOfCyclones,                
+                    fsParameterIdentifier.CycleTime,
+                    fsParameterIdentifier.ResidualTime
+                });
 
             treeView1.ExpandAll();
         }

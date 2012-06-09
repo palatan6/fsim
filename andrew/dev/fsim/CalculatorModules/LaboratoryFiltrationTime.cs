@@ -91,7 +91,8 @@ namespace CalculatorModules
             var colors = new[]
                              {
                                  Color.FromArgb(255, 255, 230),
-                                 Color.FromArgb(255, 230, 255)
+                                 Color.FromArgb(255, 230, 255),
+                                 Color.FromArgb(230, 255, 255)
                              };
 
             for (int i = 0; i < groups.Length; ++i)

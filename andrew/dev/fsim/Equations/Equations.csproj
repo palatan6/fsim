@@ -52,6 +52,10 @@
     <Compile Include="Belt Filters with Reversible Trays\fsTrSrTtechNsTcEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsUFromLsOverBQmsHcDpTtech0LambdaNsfMaterialEquation.cs" />
     <Compile Include="Cake Formation\fsCakeHeightFrom_Dp_tfEquation.cs" />
+    <Compile Include="Cake Formation\fsEpsFromMcAndQfEquation.cs" />
+    <Compile Include="Cake Formation\fsEpsFromMsAndHcEquation.cs" />
+    <Compile Include="Cake Formation\fsEpsFromMsAndMfEquation.cs" />
+    <Compile Include="Cake Formation\fsEpsFromMsAndQfEquation.cs" />
     <Compile Include="Cake Formation\fsMcFromHcEquation.cs" />
     <Compile Include="Cake Formation\fsQftFromHcEtaDpEquation.cs" />
     <Compile Include="Cake Formation\fsQmftFromHcRhoEtaDpEquation.cs" />

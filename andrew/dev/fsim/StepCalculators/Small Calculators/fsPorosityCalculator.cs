@@ -23,6 +23,13 @@ namespace StepCalculators
             fsCalculatorConstant volumeConcentration = AddConstant(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
             fsCalculatorConstant solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
             fsCalculatorConstant filtrateDensity = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
+            fsCalculatorConstant solidsMass = AddConstant(fsParameterIdentifier.SolidsMass);
+            fsCalculatorConstant filtrationArea = AddConstant(fsParameterIdentifier.FilterArea);
+            fsCalculatorConstant cakeHight = AddConstant(fsParameterIdentifier.CakeHeight);
+            fsCalculatorConstant fitrationTime = AddConstant(fsParameterIdentifier.FiltrationTime);
+            fsCalculatorConstant qft = AddConstant(fsParameterIdentifier.qft);
+            fsCalculatorConstant mf = AddConstant(fsParameterIdentifier.FiltrateMass);
+            fsCalculatorConstant cakeMass = AddConstant(fsParameterIdentifier.CakeMass);
 
             fsCalculatorVariable porosity0 = AddVariable(fsParameterIdentifier.CakePorosity0);
             fsCalculatorVariable kappa0 = AddVariable(fsParameterIdentifier.Kappa0);
@@ -61,6 +68,11 @@ namespace StepCalculators
             AddEquation(new fsMoistureContentFromDensitiesAndPorosityEquation(cakeMoistureContentRf, porosity, filtrateDensity, solidsDensity));
             AddEquation(new fsSumEquation(one, cakeMoistureContentRf, cakeWetMassSolidsFractionRs));
             AddEquation(new fsCakeWetDensityFromRhofRhosPorosityEquation(cakeWetDensity, filtrateDensity, solidsDensity, porosity));
+
+            AddEquation(new fsEpsFromMsAndHcEquation(porosity, solidsMass, filtrationArea, solidsDensity, cakeHight));
+            AddEquation(new fsEpsFromMsAndQfEquation(porosity, volumeConcentration, solidsMass, filtrationArea, solidsDensity, fitrationTime, qft));
+            AddEquation(new fsEpsFromMsAndMfEquation(porosity, volumeConcentration, solidsMass, filtrateDensity, solidsDensity, mf));
+            AddEquation(new fsEpsFromMcAndQfEquation(porosity, volumeConcentration, cakeMass, filtrationArea, filtrateDensity, solidsDensity, fitrationTime, qft));
 
             #endregion
         }
