@@ -318,6 +318,12 @@ namespace Parameters
         public static fsParameterIdentifier FilterMediumResistanceRm0 = 
             new fsParameterIdentifier("Rm0", fsCharacteristic.FilterMediumResistance);
 
+        public static fsParameterIdentifier FilterMediumResistanceHce =
+            new fsParameterIdentifier("hce", "Filter Medium Resistance hce", fsCharacteristic.CakeHeight);
+
+        public static fsParameterIdentifier FilterMediumResistanceRm =
+            new fsParameterIdentifier("Rm", fsCharacteristic.FilterMediumResistance);
+
         public static fsParameterIdentifier SolutesConcentrationInMotherLiquid = 
             new fsParameterIdentifier("C_sol", "Solutes Concentration in Mother Liquid", fsCharacteristic.SolidsConcentration);
 

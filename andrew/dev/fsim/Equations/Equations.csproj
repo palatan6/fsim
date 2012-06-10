@@ -57,6 +57,7 @@
     <Compile Include="Cake Formation\fsEpsFromMsAndMfEquation.cs" />
     <Compile Include="Cake Formation\fsEpsFromMsAndQfEquation.cs" />
     <Compile Include="Cake Formation\fsHcFromTfAndKEquation.cs" />
+    <Compile Include="Cake Formation\fsKfromPcAndRmEquation.cs" />
     <Compile Include="Cake Formation\fsMcFromHcEquation.cs" />
     <Compile Include="Cake Formation\fsPcFromPcstarEquation.cs" />
     <Compile Include="Cake Formation\fsQftFromHcEtaDpEquation.cs" />

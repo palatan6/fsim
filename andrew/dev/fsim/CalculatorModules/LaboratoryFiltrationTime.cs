@@ -52,8 +52,8 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakeResistanceAlpha,
                 fsParameterIdentifier.PracticalCakePermeability);
             fsParametersGroup hceGroup = AddGroup(
-                fsParameterIdentifier.FilterMediumResistanceHce0,
-                fsParameterIdentifier.FilterMediumResistanceRm0);
+                fsParameterIdentifier.FilterMediumResistanceHce,
+                fsParameterIdentifier.FilterMediumResistanceRm);
             fsParametersGroup areaGroup = AddGroup(
                 fsParameterIdentifier.FilterArea);
             fsParametersGroup pressureGroup = AddGroup(
