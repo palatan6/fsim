@@ -27,7 +27,7 @@ namespace StepCalculators
             fsCalculatorConstant filtrationArea = AddConstant(fsParameterIdentifier.FilterArea);
             fsCalculatorConstant cakeHight = AddConstant(fsParameterIdentifier.CakeHeight);
             fsCalculatorConstant fitrationTime = AddConstant(fsParameterIdentifier.FiltrationTime);
-            fsCalculatorConstant qft = AddConstant(fsParameterIdentifier.qft);
+            fsCalculatorConstant qf = AddConstant(fsParameterIdentifier.qf);
             fsCalculatorConstant mf = AddConstant(fsParameterIdentifier.FiltrateMass);
             fsCalculatorConstant cakeMass = AddConstant(fsParameterIdentifier.CakeMass);
 
@@ -70,9 +70,9 @@ namespace StepCalculators
             AddEquation(new fsCakeWetDensityFromRhofRhosPorosityEquation(cakeWetDensity, filtrateDensity, solidsDensity, porosity));
 
             AddEquation(new fsEpsFromMsAndHcEquation(porosity, solidsMass, filtrationArea, solidsDensity, cakeHight));
-            AddEquation(new fsEpsFromMsAndQfEquation(porosity, volumeConcentration, solidsMass, filtrationArea, solidsDensity, fitrationTime, qft));
+            AddEquation(new fsEpsFromMsAndQfEquation(porosity, volumeConcentration, solidsMass, filtrationArea, solidsDensity, fitrationTime, qf));
             AddEquation(new fsEpsFromMsAndMfEquation(porosity, volumeConcentration, solidsMass, filtrateDensity, solidsDensity, mf));
-            AddEquation(new fsEpsFromMcAndQfEquation(porosity, volumeConcentration, cakeMass, filtrationArea, filtrateDensity, solidsDensity, fitrationTime, qft));
+            AddEquation(new fsEpsFromMcAndQfEquation(porosity, volumeConcentration, cakeMass, filtrationArea, filtrateDensity, solidsDensity, fitrationTime, qf));
 
             #endregion
         }

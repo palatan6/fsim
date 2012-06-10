@@ -65,12 +65,12 @@ namespace CalculatorModules
                 fsParameterIdentifier.FiltrateMass,
                 fsParameterIdentifier.CakeMass,
                 fsParameterIdentifier.SolidsMass,
-                fsParameterIdentifier.qmft,
+                fsParameterIdentifier.qmf,
                 fsParameterIdentifier.SuspensionVolume,
                 fsParameterIdentifier.FiltrateVolume,
                 fsParameterIdentifier.CakeVolume,
                 fsParameterIdentifier.SolidsVolume,
-                fsParameterIdentifier.qft);
+                fsParameterIdentifier.qf);
             
             var groups = new[]
                              {

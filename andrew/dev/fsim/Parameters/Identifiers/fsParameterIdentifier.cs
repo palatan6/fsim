@@ -233,6 +233,12 @@ namespace Parameters
         public static fsParameterIdentifier qmft =
             new fsParameterIdentifier("qmft", fsCharacteristic.SpecificMassFlowrate);
 
+        public static fsParameterIdentifier qf =
+            new fsParameterIdentifier("qf", "Spec filtrate volume rel to time", fsCharacteristic.SpecificVolumeFlowrate);
+
+        public static fsParameterIdentifier qmf =
+            new fsParameterIdentifier("qmf", fsCharacteristic.SpecificMassFlowrate);
+
         public static fsParameterIdentifier MotherLiquidViscosity =
             new fsParameterIdentifier("eta", "Mother Liquid Viscosity", fsCharacteristic.Viscosity);
 
