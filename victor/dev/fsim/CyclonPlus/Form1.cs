@@ -1533,21 +1533,21 @@ namespace CyclonPlus
 
         protected void writeToOleDb(fsParameterIdentifier parameter, DataGridViewCellEventArgs e)
         {
-            int currentRow = e.RowIndex;
-            fsValue val = hydrocycloneControl1.GetValue(parameter);
-            DataRowView drv = (DataRowView)cpCmSimul.Current;
-            DataRow[] idCurrentGroup = cpDataSet.Tables[tables.groups].Select("id_simulation = " + drv.Row["id_simulation"]);
-            DataRow[] tableValue;
+            //int currentRow = e.RowIndex;
+            //fsValue val = hydrocycloneControl1.GetValue(parameter);
+            //DataRowView drv = (DataRowView)cpCmSimul.Current;
+            //DataRow[] idCurrentGroup = cpDataSet.Tables[tables.groups].Select("id_simulation = " + drv.Row["id_simulation"]);
+            //DataRow[] tableValue;
 
-            if (Convert.ToInt32(idCurrentGroup.First()["id_group"]) < Convert.ToInt32(idCurrentGroup.Last()["id_group"]))
-                tableValue = cpDataSet.Tables[tables.values].Select("id_group >= " + idCurrentGroup.First()["id_group"].ToString() + " AND id_group <= " + idCurrentGroup.Last()["id_group"].ToString());
-            else
-                tableValue = cpDataSet.Tables[tables.values].Select("id_group >= " + idCurrentGroup.Last()["id_group"].ToString() + " AND id_group <= " + idCurrentGroup.First()["id_group"].ToString());
-            DataRow dataRowEdit = tableValue[currentRow];
-            dataRowEdit.BeginEdit();
-            dataRowEdit["valueOfParam"] = val.Value;
-            dataRowEdit["defined"] = val.Defined;
-            dataRowEdit.EndEdit();
+            //if (Convert.ToInt32(idCurrentGroup.First()["id_group"]) < Convert.ToInt32(idCurrentGroup.Last()["id_group"]))
+            //    tableValue = cpDataSet.Tables[tables.values].Select("id_group >= " + idCurrentGroup.First()["id_group"].ToString() + " AND id_group <= " + idCurrentGroup.Last()["id_group"].ToString());
+            //else
+            //    tableValue = cpDataSet.Tables[tables.values].Select("id_group >= " + idCurrentGroup.Last()["id_group"].ToString() + " AND id_group <= " + idCurrentGroup.First()["id_group"].ToString());
+            //DataRow dataRowEdit = tableValue[currentRow];
+            //dataRowEdit.BeginEdit();
+            //dataRowEdit["valueOfParam"] = val.Value;
+            //dataRowEdit["defined"] = val.Defined;
+            //dataRowEdit.EndEdit();
          }
 
 

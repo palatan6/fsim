@@ -47,8 +47,7 @@ namespace CalculatorModules.Cake_Fromation
             UpdateEquationsFromCalculationOptions();
             SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea,
                               fsParameterIdentifier.SpecificFiltrationTime);
-            Recalculate();
-            UpdateUIFromData();
+            RecalculateAndRedraw();
             ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid, calculationComboBox);
         }
 
@@ -222,15 +221,14 @@ namespace CalculatorModules.Cake_Fromation
             return (fsCakeFormationCalculationOption) CalculationOptions[typeof (fsCakeFormationCalculationOption)];
         }
 
-        internal void SetCalculationOption(fsCakeFormationCalculationOption cakeFormationCalculationOption)
+        internal void SetCalculationOptionAndRefreshCalculatorControl(fsCakeFormationCalculationOption cakeFormationCalculationOption)
         {
             if (GetCalculationOption() != cakeFormationCalculationOption)
             {
                 EstablishCalculationOption(cakeFormationCalculationOption);
                 UpdateGroupsInputInfoFromCalculationOptions();
                 UpdateEquationsFromCalculationOptions();
-                Recalculate();
-                UpdateUIFromData();
+                RecalculateAndRedraw();
             }
         }
 
@@ -249,7 +247,7 @@ namespace CalculatorModules.Cake_Fromation
             return Values.Values;
         }
 
-        internal void SetValues(ICollection<fsSimulationModuleParameter> collection)
+        internal void SetValuesAndRefreshCalculatorControl(ICollection<fsSimulationModuleParameter> collection)
         {
             foreach (fsSimulationModuleParameter parameter in collection)
             {
@@ -259,9 +257,7 @@ namespace CalculatorModules.Cake_Fromation
                     internalParameter.Value = parameter.Value;
                 }
             }
-
-            Recalculate();
-            UpdateUIFromData();
+            RecalculateAndRedraw();
         }
     }
 }

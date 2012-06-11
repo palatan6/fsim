@@ -102,8 +102,7 @@ namespace CalculatorModules
             UpdateCalculationOptionFromUI();
             UpdateGroupsInputInfoFromCalculationOptions();
             UpdateEquationsFromCalculationOptions();
-            Recalculate();
-            UpdateUIFromData();
+            RecalculateAndRedraw();
         }
 
         protected void ConnectUIWithDataUpdating(params Control[] controls)
@@ -233,9 +232,7 @@ namespace CalculatorModules
             fsParameterIdentifier parameter = CellToParameter[cell];
             UpdateInputInGroup(parameter);
             ReadEnteredValue(cell, parameter);
-            Recalculate();
-            UpdateCellForeColors();
-            WriteValuesToDataGrid();
+            RecalculateAndRedraw();
         }
 
         protected void AddRow(fsParametersWithValuesTable dataGrid, fsSimulationModuleParameter parameter, Color color)
@@ -270,7 +267,7 @@ namespace CalculatorModules
             CellToParameter.Add(dataGridViewCell, parameter);
         }
 
-        protected virtual void Recalculate()
+        protected void Recalculate()
         {
             fsCalculationProcessor.ProcessCalculatorParameters(Values, ParameterToGroup, Calculators);
         }
@@ -317,12 +314,12 @@ namespace CalculatorModules
             value.SetValueInUnits(fsValue.ObjectToValue(cell.Value));
         }
 
+        #endregion
+
         protected internal virtual void StopGridsEdit()
         {
             throw new Exception("You must implement StopGridsEdit in derivative class.");
         }
-
-        #endregion
 
         #region Show/Hide parameters methods
 
@@ -367,32 +364,15 @@ namespace CalculatorModules
             Recalculate();
         }
 
-        public void RecalculateAndRedraw()
+        public virtual void RecalculateAndRedraw()
         {
             Recalculate();
+            UpdateUIFromData();
         }
 
         #endregion
 
         #region Methods to change internal data
-
-        public fsValue GetValue(fsParameterIdentifier parameter)
-        {
-            return Values[parameter].Value;
-        }
-
-        public void SetValue(fsParameterIdentifier parameter, fsValue value)
-        {
-            Values[parameter].Value = value;
-        }
-
-        public void ChangeCalculationOption(Enum option)
-        {
-            EstablishCalculationOption(option);
-            UpdateGroupsInputInfoFromCalculationOptions();
-            Recalculate();
-            UpdateUIFromData();
-        }
 
         public void SetRanges(Dictionary<fsParameterIdentifier, fsRange> dictionary)
         {

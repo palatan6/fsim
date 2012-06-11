@@ -107,9 +107,9 @@ namespace CalculatorModules.Cake_Fromation
 
                 if (lastCalculatorControl != null)
                 {
-                    m_currentCalculatorControl.SetCalculationOption(lastCalculatorControl.GetCalculationOption());
+                    m_currentCalculatorControl.SetCalculationOptionAndRefreshCalculatorControl(lastCalculatorControl.GetCalculationOption());
                     m_currentCalculatorControl.SetMaterialParametersTableVisible(lastCalculatorControl.GetMaterialParametersTableVisible());
-                    m_currentCalculatorControl.SetValues(lastCalculatorControl.GetValues());
+                    m_currentCalculatorControl.SetValuesAndRefreshCalculatorControl(lastCalculatorControl.GetValues());
 
                     Control owningControl = m_currentCalculatorControl.ControlToResizeForExpanding;
                     m_currentCalculatorControl.ControlToResizeForExpanding = null;

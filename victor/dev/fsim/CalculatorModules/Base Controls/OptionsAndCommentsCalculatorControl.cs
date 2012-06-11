@@ -81,9 +81,9 @@ namespace CalculatorModules
 
         #region Internal Routine
 
-        protected override void Recalculate()
+        public override void RecalculateAndRedraw()
         {
-            base.Recalculate();
+            base.RecalculateAndRedraw();
             fsTableAndChart1.AssignCalculatorData(Values,
                 Groups,
                 ParameterToGroup,

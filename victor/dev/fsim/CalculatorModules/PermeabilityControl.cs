@@ -54,8 +54,7 @@ namespace CalculatorModules
 
             UpdateGroupsInputInfoFromCalculationOptions();
             UpdateEquationsFromCalculationOptions();
-            Recalculate();
-            UpdateUIFromData();
+            RecalculateAndRedraw();
             ConnectUIWithDataUpdating(dataGrid, calculationOptionComboBox);
         }
 

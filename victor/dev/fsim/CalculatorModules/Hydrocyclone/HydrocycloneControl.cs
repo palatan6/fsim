@@ -198,8 +198,7 @@ namespace CalculatorModules.Hydrocyclone
             AssignCalculationOptionAndControl(typeof (fsCalculationOption), comboBoxCalculationOption);
 
             UpdateGroupsInputInfoFromCalculationOptions();
-            Recalculate();
-            UpdateUIFromData();
+            RecalculateAndRedraw();
             ConnectUIWithDataUpdating(dataGrid, comboBoxCalculationOption);
         }
 

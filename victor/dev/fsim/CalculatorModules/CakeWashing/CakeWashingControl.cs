@@ -96,8 +96,7 @@ namespace CalculatorModules.CakeWashing
             #endregion
 
             //SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea, fsParameterIdentifier.SpecificFiltrationTime);
-            Recalculate();
-            UpdateUIFromData();
+            RecalculateAndRedraw();
             ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid);
         }
 
