@@ -4,6 +4,7 @@ using Parameters;
 using Equations;
 using UpdateHandler;
 using Value;
+using System;
 
 namespace StepCalculators
 {
@@ -86,6 +87,10 @@ namespace StepCalculators
         protected fsCalculatorVariable AddVariable(fsParameterIdentifier identifier)
         {
             var p = new fsCalculatorVariable(identifier);
+            if (m_variables.ContainsKey(identifier))
+            {
+                throw new Exception("Parameter " + identifier.ToString() + " already exists in variables.");
+            }
             m_variables[identifier] = p;
             return p;
         }
@@ -93,6 +98,10 @@ namespace StepCalculators
         protected fsCalculatorConstant AddConstant(fsParameterIdentifier identifier)
         {
             var c = new fsCalculatorConstant(identifier);
+            if (m_constants.ContainsKey(identifier))
+            {
+                throw new Exception("Parameter " + identifier.ToString() + " already exists in constants.");
+            }
             m_constants[identifier] = c;
             return c;
         }

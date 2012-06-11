@@ -36,7 +36,7 @@ namespace StepCalculators
             IEquationParameter mc = AddVariable(fsParameterIdentifier.CakeMass);
             IEquationParameter ms = AddVariable(fsParameterIdentifier.SolidsMass);
             IEquationParameter qmf = AddVariable(fsParameterIdentifier.qmf);
-            IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
+            //IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
             IEquationParameter vsus = AddVariable(fsParameterIdentifier.SuspensionVolume);
             IEquationParameter vf = AddVariable(fsParameterIdentifier.FiltrateVolume);
             IEquationParameter vc = AddVariable(fsParameterIdentifier.CakeVolume);
@@ -82,8 +82,8 @@ namespace StepCalculators
             AddEquation(new fsProductEquation(solidsMass, suspensionMass, cm));
             AddEquation(new fsSumEquation(suspensionMass, solidsMass, liquidMass));
             AddEquation(new fsMcFromHcEquation(mc, area, hc, solidsDensity, eps, rho));
-            AddEquation(new fsQmftFromHcRhoEtaDpEquation(qmf, rho, pc, Dp, viscosity, hc, hce));
-            AddEquation(new fsQftFromHcEtaDpEquation(qf, pc, Dp, viscosity, hc, hce));
+            AddEquation(new fsQmftFromHcRhoEtaDpEquation(qmf, rho, pc, pressure, viscosity, hc, hce));
+            AddEquation(new fsQftFromHcEtaDpEquation(qf, pc, pressure, viscosity, hc, hce));
            
             Equations.Add(new fsProductsEquation(
                 new[] { area, hc, onePlusKappa },
