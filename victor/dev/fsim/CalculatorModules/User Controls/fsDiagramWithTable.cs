@@ -60,6 +60,7 @@ namespace CalculatorModules.User_Controls
             }
 
             table.ColumnCount = 1;
+            table.RowCount = m_xAxis.Array.Length;
             WriteArrayToLastColumnInTable(m_xAxis);
             foreach (fsNamedArray curve in m_yAxis)
             {
