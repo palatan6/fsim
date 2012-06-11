@@ -36,7 +36,6 @@ namespace StepCalculators
             IEquationParameter mc = AddVariable(fsParameterIdentifier.CakeMass);
             IEquationParameter ms = AddVariable(fsParameterIdentifier.SolidsMass);
             IEquationParameter qmf = AddVariable(fsParameterIdentifier.qmf);
-            //IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
             IEquationParameter vsus = AddVariable(fsParameterIdentifier.SuspensionVolume);
             IEquationParameter vf = AddVariable(fsParameterIdentifier.FiltrateVolume);
             IEquationParameter vc = AddVariable(fsParameterIdentifier.CakeVolume);
