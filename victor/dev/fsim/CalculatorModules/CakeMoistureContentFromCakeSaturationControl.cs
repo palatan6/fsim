@@ -20,10 +20,8 @@ namespace CalculatorModules
 
         #endregion
 
-        public fsCakeMoistureContentFromCakeSaturationControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(new fsRfFromCakeSaturationCalculator());
 
             fsParametersGroup liquidGroup = AddGroup(
@@ -60,15 +58,20 @@ namespace CalculatorModules
             rfGroup.SetIsInputFlag(false);
             ParameterToCell[fsParameterIdentifier.CakeMoistureContent].ReadOnly = true;
 
-            fsMisc.FillList(calculationOptionComboBox.Items, typeof (fsCalculationOption));
+            fsMisc.FillList(calculationOptionComboBox.Items, typeof(fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.CakeMoistureContent);
-            AssignCalculationOptionAndControl(typeof (fsCalculationOption), calculationOptionComboBox);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationOptionComboBox);
 
             UpdateGroupsInputInfoFromCalculationOptions();
             UpdateEquationsFromCalculationOptions();
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(dataGrid, calculationOptionComboBox);
+        }
+
+        public fsCakeMoistureContentFromCakeSaturationControl()
+        {
+            InitializeComponent();
         }
 
         protected override void UpdateEquationsFromCalculationOptions()

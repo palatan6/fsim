@@ -20,10 +20,8 @@ namespace CalculatorModules
 
         #endregion
 
-        public fsPermeabilityControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(new fsPermeabilityCalculator());
 
             fsParametersGroup solidsGroup = AddGroup(
@@ -50,8 +48,8 @@ namespace CalculatorModules
             AddGroupToUI(dataGrid, pressureGroup, Color.FromArgb(230, 230, 255));
             AddGroupToUI(dataGrid, pcRcAGroup, Color.FromArgb(255, 230, 230));
 
-            fsMisc.FillList(calculationOptionComboBox.Items, typeof (fsCalculationOption));
-            AssignCalculationOptionAndControl(typeof (fsCalculationOption), calculationOptionComboBox);
+            fsMisc.FillList(calculationOptionComboBox.Items, typeof(fsCalculationOption));
+            AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationOptionComboBox);
             EstablishCalculationOption(fsCalculationOption.CalcPcRcAlpha);
 
             UpdateGroupsInputInfoFromCalculationOptions();
@@ -59,6 +57,11 @@ namespace CalculatorModules
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(dataGrid, calculationOptionComboBox);
+        }
+
+        public fsPermeabilityControl()
+        {
+            InitializeComponent();
         }
 
         #region Routine Methods

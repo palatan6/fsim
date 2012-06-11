@@ -9,10 +9,8 @@ namespace CalculatorModules
     {
         private readonly fsCakeWashOutContentCalculator m_calculator = new fsCakeWashOutContentCalculator();
 
-        public fsCakeWashOutContentControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(m_calculator);
 
             fsParametersGroup wetMassGroup = AddGroup(fsParameterIdentifier.WetCakeMass);
@@ -52,13 +50,13 @@ namespace CalculatorModules
             }
             SetGroupInput(outGroup, false);
 
-            fsMisc.FillList(fromComboBox.Items, typeof (fsCalculationOptions.fsFromCalculationOption));
+            fsMisc.FillList(fromComboBox.Items, typeof(fsCalculationOptions.fsFromCalculationOption));
             EstablishCalculationOption(fsCalculationOptions.fsFromCalculationOption.WashOutContent);
-            AssignCalculationOptionAndControl(typeof (fsCalculationOptions.fsFromCalculationOption), fromComboBox);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsFromCalculationOption), fromComboBox);
 
-            fsMisc.FillList(washOutContentComboBox.Items, typeof (fsCalculationOptions.fsWashOutContentOption));
+            fsMisc.FillList(washOutContentComboBox.Items, typeof(fsCalculationOptions.fsWashOutContentOption));
             EstablishCalculationOption(fsCalculationOptions.fsWashOutContentOption.AsConcentration);
-            AssignCalculationOptionAndControl(typeof (fsCalculationOptions.fsWashOutContentOption),
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsWashOutContentOption),
                                               washOutContentComboBox);
 
             UpdateGroupsInputInfoFromCalculationOptions();
@@ -68,6 +66,11 @@ namespace CalculatorModules
             ConnectUIWithDataUpdating(dataGrid,
                                       fromComboBox,
                                       washOutContentComboBox);
+        }
+
+        public fsCakeWashOutContentControl()
+        {
+            InitializeComponent();
         }
 
         #region Routine Methods

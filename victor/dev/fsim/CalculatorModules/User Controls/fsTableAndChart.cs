@@ -56,7 +56,7 @@ namespace CalculatorModules.User_Controls
             m_calculators = new List<fsCalculator>(calculators);
         }
 
-        public void SetDefaultDiagram(
+        public void SetDiagram(
             fsParameterIdentifier iterationParameter,
             fsParameterIdentifier yAxisParameter,
             fsParameterIdentifier y2AxisParameter)

@@ -24,10 +24,8 @@ namespace CalculatorModules.Cake_Fromation
 
         #endregion
 
-        public fsCakeFormationBaseControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             #region Calculators
 
             Calculators.Add(new fsDensityConcentrationCalculator());
@@ -38,24 +36,25 @@ namespace CalculatorModules.Cake_Fromation
 
             #endregion
 
-            fsMisc.FillList(calculationComboBox.Items, typeof(fsCakeFormationCalculationOption));
+            fsMisc.FillList(calculationComboBox.Items, typeof (fsCakeFormationCalculationOption));
             EstablishCalculationOption(fsCakeFormationCalculationOption.StandardCalculation);
-            AssignCalculationOptionAndControl(typeof(fsCakeFormationCalculationOption), calculationComboBox);
+            AssignCalculationOptionAndControl(typeof (fsCakeFormationCalculationOption), calculationComboBox);
 
             UpdateGroupsInputInfoFromCalculationOptions();
 
             AssignDefaultValues();
 
             UpdateEquationsFromCalculationOptions();
-            SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea, fsParameterIdentifier.SpecificFiltrationTime);
+            SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea,
+                              fsParameterIdentifier.SpecificFiltrationTime);
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid, calculationComboBox);
         }
 
-        protected override sealed void Recalculate()
+        public fsCakeFormationBaseControl()
         {
-            base.Recalculate();
+            InitializeComponent();
         }
 
         protected virtual void AddCakeFormationCalculator()

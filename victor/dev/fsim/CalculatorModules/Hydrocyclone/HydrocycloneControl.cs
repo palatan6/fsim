@@ -24,10 +24,8 @@ namespace CalculatorModules.Hydrocyclone
 
         #endregion
 
-        public fsHydrocycloneControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             #region Calculators
 
             Calculators.Add(new fsDensityConcentrationCalculator());
@@ -44,50 +42,50 @@ namespace CalculatorModules.Hydrocyclone
             #region Groups
 
             fsParametersGroup etaGroup = AddGroup(
-               fsParameterIdentifier.MotherLiquidViscosity);    //eta
+                fsParameterIdentifier.MotherLiquidViscosity); //eta
 
             fsParametersGroup rhoGroup = AddGroup(
-                fsParameterIdentifier.MotherLiquidDensity);       //rho
+                fsParameterIdentifier.MotherLiquidDensity); //rho
 
             fsParametersGroup densitiesGroup = AddGroup(
-                fsParameterIdentifier.SolidsDensity,        //rho_s
-                fsParameterIdentifier.SuspensionDensity);   //rho_sus
+                fsParameterIdentifier.SolidsDensity, //rho_s
+                fsParameterIdentifier.SuspensionDensity); //rho_sus
 
             fsParametersGroup cGroup = AddGroup(
-                fsParameterIdentifier.SuspensionSolidsMassFraction,     //cm
-                fsParameterIdentifier.SuspensionSolidsVolumeFraction,   //cv
-                fsParameterIdentifier.SuspensionSolidsConcentration);   //c
+                fsParameterIdentifier.SuspensionSolidsMassFraction, //cm
+                fsParameterIdentifier.SuspensionSolidsVolumeFraction, //cv
+                fsParameterIdentifier.SuspensionSolidsConcentration); //c
 
             fsParametersGroup xgGroup = AddGroup(
-                fsParameterIdentifier.xg);   //xg
+                fsParameterIdentifier.xg); //xg
 
             fsParametersGroup sigma_gGroup = AddGroup(
-                fsParameterIdentifier.sigma_g);   //sigma_g
+                fsParameterIdentifier.sigma_g); //sigma_g
 
             fsParametersGroup sigma_sGroup = AddGroup(
-                fsParameterIdentifier.sigma_s);   //sigma_s
+                fsParameterIdentifier.sigma_s); //sigma_s
 
             fsParametersGroup underFlowGroup = AddGroup(
-                fsParameterIdentifier.rf,                              //rf
-                fsParameterIdentifier.DuOverD,                         //Du/D
-                fsParameterIdentifier.UnderflowSolidsMassFraction);    //cm_u
+                fsParameterIdentifier.rf, //rf
+                fsParameterIdentifier.DuOverD, //Du/D
+                fsParameterIdentifier.UnderflowSolidsMassFraction); //cm_u
 
             fsParametersGroup cxdGroup = AddGroup(
-                fsParameterIdentifier.OverflowSolidsMassFraction,    //cmo
-                fsParameterIdentifier.OverflowParticleSize,          //x0_i
-                fsParameterIdentifier.ReducedCutSize,                //x’50
-                fsParameterIdentifier.MachineDiameter);              //D
-            
+                fsParameterIdentifier.OverflowSolidsMassFraction, //cmo
+                fsParameterIdentifier.OverflowParticleSize, //x0_i
+                fsParameterIdentifier.ReducedCutSize, //x’50
+                fsParameterIdentifier.MachineDiameter); //D
+
             fsParametersGroup numCyclonesGroup = AddGroup(
-                fsParameterIdentifier.NumberOfCyclones);     //n
+                fsParameterIdentifier.NumberOfCyclones); //n
 
             fsParametersGroup pressureGroup = AddGroup(
-                fsParameterIdentifier.PressureDifference);   //Dp
+                fsParameterIdentifier.PressureDifference); //Dp
 
             fsParametersGroup qGroup = AddGroup(
-                fsParameterIdentifier.FeedVolumeFlowRate,       //Q
-                fsParameterIdentifier.FeedSolidsMassFlowRate,   //Qm
-                fsParameterIdentifier.Qms);                     //Qms
+                fsParameterIdentifier.FeedVolumeFlowRate, //Q
+                fsParameterIdentifier.FeedSolidsMassFlowRate, //Qm
+                fsParameterIdentifier.Qms); //Qms
 
             fsParametersGroup alpha1Group = AddGroup(
                 fsParameterIdentifier.Alpha1);
@@ -130,57 +128,57 @@ namespace CalculatorModules.Hydrocyclone
                 fsParameterIdentifier.DoOverD);
 
             fsParametersGroup onlyCalculatedParametersGroup = AddGroup(
-                 fsParameterIdentifier.StokesNumber,
-                 fsParameterIdentifier.EulerNumber,
-                 fsParameterIdentifier.ReynoldsNumber,
-                 fsParameterIdentifier.AverageVelocity,
-                 fsParameterIdentifier.TotalEfficiency,
-                 fsParameterIdentifier.ReducedTotalEfficiency,
-                 fsParameterIdentifier.CycloneLength,
-                 fsParameterIdentifier.LengthOfCylindricalPart,
-                 fsParameterIdentifier.InletDiameter,
-                 fsParameterIdentifier.OutletDiameter,
-                 fsParameterIdentifier.UnderflowDiameter,
-                 fsParameterIdentifier.OverflowVolumeFlowRate,
-                 fsParameterIdentifier.OverflowMassFlowRate,
-                 fsParameterIdentifier.OverflowSolidsMassFlowRate,
-                 fsParameterIdentifier.UnderflowVolumeFlowRate,
-                 fsParameterIdentifier.UnderflowMassFlowRate,
-                 fsParameterIdentifier.UnderflowSolidsMassFlowRate,
-                 fsParameterIdentifier.OverflowMeanParticleSize,
-                 fsParameterIdentifier.UnderflowMeanParticleSize,
-                 fsParameterIdentifier.OverflowSolidsVolumeFraction,
-                 fsParameterIdentifier.OverflowSolidsConcentration,
-                 fsParameterIdentifier.UnderflowSolidsVolumeFraction,
-                 fsParameterIdentifier.UnderflowSolidsConcentration);
+                fsParameterIdentifier.StokesNumber,
+                fsParameterIdentifier.EulerNumber,
+                fsParameterIdentifier.ReynoldsNumber,
+                fsParameterIdentifier.AverageVelocity,
+                fsParameterIdentifier.TotalEfficiency,
+                fsParameterIdentifier.ReducedTotalEfficiency,
+                fsParameterIdentifier.CycloneLength,
+                fsParameterIdentifier.LengthOfCylindricalPart,
+                fsParameterIdentifier.InletDiameter,
+                fsParameterIdentifier.OutletDiameter,
+                fsParameterIdentifier.UnderflowDiameter,
+                fsParameterIdentifier.OverflowVolumeFlowRate,
+                fsParameterIdentifier.OverflowMassFlowRate,
+                fsParameterIdentifier.OverflowSolidsMassFlowRate,
+                fsParameterIdentifier.UnderflowVolumeFlowRate,
+                fsParameterIdentifier.UnderflowMassFlowRate,
+                fsParameterIdentifier.UnderflowSolidsMassFlowRate,
+                fsParameterIdentifier.OverflowMeanParticleSize,
+                fsParameterIdentifier.UnderflowMeanParticleSize,
+                fsParameterIdentifier.OverflowSolidsVolumeFraction,
+                fsParameterIdentifier.OverflowSolidsConcentration,
+                fsParameterIdentifier.UnderflowSolidsVolumeFraction,
+                fsParameterIdentifier.UnderflowSolidsConcentration);
             var groups = new[]
                              {
-                                etaGroup,
-                                rhoGroup,
-                                densitiesGroup,
-                                cGroup,
-                                xgGroup,
-                                sigma_gGroup,
-                                sigma_sGroup,
-                                underFlowGroup,
-                                cxdGroup,
-                                numCyclonesGroup,
-                                pressureGroup,
-                                qGroup,
-                                onlyCalculatedParametersGroup,
-                                alpha1Group,
-                                alpha2Group,
-                                alpha3Group,
-                                beta1Group,
-                                beta2Group,
-                                beta3Group,
-                                gamma1Group,
-                                gamma2Group,
-                                gamma3Group,
-                                bigLOverDGroup,
-                                smallLOverDGroup,
-                                diOverDGroup,
-                                doOverDGroup
+                                 etaGroup,
+                                 rhoGroup,
+                                 densitiesGroup,
+                                 cGroup,
+                                 xgGroup,
+                                 sigma_gGroup,
+                                 sigma_sGroup,
+                                 underFlowGroup,
+                                 cxdGroup,
+                                 numCyclonesGroup,
+                                 pressureGroup,
+                                 qGroup,
+                                 onlyCalculatedParametersGroup,
+                                 alpha1Group,
+                                 alpha2Group,
+                                 alpha3Group,
+                                 beta1Group,
+                                 beta2Group,
+                                 beta3Group,
+                                 gamma1Group,
+                                 gamma2Group,
+                                 gamma3Group,
+                                 bigLOverDGroup,
+                                 smallLOverDGroup,
+                                 diOverDGroup,
+                                 doOverDGroup
                              };
 
             for (int i = 0; i < groups.Length; ++i)
@@ -189,21 +187,25 @@ namespace CalculatorModules.Hydrocyclone
                 SetGroupInput(groups[i], true);
             }
             SetGroupInput(onlyCalculatedParametersGroup, false);
-            
+
 
             #endregion
 
             AssignDefaultValues();
 
-            fsMisc.FillList(comboBoxCalculationOption.Items, typeof(fsCalculationOption));
+            fsMisc.FillList(comboBoxCalculationOption.Items, typeof (fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.Dp);
-            AssignCalculationOptionAndControl(typeof(fsCalculationOption), comboBoxCalculationOption);
+            AssignCalculationOptionAndControl(typeof (fsCalculationOption), comboBoxCalculationOption);
 
             UpdateGroupsInputInfoFromCalculationOptions();
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(dataGrid, comboBoxCalculationOption);
+        }
 
+        public fsHydrocycloneControl()
+        {
+            InitializeComponent();
         }
 
         private void AssignDefaultValues()

@@ -9,10 +9,8 @@ namespace CalculatorModules
     {
         private readonly fsCakePorosityCalculator m_calculator = new fsCakePorosityCalculator();
 
-        public fsCakePorossityControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(m_calculator);
 
             fsParametersGroup machineDiameterGroup = AddGroup(fsParameterIdentifier.MachineDiameter);
@@ -63,16 +61,16 @@ namespace CalculatorModules
             SetRowColor(dataGrid, ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].RowIndex,
                         Color.FromArgb(255, 230, 230));
 
-            fsMisc.FillList(saturationComboBox.Items, typeof (fsCakePorosityCalculator.fsSaturationOption));
-            AssignCalculationOptionAndControl(typeof (fsCakePorosityCalculator.fsSaturationOption), saturationComboBox);
+            fsMisc.FillList(saturationComboBox.Items, typeof(fsCakePorosityCalculator.fsSaturationOption));
+            AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsSaturationOption), saturationComboBox);
             EstablishCalculationOption(fsCakePorosityCalculator.fsSaturationOption.NotSaturatedCake);
 
-            fsMisc.FillList(saltContentComboBox.Items, typeof (fsCakePorosityCalculator.fsSaltContentOption));
-            AssignCalculationOptionAndControl(typeof (fsCakePorosityCalculator.fsSaltContentOption), saltContentComboBox);
+            fsMisc.FillList(saltContentComboBox.Items, typeof(fsCakePorosityCalculator.fsSaltContentOption));
+            AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsSaltContentOption), saltContentComboBox);
             EstablishCalculationOption(fsCakePorosityCalculator.fsSaltContentOption.Neglected);
 
-            fsMisc.FillList(machineTypeComboBox.Items, typeof (fsCakePorosityCalculator.fsMachineTypeOption));
-            AssignCalculationOptionAndControl(typeof (fsCakePorosityCalculator.fsMachineTypeOption), machineTypeComboBox);
+            fsMisc.FillList(machineTypeComboBox.Items, typeof(fsCakePorosityCalculator.fsMachineTypeOption));
+            AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsMachineTypeOption), machineTypeComboBox);
             EstablishCalculationOption(fsCakePorosityCalculator.fsMachineTypeOption.PlainArea);
 
             UpdateGroupsInputInfoFromCalculationOptions();
@@ -83,6 +81,11 @@ namespace CalculatorModules
                                       saturationComboBox,
                                       saltContentComboBox,
                                       machineTypeComboBox);
+        }
+
+        public fsCakePorossityControl()
+        {
+            InitializeComponent();
         }
 
         #region Routine Methods

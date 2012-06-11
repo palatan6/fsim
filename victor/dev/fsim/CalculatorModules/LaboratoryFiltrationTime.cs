@@ -8,10 +8,8 @@ namespace CalculatorModules
 {
     public sealed partial class fsLaboratoryFiltrationTime : fsOptionsSingleTableAndCommentsCalculatorControl
     {
-        public fsLaboratoryFiltrationTime()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(new fsDensityConcentrationCalculator());
             Calculators.Add(new fsPorosityCalculator());
             Calculators.Add(new fsPermeabilityCalculator());
@@ -72,7 +70,7 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakeVolume,
                 fsParameterIdentifier.SolidsVolume,
                 fsParameterIdentifier.qft);
-            
+
             var groups = new[]
                              {
                                  viscosityGroup,
@@ -100,7 +98,7 @@ namespace CalculatorModules
                 groups[i].SetIsInputFlag(true);
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
-            
+
             ParameterToCell[fsParameterIdentifier.Ne].OwningRow.Visible = false;
             ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = false;
             ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Visible = false;
@@ -116,6 +114,11 @@ namespace CalculatorModules
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(dataGrid);
+        }
+
+        public fsLaboratoryFiltrationTime()
+        {
+            InitializeComponent();
         }
 
         private void AssignDefaultValues()

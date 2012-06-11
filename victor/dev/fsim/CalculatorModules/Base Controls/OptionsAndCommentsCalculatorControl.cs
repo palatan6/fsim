@@ -76,7 +76,7 @@ namespace CalculatorModules
             fsParameterIdentifier yAxisParameter,
             fsParameterIdentifier y2AxisParameter)
         {
-            fsTableAndChart1.SetDefaultDiagram(xAxisParameter, yAxisParameter, y2AxisParameter);
+            fsTableAndChart1.SetDiagram(xAxisParameter, yAxisParameter, y2AxisParameter);
         }
 
         #region Internal Routine

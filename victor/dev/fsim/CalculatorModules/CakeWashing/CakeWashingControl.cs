@@ -9,10 +9,8 @@ namespace CalculatorModules.CakeWashing
 {
     public partial class fsCakeWashingControl : fsOptionsDoubleTableAndCommentsCalculatorControl
     {
-        public fsCakeWashingControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             #region Calculators
 
             Calculators.Add(new fsDensityConcentrationCalculator());
@@ -101,6 +99,11 @@ namespace CalculatorModules.CakeWashing
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid);
+        }
+
+        public fsCakeWashingControl()
+        {
+            InitializeComponent();
         }
 
             #region Routine Methods

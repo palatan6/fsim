@@ -12,10 +12,8 @@ namespace CalculatorModules.Cake_Fromation
         private readonly Dictionary<string, fsCakeFormationBaseControl> m_moduleNameToControl = new Dictionary<string, fsCakeFormationBaseControl>();
         private fsCakeFormationBaseControl m_currentCalculatorControl;
 
-        public fsCakeFormationOvermoduleControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             AddCalculatorControl(new fsContinuousNonModularBeltFilterControl(), "Continuous Belt Filters (Non Modular)");
             AddCalculatorControl(new fsContinuousModularBeltFilterControl(), "Continuous Belt Filters (Modular)");
             AddCalculatorControl(new fsBeltFilterWithReversibleTrayControl(), "Belt Filter With Reversible Tray");
@@ -32,6 +30,11 @@ namespace CalculatorModules.Cake_Fromation
                 "Laboratory Pressure Nutsche Filter",
                 "Laboratory Vacuum Filter");
             ChangeAndShowCurrentCalculatorControl();
+        }
+
+        public fsCakeFormationOvermoduleControl()
+        {
+            InitializeComponent();
         }
 
         public override Control ControlToResizeForExpanding

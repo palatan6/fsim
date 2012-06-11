@@ -20,10 +20,8 @@ namespace CalculatorModules
 
         #endregion
 
-        public fsDensityConcentrationControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(new fsDensityConcentrationCalculator());
 
             fsParametersGroup filtrateGroup = AddGroup(
@@ -42,15 +40,20 @@ namespace CalculatorModules
             AddGroupToUI(dataGrid, suspensionGroup, Color.FromArgb(255, 255, 230));
             AddGroupToUI(dataGrid, concentrationGroup, Color.FromArgb(230, 230, 230));
 
-            fsMisc.FillList(calculateSelectionComboBox.Items, typeof (fsCalculationOption));
+            fsMisc.FillList(calculateSelectionComboBox.Items, typeof(fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.CalcSuspensionDensity);
-            AssignCalculationOptionAndControl(typeof (fsCalculationOption), calculateSelectionComboBox);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculateSelectionComboBox);
 
             UpdateGroupsInputInfoFromCalculationOptions();
             UpdateEquationsFromCalculationOptions();
             Recalculate();
             UpdateUIFromData();
             ConnectUIWithDataUpdating(dataGrid, calculateSelectionComboBox);
+        }
+
+        public fsDensityConcentrationControl()
+        {
+            InitializeComponent();
         }
 
         #region Routine Methods

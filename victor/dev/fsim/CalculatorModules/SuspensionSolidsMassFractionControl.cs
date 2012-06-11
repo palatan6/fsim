@@ -10,10 +10,8 @@ namespace CalculatorModules
         private readonly fsSuspensionSolidsMassFractionCalculator m_calculator =
             new fsSuspensionSolidsMassFractionCalculator();
 
-        public SuspensionSolidsMassFractionControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(m_calculator);
 
             fsParametersGroup wetMassGroup = AddGroup(fsParameterIdentifier.SuspensionMass);
@@ -46,13 +44,13 @@ namespace CalculatorModules
             }
             SetGroupInput(cmGroup, false);
 
-            fsMisc.FillList(saltContentComboBox.Items, typeof (fsCalculationOptions.fsSaltContentOption));
+            fsMisc.FillList(saltContentComboBox.Items, typeof(fsCalculationOptions.fsSaltContentOption));
             EstablishCalculationOption(fsCalculationOptions.fsSaltContentOption.Neglected);
-            AssignCalculationOptionAndControl(typeof (fsCalculationOptions.fsSaltContentOption), saltContentComboBox);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsSaltContentOption), saltContentComboBox);
 
-            fsMisc.FillList(concentrationComboBox.Items, typeof (fsCalculationOptions.fsConcentrationOption));
+            fsMisc.FillList(concentrationComboBox.Items, typeof(fsCalculationOptions.fsConcentrationOption));
             EstablishCalculationOption(fsCalculationOptions.fsConcentrationOption.SolidsMassFraction);
-            AssignCalculationOptionAndControl(typeof (fsCalculationOptions.fsConcentrationOption), concentrationComboBox);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsConcentrationOption), concentrationComboBox);
 
             UpdateGroupsInputInfoFromCalculationOptions();
             UpdateEquationsFromCalculationOptions();
@@ -61,6 +59,11 @@ namespace CalculatorModules
             ConnectUIWithDataUpdating(dataGrid,
                                       saltContentComboBox,
                                       concentrationComboBox);
+        }
+
+        public SuspensionSolidsMassFractionControl()
+        {
+            InitializeComponent();
         }
 
         #region Routine Methods

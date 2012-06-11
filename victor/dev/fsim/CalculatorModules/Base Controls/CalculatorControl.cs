@@ -33,6 +33,16 @@ namespace CalculatorModules
 
         #endregion
 
+
+        #region CalculatorControl Initialization
+
+        private bool m_isInitialized;
+        protected virtual void InitializeCalculatorControl()
+        {
+        }
+
+        #endregion
+
         protected fsCalculatorControl()
         {
             Values = new Dictionary<fsParameterIdentifier, fsSimulationModuleParameter>();
@@ -41,6 +51,16 @@ namespace CalculatorModules
             Calculators = new List<fsCalculator>();
             Groups = new List<fsParametersGroup>();
             ParameterToGroup = new Dictionary<fsParameterIdentifier, fsParametersGroup>();
+
+            Load += CalculatorControlLoad;
+        }
+
+        void CalculatorControlLoad(object sender, EventArgs e)
+        {
+            if (m_isInitialized)
+                return;
+            m_isInitialized = true;
+            InitializeCalculatorControl();
         }
 
         public virtual Control ControlToResizeForExpanding { get; set; }
@@ -297,46 +317,14 @@ namespace CalculatorModules
             value.SetValueInUnits(fsValue.ObjectToValue(cell.Value));
         }
 
-        #endregion
-
-        public virtual void SetUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
-        {
-            StopGridsEdit();
-
-            foreach (fsParameterIdentifier identifier in Values.Keys)
-            {
-                fsSimulationModuleParameter parameter = Values[identifier];
-                if (dictionary.ContainsKey(identifier.MeasurementCharacteristic))
-                {
-                    parameter.Unit = dictionary[identifier.MeasurementCharacteristic];
-                    DataGridViewCell valueCell = ParameterToCell[identifier];
-                    DataGridViewCell unitsCell = valueCell.DataGridView[valueCell.ColumnIndex - 1, valueCell.RowIndex];
-                    unitsCell.Value = parameter.Unit.Name;
-                    valueCell.Value = parameter.GetValueInUnits();
-                }
-            }
-            Recalculate();
-        }
-
         protected internal virtual void StopGridsEdit()
         {
             throw new Exception("You must implement StopGridsEdit in derivative class.");
         }
 
-        public void SetRanges(Dictionary<fsParameterIdentifier, fsRange> dictionary)
-        {
-            foreach (fsParameterIdentifier identifier in Values.Keys)
-            {
-                fsSimulationModuleParameter parameter = Values[identifier];
-                if (dictionary.ContainsKey(identifier))
-                {
-                    parameter.Range = dictionary[identifier];
-                }
-            }
-            Recalculate();
-        }
+        #endregion
 
-        #region Show/Hide parameters
+        #region Show/Hide parameters methods
 
         virtual public void ShowAndHideParameters(Dictionary<fsParameterIdentifier, bool> parametersToShowAndHide)
         {
@@ -358,10 +346,35 @@ namespace CalculatorModules
 
         #endregion
 
+        #region Methods to change/update view of the module
+
+        public virtual void SetUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
+        {
+            StopGridsEdit();
+
+            foreach (fsParameterIdentifier identifier in Values.Keys)
+            {
+                fsSimulationModuleParameter parameter = Values[identifier];
+                if (dictionary.ContainsKey(identifier.MeasurementCharacteristic))
+                {
+                    parameter.Unit = dictionary[identifier.MeasurementCharacteristic];
+                    DataGridViewCell valueCell = ParameterToCell[identifier];
+                    DataGridViewCell unitsCell = valueCell.DataGridView[valueCell.ColumnIndex - 1, valueCell.RowIndex];
+                    unitsCell.Value = parameter.Unit.Name;
+                    valueCell.Value = parameter.GetValueInUnits();
+                }
+            }
+            Recalculate();
+        }
+
         public void RecalculateAndRedraw()
         {
             Recalculate();
         }
+
+        #endregion
+
+        #region Methods to change internal data
 
         public fsValue GetValue(fsParameterIdentifier parameter)
         {
@@ -380,5 +393,20 @@ namespace CalculatorModules
             Recalculate();
             UpdateUIFromData();
         }
+
+        public void SetRanges(Dictionary<fsParameterIdentifier, fsRange> dictionary)
+        {
+            foreach (fsParameterIdentifier identifier in Values.Keys)
+            {
+                fsSimulationModuleParameter parameter = Values[identifier];
+                if (dictionary.ContainsKey(identifier))
+                {
+                    parameter.Range = dictionary[identifier];
+                }
+            }
+            Recalculate();
+        }
+
+        #endregion
     }
 }

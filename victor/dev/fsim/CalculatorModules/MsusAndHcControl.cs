@@ -28,7 +28,7 @@ namespace CalculatorModules
 
         #region Routine Data
 
-        private readonly fsParametersGroup m_areaBGroup;
+        private fsParametersGroup m_areaBGroup;
 
         private readonly List<fsCalculator> m_concaveCylindricAreaCalculators = new List<fsCalculator>();
         private readonly List<fsCalculator> m_convexCylindricAreaCalculators = new List<fsCalculator>();
@@ -36,10 +36,8 @@ namespace CalculatorModules
 
         #endregion
 
-        public fsMsusAndHcControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             m_plainAreaCalculators.Add(new fsMsusHcPlainAreaCalculator());
             m_convexCylindricAreaCalculators.Add(new fsMsusHcConvexCylindricAreaCalculator());
             m_concaveCylindricAreaCalculators.Add(new fsMsusHcConcaveCylindricAreaCalculator());
@@ -101,15 +99,15 @@ namespace CalculatorModules
             SetRowColor(dataGrid, ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].RowIndex,
                         Color.FromArgb(255, 230, 230));
 
-            fsMisc.FillList(machineTypeComboBox.Items, typeof (fsCakePorosityCalculator.fsMachineTypeOption));
+            fsMisc.FillList(machineTypeComboBox.Items, typeof(fsCakePorosityCalculator.fsMachineTypeOption));
             EstablishCalculationOption(fsCakePorosityCalculator.fsMachineTypeOption.PlainArea);
-            AssignCalculationOptionAndControl(typeof (fsCakePorosityCalculator.fsMachineTypeOption), machineTypeComboBox);
+            AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsMachineTypeOption), machineTypeComboBox);
 
             EstablishCalculationOption(fsCalculationOption.MassVolumeCalculated);
             FillCalculationComboBox();
 
             m_isBlockedCalculationOptionChanged = false;
-            AssignCalculationOptionAndControl(typeof (fsCalculationOption), calculationOptionComboBox);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationOptionComboBox);
 
             UpdateGroupsInputInfoFromCalculationOptions();
             UpdateEquationsFromCalculationOptions();
@@ -118,6 +116,11 @@ namespace CalculatorModules
             ConnectUIWithDataUpdating(dataGrid,
                                       machineTypeComboBox,
                                       calculationOptionComboBox);
+        }
+
+        public fsMsusAndHcControl()
+        {
+            InitializeComponent();
         }
 
         #region Routine Methods

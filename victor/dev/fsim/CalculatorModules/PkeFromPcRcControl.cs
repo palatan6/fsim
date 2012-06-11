@@ -9,10 +9,8 @@ namespace CalculatorModules
     {
         private readonly fsPkeFromPcRcCalculator m_calculator = new fsPkeFromPcRcCalculator();
 
-        public fsPkeFromPcRcControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(m_calculator);
 
             fsParametersGroup permeabilityGroup = AddGroup(
@@ -60,12 +58,12 @@ namespace CalculatorModules
             }
             SetGroupInput(pkeGroup, false);
 
-            fsMisc.FillList(inputCakeComboBox.Items, typeof (fsCalculationOptions.fsCakeInputOption));
-            AssignCalculationOptionAndControl(typeof (fsCalculationOptions.fsCakeInputOption), inputCakeComboBox);
+            fsMisc.FillList(inputCakeComboBox.Items, typeof(fsCalculationOptions.fsCakeInputOption));
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsCakeInputOption), inputCakeComboBox);
             EstablishCalculationOption(fsCalculationOptions.fsCakeInputOption.PermeabilityPc);
 
-            fsMisc.FillList(enterSolidsDensityComboBox.Items, typeof (fsCalculationOptions.fsEnterSolidsDensity));
-            AssignCalculationOptionAndControl(typeof (fsCalculationOptions.fsEnterSolidsDensity),
+            fsMisc.FillList(enterSolidsDensityComboBox.Items, typeof(fsCalculationOptions.fsEnterSolidsDensity));
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsEnterSolidsDensity),
                                               enterSolidsDensityComboBox);
             EstablishCalculationOption(fsCalculationOptions.fsEnterSolidsDensity.BulkDensityDrySolids);
 
@@ -76,6 +74,11 @@ namespace CalculatorModules
             ConnectUIWithDataUpdating(dataGrid,
                                       inputCakeComboBox,
                                       enterSolidsDensityComboBox);
+        }
+
+        public fsPkeFromPcRcControl()
+        {
+            InitializeComponent();
         }
 
         #region Routine Methods

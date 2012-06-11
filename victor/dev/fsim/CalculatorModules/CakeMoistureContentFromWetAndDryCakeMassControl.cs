@@ -10,10 +10,8 @@ namespace CalculatorModules
     {
         private readonly fsRfFromWetDryCakeCalculator m_calculator = new fsRfFromWetDryCakeCalculator();
 
-        public fsCakeMoistureContentFromWetAndDryCakeMassControl()
+        protected override void InitializeCalculatorControl()
         {
-            InitializeComponent();
-
             Calculators.Add(m_calculator);
 
             fsParametersGroup wetMassGroup = AddGroup(fsParameterIdentifier.WetCakeMass);
@@ -61,6 +59,11 @@ namespace CalculatorModules
             ConnectUIWithDataUpdating(dataGrid,
                                       saltContentComboBox,
                                       concentrationComboBox);
+        }
+
+        public fsCakeMoistureContentFromWetAndDryCakeMassControl()
+        {
+            InitializeComponent();
         }
 
         #region Routine Methods
