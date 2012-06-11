@@ -2,6 +2,7 @@
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
+using System.Windows.Forms;
 
 namespace CalculatorModules
 {
@@ -58,13 +59,13 @@ namespace CalculatorModules
             EstablishCalculationOption(fsCalculationOptions.fsWashOutContentOption.AsConcentration);
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsWashOutContentOption),
                                               washOutContentComboBox);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid,
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid,
                                       fromComboBox,
-                                      washOutContentComboBox);
+                                      washOutContentComboBox };
         }
 
         public fsCakeWashOutContentControl()

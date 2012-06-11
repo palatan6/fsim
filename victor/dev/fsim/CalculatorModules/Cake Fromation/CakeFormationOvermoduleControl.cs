@@ -32,6 +32,16 @@ namespace CalculatorModules.Cake_Fromation
             ChangeAndShowCurrentCalculatorControl();
         }
 
+        protected override void UpdateGroupsInputInfoFromCalculationOptions()
+        {
+            // no groups in this module
+        }
+
+        protected override void UpdateEquationsFromCalculationOptions()
+        {
+            // no equations in this module
+        }
+
         public fsCakeFormationOvermoduleControl()
         {
             InitializeComponent();

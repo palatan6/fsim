@@ -3,6 +3,7 @@ using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using Value;
+using System.Windows.Forms;
 
 namespace CalculatorModules
 {
@@ -99,20 +100,18 @@ namespace CalculatorModules
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
 
+            #endregion
+
             ParameterToCell[fsParameterIdentifier.Ne].OwningRow.Visible = false;
             ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = false;
             ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Visible = false;
             ParameterToCell[fsParameterIdentifier.Kappa0].OwningRow.Visible = false;
             ParameterToCell[fsParameterIdentifier.CakeMoistureContentRf0].OwningRow.Visible = false;
+        }
 
-            #endregion
-
-            AssignDefaultValues();
-
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid);
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid };
         }
 
         public fsLaboratoryFiltrationTime()
@@ -120,7 +119,7 @@ namespace CalculatorModules
             InitializeComponent();
         }
 
-        private void AssignDefaultValues()
+        protected override void InitializeParametersValues()
         {
             Values[fsParameterIdentifier.Ne].Value = new fsValue(0);
         }

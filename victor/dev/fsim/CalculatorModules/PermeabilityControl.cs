@@ -3,6 +3,7 @@ using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
+using System.Windows.Forms;
 
 namespace CalculatorModules
 {
@@ -51,11 +52,11 @@ namespace CalculatorModules
             fsMisc.FillList(calculationOptionComboBox.Items, typeof(fsCalculationOption));
             AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationOptionComboBox);
             EstablishCalculationOption(fsCalculationOption.CalcPcRcAlpha);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid, calculationOptionComboBox);
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid, calculationOptionComboBox };
         }
 
         public fsPermeabilityControl()

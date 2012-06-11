@@ -4,6 +4,7 @@ using Parameters;
 using StepCalculators;
 using StepCalculators.Simulation_Calculators;
 using Value;
+using System.Windows.Forms;
 
 
 namespace CalculatorModules.Hydrocyclone
@@ -191,15 +192,16 @@ namespace CalculatorModules.Hydrocyclone
 
             #endregion
 
-            AssignDefaultValues();
+            InitializeParametersValues();
 
             fsMisc.FillList(comboBoxCalculationOption.Items, typeof (fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.Dp);
             AssignCalculationOptionAndControl(typeof (fsCalculationOption), comboBoxCalculationOption);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid, comboBoxCalculationOption);
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid, comboBoxCalculationOption };
         }
 
         public fsHydrocycloneControl()
@@ -207,7 +209,7 @@ namespace CalculatorModules.Hydrocyclone
             InitializeComponent();
         }
 
-        private void AssignDefaultValues()
+        protected override void InitializeParametersValues()
         {
             Values[fsParameterIdentifier.MotherLiquidViscosity].Value = new fsValue(1e-3);
             Values[fsParameterIdentifier.MotherLiquidDensity].Value = new fsValue(1000);

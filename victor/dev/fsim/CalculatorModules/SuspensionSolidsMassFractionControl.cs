@@ -2,6 +2,7 @@
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
+using System.Windows.Forms;
 
 namespace CalculatorModules
 {
@@ -51,13 +52,13 @@ namespace CalculatorModules
             fsMisc.FillList(concentrationComboBox.Items, typeof(fsCalculationOptions.fsConcentrationOption));
             EstablishCalculationOption(fsCalculationOptions.fsConcentrationOption.SolidsMassFraction);
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsConcentrationOption), concentrationComboBox);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid,
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid,
                                       saltContentComboBox,
-                                      concentrationComboBox);
+                                      concentrationComboBox };
         }
 
         public SuspensionSolidsMassFractionControl()

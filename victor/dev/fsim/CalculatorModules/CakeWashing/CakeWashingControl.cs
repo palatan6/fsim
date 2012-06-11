@@ -3,6 +3,7 @@ using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using StepCalculators.Simulation_Calculators;
+using System.Windows.Forms;
 
 
 namespace CalculatorModules.CakeWashing
@@ -94,16 +95,17 @@ namespace CalculatorModules.CakeWashing
             }
 
             #endregion
+            }
 
-            //SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea, fsParameterIdentifier.SpecificFiltrationTime);
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid);
-        }
+            protected override Control[] GetUIControlsToConnectWithDataUpdating()
+            {
+                return new Control[] { materialParametersDataGrid, dataGrid };
+            }
 
-        public fsCakeWashingControl()
-        {
-            InitializeComponent();
-        }
+            public fsCakeWashingControl()
+            {
+                InitializeComponent();
+            }
 
             #region Routine Methods
 

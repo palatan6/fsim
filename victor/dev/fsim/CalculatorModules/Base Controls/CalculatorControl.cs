@@ -41,6 +41,11 @@ namespace CalculatorModules
         {
         }
 
+        protected virtual Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return null;
+        }
+
         #endregion
 
         protected fsCalculatorControl()
@@ -59,8 +64,30 @@ namespace CalculatorModules
         {
             if (m_isInitialized)
                 return;
+
             m_isInitialized = true;
+
             InitializeCalculatorControl();
+            UpdateGroupsInputInfoFromCalculationOptions();
+            InitializeParametersValues();
+            UpdateEquationsFromCalculationOptions();
+            InitializeDefaultDiagrams();
+            ShowDefaultDiagramForCurrentCalculationOptions();
+            RecalculateAndRedraw();
+
+            ConnectUIWithDataUpdating(GetUIControlsToConnectWithDataUpdating());
+        }
+
+        protected virtual void InitializeParametersValues()
+        {
+        }
+
+        protected virtual void InitializeDefaultDiagrams()
+        {
+        }
+
+        protected virtual void ShowDefaultDiagramForCurrentCalculationOptions()
+        {
         }
 
         public virtual Control ControlToResizeForExpanding { get; set; }
@@ -107,6 +134,9 @@ namespace CalculatorModules
 
         protected void ConnectUIWithDataUpdating(params Control[] controls)
         {
+            if (controls == null)
+                return;
+
             foreach (Control control in controls)
             {
                 if (control is fsParametersWithValuesTable)

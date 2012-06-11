@@ -3,6 +3,7 @@ using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
+using System.Windows.Forms;
 
 namespace CalculatorModules
 {
@@ -61,11 +62,11 @@ namespace CalculatorModules
             fsMisc.FillList(calculationOptionComboBox.Items, typeof(fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.CakeMoistureContent);
             AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationOptionComboBox);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid, calculationOptionComboBox);
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid, calculationOptionComboBox };
         }
 
         public fsCakeMoistureContentFromCakeSaturationControl()

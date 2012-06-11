@@ -39,16 +39,17 @@ namespace CalculatorModules.Cake_Fromation
             fsMisc.FillList(calculationComboBox.Items, typeof (fsCakeFormationCalculationOption));
             EstablishCalculationOption(fsCakeFormationCalculationOption.StandardCalculation);
             AssignCalculationOptionAndControl(typeof (fsCakeFormationCalculationOption), calculationComboBox);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { materialParametersDataGrid, dataGrid, calculationComboBox };
+        }
 
-            AssignDefaultValues();
-
-            UpdateEquationsFromCalculationOptions();
+        protected override void ShowDefaultDiagramForCurrentCalculationOptions()
+        {
             SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea,
                               fsParameterIdentifier.SpecificFiltrationTime);
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(materialParametersDataGrid, dataGrid, calculationComboBox);
         }
 
         public fsCakeFormationBaseControl()
@@ -66,7 +67,7 @@ namespace CalculatorModules.Cake_Fromation
             tablesSplitContainer.Panel1Collapsed = !materialParametersDisplayCheckBox.Checked;
         }
 
-        private void AssignDefaultValues()
+        protected override void InitializeParametersValues()
         {
             SetDefaultValue(fsParameterIdentifier.MotherLiquidViscosity, new fsValue(1e-3));
             SetDefaultValue(fsParameterIdentifier.MotherLiquidDensity, new fsValue(1000));

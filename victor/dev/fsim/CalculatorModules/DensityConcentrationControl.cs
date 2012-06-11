@@ -3,6 +3,7 @@ using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
+using System.Windows.Forms;
 
 namespace CalculatorModules
 {
@@ -43,11 +44,11 @@ namespace CalculatorModules
             fsMisc.FillList(calculateSelectionComboBox.Items, typeof(fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.CalcSuspensionDensity);
             AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculateSelectionComboBox);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid, calculateSelectionComboBox);
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid, calculateSelectionComboBox };
         }
 
         public fsDensityConcentrationControl()

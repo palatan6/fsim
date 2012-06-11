@@ -2,6 +2,7 @@
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
+using System.Windows.Forms;
 
 namespace CalculatorModules
 {
@@ -72,14 +73,14 @@ namespace CalculatorModules
             fsMisc.FillList(machineTypeComboBox.Items, typeof(fsCakePorosityCalculator.fsMachineTypeOption));
             AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsMachineTypeOption), machineTypeComboBox);
             EstablishCalculationOption(fsCakePorosityCalculator.fsMachineTypeOption.PlainArea);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid,
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid,
                                       saturationComboBox,
                                       saltContentComboBox,
-                                      machineTypeComboBox);
+                                      machineTypeComboBox };
         }
 
         public fsCakePorossityControl()

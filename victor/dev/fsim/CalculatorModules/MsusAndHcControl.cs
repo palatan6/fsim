@@ -5,6 +5,7 @@ using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
+using System.Windows.Forms;
 
 namespace CalculatorModules
 {
@@ -108,13 +109,13 @@ namespace CalculatorModules
 
             m_isBlockedCalculationOptionChanged = false;
             AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationOptionComboBox);
+        }
 
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            RecalculateAndRedraw();
-            ConnectUIWithDataUpdating(dataGrid,
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid,
                                       machineTypeComboBox,
-                                      calculationOptionComboBox);
+                                      calculationOptionComboBox };
         }
 
         public fsMsusAndHcControl()
