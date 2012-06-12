@@ -47,25 +47,6 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void InitializeDefaultDiagrams()
         {
-            m_defaultDiagrams.Add(
-                new Enum[]
-                    {
-                        fsCakeFormationCalculationOption.FilterDesign
-                    },
-                new DiagramConfiguration(
-                    fsParameterIdentifier.u,
-                    new[] {fsParameterIdentifier.FilterArea},
-                    new[] {fsParameterIdentifier.SpecificFiltrationTime}));
-
-            m_defaultDiagrams.Add(
-                new Enum[]
-                    {
-                        fsCakeFormationCalculationOption.StandardCalculation
-                    },
-                new DiagramConfiguration(
-                    fsParameterIdentifier.FiltrationTime,
-                    new[] {fsParameterIdentifier.CakeHeight},
-                    new[] {fsParameterIdentifier.SuspensionMass}));
         }
 
         public fsCakeFormationBaseControl()

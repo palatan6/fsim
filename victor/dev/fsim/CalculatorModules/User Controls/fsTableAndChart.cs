@@ -62,7 +62,7 @@ namespace CalculatorModules.User_Controls
             fsParameterIdentifier [] y2AxisParameters)
         {
             m_iterationParameter = iterationParameter;
-            
+            m_xAxisComboBox.Text = m_iterationParameter.Name;
             m_yAxisParameters.Clear();
             foreach (fsParameterIdentifier p in yAxisParameters)
             {
