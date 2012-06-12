@@ -65,7 +65,10 @@ namespace CalculatorModules.User_Controls
             m_yAxisParameters.Clear();
             m_yAxisParameters.Add(yAxisParameter);
             m_y2AxisParameters.Clear();
-            m_y2AxisParameters.Add(y2AxisParameter);
+            if (y2AxisParameter != null)
+            {
+                m_y2AxisParameters.Add(y2AxisParameter);
+            }
         }
 
         #region Reprocessing

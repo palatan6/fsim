@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
@@ -58,6 +59,49 @@ namespace CalculatorModules
             fsMisc.FillList(concentrationComboBox.Items, typeof(fsCalculationOptions.fsConcentrationOption));
             EstablishCalculationOption(fsCalculationOptions.fsConcentrationOption.SolidsMassFraction);
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsConcentrationOption), concentrationComboBox);
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsSaltContentOption.Neglected,
+                        fsCalculationOptions.fsConcentrationOption.SolidsMassFraction
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.SuspensionMass,
+                    fsParameterIdentifier.SuspensionSolidsMassFraction));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsSaltContentOption.Neglected,
+                        fsCalculationOptions.fsConcentrationOption.Concentration
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.SuspensionMass,
+                    fsParameterIdentifier.SuspensionSolidsMassFraction));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsSaltContentOption.Considered,
+                        fsCalculationOptions.fsConcentrationOption.Concentration
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.SolutesConcentrationInMotherLiquid,
+                    fsParameterIdentifier.SuspensionSolidsMassFraction));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsSaltContentOption.Considered,
+                        fsCalculationOptions.fsConcentrationOption.SolidsMassFraction
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.SolutesMassFractionInMotherLiquid,
+                    fsParameterIdentifier.SuspensionSolidsMassFraction));
         }
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()

@@ -36,7 +36,7 @@ namespace CalculatorModules
 
         #region CalculatorControl Initialization
 
-        private bool m_isInitialized;
+        protected bool IsCalculatorControlInitialized;
 
         protected virtual Control[] GetUIControlsToConnectWithDataUpdating()
         {
@@ -45,10 +45,15 @@ namespace CalculatorModules
 
         void CalculatorControlLoad(object sender, EventArgs e)
         {
-            if (m_isInitialized)
+            InitializeCalculatorContorl();
+        }
+
+        protected virtual void InitializeCalculatorContorl()
+        {
+            if (IsCalculatorControlInitialized)
                 return;
 
-            m_isInitialized = true;
+            IsCalculatorControlInitialized = true;
 
             InitializeCalculators();
             InitializeGroups();
@@ -344,12 +349,12 @@ namespace CalculatorModules
             value.SetValueInUnits(fsValue.ObjectToValue(cell.Value));
         }
 
-        #endregion
-
         protected internal virtual void StopGridsEdit()
         {
             throw new Exception("You must implement StopGridsEdit in derivative class.");
         }
+
+        #endregion
 
         #region Show/Hide parameters methods
 

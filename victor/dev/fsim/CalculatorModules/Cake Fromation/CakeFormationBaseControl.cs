@@ -45,6 +45,29 @@ namespace CalculatorModules.Cake_Fromation
             return new Control[] { materialParametersDataGrid, dataGrid, calculationComboBox };
         }
 
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakeFormationCalculationOption.FilterDesign
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.u, 
+                    fsParameterIdentifier.FilterArea, 
+                    fsParameterIdentifier.SpecificFiltrationTime));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakeFormationCalculationOption.StandardCalculation
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.FiltrationTime,
+                    fsParameterIdentifier.CakeHeight,
+                    fsParameterIdentifier.SuspensionMass));
+        }
+
         public fsCakeFormationBaseControl()
         {
             InitializeComponent();
