@@ -126,17 +126,18 @@ namespace CalculatorModules
 
             public DiagramConfiguration(
                 fsParameterIdentifier xAxisParameter,
-                fsParameterIdentifier [] yAxisParameters,
-                fsParameterIdentifier [] y2AxisParameters)
+                DiagramRange range,
+                fsParameterIdentifier [] yAxisParameters)
             {
                 this.xAxisParameter = xAxisParameter;
+                this.range = range;
                 this.yAxisParameters = yAxisParameters;
-                this.y2AxisParameters = y2AxisParameters;
+                this.y2AxisParameters = new fsParameterIdentifier[0];
             }
 
             public DiagramConfiguration(
                fsParameterIdentifier xAxisParameter,
-                DiagramRange range,
+               DiagramRange range,
                fsParameterIdentifier[] yAxisParameters,
                fsParameterIdentifier[] y2AxisParameters)
             {
@@ -162,10 +163,10 @@ namespace CalculatorModules
 
             public int GetHashCode(ICollection<Enum> obj)
             {
-                int key = 0;
+                int key = 1;
                 foreach (Enum e in obj)
                 {
-                    key = key * 19 + e.GetHashCode();
+                    key = key * e.GetHashCode();
                 }
                 return key;
             }

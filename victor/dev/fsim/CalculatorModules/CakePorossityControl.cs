@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using Value;
 
 namespace CalculatorModules
 {
@@ -87,6 +89,136 @@ namespace CalculatorModules
                                       saturationComboBox,
                                       saltContentComboBox,
                                       machineTypeComboBox };
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(20e-4));
+            SetDefaultValue(fsParameterIdentifier.CakeHeight, new fsValue(25e-3));
+            SetDefaultValue(fsParameterIdentifier.WetCakeMass, new fsValue(55e-3));
+            SetDefaultValue(fsParameterIdentifier.DryCakeMass, new fsValue(41e-3));
+            SetDefaultValue(fsParameterIdentifier.SolutesConcentrationInCakeLiquid, new fsValue(12));
+            SetDefaultValue(fsParameterIdentifier.LiquidDensity, new fsValue(1000));
+            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(2300));
+            SetDefaultValue(fsParameterIdentifier.FilterElementDiameter, new fsValue(25e-3));
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.NotSaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.PlainArea,
+                        fsCakePorosityCalculator.fsSaltContentOption.Neglected
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.CakeHeight,
+                    new DiagramConfiguration.DiagramRange(22e-3, 27e-3),
+                    new[] {fsParameterIdentifier.CakePorosity}));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.NotSaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.PlainArea,
+                        fsCakePorosityCalculator.fsSaltContentOption.Considered
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.SolutesConcentrationInCakeLiquid,
+                    new DiagramConfiguration.DiagramRange(0, 100),
+                    new[] { fsParameterIdentifier.CakePorosity }));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.NotSaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.ConvexCylindric,
+                        fsCakePorosityCalculator.fsSaltContentOption.Neglected
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.CakeHeight,
+                    new DiagramConfiguration.DiagramRange(8e-3, 12e-3),
+                    new[] { fsParameterIdentifier.CakePorosity }));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.NotSaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric,
+                        fsCakePorosityCalculator.fsSaltContentOption.Neglected
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.CakeHeight,
+                    new DiagramConfiguration.DiagramRange(38e-3, 45e-3),
+                    new[] { fsParameterIdentifier.CakePorosity }));
+
+
+            #region Saturated Cake And Neglected Salt Content
+
+            var diagramForSaturatedCakeAndNeglectedSaltContent = new DiagramConfiguration(
+                fsParameterIdentifier.SolidsDensity,
+                new DiagramConfiguration.DiagramRange(2200, 2500),
+                new[] {fsParameterIdentifier.CakePorosity});
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.SaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.PlainArea,
+                        fsCakePorosityCalculator.fsSaltContentOption.Neglected
+                    },
+                diagramForSaturatedCakeAndNeglectedSaltContent);
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.SaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.ConvexCylindric,
+                        fsCakePorosityCalculator.fsSaltContentOption.Neglected
+                    },
+                diagramForSaturatedCakeAndNeglectedSaltContent);
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.SaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric,
+                        fsCakePorosityCalculator.fsSaltContentOption.Neglected
+                    },
+                diagramForSaturatedCakeAndNeglectedSaltContent);
+
+            #endregion
+
+            #region Saturated Cake And Considered Salt Content
+
+            var diagramForSaturatedCakeAndConsideredSaltContent = new DiagramConfiguration(
+                fsParameterIdentifier.SolutesConcentrationInCakeLiquid,
+                new DiagramConfiguration.DiagramRange(0, 200),
+                new[] {fsParameterIdentifier.CakePorosity});
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.SaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.PlainArea,
+                        fsCakePorosityCalculator.fsSaltContentOption.Considered
+                    },
+                diagramForSaturatedCakeAndConsideredSaltContent);
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.SaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.ConvexCylindric,
+                        fsCakePorosityCalculator.fsSaltContentOption.Considered
+                    },
+                diagramForSaturatedCakeAndConsideredSaltContent);
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCakePorosityCalculator.fsSaturationOption.SaturatedCake,
+                        fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric,
+                        fsCakePorosityCalculator.fsSaltContentOption.Considered
+                    },
+                diagramForSaturatedCakeAndConsideredSaltContent);
+
+            #endregion
         }
 
         public fsCakePorossityControl()
