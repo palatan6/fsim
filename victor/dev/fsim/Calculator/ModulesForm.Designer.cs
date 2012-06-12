@@ -100,6 +100,7 @@ namespace Calculator
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(327, 538);
             this.treeView1.TabIndex = 1;
+            this.treeView1.DoubleClick += new System.EventHandler(this.treeView1_DoubleClick);
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView1AfterSelect);
             // 
             // panel4

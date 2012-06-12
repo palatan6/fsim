@@ -169,5 +169,12 @@ namespace Calculator
                 prevCalculatorControl.Parent = null;
             }
         }
+
+        private void treeView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (!m_modules.ContainsKey(treeView1.SelectedNode.Text))
+                return;
+            OkButtonClick(sender, e);
+        }
     }
 }
