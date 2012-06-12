@@ -59,6 +59,8 @@ namespace StepCalculators
             Equations.Add(new fsSumEquation(onePlusKappa, constantOne, kappa));
             IEquationParameter oneMinusEps = AddVariable(new fsParameterIdentifier("1 - eps"));
             Equations.Add(new fsSumEquation(constantOne, oneMinusEps, eps));
+            IEquationParameter oneMinusEps0 = AddVariable(new fsParameterIdentifier("1 - eps0"));
+            Equations.Add(new fsSumEquation(constantOne, oneMinusEps0, eps0));
             
             #endregion
 
@@ -66,7 +68,11 @@ namespace StepCalculators
 
             AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
             AddEquation(new fsCakeHeightFromDpTf(hc, hce, pc, kappa0, pressure, formationTime, viscosity));
-            AddEquation(new fsSuspensionMassFromHcEpsPlainAreaEquation(suspensionMass, eps0, solidsDensity, area, hc, cm));
+            
+            Equations.Add(new fsProductsEquation(
+                new[] { oneMinusEps0, solidsDensity, area, hc },
+                new[] { cm, suspensionMass }));
+
             AddEquation(new fsProductEquation(solidsMass, suspensionMass, cm));
             AddEquation(new fsSumEquation(suspensionMass, solidsMass, liquidMass));
             AddEquation(new fsMcFromHcEquation(mc, area, hc, solidsDensity, eps, rho));

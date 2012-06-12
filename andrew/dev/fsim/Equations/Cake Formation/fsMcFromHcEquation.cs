@@ -44,6 +44,7 @@ namespace Equations
         {
             AddFormula(mc, mcFormula);
             AddFormula(hc, hcFormula);
+            AddFormula(eps, epsFormula);
         }
 
         #region Formulas
@@ -56,6 +57,11 @@ namespace Equations
         private void hcFormula()
         {
             hc.Value = mc.Value / (A.Value * (rhos.Value * (1 - eps.Value) + rho.Value * eps.Value));
+        }
+
+        private void epsFormula()
+        {
+            eps.Value = (rhos.Value - mc.Value / (A.Value * hc.Value)) / (rhos.Value - rho.Value);
         }
 
         #endregion
