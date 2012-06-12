@@ -37,35 +37,27 @@
             // 
             // tablesSplitContainer
             // 
-            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 496);
+            this.tablesSplitContainer.Size = new System.Drawing.Size(787, 236);
+            this.tablesSplitContainer.SplitterDistance = 381;
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(144, 496);
+            this.dataGrid.Size = new System.Drawing.Size(402, 236);
             // 
             // materialParametersDataGrid
             // 
-            this.materialParametersDataGrid.Size = new System.Drawing.Size(139, 496);
-            // 
-            // leftTopPanel
-            // 
-            this.leftTopPanel.Size = new System.Drawing.Size(287, 64);
+            this.materialParametersDataGrid.Size = new System.Drawing.Size(381, 236);
             // 
             // calculationOptionsPanel
             // 
-            this.calculationOptionsPanel.Size = new System.Drawing.Size(236, 64);
-            // 
-            // tablesPanel
-            // 
-            this.tablesPanel.Location = new System.Drawing.Point(0, 64);
-            this.tablesPanel.Size = new System.Drawing.Size(287, 496);
+            this.calculationOptionsPanel.Size = new System.Drawing.Size(736, 64);
             // 
             // fsBeltFilterWithReversibleTrayControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "fsBeltFilterWithReversibleTrayControl";
-            this.Size = new System.Drawing.Size(287, 800);
+            this.Size = new System.Drawing.Size(1095, 800);
             this.tablesSplitContainer.Panel1.ResumeLayout(false);
             this.tablesSplitContainer.Panel2.ResumeLayout(false);
             this.tablesSplitContainer.ResumeLayout(false);

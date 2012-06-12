@@ -75,7 +75,7 @@ namespace CalculatorModules.Cake_Fromation
 
         protected virtual void AddCakeFormationCalculator()
         {
-            throw new Exception("Implement AddCakeFormationCalculator with specific cake formation calculator in deriviative class.");
+            // Implement AddCakeFormationCalculator with specific cake formation calculator in deriviative class.
         }
 
         private void MaterialParametersDisplayCheckBoxCheckedChanged(object sender, EventArgs e)
@@ -138,7 +138,8 @@ namespace CalculatorModules.Cake_Fromation
 
         protected virtual fsParametersGroup[] MakeMachiningStandardGroups()
         {
-            throw new Exception("MakeMachiningStandardGroups should be implemented in deriviative class.");
+            // MakeMachiningStandardGroups should be implemented in derived class
+            return null;
         }
 
         protected virtual fsParametersGroup[] MakeMachiningDesignGroups()

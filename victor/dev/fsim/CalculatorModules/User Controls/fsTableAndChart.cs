@@ -115,6 +115,9 @@ namespace CalculatorModules.User_Controls
 
         private void RefreshRangesBoxes()
         {
+            if (m_iterationParameter == null)
+                return;
+
             fsRange range = m_values[m_iterationParameter].Range;
             double factor = m_values[m_iterationParameter].Unit.Coefficient;
             rangeFrom.Text = (range.From / factor).ToString();
@@ -171,6 +174,10 @@ namespace CalculatorModules.User_Controls
                     }
                 }
             }
+
+            if (iterationList.Items.Count == 0)
+                return;
+
             if (m_iterationParameter != null && iterationList.Items.Contains(m_iterationParameter.Name))
             {
                 iterationList.SelectedIndex = iterationList.Items.IndexOf(m_iterationParameter.Name);
@@ -187,7 +194,7 @@ namespace CalculatorModules.User_Controls
 
         private void CalculateData()
         {
-            if (m_inputRefreshing)
+            if (m_inputRefreshing || m_iterationParameter == null)
                 return;
 
             var detalization = (int)fsValue.StringToValue(detalizationBox.Text).Value;
@@ -283,7 +290,10 @@ namespace CalculatorModules.User_Controls
                     xAxisComboBox.Items.Add(classifyiedParameter.Identifier.Name);
                 }
             }
-            xAxisComboBox.Text = xAxisComboBox.Items.Contains(oldText) ? oldText : m_iterationParameter.Name;
+            if (m_iterationParameter != null)
+            {
+                xAxisComboBox.Text = xAxisComboBox.Items.Contains(oldText) ? oldText : m_iterationParameter.Name;
+            }
         }
 
         private void RefreshYAxisList(IEnumerable<fsParameterIdentifier> parameters, ListView yAxisListView)
@@ -638,9 +648,16 @@ namespace CalculatorModules.User_Controls
             var selectionParameters = new List<fsYAxisParameter>();
             foreach (fsParameterIdentifier parameter in parameters)
             {
+                // if group isn't assigned to current parameter then do nothing here
+                if (!m_parameterToGroup.ContainsKey(parameter))
+                    continue;
+
                 fsParametersGroup group = m_parameterToGroup[parameter];
                 fsYAxisParameter.fsYParameterKind kind;
-                if (group == m_parameterToGroup[m_iterationParameter])
+                fsParametersGroup iterationParameterGroup = m_iterationParameter == null
+                                                                ? null
+                                                                : m_parameterToGroup[m_iterationParameter];
+                if (group == iterationParameterGroup)
                 {
                     kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
                 }

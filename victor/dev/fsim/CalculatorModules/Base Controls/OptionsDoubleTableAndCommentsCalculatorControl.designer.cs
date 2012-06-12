@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.tablesSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.dataGrid = new fsUIControls.fsParametersWithValuesTable();
             this.materialParametersDataGrid = new fsUIControls.fsParametersWithValuesTable();
+            this.dataGrid = new fsUIControls.fsParametersWithValuesTable();
             this.leftTopPanel.SuspendLayout();
             this.tablesPanel.SuspendLayout();
             this.tablesSplitContainer.Panel1.SuspendLayout();
@@ -38,18 +38,9 @@
             this.tablesSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // leftTopPanel
-            // 
-            this.leftTopPanel.Size = new System.Drawing.Size(365, 48);
-            // 
-            // calculationOptionsPanel
-            // 
-            this.calculationOptionsPanel.Size = new System.Drawing.Size(314, 48);
-            // 
             // tablesPanel
             // 
             this.tablesPanel.Controls.Add(this.tablesSplitContainer);
-            this.tablesPanel.Size = new System.Drawing.Size(365, 357);
             // 
             // tablesSplitContainer
             // 
@@ -64,18 +55,9 @@
             // tablesSplitContainer.Panel2
             // 
             this.tablesSplitContainer.Panel2.Controls.Add(this.dataGrid);
-            this.tablesSplitContainer.Size = new System.Drawing.Size(365, 357);
-            this.tablesSplitContainer.SplitterDistance = 178;
+            this.tablesSplitContainer.Size = new System.Drawing.Size(787, 252);
+            this.tablesSplitContainer.SplitterDistance = 383;
             this.tablesSplitContainer.TabIndex = 1;
-            // 
-            // dataGrid
-            // 
-            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.dataGrid.Location = new System.Drawing.Point(0, 0);
-            this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(183, 357);
-            this.dataGrid.TabIndex = 0;
             // 
             // materialParametersDataGrid
             // 
@@ -83,15 +65,24 @@
             this.materialParametersDataGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.materialParametersDataGrid.Location = new System.Drawing.Point(0, 0);
             this.materialParametersDataGrid.Name = "materialParametersDataGrid";
-            this.materialParametersDataGrid.Size = new System.Drawing.Size(178, 357);
+            this.materialParametersDataGrid.Size = new System.Drawing.Size(383, 252);
             this.materialParametersDataGrid.TabIndex = 0;
+            // 
+            // dataGrid
+            // 
+            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.dataGrid.Location = new System.Drawing.Point(0, 0);
+            this.dataGrid.Name = "dataGrid";
+            this.dataGrid.Size = new System.Drawing.Size(400, 252);
+            this.dataGrid.TabIndex = 0;
             // 
             // fsOptionsDoubleTableAndCommentsCalculatorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "fsOptionsDoubleTableAndCommentsCalculatorControl";
-            this.Size = new System.Drawing.Size(365, 405);
+            this.Size = new System.Drawing.Size(1158, 636);
             this.leftTopPanel.ResumeLayout(false);
             this.tablesPanel.ResumeLayout(false);
             this.tablesSplitContainer.Panel1.ResumeLayout(false);

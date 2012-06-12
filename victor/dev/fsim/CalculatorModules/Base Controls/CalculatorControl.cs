@@ -40,6 +40,8 @@ namespace CalculatorModules
 
         protected virtual Control[] GetUIControlsToConnectWithDataUpdating()
         {
+            // This method should return array of Controls that may change
+            // data(values) or calculation options (like datagrids, checkboxes, radiobuttons)
             return null;
         }
 
@@ -67,21 +69,37 @@ namespace CalculatorModules
 
         protected virtual void InitializeCalculators()
         {
+            // This method should contain initialization of Calculators in derived class.
         }
 
         protected virtual void InitializeGroups()
         {
+            // This method should contain initialization of Groups in derived class.
         }
 
         protected virtual void InitializeCalculationOptionsUIControls()
         {
+            // This method should contain initialization of UI controls
+            // (like comboboxes) with data corresponding to possible calculation
+            // options in derived class.
         }
 
         protected virtual void InitializeParametersValues()
         {
+            // This method should contain assigning values that will be used on startup of the module
         }
 
         #endregion
+
+        protected virtual void UpdateGroupsInputInfoFromCalculationOptions()
+        {
+            // You should set up groups input info in this method. Override this method in derived class
+        }
+
+        protected virtual void UpdateEquationsFromCalculationOptions()
+        {
+            // It should set up equations here. Override this method in derived class
+        }
 
         protected fsCalculatorControl()
         {
@@ -163,16 +181,6 @@ namespace CalculatorModules
             }
         }
 
-        protected virtual void UpdateGroupsInputInfoFromCalculationOptions()
-        {
-            throw new Exception("You should set up groups input info in this method. Override this method in your class.");
-        }
-
-        protected virtual void UpdateEquationsFromCalculationOptions()
-        {
-            throw new Exception("it should set up equations here. Override this method.");
-        }
-
         protected void UpdateCalculationOptionFromUI()
         {
             foreach (var pair in ControlToCalculationOption)
@@ -220,6 +228,9 @@ namespace CalculatorModules
 
         protected void AddGroupsToUI(fsParametersWithValuesTable dataGrid, fsParametersGroup[] groups)
         {
+            if (groups == null)
+                return;
+
             var colors = new[]
                              {
                                  Color.FromArgb(255, 255, 230),
