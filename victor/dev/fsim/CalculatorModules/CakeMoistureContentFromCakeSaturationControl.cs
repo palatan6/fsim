@@ -37,7 +37,7 @@ namespace CalculatorModules
             fsParametersGroup saturationGroup = AddGroup(
                 fsParameterIdentifier.CakeSaturation);
             fsParametersGroup rfGroup = AddGroup(
-                fsParameterIdentifier.CakeMoistureContent);
+                fsParameterIdentifier.CakeMoistureContentRf);
 
             var groups = new[]
                              {
@@ -60,7 +60,7 @@ namespace CalculatorModules
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
             rfGroup.SetIsInputFlag(false);
-            ParameterToCell[fsParameterIdentifier.CakeMoistureContent].ReadOnly = true;
+            ParameterToCell[fsParameterIdentifier.CakeMoistureContentRf].ReadOnly = true;
         }
 
         protected override void InitializeCalculationOptionsUIControls()
@@ -92,7 +92,7 @@ namespace CalculatorModules
             switch (calculationOption)
             {
                 case fsCalculationOption.CakeMoistureContent:
-                    calculateGroup = ParameterToGroup[fsParameterIdentifier.CakeMoistureContent];
+                    calculateGroup = ParameterToGroup[fsParameterIdentifier.CakeMoistureContentRf];
                     break;
                 case fsCalculationOption.CakePorosity:
                     calculateGroup = ParameterToGroup[fsParameterIdentifier.CakePorosity];

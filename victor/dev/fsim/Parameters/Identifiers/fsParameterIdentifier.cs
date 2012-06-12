@@ -342,9 +342,6 @@ namespace Parameters
         public static fsParameterIdentifier CakeSaturation = new fsParameterIdentifier("S", "Cake Saturation",
                                                                                        fsCharacteristic.Concentration);
 
-        public static fsParameterIdentifier CakeMoistureContent =
-            new fsParameterIdentifier("RF", "Cake Moisture Content", fsCharacteristic.Concentration);
-
         public static fsParameterIdentifier CakeMoistureContentRf0 =
             new fsParameterIdentifier("Rf0", "Cake Moisture Content 0", fsCharacteristic.Concentration);
 

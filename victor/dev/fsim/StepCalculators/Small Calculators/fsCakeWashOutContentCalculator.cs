@@ -31,7 +31,7 @@ namespace StepCalculators
             m_solidsConcentration = AddConstant(fsParameterIdentifier.LiquidWashOutConcentration);
             m_internalC = AddVariable(new fsParameterIdentifier("internalC"));
             m_liquidDensity = AddConstant(fsParameterIdentifier.LiquidDensity);
-            m_cakeMoistureContent = AddVariable(fsParameterIdentifier.CakeMoistureContent);
+            m_cakeMoistureContent = AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
             m_pH = AddConstant(fsParameterIdentifier.Ph);
             m_pHcake = AddVariable(fsParameterIdentifier.PHcake);
             m_cakeWashOutContent = AddVariable(fsParameterIdentifier.CakeWashOutContent);

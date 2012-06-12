@@ -25,7 +25,7 @@ namespace StepCalculators
             m_solidsMassFraction = AddConstant(fsParameterIdentifier.SolutesMassFractionInLiquid);
             m_solidsConcentration = AddConstant(fsParameterIdentifier.SolutesConcentrationInCakeLiquid);
             m_liquidDensity = AddConstant(fsParameterIdentifier.LiquidDensity);
-            m_cakeMoistureContent = AddVariable(fsParameterIdentifier.CakeMoistureContent);
+            m_cakeMoistureContent = AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
             m_internalC = AddVariable(new fsParameterIdentifier("internalC"));
 
             #endregion

@@ -26,7 +26,7 @@ namespace CalculatorModules
             fsParametersGroup dryMassGroup = AddGroup(fsParameterIdentifier.DryCakeMass);
             fsParametersGroup outGroup = AddGroup(
                 fsParameterIdentifier.PHcake,
-                fsParameterIdentifier.CakeMoistureContent,
+                fsParameterIdentifier.CakeMoistureContentRf,
                 fsParameterIdentifier.CakeWashOutContent);
 
             var groups = new[]

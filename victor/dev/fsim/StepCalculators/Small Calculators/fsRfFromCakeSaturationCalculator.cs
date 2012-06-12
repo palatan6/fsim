@@ -19,7 +19,7 @@ namespace StepCalculators
             m_solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
             m_cakePorosity = AddVariable(fsParameterIdentifier.CakePorosity);
             m_cakeSaturation = AddVariable(fsParameterIdentifier.CakeSaturation);
-            m_cakeMoistureContent = AddVariable(fsParameterIdentifier.CakeMoistureContent);
+            m_cakeMoistureContent = AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
 
             #endregion
 
