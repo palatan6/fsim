@@ -1,9 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using Value;
 
 namespace CalculatorModules
 {
@@ -63,6 +65,49 @@ namespace CalculatorModules
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
         {
             return new Control[] { dataGrid, calculationOptionComboBox };
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(2300));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity, new fsValue(0.55));
+            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(2e-13));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.3));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(2e5));
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[] {fsCalculationOption.CalcPcRcAlpha},
+                new DiagramConfiguration(
+                    fsParameterIdentifier.PressureDifference,
+                    new DiagramConfiguration.DiagramRange(0.5e5, 4e5),
+                    new[] {fsParameterIdentifier.CakePermeability},
+                    new[] {fsParameterIdentifier.CakeResistance, fsParameterIdentifier.CakeResistanceAlpha}));
+
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCalculationOption.CalcPressure },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.CakePermeability,
+                    new DiagramConfiguration.DiagramRange(1e-13, 3e-13),
+                    new[] { fsParameterIdentifier.PressureDifference },
+                    new[] { fsParameterIdentifier.CakeResistance, fsParameterIdentifier.CakeResistanceAlpha }));
+            
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCalculationOption.CalcNc },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.CakePermeability,
+                    new DiagramConfiguration.DiagramRange(0.2e-13, 1e-13),
+                    new[] { fsParameterIdentifier.CakeCompressibility }));
+
+            m_defaultDiagrams.Add(
+                    new Enum[] { fsCalculationOption.CalcPc0Rc0Alpha0 },
+                    new DiagramConfiguration(
+                        fsParameterIdentifier.CakeCompressibility,
+                        new DiagramConfiguration.DiagramRange(0, 1),
+                        new[] { fsParameterIdentifier.CakePermeability0 },
+                        new[] { fsParameterIdentifier.CakeResistance0 }));
         }
 
         public fsPermeabilityControl()
