@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using Value;
 
 namespace CalculatorModules
 {
@@ -72,6 +74,61 @@ namespace CalculatorModules
             return new Control[] { dataGrid,
                                       fromComboBox,
                                       washOutContentComboBox };
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            SetDefaultValue(fsParameterIdentifier.WetCakeMass, new fsValue(0.056));
+            SetDefaultValue(fsParameterIdentifier.LiquidMassForResuspension, new fsValue(0.100));
+            SetDefaultValue(fsParameterIdentifier.LiquidDensity, new fsValue(1000));
+            SetDefaultValue(fsParameterIdentifier.LiquidWashOutConcentration, new fsValue(30));
+            SetDefaultValue(fsParameterIdentifier.DryCakeMass, new fsValue(0.043));
+            SetDefaultValue(fsParameterIdentifier.LiquidWashOutMassFraction, new fsValue(0.03));
+            SetDefaultValue(fsParameterIdentifier.Ph, new fsValue(5.2));
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsFromCalculationOption.WashOutContent,
+                        fsCalculationOptions.fsWashOutContentOption.AsConcentration
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.LiquidWashOutConcentration,
+                    new DiagramConfiguration.DiagramRange(0, 100),
+                    new[] {fsParameterIdentifier.CakeWashOutContent}));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsFromCalculationOption.WashOutContent,
+                        fsCalculationOptions.fsWashOutContentOption.AsMassFraction
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.LiquidWashOutMassFraction,
+                    new DiagramConfiguration.DiagramRange(0, 0.05),
+                    new[] {fsParameterIdentifier.CakeWashOutContent}));
+
+            var pHDiagram = new DiagramConfiguration(
+                fsParameterIdentifier.Ph,
+                new DiagramConfiguration.DiagramRange(2, 14),
+                new[] {fsParameterIdentifier.PHcake}); 
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsFromCalculationOption.Ph,
+                        fsCalculationOptions.fsWashOutContentOption.AsMassFraction
+                    },
+                pHDiagram);
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsFromCalculationOption.Ph,
+                        fsCalculationOptions.fsWashOutContentOption.AsConcentration
+                    },
+                pHDiagram);
         }
 
         public fsCakeWashOutContentControl()
