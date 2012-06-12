@@ -45,6 +45,34 @@ namespace CalculatorModules.Cake_Fromation
             return new Control[] { materialParametersDataGrid, dataGrid, calculationComboBox };
         }
 
+        protected override void InitializeParametersValues()
+        {
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidViscosity, new fsValue(1e-3));
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidDensity, new fsValue(1000));
+            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(1500));
+            SetDefaultValue(fsParameterIdentifier.SuspensionSolidsMassFraction, new fsValue(15e-2));
+            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0.05));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity0, new fsValue(55e-2));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.3));
+            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(1.5e-13));
+            SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce0, new fsValue(3e-3));
+
+            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(1));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(0.7e5));
+
+            // tc (u)
+            SetDefaultValue(fsParameterIdentifier.CycleTime, new fsValue(72));
+
+            // ttech0 and lambda
+            SetDefaultValue(fsParameterIdentifier.StandardTechnicalTime, new fsValue(2));
+            SetDefaultValue(fsParameterIdentifier.lambda, new fsValue(0.1));
+
+            // ns, ls, nsf
+            SetDefaultValue(fsParameterIdentifier.ns, new fsValue(12));
+            SetDefaultValue(fsParameterIdentifier.FilterLength, new fsValue(2.4));
+            SetDefaultValue(fsParameterIdentifier.SpecificFiltrationTime, new fsValue(0.25));
+        }
+
         protected override void InitializeDefaultDiagrams()
         {
         }
@@ -62,34 +90,6 @@ namespace CalculatorModules.Cake_Fromation
         private void MaterialParametersDisplayCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             tablesSplitContainer.Panel1Collapsed = !materialParametersDisplayCheckBox.Checked;
-        }
-
-        protected override void InitializeParametersValues()
-        {
-            SetDefaultValue(fsParameterIdentifier.MotherLiquidViscosity, new fsValue(1e-3));
-            SetDefaultValue(fsParameterIdentifier.MotherLiquidDensity, new fsValue(1000));
-            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(1500));
-            SetDefaultValue(fsParameterIdentifier.SuspensionSolidsMassFraction, new fsValue(15e-2));
-            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0.05));
-            SetDefaultValue(fsParameterIdentifier.CakePorosity0, new fsValue(55e-2));
-            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.3));
-            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(1.5e-13));
-            SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce0, new fsValue(3e-3));
-
-            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(1));
-            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(0.7e5));
-            
-            // tc (u)
-            SetDefaultValue(fsParameterIdentifier.CycleTime, new fsValue(72));
-            
-            // ttech0 and lambda
-            SetDefaultValue(fsParameterIdentifier.StandardTechnicalTime, new fsValue(2));
-            SetDefaultValue(fsParameterIdentifier.lambda, new fsValue(0.1));
-
-            // ns, ls, nsf
-            SetDefaultValue(fsParameterIdentifier.ns, new fsValue(12));
-            SetDefaultValue(fsParameterIdentifier.FilterLength, new fsValue(2.4));
-            SetDefaultValue(fsParameterIdentifier.SpecificFiltrationTime, new fsValue(0.25));
         }
 
         #region Routine Methods

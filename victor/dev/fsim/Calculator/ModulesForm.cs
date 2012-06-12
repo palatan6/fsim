@@ -56,23 +56,24 @@ namespace Calculator
             const string name = "Simulation Modules";
             TreeNode node = treeNodeCollection.Add(name);
             AddGroupToTree("Cake Formation", node.Nodes, new[]
-                                             {
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Cake Formation Overmodule",
-                                                     new fsCakeFormationOvermoduleControl()),
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Belt Filters with Reversible Trays",
-                                                     new fsBeltFilterWithReversibleTrayControl()),
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Continuous Belt Filters (modular)",
-                                                     new fsContinuousModularBeltFilterControl()),
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Continuous Belt Filters (non modular)",
-                                                     new fsContinuousNonModularBeltFilterControl()),
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Other",
-                                                     new fsCommonCakeFormationControl())
-                                             });
+                                                             {
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Belt Filters with Reversible Trays",
+                                                                     new fsBeltFilterWithReversibleTrayControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Continuous Belt Filters (modular)",
+                                                                     new fsContinuousModularBeltFilterControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Continuous Belt Filters (non modular)",
+                                                                     new fsContinuousNonModularBeltFilterControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Other",
+                                                                     new fsCommonCakeFormationControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Cake Formation Overmodule",
+                                                                     new fsCakeFormationOvermoduleControl())
+
+                                                             });
         }
 
         private void AddHelpGroup(TreeNodeCollection treeNodeCollection)
