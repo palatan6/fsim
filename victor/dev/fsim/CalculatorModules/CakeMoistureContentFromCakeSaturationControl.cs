@@ -1,9 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using Value;
 
 namespace CalculatorModules
 {
@@ -73,6 +75,38 @@ namespace CalculatorModules
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
         {
             return new Control[] { dataGrid, calculationOptionComboBox };
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            SetDefaultValue(fsParameterIdentifier.LiquidDensity, new fsValue(1000));
+            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(2300));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity, new fsValue(0.55));
+            SetDefaultValue(fsParameterIdentifier.CakeSaturation, new fsValue(1));
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[] {fsCalculationOption.CakeMoistureContent},
+                new DiagramConfiguration(
+                    fsParameterIdentifier.CakeSaturation,
+                    new DiagramConfiguration.DiagramRange(0, 1),
+                    new[] {fsParameterIdentifier.CakeMoistureContentRf}));
+
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCalculationOption.CakeSaturation },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.CakePorosity,
+                    new DiagramConfiguration.DiagramRange(0.50, 0.70),
+                    new[] { fsParameterIdentifier.CakeSaturation }));
+
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCalculationOption.CakePorosity },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.CakeSaturation,
+                    new DiagramConfiguration.DiagramRange(0.10, 1),
+                    new[] { fsParameterIdentifier.CakePorosity }));
         }
 
         public fsCakeMoistureContentFromCakeSaturationControl()
