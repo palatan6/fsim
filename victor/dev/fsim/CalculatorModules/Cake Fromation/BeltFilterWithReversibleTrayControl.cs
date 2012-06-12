@@ -1,6 +1,8 @@
-﻿using CalculatorModules.Cake_Fromation;
+﻿using System;
+using CalculatorModules.Cake_Fromation;
 using Parameters;
 using StepCalculators.Simulation_Calculators;
+using Value;
 
 namespace CalculatorModules.BeltFiltersWithReversibleTrays
 {
@@ -14,6 +16,43 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
         protected override void AddCakeFormationCalculator()
         {
             Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            base.InitializeParametersValues();
+
+            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0.02));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity0, new fsValue(0.5));
+            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(5e-13));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.2));
+            SetDefaultValue(fsParameterIdentifier.MachineWidth, new fsValue(2));
+            SetDefaultValue(fsParameterIdentifier.ns, new fsValue(12));
+            SetDefaultValue(fsParameterIdentifier.ls, new fsValue(0.7));
+            SetDefaultValue(fsParameterIdentifier.StandardTechnicalTime, new fsValue(2));
+            SetDefaultValue(fsParameterIdentifier.lambda, new fsValue(0.1));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(0.7e5));
+            SetDefaultValue(fsParameterIdentifier.nsf, new fsValue(3));
+            SetDefaultValue(fsParameterIdentifier.u, new fsValue(5.0 / 60));
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCakeFormationCalculationOption.StandardCalculation },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.u,
+                    new DiagramConfiguration.DiagramRange(2.0 / 60.0, 10.0 / 60.0),
+                    new[] { fsParameterIdentifier.CakeHeight },
+                    new[] { fsParameterIdentifier.Qms }));
+
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCakeFormationCalculationOption.FilterDesign },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.u,
+                    new DiagramConfiguration.DiagramRange(2.0 / 60.0, 10.0 / 60.0),
+                    new[] { fsParameterIdentifier.FilterArea },
+                    new[] { fsParameterIdentifier.nsf }));
         }
 
         override protected fsParametersGroup[] MakeMachiningStandardGroups()
