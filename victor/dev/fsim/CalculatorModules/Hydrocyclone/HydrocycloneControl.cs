@@ -25,22 +25,19 @@ namespace CalculatorModules.Hydrocyclone
 
         #endregion
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
-            #region Calculators
-
             Calculators.Add(new fsDensityConcentrationCalculator());
             Calculators.Add(new fsHydrocycloneCalculator());
+        }
 
-            #endregion
-
+        protected override void InitializeGroups()
+        {
             var colors = new[]
                              {
                                  Color.FromArgb(255, 255, 230),
                                  Color.FromArgb(255, 230, 255)
                              };
-
-            #region Groups
 
             fsParametersGroup etaGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidViscosity); //eta
@@ -188,12 +185,10 @@ namespace CalculatorModules.Hydrocyclone
                 SetGroupInput(groups[i], true);
             }
             SetGroupInput(onlyCalculatedParametersGroup, false);
+        }
 
-
-            #endregion
-
-            InitializeParametersValues();
-
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(comboBoxCalculationOption.Items, typeof (fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.Dp);
             AssignCalculationOptionAndControl(typeof (fsCalculationOption), comboBoxCalculationOption);

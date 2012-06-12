@@ -10,10 +10,13 @@ namespace CalculatorModules
     {
         private readonly fsCakePorosityCalculator m_calculator = new fsCakePorosityCalculator();
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
             Calculators.Add(m_calculator);
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup machineDiameterGroup = AddGroup(fsParameterIdentifier.MachineDiameter);
             fsParametersGroup areaBGroup = AddGroup(fsParameterIdentifier.MachineWidth,
                                                     fsParameterIdentifier.WidthOverDiameterRatio,
@@ -61,7 +64,10 @@ namespace CalculatorModules
                         Color.FromArgb(255, 230, 230));
             SetRowColor(dataGrid, ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].RowIndex,
                         Color.FromArgb(255, 230, 230));
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(saturationComboBox.Items, typeof(fsCakePorosityCalculator.fsSaturationOption));
             AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsSaturationOption), saturationComboBox);
             EstablishCalculationOption(fsCakePorosityCalculator.fsSaturationOption.NotSaturatedCake);

@@ -10,25 +10,22 @@ namespace CalculatorModules.CakeWashing
 {
     public partial class fsCakeWashingControl : fsOptionsDoubleTableAndCommentsCalculatorControl
     {
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
-            #region Calculators
-
             Calculators.Add(new fsDensityConcentrationCalculator());
             Calculators.Add(new fsPorosityCalculator());
             Calculators.Add(new fsPermeabilityCalculator());
             Calculators.Add(new fsRm0Hce0Calculator());
             Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
+        }
 
-            #endregion
-
+        protected override void InitializeGroups()
+        {
             var colors = new[]
                              {
                                  Color.FromArgb(255, 255, 230),
                                  Color.FromArgb(255, 230, 255)
                              };
-
-            #region Material groups
 
             fsParametersGroup etafGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidViscosity);
@@ -93,35 +90,33 @@ namespace CalculatorModules.CakeWashing
                 AddGroupToUI(materialParametersDataGrid, materialGroups[i], colors[i % colors.Length]);
                 SetGroupInput(materialGroups[i], true);
             }
+        }
 
-            #endregion
-            }
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { materialParametersDataGrid, dataGrid };
+        }
 
-            protected override Control[] GetUIControlsToConnectWithDataUpdating()
-            {
-                return new Control[] { materialParametersDataGrid, dataGrid };
-            }
+        public fsCakeWashingControl()
+        {
+            InitializeComponent();
+        }
 
-            public fsCakeWashingControl()
-            {
-                InitializeComponent();
-            }
+        #region Routine Methods
 
-            #region Routine Methods
+        protected override void UpdateGroupsInputInfoFromCalculationOptions()
+        {
+        }
 
-            protected override void UpdateGroupsInputInfoFromCalculationOptions()
-            {
-            }
+        protected override void UpdateEquationsFromCalculationOptions()
+        {
+        }
 
-            protected override void UpdateEquationsFromCalculationOptions()
-            {
-            }
+        protected override void UpdateUIFromData()
+        {
+            base.UpdateUIFromData();
+        }
 
-            protected override void UpdateUIFromData()
-            {
-                base.UpdateUIFromData();
-            }
-
-            #endregion
+        #endregion
     }
 }

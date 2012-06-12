@@ -37,13 +37,43 @@ namespace CalculatorModules
         #region CalculatorControl Initialization
 
         private bool m_isInitialized;
-        protected virtual void InitializeCalculatorControl()
-        {
-        }
 
         protected virtual Control[] GetUIControlsToConnectWithDataUpdating()
         {
             return null;
+        }
+
+        void CalculatorControlLoad(object sender, EventArgs e)
+        {
+            if (m_isInitialized)
+                return;
+
+            m_isInitialized = true;
+
+            InitializeCalculators();
+            InitializeGroups();
+            InitializeCalculationOptionsUIControls();
+            UpdateGroupsInputInfoFromCalculationOptions();
+            InitializeParametersValues();
+            UpdateEquationsFromCalculationOptions();
+            RecalculateAndRedraw();
+            ConnectUIWithDataUpdating(GetUIControlsToConnectWithDataUpdating());
+        }
+
+        protected virtual void InitializeCalculators()
+        {
+        }
+
+        protected virtual void InitializeGroups()
+        {
+        }
+
+        protected virtual void InitializeCalculationOptionsUIControls()
+        {
+        }
+
+        protected virtual void InitializeParametersValues()
+        {
         }
 
         #endregion
@@ -58,36 +88,6 @@ namespace CalculatorModules
             ParameterToGroup = new Dictionary<fsParameterIdentifier, fsParametersGroup>();
 
             Load += CalculatorControlLoad;
-        }
-
-        void CalculatorControlLoad(object sender, EventArgs e)
-        {
-            if (m_isInitialized)
-                return;
-
-            m_isInitialized = true;
-
-            InitializeCalculatorControl();
-            UpdateGroupsInputInfoFromCalculationOptions();
-            InitializeParametersValues();
-            UpdateEquationsFromCalculationOptions();
-            InitializeDefaultDiagrams();
-            ShowDefaultDiagramForCurrentCalculationOptions();
-            RecalculateAndRedraw();
-
-            ConnectUIWithDataUpdating(GetUIControlsToConnectWithDataUpdating());
-        }
-
-        protected virtual void InitializeParametersValues()
-        {
-        }
-
-        protected virtual void InitializeDefaultDiagrams()
-        {
-        }
-
-        protected virtual void ShowDefaultDiagramForCurrentCalculationOptions()
-        {
         }
 
         public virtual Control ControlToResizeForExpanding { get; set; }

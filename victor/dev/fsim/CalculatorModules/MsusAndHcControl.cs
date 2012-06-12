@@ -37,15 +37,18 @@ namespace CalculatorModules
 
         #endregion
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
             m_plainAreaCalculators.Add(new fsMsusHcPlainAreaCalculator());
             m_convexCylindricAreaCalculators.Add(new fsMsusHcConvexCylindricAreaCalculator());
             m_concaveCylindricAreaCalculators.Add(new fsMsusHcConcaveCylindricAreaCalculator());
             Calculators = m_plainAreaCalculators;
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup filtrateGroup = AddGroup(
-                fsParameterIdentifier.MotherLiquidDensity);
+               fsParameterIdentifier.MotherLiquidDensity);
             fsParametersGroup densitiesGroup = AddGroup(
                 fsParameterIdentifier.SolidsDensity,
                 fsParameterIdentifier.SuspensionDensity);
@@ -99,7 +102,10 @@ namespace CalculatorModules
                         Color.FromArgb(255, 230, 230));
             SetRowColor(dataGrid, ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].RowIndex,
                         Color.FromArgb(255, 230, 230));
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(machineTypeComboBox.Items, typeof(fsCakePorosityCalculator.fsMachineTypeOption));
             EstablishCalculationOption(fsCakePorosityCalculator.fsMachineTypeOption.PlainArea);
             AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsMachineTypeOption), machineTypeComboBox);

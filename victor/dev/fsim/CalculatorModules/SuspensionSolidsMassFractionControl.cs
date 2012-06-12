@@ -11,10 +11,13 @@ namespace CalculatorModules
         private readonly fsSuspensionSolidsMassFractionCalculator m_calculator =
             new fsSuspensionSolidsMassFractionCalculator();
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
             Calculators.Add(m_calculator);
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup wetMassGroup = AddGroup(fsParameterIdentifier.SuspensionMass);
             fsParametersGroup dryMassGroup = AddGroup(fsParameterIdentifier.DryCakeMass);
             fsParametersGroup cfmGroup = AddGroup(fsParameterIdentifier.SolutesMassFractionInMotherLiquid);
@@ -44,7 +47,10 @@ namespace CalculatorModules
                 SetGroupInput(groups[i], true);
             }
             SetGroupInput(cmGroup, false);
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(saltContentComboBox.Items, typeof(fsCalculationOptions.fsSaltContentOption));
             EstablishCalculationOption(fsCalculationOptions.fsSaltContentOption.Neglected);
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsSaltContentOption), saltContentComboBox);

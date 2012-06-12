@@ -24,18 +24,17 @@ namespace CalculatorModules.Cake_Fromation
 
         #endregion
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
-            #region Calculators
-
             Calculators.Add(new fsDensityConcentrationCalculator());
             Calculators.Add(new fsPorosityCalculator());
             Calculators.Add(new fsPermeabilityCalculator());
             Calculators.Add(new fsRm0Hce0Calculator());
             AddCakeFormationCalculator();
+        }
 
-            #endregion
-
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(calculationComboBox.Items, typeof (fsCakeFormationCalculationOption));
             EstablishCalculationOption(fsCakeFormationCalculationOption.StandardCalculation);
             AssignCalculationOptionAndControl(typeof (fsCakeFormationCalculationOption), calculationComboBox);
@@ -44,12 +43,6 @@ namespace CalculatorModules.Cake_Fromation
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
         {
             return new Control[] { materialParametersDataGrid, dataGrid, calculationComboBox };
-        }
-
-        protected override void ShowDefaultDiagramForCurrentCalculationOptions()
-        {
-            SetDefaultDiagram(fsParameterIdentifier.u, fsParameterIdentifier.FilterArea,
-                              fsParameterIdentifier.SpecificFiltrationTime);
         }
 
         public fsCakeFormationBaseControl()

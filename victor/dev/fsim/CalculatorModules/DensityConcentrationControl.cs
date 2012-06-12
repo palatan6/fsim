@@ -21,10 +21,14 @@ namespace CalculatorModules
 
         #endregion
 
-        protected override void InitializeCalculatorControl()
+        
+        protected override void InitializeCalculators()
         {
             Calculators.Add(new fsDensityConcentrationCalculator());
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup filtrateGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidDensity);
             fsParametersGroup solidsGroup = AddGroup(
@@ -40,7 +44,10 @@ namespace CalculatorModules
             AddGroupToUI(dataGrid, solidsGroup, Color.FromArgb(255, 230, 255));
             AddGroupToUI(dataGrid, suspensionGroup, Color.FromArgb(255, 255, 230));
             AddGroupToUI(dataGrid, concentrationGroup, Color.FromArgb(230, 230, 230));
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(calculateSelectionComboBox.Items, typeof(fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.CalcSuspensionDensity);
             AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculateSelectionComboBox);

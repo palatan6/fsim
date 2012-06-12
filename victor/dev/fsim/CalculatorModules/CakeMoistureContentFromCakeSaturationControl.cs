@@ -21,12 +21,15 @@ namespace CalculatorModules
 
         #endregion
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
             Calculators.Add(new fsRfFromCakeSaturationCalculator());
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup liquidGroup = AddGroup(
-                fsParameterIdentifier.LiquidDensity);
+               fsParameterIdentifier.LiquidDensity);
             fsParametersGroup solidsGroup = AddGroup(
                 fsParameterIdentifier.SolidsDensity);
             fsParametersGroup porosityGroup = AddGroup(
@@ -58,7 +61,10 @@ namespace CalculatorModules
             }
             rfGroup.SetIsInputFlag(false);
             ParameterToCell[fsParameterIdentifier.CakeMoistureContent].ReadOnly = true;
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(calculationOptionComboBox.Items, typeof(fsCalculationOption));
             EstablishCalculationOption(fsCalculationOption.CakeMoistureContent);
             AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationOptionComboBox);

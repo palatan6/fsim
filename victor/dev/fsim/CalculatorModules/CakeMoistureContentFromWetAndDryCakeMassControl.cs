@@ -11,10 +11,13 @@ namespace CalculatorModules
     {
         private readonly fsRfFromWetDryCakeCalculator m_calculator = new fsRfFromWetDryCakeCalculator();
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
             Calculators.Add(m_calculator);
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup wetMassGroup = AddGroup(fsParameterIdentifier.WetCakeMass);
             fsParametersGroup dryMassGroup = AddGroup(fsParameterIdentifier.DryCakeMass);
             fsParametersGroup cmGroup = AddGroup(fsParameterIdentifier.SolutesMassFractionInLiquid);
@@ -44,7 +47,10 @@ namespace CalculatorModules
                 SetGroupInput(groups[i], true);
             }
             SetGroupInput(rfGroup, false);
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(saltContentComboBox.Items, typeof (fsCalculationOptions.fsSaltContentOption));
             EstablishCalculationOption(fsCalculationOptions.fsSaltContentOption.Neglected);
             AssignCalculationOptionAndControl(typeof (fsCalculationOptions.fsSaltContentOption), saltContentComboBox);

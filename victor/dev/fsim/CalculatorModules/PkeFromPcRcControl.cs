@@ -10,12 +10,15 @@ namespace CalculatorModules
     {
         private readonly fsPkeFromPcRcCalculator m_calculator = new fsPkeFromPcRcCalculator();
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
             Calculators.Add(m_calculator);
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup permeabilityGroup = AddGroup(
-                fsParameterIdentifier.CakePermeability);
+               fsParameterIdentifier.CakePermeability);
             fsParametersGroup resistanceGroup = AddGroup(
                 fsParameterIdentifier.CakeResistance);
             fsParametersGroup alphaGroup = AddGroup(
@@ -58,14 +61,16 @@ namespace CalculatorModules
                 SetGroupInput(groups[i], true);
             }
             SetGroupInput(pkeGroup, false);
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(inputCakeComboBox.Items, typeof(fsCalculationOptions.fsCakeInputOption));
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsCakeInputOption), inputCakeComboBox);
             EstablishCalculationOption(fsCalculationOptions.fsCakeInputOption.PermeabilityPc);
 
             fsMisc.FillList(enterSolidsDensityComboBox.Items, typeof(fsCalculationOptions.fsEnterSolidsDensity));
-            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsEnterSolidsDensity),
-                                              enterSolidsDensityComboBox);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsEnterSolidsDensity), enterSolidsDensityComboBox);
             EstablishCalculationOption(fsCalculationOptions.fsEnterSolidsDensity.BulkDensityDrySolids);
         }
 

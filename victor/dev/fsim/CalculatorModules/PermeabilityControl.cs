@@ -21,10 +21,13 @@ namespace CalculatorModules
 
         #endregion
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
             Calculators.Add(new fsPermeabilityCalculator());
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup solidsGroup = AddGroup(
                 fsParameterIdentifier.SolidsDensity);
             fsParametersGroup porosityGroup = AddGroup(
@@ -48,7 +51,10 @@ namespace CalculatorModules
             AddGroupToUI(dataGrid, ncGroup, Color.FromArgb(255, 255, 230));
             AddGroupToUI(dataGrid, pressureGroup, Color.FromArgb(230, 230, 255));
             AddGroupToUI(dataGrid, pcRcAGroup, Color.FromArgb(255, 230, 230));
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(calculationOptionComboBox.Items, typeof(fsCalculationOption));
             AssignCalculationOptionAndControl(typeof(fsCalculationOption), calculationOptionComboBox);
             EstablishCalculationOption(fsCalculationOption.CalcPcRcAlpha);

@@ -10,10 +10,13 @@ namespace CalculatorModules
     {
         private readonly fsCakeWashOutContentCalculator m_calculator = new fsCakeWashOutContentCalculator();
 
-        protected override void InitializeCalculatorControl()
+        protected override void InitializeCalculators()
         {
             Calculators.Add(m_calculator);
+        }
 
+        protected override void InitializeGroups()
+        {
             fsParametersGroup wetMassGroup = AddGroup(fsParameterIdentifier.WetCakeMass);
             fsParametersGroup liquidGroup = AddGroup(fsParameterIdentifier.LiquidMassForResuspension);
             fsParametersGroup cwmGroup = AddGroup(fsParameterIdentifier.LiquidWashOutMassFraction);
@@ -50,7 +53,10 @@ namespace CalculatorModules
                 SetGroupInput(groups[i], true);
             }
             SetGroupInput(outGroup, false);
+        }
 
+        protected override void InitializeCalculationOptionsUIControls()
+        {
             fsMisc.FillList(fromComboBox.Items, typeof(fsCalculationOptions.fsFromCalculationOption));
             EstablishCalculationOption(fsCalculationOptions.fsFromCalculationOption.WashOutContent);
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsFromCalculationOption), fromComboBox);
