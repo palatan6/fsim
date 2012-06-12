@@ -73,10 +73,6 @@ namespace CalculatorModules.Cake_Fromation
             SetDefaultValue(fsParameterIdentifier.SpecificFiltrationTime, new fsValue(0.25));
         }
 
-        protected override void InitializeDefaultDiagrams()
-        {
-        }
-
         public fsCakeFormationBaseControl()
         {
             InitializeComponent();

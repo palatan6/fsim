@@ -1,5 +1,7 @@
-﻿using Parameters;
+﻿using System;
+using Parameters;
 using StepCalculators.Simulation_Calculators.Cake_Formation;
+using Value;
 
 namespace CalculatorModules.Cake_Fromation
 {
@@ -13,6 +15,39 @@ namespace CalculatorModules.Cake_Fromation
         protected override void AddCakeFormationCalculator()
         {
             Calculators.Add(new fsContinuousNonModularBeltFilterCalculator());
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            base.InitializeParametersValues();
+
+            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0.02));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity0, new fsValue(0.5));
+            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(5e-13));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.2));
+            SetDefaultValue(fsParameterIdentifier.MachineWidth, new fsValue(2));
+            SetDefaultValue(fsParameterIdentifier.l_over_b, new fsValue(4.5));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(0.7e5));
+            SetDefaultValue(fsParameterIdentifier.u, new fsValue(5.0 / 60));
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[] {fsCakeFormationCalculationOption.StandardCalculation},
+                new DiagramConfiguration(
+                    fsParameterIdentifier.u,
+                    new DiagramConfiguration.DiagramRange(2.0 / 60.0, 10.0 / 60.0),
+                    new[] {fsParameterIdentifier.CakeHeight},
+                    new[] {fsParameterIdentifier.Qms}));
+
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCakeFormationCalculationOption.FilterDesign },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.u,
+                    new DiagramConfiguration.DiagramRange(2.0 / 60.0, 10.0 / 60.0),
+                    new[] { fsParameterIdentifier.FilterArea },
+                    new[] { fsParameterIdentifier.SpecificFiltrationTime }));
         }
 
         override protected fsParametersGroup[] MakeMachiningStandardGroups()
