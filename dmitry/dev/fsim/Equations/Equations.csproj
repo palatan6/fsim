@@ -52,6 +52,8 @@
     <Compile Include="Belt Filters with Reversible Trays\fsTrSrTtechNsTcEquation.cs" />
     <Compile Include="Belt Filters with Reversible Trays\fsUFromLsOverBQmsHcDpTtech0LambdaNsfMaterialEquation.cs" />
     <Compile Include="Cake Formation\fsCakeHeightFrom_Dp_tfEquation.cs" />
+    <Compile Include="Cake Formation\fsSuspensionMassFromHcEpsConcaveCylindircAreaEquation.cs" />
+    <Compile Include="Cake Formation\fsSuspensionMassFromHcEpsConvexCylindircAreaEquation.cs" />
     <Compile Include="Cake Washing\fsCaDnCwWfEquation.cs" />
     <Compile Include="Cake Washing\fsCstarDnWfEquation.cs" />
     <Compile Include="Cake Washing\fsIfMoreOrLessThenOneEquation.cs" />
@@ -89,8 +91,6 @@
     <Compile Include="Math\GeneralEquations\fsConstantSumEquation.cs" />
     <Compile Include="Math\fsCylinderAreaEquation.cs" />
     <Compile Include="Cake Formation\fsFrom0AndDpEquation.cs" />
-    <Compile Include="Cake Formation\fsSuspensionMassFromHcEpsConcaveCylindricAreaEquation.cs" />
-    <Compile Include="Cake Formation\fsSuspensionMassFromHcEpsConvexCylindricAreaEquation.cs" />
     <Compile Include="Cake Formation\fsSuspensionMassFromHcEpsPlainAreaEquation.cs" />
     <Compile Include="Cake Formation\fsSuspensionVolumeFromHcEpsPlainAreaEquation.cs" />
     <Compile Include="Cake Formation\fsSuspensionVolumeFromHcKappaPlainAreaEquation.cs" />
