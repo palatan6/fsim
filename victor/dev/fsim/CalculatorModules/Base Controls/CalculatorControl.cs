@@ -101,6 +101,15 @@ namespace CalculatorModules
             // It should set up equations here. Override this method in derived class
         }
 
+        protected void SetDefaultValue(fsParameterIdentifier identifier, fsValue value)
+        {
+            if (Values.ContainsKey(identifier))
+            {
+                ParameterToGroup[identifier].Representator = identifier;
+                Values[identifier].Value = value;
+            }
+        }
+
         protected fsCalculatorControl()
         {
             Values = new Dictionary<fsParameterIdentifier, fsSimulationModuleParameter>();

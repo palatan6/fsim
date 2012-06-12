@@ -53,9 +53,9 @@ namespace CalculatorModules.Cake_Fromation
                         fsCakeFormationCalculationOption.FilterDesign
                     },
                 new DiagramConfiguration(
-                    fsParameterIdentifier.u, 
-                    fsParameterIdentifier.FilterArea, 
-                    fsParameterIdentifier.SpecificFiltrationTime));
+                    fsParameterIdentifier.u,
+                    new[] {fsParameterIdentifier.FilterArea},
+                    new[] {fsParameterIdentifier.SpecificFiltrationTime}));
 
             m_defaultDiagrams.Add(
                 new Enum[]
@@ -64,8 +64,8 @@ namespace CalculatorModules.Cake_Fromation
                     },
                 new DiagramConfiguration(
                     fsParameterIdentifier.FiltrationTime,
-                    fsParameterIdentifier.CakeHeight,
-                    fsParameterIdentifier.SuspensionMass));
+                    new[] {fsParameterIdentifier.CakeHeight},
+                    new[] {fsParameterIdentifier.SuspensionMass}));
         }
 
         public fsCakeFormationBaseControl()
@@ -109,15 +109,6 @@ namespace CalculatorModules.Cake_Fromation
             SetDefaultValue(fsParameterIdentifier.ns, new fsValue(12));
             SetDefaultValue(fsParameterIdentifier.FilterLength, new fsValue(2.4));
             SetDefaultValue(fsParameterIdentifier.SpecificFiltrationTime, new fsValue(0.25));
-        }
-
-        private void SetDefaultValue(fsParameterIdentifier identifier, fsValue value)
-        {
-            if (Values.ContainsKey(identifier))
-            {
-                ParameterToGroup[identifier].Representator = identifier;
-                Values[identifier].Value = value;
-            }
         }
 
         #region Routine Methods

@@ -58,16 +58,21 @@ namespace CalculatorModules.User_Controls
 
         public void SetDiagram(
             fsParameterIdentifier iterationParameter,
-            fsParameterIdentifier yAxisParameter,
-            fsParameterIdentifier y2AxisParameter)
+            fsParameterIdentifier [] yAxisParameters,
+            fsParameterIdentifier [] y2AxisParameters)
         {
             m_iterationParameter = iterationParameter;
+            
             m_yAxisParameters.Clear();
-            m_yAxisParameters.Add(yAxisParameter);
-            m_y2AxisParameters.Clear();
-            if (y2AxisParameter != null)
+            foreach (fsParameterIdentifier p in yAxisParameters)
             {
-                m_y2AxisParameters.Add(y2AxisParameter);
+                m_yAxisParameters.Add(p);
+            }
+
+            m_y2AxisParameters.Clear();
+            foreach (fsParameterIdentifier p in y2AxisParameters)
+            {
+                m_y2AxisParameters.Add(p);
             }
         }
 

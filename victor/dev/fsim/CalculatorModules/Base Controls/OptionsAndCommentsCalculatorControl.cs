@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Parameters;
+using Units;
+using Value;
 
 namespace CalculatorModules
 {
@@ -105,28 +107,45 @@ namespace CalculatorModules
 
         protected class DiagramConfiguration
         {
+            public class DiagramRange
+            {
+                public double From;
+                public double To;
+
+                public DiagramRange(double from, double to)
+                {
+                    From = from;
+                    To = to;
+                }
+            }
+
             public fsParameterIdentifier xAxisParameter { get; set; }
-            public fsParameterIdentifier yAxisParameter { get; set; }
-            public fsParameterIdentifier y2AxisParameter { get; set; }
+            public fsParameterIdentifier[] yAxisParameters { get; set; }
+            public fsParameterIdentifier[] y2AxisParameters { get; set; }
+            public DiagramRange range { get; set; }
 
             public DiagramConfiguration(
                 fsParameterIdentifier xAxisParameter,
-                fsParameterIdentifier yAxisParameter,
-                fsParameterIdentifier y2AxisParameter)
+                fsParameterIdentifier [] yAxisParameters,
+                fsParameterIdentifier [] y2AxisParameters)
             {
                 this.xAxisParameter = xAxisParameter;
-                this.yAxisParameter = yAxisParameter;
-                this.y2AxisParameter = y2AxisParameter;
+                this.yAxisParameters = yAxisParameters;
+                this.y2AxisParameters = y2AxisParameters;
             }
 
             public DiagramConfiguration(
-                fsParameterIdentifier xAxisParameter,
-                fsParameterIdentifier yAxisParameter)
+               fsParameterIdentifier xAxisParameter,
+                DiagramRange range,
+               fsParameterIdentifier[] yAxisParameters,
+               fsParameterIdentifier[] y2AxisParameters)
             {
                 this.xAxisParameter = xAxisParameter;
-                this.yAxisParameter = yAxisParameter;
-                y2AxisParameter = null;
+                this.range = range;
+                this.yAxisParameters = yAxisParameters;
+                this.y2AxisParameters = y2AxisParameters;
             }
+
         }
 
         private class EqualityComparer : IEqualityComparer<ICollection<Enum>>
@@ -163,7 +182,12 @@ namespace CalculatorModules
             if (m_defaultDiagrams.ContainsKey(CalculationOptions.Values))
             {
                 DiagramConfiguration diagram = m_defaultDiagrams[CalculationOptions.Values];
-                fsTableAndChart1.SetDiagram(diagram.xAxisParameter, diagram.yAxisParameter, diagram.y2AxisParameter);
+                fsTableAndChart1.SetDiagram(diagram.xAxisParameter, diagram.yAxisParameters, diagram.y2AxisParameters);
+                if (diagram.range != null)
+                {
+                    Values[diagram.xAxisParameter].Range.From = new fsValue(diagram.range.From);
+                    Values[diagram.xAxisParameter].Range.To = new fsValue(diagram.range.To);
+                }
             }
         }
 

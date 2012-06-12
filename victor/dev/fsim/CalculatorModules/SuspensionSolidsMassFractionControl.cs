@@ -71,7 +71,8 @@ namespace CalculatorModules
                     },
                 new DiagramConfiguration(
                     fsParameterIdentifier.SuspensionMass,
-                    fsParameterIdentifier.SuspensionSolidsMassFraction));
+                    new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
+                    new fsParameterIdentifier[] { }));
 
             m_defaultDiagrams.Add(
                 new Enum[]
@@ -81,7 +82,8 @@ namespace CalculatorModules
                     },
                 new DiagramConfiguration(
                     fsParameterIdentifier.SuspensionMass,
-                    fsParameterIdentifier.SuspensionSolidsMassFraction));
+                    new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
+                    new fsParameterIdentifier[] { }));
 
             m_defaultDiagrams.Add(
                 new Enum[]
@@ -91,7 +93,8 @@ namespace CalculatorModules
                     },
                 new DiagramConfiguration(
                     fsParameterIdentifier.SolutesConcentrationInMotherLiquid,
-                    fsParameterIdentifier.SuspensionSolidsMassFraction));
+                    new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
+                    new fsParameterIdentifier[] { }));
 
             m_defaultDiagrams.Add(
                 new Enum[]
@@ -101,7 +104,8 @@ namespace CalculatorModules
                     },
                 new DiagramConfiguration(
                     fsParameterIdentifier.SolutesMassFractionInMotherLiquid,
-                    fsParameterIdentifier.SuspensionSolidsMassFraction));
+                    new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
+                    new fsParameterIdentifier[] { }));
         }
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
