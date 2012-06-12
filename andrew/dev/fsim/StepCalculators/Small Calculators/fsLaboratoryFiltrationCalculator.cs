@@ -21,7 +21,16 @@ namespace StepCalculators
             IEquationParameter solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
             IEquationParameter cm = AddConstant(fsParameterIdentifier.SuspensionSolidsMassFraction);
             IEquationParameter kappa = AddConstant(fsParameterIdentifier.Kappa);
+
+            IEquationParameter pc0 = AddVariable(fsParameterIdentifier.CakePermeability0);
+            IEquationParameter rc0 = AddVariable(fsParameterIdentifier.CakeResistance0);
+            IEquationParameter alpha0 = AddVariable(fsParameterIdentifier.CakeResistanceAlpha0);
             IEquationParameter pc = AddVariable(fsParameterIdentifier.CakePermeability);
+            IEquationParameter rc = AddVariable(fsParameterIdentifier.CakeResistance);
+            IEquationParameter alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
+            IEquationParameter nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
+            IEquationParameter pressure = AddVariable(fsParameterIdentifier.PressureDifference);
+
             IEquationParameter hc = AddVariable(fsParameterIdentifier.CakeHeight);
             IEquationParameter formationTime = AddVariable(fsParameterIdentifier.FiltrationTime);
             IEquationParameter solidsMass = AddVariable(fsParameterIdentifier.SolidsMassInSuspension);
@@ -39,16 +48,6 @@ namespace StepCalculators
             IEquationParameter qf = AddVariable(fsParameterIdentifier.qf);
             IEquationParameter hce = AddVariable(fsParameterIdentifier.FilterMediumResistanceHce);
             IEquationParameter K = AddVariable(fsParameterIdentifier.PracticalCakePermeability);
-
-            IEquationParameter rc0 = AddVariable(fsParameterIdentifier.CakeResistance0);
-            IEquationParameter pc0 = AddVariable(fsParameterIdentifier.CakePermeability0);
-            IEquationParameter alpha0 = AddVariable(fsParameterIdentifier.CakeResistanceAlpha0);
-            IEquationParameter rc = AddVariable(fsParameterIdentifier.CakeResistance);
-            IEquationParameter alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
-            IEquationParameter nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
-            IEquationParameter pressure = AddVariable(fsParameterIdentifier.PressureDifference);
-
-
 
             #endregion
 
