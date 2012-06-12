@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using Value;
 
 namespace CalculatorModules
 {
@@ -17,24 +19,15 @@ namespace CalculatorModules
 
         protected override void InitializeGroups()
         {
-            fsParametersGroup permeabilityGroup = AddGroup(
-               fsParameterIdentifier.CakePermeability);
-            fsParametersGroup resistanceGroup = AddGroup(
-                fsParameterIdentifier.CakeResistance);
-            fsParametersGroup alphaGroup = AddGroup(
-                fsParameterIdentifier.CakeResistanceAlpha);
-            fsParametersGroup rhosGroup = AddGroup(
-                fsParameterIdentifier.SolidsDensity);
-            fsParametersGroup epsGroup = AddGroup(
-                fsParameterIdentifier.CakePorosity);
-            fsParametersGroup rhosBulkGroup = AddGroup(
-                fsParameterIdentifier.DryCakeDensity);
-            fsParametersGroup sigmaGroup = AddGroup(
-                fsParameterIdentifier.SurfaceTensionLiquidInCake);
-            fsParametersGroup pkestGroup = AddGroup(
-                fsParameterIdentifier.StandardCapillaryPressure);
-            fsParametersGroup pkeGroup = AddGroup(
-                fsParameterIdentifier.CapillaryPressure);
+            fsParametersGroup permeabilityGroup = AddGroup(fsParameterIdentifier.CakePermeability);
+            fsParametersGroup resistanceGroup = AddGroup(fsParameterIdentifier.CakeResistance);
+            fsParametersGroup alphaGroup = AddGroup(fsParameterIdentifier.CakeResistanceAlpha);
+            fsParametersGroup rhosGroup = AddGroup(fsParameterIdentifier.SolidsDensity);
+            fsParametersGroup epsGroup = AddGroup(fsParameterIdentifier.CakePorosity);
+            fsParametersGroup rhosBulkGroup = AddGroup(fsParameterIdentifier.DryCakeDensity);
+            fsParametersGroup sigmaGroup = AddGroup(fsParameterIdentifier.SurfaceTensionLiquidInCake);
+            fsParametersGroup pkestGroup = AddGroup(fsParameterIdentifier.StandardCapillaryPressure);
+            fsParametersGroup pkeGroup = AddGroup(fsParameterIdentifier.CapillaryPressure);
 
             var groups = new[]
                              {
@@ -79,6 +72,78 @@ namespace CalculatorModules
             return new Control[] { dataGrid,
                                       inputCakeComboBox,
                                       enterSolidsDensityComboBox };
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            SetDefaultValue(fsParameterIdentifier.CakePermeability, new fsValue(0.3e-13));
+            SetDefaultValue(fsParameterIdentifier.SurfaceTensionLiquidInCake, new fsValue(60e-3));
+            SetDefaultValue(fsParameterIdentifier.DryCakeDensity, new fsValue(800));
+            SetDefaultValue(fsParameterIdentifier.CakeResistanceAlpha, new fsValue(2e10));
+            SetDefaultValue(fsParameterIdentifier.StandardCapillaryPressure, new fsValue(0.15e5));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity, new fsValue(0.55));
+            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(2300));
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            var permeabilityDiagram = new DiagramConfiguration(
+                fsParameterIdentifier.CakePermeability,
+                new DiagramConfiguration.DiagramRange(0.1e-13, 1e-13),
+                new[] {fsParameterIdentifier.CapillaryPressure});
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsCakeInputOption.PermeabilityPc,
+                        fsCalculationOptions.fsEnterSolidsDensity.BulkDensityDrySolids
+                    },
+                permeabilityDiagram);
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsCakeInputOption.PermeabilityPc,
+                        fsCalculationOptions.fsEnterSolidsDensity.SolidsDensityAndCakePorosity
+                    },
+                permeabilityDiagram);
+
+            var resistanceDiagram = new DiagramConfiguration(
+                fsParameterIdentifier.CakeResistance,
+                new DiagramConfiguration.DiagramRange(0.1e+13, 10e+13),
+                new[] { fsParameterIdentifier.CapillaryPressure });
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsCakeInputOption.ResistanceRc,
+                        fsCalculationOptions.fsEnterSolidsDensity.BulkDensityDrySolids
+                    },
+                resistanceDiagram);
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsCakeInputOption.ResistanceRc,
+                        fsCalculationOptions.fsEnterSolidsDensity.SolidsDensityAndCakePorosity
+                    },
+                resistanceDiagram);
+
+            var resistanceAlphaDiagram = new DiagramConfiguration(
+                fsParameterIdentifier.CakeResistanceAlpha,
+                new DiagramConfiguration.DiagramRange(0.1e+10, 20e+10),
+                new[] {fsParameterIdentifier.CapillaryPressure});
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsCakeInputOption.ResistanceAlpha,
+                        fsCalculationOptions.fsEnterSolidsDensity.BulkDensityDrySolids
+                    },
+                resistanceAlphaDiagram);
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsCakeInputOption.ResistanceAlpha,
+                        fsCalculationOptions.fsEnterSolidsDensity.SolidsDensityAndCakePorosity
+                    },
+                resistanceAlphaDiagram);
         }
 
         public fsPkeFromPcRcControl()
