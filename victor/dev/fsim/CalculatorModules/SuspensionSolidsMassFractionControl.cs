@@ -4,6 +4,7 @@ using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using Value;
 
 namespace CalculatorModules
 {
@@ -63,16 +64,19 @@ namespace CalculatorModules
 
         protected override void InitializeDefaultDiagrams()
         {
+            var neglectedDiagram = new DiagramConfiguration(
+                fsParameterIdentifier.DryCakeMass,
+                new DiagramConfiguration.DiagramRange(0.001, 0.020),
+                new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
+                new fsParameterIdentifier[] {});
+
             m_defaultDiagrams.Add(
                 new Enum[]
                     {
                         fsCalculationOptions.fsSaltContentOption.Neglected,
                         fsCalculationOptions.fsConcentrationOption.SolidsMassFraction
                     },
-                new DiagramConfiguration(
-                    fsParameterIdentifier.SuspensionMass,
-                    new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
-                    new fsParameterIdentifier[] { }));
+                neglectedDiagram);
 
             m_defaultDiagrams.Add(
                 new Enum[]
@@ -80,21 +84,7 @@ namespace CalculatorModules
                         fsCalculationOptions.fsSaltContentOption.Neglected,
                         fsCalculationOptions.fsConcentrationOption.Concentration
                     },
-                new DiagramConfiguration(
-                    fsParameterIdentifier.SuspensionMass,
-                    new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
-                    new fsParameterIdentifier[] { }));
-
-            m_defaultDiagrams.Add(
-                new Enum[]
-                    {
-                        fsCalculationOptions.fsSaltContentOption.Considered,
-                        fsCalculationOptions.fsConcentrationOption.Concentration
-                    },
-                new DiagramConfiguration(
-                    fsParameterIdentifier.SolutesConcentrationInMotherLiquid,
-                    new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
-                    new fsParameterIdentifier[] { }));
+                neglectedDiagram);
 
             m_defaultDiagrams.Add(
                 new Enum[]
@@ -104,8 +94,30 @@ namespace CalculatorModules
                     },
                 new DiagramConfiguration(
                     fsParameterIdentifier.SolutesMassFractionInMotherLiquid,
+                    new DiagramConfiguration.DiagramRange(0, 0.2),
+                    new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
+                    new fsParameterIdentifier[] {}));
+
+            m_defaultDiagrams.Add(
+                new Enum[]
+                    {
+                        fsCalculationOptions.fsSaltContentOption.Considered,
+                        fsCalculationOptions.fsConcentrationOption.Concentration
+                    },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.SolutesConcentrationInMotherLiquid,
+                    new DiagramConfiguration.DiagramRange(0, 100),
                     new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
                     new fsParameterIdentifier[] { }));
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            SetDefaultValue(fsParameterIdentifier.SuspensionMass, new fsValue(0.050));
+            SetDefaultValue(fsParameterIdentifier.DryCakeMass, new fsValue(0.012));
+            SetDefaultValue(fsParameterIdentifier.SolutesMassFractionInMotherLiquid, new fsValue(0.05));
+            SetDefaultValue(fsParameterIdentifier.SolutesConcentrationInMotherLiquid, new fsValue(49.5));
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidDensity, new fsValue(1000));
         }
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()

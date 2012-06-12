@@ -37,6 +37,7 @@ namespace Calculator
         internal void SetUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
         {
             m_calculatorControl.SetUnits(dictionary);
+            m_calculatorControl.RecalculateAndRedraw();
         }
 
         internal void SetRanges(Dictionary<fsParameterIdentifier, fsRange> dictionary)
