@@ -7,6 +7,12 @@ namespace Equations.CakeWashing
 {
     public class fsMwfVcWfEquation : fsCalculatorEquation
     {
+        /*
+         *        { eps*Vc * ((rhow - rho)/2 * wf^2 + rho * wf), if wf < 1
+         *  Mwf = |
+         *        { eps*Vc * (rhow * (wf - 1/2) + rho/2),        if wf >= 1 
+         */
+
         #region Parameters
 
         private readonly IEquationParameter m_Mwf;

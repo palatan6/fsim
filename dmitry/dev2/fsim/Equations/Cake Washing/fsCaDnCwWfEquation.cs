@@ -11,6 +11,18 @@ namespace Equations.CakeWashing
 {
     public class fsCaDnCwWfEquation : fsCalculatorEquation
     {
+        /*
+         * ca(Dn, wf) = 1/wf * (cw * wf + (c0 - cw) * x*(Dn, wf)),
+         * where
+         * x*(Dn, wf) = 1/2 *
+         *              ( (1 - wf) * (2 - erfc(Dn^(1/2)/2 * (1 - wf)/wf^(1/2))) + 
+         *                 exp(Dn) * (1 + wf) * erfc(Dn^(1/2)/2 * (1 + wf)/wf^(1/2))
+         *              )
+         * Denote v = Dn^(1/2)/2 * (1 - wf)/wf^(1/2). 
+         * Then Dn^(1/2)/2 * (1 + wf)/wf^(1/2) = (v^2 + Dn)^(1/2). 
+         * We use this relashionship for finding unknown wf when ca is known (see wfFormula())              
+         */
+
         #region Parameters
 
         private readonly IEquationParameter m_ca;
@@ -46,7 +58,7 @@ namespace Equations.CakeWashing
 
         #region Help Equation Class
 
-        class Equation : fsFunction
+        class wfCalculationFunction : fsFunction
         {
             #region Parameters
 
@@ -55,7 +67,7 @@ namespace Equations.CakeWashing
 
             #endregion
 
-            public Equation(
+            public wfCalculationFunction(
                 fsValue a,
                 fsValue u)
             {
@@ -124,7 +136,7 @@ namespace Equations.CakeWashing
             }
             else
             {
-                var f = new Equation(m_Dn.Value, u);
+                var f = new wfCalculationFunction(m_Dn.Value, u);
                 fsValue sqrt = 1 / fsValue.Sqrt(m_Dn.Value);
                 fsValue b = sqrt * (1 + sqrt) / Math.Sqrt(Math.PI);
                 fsValue upperBound = 1 + fsValue.Sqrt(fsValue.Log(b / u));

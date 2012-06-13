@@ -11,6 +11,27 @@ namespace Equations.CakeWashing
 {
     public class fsXstarDnWfEquation : fsCalculatorEquation
     {
+        /*
+         *              wf      
+         *              /
+         *              |
+         * x*(Dn, wf) = | c*(Dn, u) du ,      (1)
+         *              |
+         *              /
+         *              0
+         * where
+         * c*(Dn, u) = 1 - 1/2*( erfc(Dn^(1/2)/2 * (1 - u)/u^(1/2)) + exp(Dn) * erfc(Dn^(1/2)/2 * (1 + u)/u^(1/2)) )
+         * 
+         * The integral (1) can be calculated analytically!!! Precisely:
+         * x*(Dn, wf) = 1/2 *
+         *              ( (1 - wf) * (2 - erfc(Dn^(1/2)/2 * (1 - wf)/wf^(1/2))) + 
+         *                 exp(Dn) * (1 + wf) * erfc(Dn^(1/2)/2 * (1 + wf)/wf^(1/2))
+         *              ) 
+         * Denote v = Dn^(1/2)/2 * (1 - wf)/wf^(1/2). 
+         * Then Dn^(1/2)/2 * (1 + wf)/wf^(1/2) = (v^2 + Dn)^(1/2). 
+         * We use this relashionship for finding unknown wf when x* is known (see wfFormula())              
+         */
+
         #region Parameters
 
         private readonly IEquationParameter m_xStar;
@@ -39,7 +60,7 @@ namespace Equations.CakeWashing
 
         #region Help Equation Class
 
-        class Equation : fsFunction
+        class wfCalculationFunction : fsFunction
         {
             #region Parameters
 
@@ -48,7 +69,7 @@ namespace Equations.CakeWashing
 
             #endregion
 
-            public Equation(
+            public wfCalculationFunction(
                 fsValue a,
                 fsValue u)
             {
@@ -94,7 +115,7 @@ namespace Equations.CakeWashing
             }
             else   // 
             {
-                var f = new Equation(m_Dn.Value, m_xStar.Value);
+                var f = new wfCalculationFunction(m_Dn.Value, m_xStar.Value);
                 fsValue upperBound = fsValue.Sqrt(m_Dn.Value / (fsValue.Sqr(2/m_xStar.Value - 1) - 1));
                 fsValue x = fsBisectionMethod.FindRoot(f, fsValue.Zero, upperBound, 60);
                 x = 2 * x / fsValue.Sqrt(m_Dn.Value);

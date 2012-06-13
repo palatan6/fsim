@@ -6,6 +6,22 @@ namespace Equations.CakeWashing
 {
     public class fsWfTwEquation : fsCalculatorEquation
     {
+        /*
+         * A solution of the differential equation 
+         * dwf/dt *((etaw - eta)*wf + eta) = c3, wf = 0 at t = 0
+         * (etaw > 0, eta > 0, c3 > 0)
+         * can be represented either in the form:
+         *       { (etaw - eta)/(2*c3) * wf^2 + eta/c3 * wf,   if wf < 1 
+         *   t = |  
+         *       { (etaw * (2*wf - 1) + eta)/(2*c3),           if wf >= 1
+         * as a dependence wf -> t  (see twFormula())
+         * or in the form:
+         *        { 1/(etaw - eta)* (-eta + (eta^2 + 2*c3*(etaw - eta)*t)^(1/2)), if etaw - eta <> 0 and t < t1
+         *   wf = | c3/eta * t,                                                   if etaw - eta = 0  and t < t1  
+         *        { 1/etaw * (c3*t + 1/2 *(etaw - eta)),                          if t >= t1,
+         * where t1 = (etaw + eta)/(2*c3),
+         * as a dependence t -> wf  (see wfFormula())
+         */
         #region Parameters
 
         private readonly IEquationParameter m_wf;

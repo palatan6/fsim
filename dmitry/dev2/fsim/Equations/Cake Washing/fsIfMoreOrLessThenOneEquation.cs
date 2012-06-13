@@ -6,6 +6,12 @@ namespace Equations.CakeWashing
 {
     public class fsIfMoreOrLessThenOneEquation : fsCalculatorEquation
     {
+        /*
+         *     { v * a + (1 - v) * b,  if v < 1 
+         * x = | 
+         *     { a,                    if v >= 1 
+         */ 
+
         #region Parameters
 
         private readonly IEquationParameter m_x;
