@@ -61,11 +61,11 @@ namespace StepCalculators
             IEquationParameter oneMinusEps = AddVariable(new fsParameterIdentifier("1 - eps"));
             Equations.Add(new fsSumEquation(constantOne, oneMinusEps, eps));
             IEquationParameter oneMinusEps0 = AddVariable(new fsParameterIdentifier("1 - eps0"));
-            Equations.Add(new fsSumEquation(constantOne, oneMinusEps0, eps0));
-            IEquationParameter twoTimesHce = AddVariable(new fsParameterIdentifier("2*hce"));
-            Equations.Add(new fsProductEquation(twoTimesHce, constantTwo, hce));
+            Equations.Add(new fsSumEquation(constantOne, oneMinusEps0, eps0));            
             IEquationParameter hcPlusTwoTimesHce = AddVariable(new fsParameterIdentifier("hc+ 2*hce"));
-            Equations.Add(new fsSumEquation(hcPlusTwoTimesHce, hc, twoTimesHce));
+            Equations.Add(new fsSumsEquation(
+                new[] { hcPlusTwoTimesHce },
+                new[] { hc, hce, hce }));
 
             #endregion
 

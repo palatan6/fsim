@@ -80,10 +80,10 @@ namespace StepCalculators
             Equations.Add(new fsSumEquation(onePlusKappa, constantOne, kappa));
             IEquationParameter oneMinusEps = AddVariable(new fsParameterIdentifier("1 - eps"));
             Equations.Add(new fsSumEquation(constantOne, oneMinusEps, eps));
-            IEquationParameter twoTimesHce = AddVariable(new fsParameterIdentifier("2*hce"));
-            Equations.Add(new fsProductEquation(twoTimesHce, constantTwo, hce));
             IEquationParameter hcPlusTwoTimesHce = AddVariable(new fsParameterIdentifier("hc+ 2*hce"));
-            Equations.Add(new fsSumEquation(hcPlusTwoTimesHce, hc, twoTimesHce));
+            Equations.Add(new fsSumsEquation(
+                new[] { hcPlusTwoTimesHce },
+                new[] { hc, hce, hce }));
             
             #endregion
 
