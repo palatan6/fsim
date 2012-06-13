@@ -80,6 +80,9 @@ namespace Calculator
                                                                      "Rotary Pressure Filters",
                                                                      new fsRotaryPressureFilters()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Nutche Filters",
+                                                                     new fsNutcheFilters()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(

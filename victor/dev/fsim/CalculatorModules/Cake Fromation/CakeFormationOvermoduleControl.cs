@@ -21,9 +21,9 @@ namespace CalculatorModules.Cake_Fromation
             AddCalculatorControl(new fsDrumFilterControl(), "Drum Filters");
             AddCalculatorControl(new fsDiscFilterControl(), "Disc Filters");
             AddCalculatorControl(new fsPanFilterControl(), "Pan Filters");
+            AddCalculatorControl(new fsRotaryPressureFilters(), "Rotary Pressure Filters");
+            AddCalculatorControl(new fsNutcheFilters(), "Nutsche Filters");
             AddCalculatorControl(new fsCommonCakeFormationControl(),
-                "Rotary Pressure Filters",
-                "Nutsche Filters",
                 "Pressure Leaf Filters",
                 "Filter Presses",
                 "Filter Press Automats",
