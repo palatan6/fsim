@@ -26,12 +26,14 @@ namespace Units
 
         public static fsUnit NoUnit = new fsUnit("-", 1);
         public static fsUnit MilliMeter = new fsUnit("mm", 1e-3);
-        public static fsUnit SantiMeter = new fsUnit("sm", 1e-2);
+        public static fsUnit SantiMeter = new fsUnit("cm", 1e-2);
         public static fsUnit DeciMeter = new fsUnit("dm", 1e-1);
         public static fsUnit Meter = new fsUnit("m", 1);
         public static fsUnit SquareMeter = new fsUnit("m2", 1);
         public static fsUnit SquareDeciMeter = new fsUnit("dm2", 1e-2);
         public static fsUnit SquareSantiMeter = new fsUnit("cm2", 1e-4);
+        public static fsUnit SquareCentimeterPerBarMin = new fsUnit("cm2/(bar min)", 1e-2 / (1e5 * 60));
+        public static fsUnit SquareMeterPerPaSec = new fsUnit("m2/(Pa s)", 1);
         public static fsUnit SquareMilliMeter = new fsUnit("mm2", 1e-6);
         public static fsUnit Bar = new fsUnit("bar", 1e5);
         public static fsUnit Pascal = new fsUnit("Pa", 1);
@@ -68,6 +70,7 @@ namespace Units
         public static fsUnit CubicMeterPerSecond = new fsUnit("m3/s", 1.0);
         public static fsUnit CubicMeterPerMinute = new fsUnit("m3/min", 1.0 / 60);
         public static fsUnit CubicMeterPerHour = new fsUnit("m3/h", 1.0 / 3600);
+        public static fsUnit CubicMeterPerKiloGramme = new fsUnit("m3/kg", 1.0);
         public static fsUnit LiterPerSecond = new fsUnit("l/s", 1.0e-3);
         public static fsUnit LiterPerMinute = new fsUnit("l/min", 1.0e-3 / 60);
         public static fsUnit LiterPerHour = new fsUnit("l/h", 1.0e-3 / 3600);
@@ -81,6 +84,7 @@ namespace Units
         public static fsUnit KiloGrammePerSquaredMeter = new fsUnit("kg/m2", 1);
         public static fsUnit CubicMeterPerSquaredMeter = new fsUnit("m3/m2", 1);
         public static fsUnit LiterPerSquaredMeter = new fsUnit("l/m2", 1e-3);
+        public static fsUnit LiterPerKiloGramme = new fsUnit("l/kg", 1.0e-3);
         public static fsUnit Micrometer = new fsUnit("um", 1e-6);
         public static fsUnit SquaredMeterPerPascalPerSecond = new fsUnit("m2/(Pa s)", 1);
         public static fsUnit SquaredSantiMeterPerBarPerMinute = new fsUnit("cm2/(bar min)", 1e-10 / 6);
