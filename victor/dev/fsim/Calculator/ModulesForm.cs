@@ -89,6 +89,9 @@ namespace Calculator
                                                                      "Filter Presses",
                                                                      new fsFilterPressesControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Filter Press Automats",
+                                                                     new fsFilterPressAutomatControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
