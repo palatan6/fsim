@@ -56,12 +56,9 @@
     <Compile Include="Cake Formation\fsEpsFromMsAndHcEquation.cs" />
     <Compile Include="Cake Formation\fsEpsFromMsAndMfEquation.cs" />
     <Compile Include="Cake Formation\fsEpsFromMsAndQfEquation.cs" />
-    <Compile Include="Cake Formation\fsHcFromTfAndKEquation.cs" />
     <Compile Include="Cake Formation\fsKfromPcAndRmEquation.cs" />
     <Compile Include="Cake Formation\fsMcFromHcEquation.cs" />
     <Compile Include="Cake Formation\fsPcFromPcstarEquation.cs" />
-    <Compile Include="Cake Formation\fsQftFromHcEtaDpEquation.cs" />
-    <Compile Include="Cake Formation\fsQmftFromHcRhoEtaDpEquation.cs" />
     <Compile Include="Hydrocyclone\fsCOverflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsCUnderflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsDFromxRed50QnDuOverDEquation.cs" />
@@ -74,7 +71,6 @@
     <Compile Include="Hydrocyclone\fsReducedTotalEfficiencyEquation.cs" />
     <Compile Include="Hydrocyclone\fsReynoldsFromXRed50Equation.cs" />
     <Compile Include="Hydrocyclone\fsTotalEfficiencyEquation.cs" />
-    <Compile Include="Cake Formation\fsKFromPcEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentFromCakeSaturationEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentFromDensitiesAndPorosityEquation.cs" />

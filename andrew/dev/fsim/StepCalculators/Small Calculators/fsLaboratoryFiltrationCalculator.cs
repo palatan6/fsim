@@ -52,8 +52,9 @@ namespace StepCalculators
             #endregion
 
             #region Help Parameters
-
+            
             var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) { Value = fsValue.One };
+            var constantTwo = new fsCalculatorConstant(new fsParameterIdentifier("2")) { Value = new fsValue(2) };
 
             IEquationParameter onePlusKappa = AddVariable(new fsParameterIdentifier("1 + kappa"));
             Equations.Add(new fsSumEquation(onePlusKappa, constantOne, kappa));
@@ -61,7 +62,11 @@ namespace StepCalculators
             Equations.Add(new fsSumEquation(constantOne, oneMinusEps, eps));
             IEquationParameter oneMinusEps0 = AddVariable(new fsParameterIdentifier("1 - eps0"));
             Equations.Add(new fsSumEquation(constantOne, oneMinusEps0, eps0));
-            
+            IEquationParameter twoTimesHce = AddVariable(new fsParameterIdentifier("2*hce"));
+            Equations.Add(new fsProductEquation(twoTimesHce, constantTwo, hce));
+            IEquationParameter hcPlusTwoTimesHce = AddVariable(new fsParameterIdentifier("hc+ 2*hce"));
+            Equations.Add(new fsSumEquation(hcPlusTwoTimesHce, hc, twoTimesHce));
+
             #endregion
 
             #region Equations Initialization
@@ -76,13 +81,20 @@ namespace StepCalculators
             AddEquation(new fsProductEquation(solidsMass, suspensionMass, cm));
             AddEquation(new fsSumEquation(suspensionMass, solidsMass, liquidMass));
             AddEquation(new fsMcFromHcEquation(mc, area, hc, solidsDensity, eps, rho));
-            AddEquation(new fsQmftFromHcRhoEtaDpEquation(qmf, rho, pc, pressure, viscosity, hc, hce));
-            AddEquation(new fsQftFromHcEtaDpEquation(qf, pc, pressure, viscosity, hc, hce));
-            AddEquation(new fsHcFromTfAndKEquation(hc, kappa, pressure, formationTime, K));
-            AddEquation(new fsKFromPcEquation(K, hc, pc, viscosity, hce));
+            Equations.Add(new fsProductsEquation(
+               new[] { qmf, viscosity, hcPlusTwoTimesHce },
+               new[] { rho, constantTwo, pc, pressure }));
+            Equations.Add(new fsProductsEquation(
+               new[] { qf, viscosity, hcPlusTwoTimesHce },
+               new[] { constantTwo, pc, pressure }));
+            Equations.Add(new fsProductsEquation(
+               new[] { hc, hc },
+               new[] { constantTwo, kappa, pressure, formationTime, K }));
+            Equations.Add(new fsProductsEquation(
+                new[] { K, viscosity, hcPlusTwoTimesHce },
+                new[] { hc, pc }));
             AddEquation(new fsKfromPcAndRmEquation(K, hc, pc, viscosity, Rm));
-
-
+            
             Equations.Add(new fsProductsEquation(
                 new[] { area, hc, onePlusKappa },
                 new[] { vsus, kappa }));

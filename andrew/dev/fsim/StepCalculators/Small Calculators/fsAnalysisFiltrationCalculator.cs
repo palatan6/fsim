@@ -80,6 +80,10 @@ namespace StepCalculators
             Equations.Add(new fsSumEquation(onePlusKappa, constantOne, kappa));
             IEquationParameter oneMinusEps = AddVariable(new fsParameterIdentifier("1 - eps"));
             Equations.Add(new fsSumEquation(constantOne, oneMinusEps, eps));
+            IEquationParameter twoTimesHce = AddVariable(new fsParameterIdentifier("2*hce"));
+            Equations.Add(new fsProductEquation(twoTimesHce, constantTwo, hce));
+            IEquationParameter hcPlusTwoTimesHce = AddVariable(new fsParameterIdentifier("hc+ 2*hce"));
+            Equations.Add(new fsSumEquation(hcPlusTwoTimesHce, hc, twoTimesHce));
             
             #endregion
 
@@ -118,8 +122,12 @@ namespace StepCalculators
             AddEquation(new fsProductEquation(solidsMass, suspensionMass, cm));
             AddEquation(new fsSumEquation(suspensionMass, solidsMass, liquidMass));
             AddEquation(new fsMcFromHcEquation(mc, area, hc, solidsDensity, eps, rho));
-            AddEquation(new fsQmftFromHcRhoEtaDpEquation(qmf, rho, pc, pressure, viscosity, hc, hce));
-            AddEquation(new fsQftFromHcEtaDpEquation(qf, pc, pressure, viscosity, hc, hce));
+            Equations.Add(new fsProductsEquation(
+               new[] { qmf, viscosity, hcPlusTwoTimesHce },
+               new[] { rho, constantTwo, pc, pressure }));
+            Equations.Add(new fsProductsEquation(
+               new[] { qf, viscosity, hcPlusTwoTimesHce },
+               new[] { constantTwo, pc, pressure }));
 
             Equations.Add(new fsProductsEquation(
                 new[] { area, hc, onePlusKappa },
