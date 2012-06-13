@@ -130,6 +130,12 @@
     <Compile Include="Cake Fromation\Other Filters Controls\DrumFilterControl.Designer.cs">
       <DependentUpon>DrumFilterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\PanFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\PanFilterControl.Designer.cs">
+      <DependentUpon>PanFilterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CakeMoistureContentFromCakeSaturationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

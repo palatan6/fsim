@@ -74,6 +74,9 @@ namespace Calculator
                                                                      "Disc Filters",
                                                                      new fsDiscFilterControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Pan Filters",
+                                                                     new fsPanFilterControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
