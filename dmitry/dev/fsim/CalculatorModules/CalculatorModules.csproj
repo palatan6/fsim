@@ -206,10 +206,10 @@
     <Compile Include="User Controls\Help Dialogs\fsTablesAndChartsParametersSelectionDialog.Designer.cs">
       <DependentUpon>fsTablesAndChartsParametersSelectionDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="CakeWashing\CakeWashingControl.cs">
+    <Compile Include="Cake Washing\CakeWashingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CakeWashing\CakeWashingControl.Designer.cs">
+    <Compile Include="Cake Washing\CakeWashingControl.Designer.cs">
       <DependentUpon>CakeWashingControl.cs</DependentUpon>
     </Compile>
     <Compile Include="User Controls\Help Dialogs\fsYAxisParameter.cs" />
@@ -303,7 +303,7 @@
       <DependentUpon>fsTablesAndChartsParametersSelectionDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CakeWashing\CakeWashingControl.resx">
+    <EmbeddedResource Include="Cake Washing\CakeWashingControl.resx">
       <DependentUpon>CakeWashingControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
