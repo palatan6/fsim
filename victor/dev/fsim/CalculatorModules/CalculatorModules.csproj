@@ -136,6 +136,12 @@
     <Compile Include="Cake Fromation\Other Filters Controls\PanFilterControl.Designer.cs">
       <DependentUpon>PanFilterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\RotaryPressureFilters.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\RotaryPressureFilters.Designer.cs">
+      <DependentUpon>RotaryPressureFilters.cs</DependentUpon>
+    </Compile>
     <Compile Include="CakeMoistureContentFromCakeSaturationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

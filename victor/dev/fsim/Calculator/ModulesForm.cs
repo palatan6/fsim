@@ -77,6 +77,9 @@ namespace Calculator
                                                                      "Pan Filters",
                                                                      new fsPanFilterControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Rotary Pressure Filters",
+                                                                     new fsRotaryPressureFilters()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
