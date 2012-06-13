@@ -95,6 +95,9 @@ namespace Calculator
                                                                      "Pneuma Presses",
                                                                      new fsPneumaPressControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Laboratory Pressure Nutsche Filters",
+                                                                     new fsLaboratoryPressureNutscheFilterControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(

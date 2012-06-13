@@ -23,11 +23,11 @@ namespace CalculatorModules.Cake_Fromation
             AddCalculatorControl(new fsPanFilterControl(), "Pan Filters");
             AddCalculatorControl(new fsRotaryPressureFilters(), "Rotary Pressure Filters");
             AddCalculatorControl(new fsNutcheFilters(), "Nutsche Filters");
+            AddCalculatorControl(new fsPressureLeafFilters(), "Pressure Leaf Filters");
+            AddCalculatorControl(new fsFilterPressesControl(), "Filter Presses");
+            AddCalculatorControl(new fsFilterPressAutomatControl(), "Filter Press Automats");
+            AddCalculatorControl(new fsPneumaPressControl(), "Pneuma Presses");
             AddCalculatorControl(new fsCommonCakeFormationControl(),
-                "Pressure Leaf Filters",
-                "Filter Presses",
-                "Filter Press Automats",
-                "Pneuma Press",
                 "Laboratory Pressure Nutsche Filter",
                 "Laboratory Vacuum Filter");
         }

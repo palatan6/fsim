@@ -142,6 +142,12 @@
     <Compile Include="Cake Fromation\Other Filters Controls\FilterPressesControl.Designer.cs">
       <DependentUpon>FilterPressesControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\LaboratoryPressureNutscheFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\LaboratoryPressureNutscheFilterControl.Designer.cs">
+      <DependentUpon>LaboratoryPressureNutscheFilterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cake Fromation\Other Filters Controls\NutcheFilters.cs">
       <SubType>UserControl</SubType>
     </Compile>
