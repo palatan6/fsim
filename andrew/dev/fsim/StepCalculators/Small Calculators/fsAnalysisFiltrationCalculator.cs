@@ -114,7 +114,11 @@ namespace StepCalculators
 
             AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
             AddEquation(new fsCakeHeightFromDpTf(hc, hce, pc, kappa0, pressure, formationTime, viscosity));
-            
+            AddEquation(new fsHcFromMsAndPcstarEquation(hc, ms, area, solidsDensity, cv, pressure, formationTime, pcstar, viscosity));
+            AddEquation(new fsHcFromMcAndPcstarEquation(hc, mc, area, solidsDensity, cv, pressure, formationTime, pcstar, rho, viscosity));
+            AddEquation(new fsHcFromMsAndAlphastarEquation(hc, ms, area, solidsDensity, cv, pressure, formationTime, alphastar, viscosity));
+            AddEquation(new fsHcFromMcAndAlphastarEquations(hc, mc, area, solidsDensity, cv, pressure, formationTime, alphastar, viscosity, rho));
+
             Equations.Add(new fsProductsEquation(
                 new[] { oneMinusEps, solidsDensity, area, hc },
                 new[] { cm, suspensionMass }));
@@ -196,7 +200,7 @@ namespace StepCalculators
                 new[] { constantOne }));
             AddEquation(new fsPcFromPcstarEquation(pc, hc, hce, pcstar));
             Equations.Add(new fsProductEquation(pcstar, K, viscosity));
-
+            
             #endregion
 
             #endregion
