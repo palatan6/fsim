@@ -53,6 +53,7 @@
     <Compile Include="Simulation Calculators\Cake Formation\fsContinuousModularBeltFilterCalculator.cs" />
     <Compile Include="Simulation Calculators\Cake Formation\fsContinuousNonModularBeltFilterCalculator.cs" />
     <Compile Include="Simulation Calculators\fsBeltFiltersWithReversibleTraysCalculator.cs" />
+    <Compile Include="Simulation Calculators\fsCakeWashingCalculator.cs" />
     <Compile Include="Simulation Calculators\fsHydrocycloneCalculator.cs" />
     <Compile Include="Small Calculators\fsCakePorosityCalculator.cs" />
     <Compile Include="Material Calculators\fsDensityConcentrationCalculator.cs" />
