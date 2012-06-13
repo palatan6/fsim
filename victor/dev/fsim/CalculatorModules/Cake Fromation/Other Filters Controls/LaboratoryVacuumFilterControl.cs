@@ -4,9 +4,9 @@ using Value;
 
 namespace CalculatorModules.Cake_Fromation.Other_Filters_Controls
 {
-    public partial class fsLaboratoryPressureNutscheFilterControl : fsCommonCakeFormationControl
+    public partial class fsLaboratoryVacuumFilterControl : fsCommonCakeFormationControl
     {
-        public fsLaboratoryPressureNutscheFilterControl()
+        public fsLaboratoryVacuumFilterControl()
         {
             InitializeComponent();
         }
@@ -16,13 +16,12 @@ namespace CalculatorModules.Cake_Fromation.Other_Filters_Controls
             base.InitializeParametersValues();
 
             SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0.05));
-            SetDefaultValue(fsParameterIdentifier.CakePorosity0, new fsValue(0.6));
-            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(0.7e-13));
-            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.5));
-            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(20e-4));
-            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(2e5));
-            SetDefaultValue(fsParameterIdentifier.ResidualTime, new fsValue(300));
-            SetDefaultValue(fsParameterIdentifier.CakeHeight, new fsValue(0.020));
+            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(1.5e-13));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.2));
+            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(100e-4));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(0.6e5));
+            SetDefaultValue(fsParameterIdentifier.ResidualTime, new fsValue(120));
+            SetDefaultValue(fsParameterIdentifier.FiltrationTime, new fsValue(60));
         }
 
         protected override void InitializeDefaultDiagrams()
@@ -30,10 +29,10 @@ namespace CalculatorModules.Cake_Fromation.Other_Filters_Controls
             m_defaultDiagrams.Add(
                 new Enum[] { fsCakeFormationCalculationOption.StandardCalculation },
                 new DiagramConfiguration(
-                    fsParameterIdentifier.CakeHeight,
-                    new DiagramConfiguration.DiagramRange(0.003, 0.050),
+                    fsParameterIdentifier.FiltrationTime,
+                    new DiagramConfiguration.DiagramRange(5, 300),
                     new[] { fsParameterIdentifier.Qms },
-                    new[] { fsParameterIdentifier.CycleTime }));
+                    new[] { fsParameterIdentifier.CakeHeight }));
 
             m_defaultDiagrams.Add(
                 new Enum[] { fsCakeFormationCalculationOption.FilterDesign },
@@ -41,7 +40,7 @@ namespace CalculatorModules.Cake_Fromation.Other_Filters_Controls
                     fsParameterIdentifier.CakeHeight,
                     new DiagramConfiguration.DiagramRange(0.003, 0.050),
                     new[] { fsParameterIdentifier.FilterArea },
-                    new[] { fsParameterIdentifier.CycleTime }));
+                    new[] { fsParameterIdentifier.FiltrationTime }));
         }
     }
 }

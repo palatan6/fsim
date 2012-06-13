@@ -27,9 +27,8 @@ namespace CalculatorModules.Cake_Fromation
             AddCalculatorControl(new fsFilterPressesControl(), "Filter Presses");
             AddCalculatorControl(new fsFilterPressAutomatControl(), "Filter Press Automats");
             AddCalculatorControl(new fsPneumaPressControl(), "Pneuma Presses");
-            AddCalculatorControl(new fsCommonCakeFormationControl(),
-                "Laboratory Pressure Nutsche Filter",
-                "Laboratory Vacuum Filter");
+            AddCalculatorControl(new fsLaboratoryPressureNutscheFilterControl(), "Laboratory Pressure Nutsche Filters");
+            AddCalculatorControl(new fsLaboratoryVacuumFilterControl(), "Laboratory Vacuum Filters");
         }
 
         protected override void InitializeCalculationOptionsUIControls()

@@ -98,6 +98,9 @@ namespace Calculator
                                                                      "Laboratory Pressure Nutsche Filters",
                                                                      new fsLaboratoryPressureNutscheFilterControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Laboratory Vacuum Filters",
+                                                                     new fsLaboratoryVacuumFilterControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
