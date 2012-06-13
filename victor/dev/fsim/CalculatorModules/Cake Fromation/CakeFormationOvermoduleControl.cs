@@ -19,7 +19,7 @@ namespace CalculatorModules.Cake_Fromation
             AddCalculatorControl(new fsContinuousModularBeltFilterControl(), "Continuous Belt Filters (Modular)");
             AddCalculatorControl(new fsBeltFilterWithReversibleTrayControl(), "Belt Filter With Reversible Tray");
             AddCalculatorControl(new fsDrumFilterControl(), "Drum Filters");
-            AddCalculatorControl(new fsDiscFilterControl(), "Disc Filters",);
+            AddCalculatorControl(new fsDiscFilterControl(), "Disc Filters");
             AddCalculatorControl(new fsCommonCakeFormationControl(),
                 "Pan Filters",
                 "Rotary Pressure Filters",
