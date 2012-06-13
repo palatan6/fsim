@@ -212,7 +212,7 @@ namespace Units
             }
         );
 
-        public static fsCharacteristic MassFlowrate = new fsCharacteristic(
+        public static fsCharacteristic MassFlowrate  = new fsCharacteristic(
             "Mass flowrate",
             new[] {
                 fsUnit.KiloGrammePerSec,
@@ -222,7 +222,7 @@ namespace Units
             }
         );
 
-        public static fsCharacteristic VolumeFlowrate = new fsCharacteristic(
+        public static fsCharacteristic VolumeFlowrate  = new fsCharacteristic(
             "Volume flowrate",
             new[] {
                 fsUnit.CubicMeterPerSecond,
