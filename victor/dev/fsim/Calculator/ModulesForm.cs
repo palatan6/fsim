@@ -86,6 +86,9 @@ namespace Calculator
                                                                      "Pressure Leaf Filters",
                                                                      new fsPressureLeafFilters()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Filter Presses",
+                                                                     new fsFilterPressesControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
