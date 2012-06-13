@@ -154,6 +154,12 @@
     <Compile Include="Cake Fromation\Other Filters Controls\PanFilterControl.Designer.cs">
       <DependentUpon>PanFilterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\PneumaPressControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\PneumaPressControl.Designer.cs">
+      <DependentUpon>PneumaPressControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cake Fromation\Other Filters Controls\PressureLeafFilters.cs">
       <SubType>UserControl</SubType>
     </Compile>

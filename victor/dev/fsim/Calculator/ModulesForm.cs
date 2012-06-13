@@ -92,6 +92,9 @@ namespace Calculator
                                                                      "Filter Press Automats",
                                                                      new fsFilterPressAutomatControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Pneuma Presses",
+                                                                     new fsPneumaPressControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
