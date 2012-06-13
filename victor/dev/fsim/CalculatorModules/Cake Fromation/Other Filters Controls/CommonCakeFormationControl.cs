@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Parameters;
 using StepCalculators.Simulation_Calculators.Cake_Formation;
+using Value;
 
 namespace CalculatorModules.Cake_Fromation
 {
@@ -21,6 +22,40 @@ namespace CalculatorModules.Cake_Fromation
         protected override void AddCakeFormationCalculator()
         {
             Calculators.Add(new fsContinuousNonModularBeltFilterCalculator());
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            base.InitializeParametersValues();
+
+            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0.02));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity0, new fsValue(0.5));
+            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(2e-13));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.2));
+            SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce0, new fsValue(0.002));
+            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(20));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(0.7e5));
+            SetDefaultValue(fsParameterIdentifier.SpecificFiltrationTime, new fsValue(0.25));
+            SetDefaultValue(fsParameterIdentifier.RotationalSpeed, new fsValue(0.5 / 60));
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCakeFormationCalculationOption.StandardCalculation },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.RotationalSpeed,
+                    new DiagramConfiguration.DiagramRange(0.2 / 60.0, 2.0 / 60.0),
+                    new[] { fsParameterIdentifier.CakeHeight },
+                    new[] { fsParameterIdentifier.Qms }));
+
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCakeFormationCalculationOption.FilterDesign },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.RotationalSpeed,
+                    new DiagramConfiguration.DiagramRange(0.2 / 60.0, 2.0 / 60.0),
+                    new[] { fsParameterIdentifier.FilterArea },
+                    new[] { fsParameterIdentifier.SpecificFiltrationTime }));
         }
 
         override protected fsParametersGroup[] MakeMachiningStandardGroups()

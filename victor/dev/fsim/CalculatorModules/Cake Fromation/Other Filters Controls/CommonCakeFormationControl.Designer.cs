@@ -37,34 +37,30 @@
             // 
             // tablesSplitContainer
             // 
-            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 341);
+            this.tablesSplitContainer.Size = new System.Drawing.Size(287, 576);
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(144, 341);
+            this.dataGrid.Size = new System.Drawing.Size(144, 576);
             // 
             // materialParametersDataGrid
             // 
-            this.materialParametersDataGrid.Size = new System.Drawing.Size(139, 341);
+            this.materialParametersDataGrid.Size = new System.Drawing.Size(139, 576);
             // 
             // leftTopPanel
             // 
             this.leftTopPanel.Size = new System.Drawing.Size(287, 64);
             // 
-            // calculationOptionsPanel
-            // 
-            this.calculationOptionsPanel.Size = new System.Drawing.Size(236, 64);
-            // 
             // tablesPanel
             // 
-            this.tablesPanel.Location = new System.Drawing.Point(0, 64);
-            this.tablesPanel.Size = new System.Drawing.Size(287, 341);
+            this.tablesPanel.Size = new System.Drawing.Size(287, 576);
             // 
             // fsCommonCakeFormationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "fsCommonCakeFormationControl";
+            this.Size = new System.Drawing.Size(287, 640);
             this.tablesSplitContainer.Panel1.ResumeLayout(false);
             this.tablesSplitContainer.Panel2.ResumeLayout(false);
             this.tablesSplitContainer.ResumeLayout(false);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CalculatorModules.BeltFiltersWithReversibleTrays;
+using CalculatorModules.Cake_Fromation.Other_Filters_Controls;
 using Parameters;
 using Units;
 
@@ -17,9 +18,9 @@ namespace CalculatorModules.Cake_Fromation
             AddCalculatorControl(new fsContinuousNonModularBeltFilterControl(), "Continuous Belt Filters (Non Modular)");
             AddCalculatorControl(new fsContinuousModularBeltFilterControl(), "Continuous Belt Filters (Modular)");
             AddCalculatorControl(new fsBeltFilterWithReversibleTrayControl(), "Belt Filter With Reversible Tray");
+            AddCalculatorControl(new fsDrumFilterControl(), "Drum Filters");
+            AddCalculatorControl(new fsDiscFilterControl(), "Disc Filters",);
             AddCalculatorControl(new fsCommonCakeFormationControl(),
-                "Drum Filters",
-                "Disc Filters",
                 "Pan Filters",
                 "Rotary Pressure Filters",
                 "Nutsche Filters",

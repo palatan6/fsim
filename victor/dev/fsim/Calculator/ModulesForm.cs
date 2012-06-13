@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using CalculatorModules;
 using CalculatorModules.BeltFiltersWithReversibleTrays;
+using CalculatorModules.Cake_Fromation.Other_Filters_Controls;
 using CalculatorModules.Hydrocyclone;
 using CalculatorModules.CakeWashing;
 using CalculatorModules.Cake_Fromation;
@@ -66,6 +67,12 @@ namespace Calculator
                                                                  new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Continuous Belt Filters (non modular)",
                                                                      new fsContinuousNonModularBeltFilterControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Drum Filters",
+                                                                     new fsDrumFilterControl()),
+                                                                 new KeyValuePair<string, fsCalculatorControl>(
+                                                                     "Disc Filters",
+                                                                     new fsDiscFilterControl()),
                                                                  new KeyValuePair<string, fsCalculatorControl>(
                                                                      "Other",
                                                                      new fsCommonCakeFormationControl()),

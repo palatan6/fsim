@@ -100,12 +100,6 @@
     <Compile Include="Cake Fromation\CakeFormationOvermoduleControl.Designer.cs">
       <DependentUpon>CakeFormationOvermoduleControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cake Fromation\CommonCakeFormationControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Cake Fromation\CommonCakeFormationControl.Designer.cs">
-      <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Cake Fromation\ContinuousModularBeltFilterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -117,6 +111,24 @@
     </Compile>
     <Compile Include="Cake Fromation\ContinuousNonModularBeltFilterControl.Designer.cs">
       <DependentUpon>ContinuousNonModularBeltFilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\CommonCakeFormationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\CommonCakeFormationControl.designer.cs">
+      <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\DiscFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\DiscFilterControl.Designer.cs">
+      <DependentUpon>DiscFilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\DrumFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Fromation\Other Filters Controls\DrumFilterControl.Designer.cs">
+      <DependentUpon>DrumFilterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CakeMoistureContentFromCakeSaturationControl.cs">
       <SubType>UserControl</SubType>
@@ -248,16 +260,15 @@
     <EmbeddedResource Include="Cake Fromation\CakeFormationOvermoduleControl.resx">
       <DependentUpon>CakeFormationOvermoduleControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cake Fromation\CommonCakeFormationControl.resx">
-      <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\ContinuousModularBeltFilterControl.resx">
       <DependentUpon>ContinuousModularBeltFilterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\ContinuousNonModularBeltFilterControl.resx">
       <DependentUpon>ContinuousNonModularBeltFilterControl.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cake Fromation\Other Filters Controls\CommonCakeFormationControl.resx">
+      <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CakeMoistureContentFromCakeSaturationControl.resx">
       <DependentUpon>CakeMoistureContentFromCakeSaturationControl.cs</DependentUpon>
