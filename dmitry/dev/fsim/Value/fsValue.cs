@@ -396,6 +396,13 @@ namespace Value
             return res;
         }
 
+        public static fsValue InvErf(fsValue op)
+        {
+            var res = new fsValue { Defined = op.Defined };
+            res.Value = res.Defined ? normaldistr.inverf(op.Value) : 1;
+            return res;
+        }
+
         public bool Equals(fsValue obj)
         {
             return (!Defined && !obj.Defined || Defined && obj.Defined && obj.Value == Value);
