@@ -36,7 +36,7 @@ namespace CalculatorModules.Cake_Fromation
             fsParametersGroup pressureGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);            
             fsParametersGroup timeGroup = AddGroup(
-                fsParameterIdentifier.NumberOfCyclones,                
+                fsParameterIdentifier.CycleFrequency,                
                 fsParameterIdentifier.CycleTime,
                 fsParameterIdentifier.ResidualTime);
             fsParametersGroup sfGroup = AddGroup(
@@ -160,7 +160,7 @@ namespace CalculatorModules.Cake_Fromation
             ParameterToCell[fsParameterIdentifier.FiltrateVolume].OwningRow.Visible = isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.CakeVolume].OwningRow.Visible = isBatchFilterOption;
 
-            ParameterToCell[fsParameterIdentifier.NumberOfCyclones].OwningRow.Visible = ! isBatchFilterOption;
+            ParameterToCell[fsParameterIdentifier.CycleFrequency].OwningRow.Visible = ! isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.CycleTime].OwningRow.Visible = !isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.SpecificFiltrationTime].OwningRow.Visible = ! isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.Qms].OwningRow.Visible = !isBatchFilterOption;

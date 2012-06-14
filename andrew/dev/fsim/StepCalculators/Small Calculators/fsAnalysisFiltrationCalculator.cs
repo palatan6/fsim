@@ -70,10 +70,8 @@ namespace StepCalculators
             IEquationParameter Rf = AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
             IEquationParameter Rf0 = AddVariable(fsParameterIdentifier.CakeMoistureContentRf0);
 
-            IEquationParameter n = AddVariable(fsParameterIdentifier.NumberOfCyclones);
-            //IEquationParameter tc = AddVariable(fsParameterIdentifier.CycleTime);
+            IEquationParameter n = AddVariable(fsParameterIdentifier.CycleFrequency);
             IEquationParameter tr = AddVariable(fsParameterIdentifier.ResidualTime);
-            //IEquationParameter tf = AddVariable(fsParameterIdentifier.FiltrationTime);
             IEquationParameter sf = AddVariable(fsParameterIdentifier.SpecificFiltrationTime);
             
             #endregion
