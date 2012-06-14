@@ -61,6 +61,7 @@ namespace CalculatorModules
             InitializeGroups();
             InitializeCalculationOptionsUIControls();
             UpdateGroupsInputInfoFromCalculationOptions();
+            InitializeUnits();
             InitializeParametersValues();
             UpdateEquationsFromCalculationOptions();
             RecalculateAndRedraw();
@@ -87,6 +88,11 @@ namespace CalculatorModules
         protected virtual void InitializeParametersValues()
         {
             // This method should contain assigning values that will be used on startup of the module
+        }
+
+        protected virtual void InitializeUnits()
+        {
+            SetUnits(fsCharacteristicScheme.PilotIndustrialScale.CharacteristicToUnit);
         }
 
         #endregion
@@ -416,7 +422,6 @@ namespace CalculatorModules
                     valueCell.Value = parameter.GetValueInUnits();
                 }
             }
-            Recalculate();
         }
 
         public virtual void RecalculateAndRedraw()
@@ -439,7 +444,6 @@ namespace CalculatorModules
                     parameter.Range = dictionary[identifier];
                 }
             }
-            Recalculate();
         }
 
         #endregion

@@ -4,6 +4,7 @@ using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using Units;
 using Value;
 
 namespace CalculatorModules
@@ -89,6 +90,11 @@ namespace CalculatorModules
                                       saturationComboBox,
                                       saltContentComboBox,
                                       machineTypeComboBox };
+        }
+
+        protected override void InitializeUnits()
+        {
+            SetUnits(fsCharacteristicScheme.LaboratoryScale.CharacteristicToUnit);
         }
 
         protected override void InitializeParametersValues()

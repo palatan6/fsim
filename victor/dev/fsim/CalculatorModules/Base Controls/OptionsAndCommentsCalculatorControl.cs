@@ -107,6 +107,7 @@ namespace CalculatorModules
             InitializeGroups();
             InitializeCalculationOptionsUIControls();
             UpdateGroupsInputInfoFromCalculationOptions();
+            InitializeUnits(); 
             InitializeParametersValues();
             UpdateEquationsFromCalculationOptions();
             InitializeDefaultDiagrams();

@@ -4,6 +4,7 @@ using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using Units;
 using Value;
 
 namespace CalculatorModules
@@ -109,6 +110,11 @@ namespace CalculatorModules
                     new DiagramConfiguration.DiagramRange(0, 100),
                     new[] {fsParameterIdentifier.SuspensionSolidsMassFraction},
                     new fsParameterIdentifier[] { }));
+        }
+
+        protected override void InitializeUnits()
+        {
+            SetUnits(fsCharacteristicScheme.LaboratoryScale.CharacteristicToUnit);
         }
 
         protected override void InitializeParametersValues()

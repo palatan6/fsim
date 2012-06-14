@@ -60,9 +60,9 @@ namespace fsUIControls
             schemeBox.Items.Add(CustomSchemeTitle);
             schemeBox.SelectedItem = schemeBox.Items[0];
 
-            foreach (FieldInfo field in typeof (fsScheme).GetFields())
+            foreach (FieldInfo field in typeof (fsCharacteristicScheme).GetFields())
             {
-                var scheme = ((fsScheme) field.GetValue(null));
+                var scheme = ((fsCharacteristicScheme)field.GetValue(null));
                 schemeBox.Items.Add(scheme.Name);
             }
         }
@@ -159,10 +159,10 @@ namespace fsUIControls
             string selectedScheme = schemeBox.SelectedItem.ToString();
             if (selectedScheme == CustomSchemeTitle)
                 return;
-            Type type = typeof (fsScheme);
+            Type type = typeof(fsCharacteristicScheme);
             foreach (FieldInfo field in type.GetFields())
             {
-                var scheme = ((fsScheme) field.GetValue(null));
+                var scheme = ((fsCharacteristicScheme)field.GetValue(null));
                 if (selectedScheme == scheme.Name)
                 {
                     UpdateSchemeBox(scheme.CharacteristicToUnit);
@@ -188,64 +188,5 @@ namespace fsUIControls
             }
             m_schemeApplyingInProcess = false;
         }
-
-        #region Nested type: fsScheme
-
-        private class fsScheme
-        {
-            public static readonly fsScheme InternationalSystemOfUnits =
-                new fsScheme("International System of Units",
-                    new[]
-                    {
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Frequency, fsUnit.PerSecond),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Area, fsUnit.SquareMeter),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Mass, fsUnit.KiloGramme),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Volume, fsUnit.CubicMeter),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.MassFlowrate, fsUnit.KiloGrammePerSec),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.VolumeFlowrate, fsUnit.CubicMeterPerSecond)
-                    });
-
-            public static readonly fsScheme LaboratoryScale =
-                new fsScheme("Laboratory Scale",
-                    new[]
-                    {
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Frequency, fsUnit.PerMinute),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Area, fsUnit.SquareSantiMeter),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Mass, fsUnit.Gramme),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Volume, fsUnit.MilliLiter),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.MassFlowrate, fsUnit.KiloGrammePerHour),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.VolumeFlowrate, fsUnit.CubicMeterPerSecond)
-                    });
-
-            public static fsScheme PilotIndustrialScale =
-                new fsScheme("Pilot/Industrial Scale",
-                    new[]
-                    {
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Frequency, fsUnit.PerMinute),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Area, fsUnit.SquareMeter),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Mass, fsUnit.KiloGramme),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Volume, fsUnit.Liter),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.MassFlowrate, fsUnit.KiloGrammePerMin),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.VolumeFlowrate, fsUnit.LiterPerMinute),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificMassFlowrate, fsUnit.KiloGrammePerSquaredMeterPerMin),
-                        new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificVolumeFlowrate, fsUnit.LiterPerSquaredMeterPerMin)
-                    });
-
-            private fsScheme(string name, params KeyValuePair<fsCharacteristic, fsUnit>[] characteristicToUnit)
-            {
-                CharacteristicToUnit = new Dictionary<fsCharacteristic, fsUnit>();
-                Name = name;
-                foreach (var pair in characteristicToUnit)
-                {
-                    CharacteristicToUnit.Add(pair.Key, pair.Value);
-                }
-            }
-
-            public Dictionary<fsCharacteristic, fsUnit> CharacteristicToUnit { get; private set; }
-
-            public string Name { get; private set; }
-        }
-
-        #endregion
     }
 }
