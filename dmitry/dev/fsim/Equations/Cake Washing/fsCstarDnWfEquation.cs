@@ -95,10 +95,7 @@ namespace Equations.CakeWashing
         {
             bool condEmpty = fsValue.Less(m_Dn.Value, fsValue.Zero) ||
                              fsValue.Less(fsValue.One, m_cStar.Value) || 
-                             fsValue.One == m_cStar.Value  ||
-                             fsValue.Less(fsValue.Exp(m_Dn.Value) * fsValue.Erfc(fsValue.Sqrt(m_Dn.Value)),
-                                          1 - 2 * m_cStar.Value
-                             );
+                             fsValue.One == m_cStar.Value;
             if (condEmpty)
             {
                 m_wf.Value = new fsValue();
@@ -107,10 +104,22 @@ namespace Equations.CakeWashing
             {
                 fsValue u = 2 * (1 - m_cStar.Value);
                 var f = new wfCalculationFunction(m_Dn.Value, u);
-                fsValue upperBound = fsValue.Max(fsValue.One,
-                                                 fsValue.Sqrt(fsValue.Log(2 / (u *Math.Sqrt(Math.PI))))
-                                     );
-                fsValue x = fsBisectionMethod.FindRoot(f, fsValue.Zero, upperBound, 60);
+                fsValue lowerBound;
+                fsValue upperBound;
+                if (fsValue.Less(u, 1.0 + fsValue.Exp(m_Dn.Value) * fsValue.Erfc(fsValue.Sqrt(m_Dn.Value))))
+                {
+                    lowerBound = fsValue.Zero;
+                    upperBound = fsValue.Max(fsValue.One,
+                                             fsValue.Sqrt(fsValue.Log(2 / (u * Math.Sqrt(Math.PI))))
+                                 );
+                }
+                else
+                {
+                    lowerBound = -1.0 * fsValue.InvErf(u - 1.0); 
+                    upperBound = fsValue.Zero;
+                }
+                
+                fsValue x = fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60);
                 x = 2 * x / fsValue.Sqrt(m_Dn.Value);
                 m_wf.Value = 1 + 0.5 * x * (x - fsValue.Sqrt(fsValue.Sqr(x) + 4));
             }          
