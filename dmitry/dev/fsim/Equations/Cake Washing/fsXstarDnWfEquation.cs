@@ -105,19 +105,31 @@ namespace Equations.CakeWashing
             }
             bool condEmpty = fsValue.Less(m_Dn.Value, fsValue.Zero) ||
                              fsValue.Less(fsValue.One, m_xStar.Value) ||
-                             fsValue.One == m_xStar.Value ||
-                             fsValue.Less(m_xStar.Value,
-                                          fsValue.Exp(m_Dn.Value) * fsValue.Erfc(fsValue.Sqrt(m_Dn.Value))
-                             );
+                             fsValue.One == m_xStar.Value;
             if (condEmpty)
             {
                 m_wf.Value = new fsValue();
             }
-            else   // 
+            else
             {
-                var f = new wfCalculationFunction(m_Dn.Value, m_xStar.Value);
-                fsValue upperBound = fsValue.Sqrt(m_Dn.Value / (fsValue.Sqr(2/m_xStar.Value - 1) - 1));
-                fsValue x = fsBisectionMethod.FindRoot(f, fsValue.Zero, upperBound, 60);
+                fsValue u = m_xStar.Value;
+                var f = new wfCalculationFunction(m_Dn.Value, u);
+                fsValue lowerBound;
+                fsValue upperBound;
+                if (fsValue.Greater(u, fsValue.Exp(m_Dn.Value) * fsValue.Erfc(fsValue.Sqrt(m_Dn.Value))))
+                {
+                    lowerBound = fsValue.Zero;
+                    upperBound = fsValue.Sqrt(m_Dn.Value / (fsValue.Sqr(2/u - 1) - 1));
+                }
+                else
+                {
+                    lowerBound = -1.0 * fsValue.Max(fsValue.One, 
+                                                    fsValue.InvErf(1.0 - u / (1.0 + fsValue.Sqrt(1.0 + m_Dn.Value)))
+                                        );                                               
+                    upperBound = fsValue.Zero;
+                }
+
+                fsValue x = fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60);
                 x = 2 * x / fsValue.Sqrt(m_Dn.Value);
                 m_wf.Value = 1 + 0.5 * x * (x - fsValue.Sqrt(fsValue.Sqr(x) + 4));
             }
