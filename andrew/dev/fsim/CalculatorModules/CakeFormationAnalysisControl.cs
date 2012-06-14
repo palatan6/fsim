@@ -16,7 +16,6 @@ namespace CalculatorModules.Cake_Fromation
             InitializeComponent();
 
             Calculators.Add(new fsDensityConcentrationCalculator());
-            Calculators.Add(new fsTimeCalculator());
             Calculators.Add(new fsAnalysisFiltrationCalculator());
 
             #region Groups

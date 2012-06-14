@@ -16,7 +16,8 @@ namespace StepCalculators
             IEquationParameter cv = AddConstant(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
 
             IEquationParameter c = AddConstant(fsParameterIdentifier.SuspensionSolidsConcentration);
-            IEquationParameter tc = AddConstant(fsParameterIdentifier.CycleTime);
+            //IEquationParameter tc = AddConstant(fsParameterIdentifier.CycleTime);
+            IEquationParameter tc = AddVariable(fsParameterIdentifier.CycleTime);
 
             IEquationParameter rho = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
             IEquationParameter viscosity = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
@@ -69,6 +70,12 @@ namespace StepCalculators
             IEquationParameter Rf = AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
             IEquationParameter Rf0 = AddVariable(fsParameterIdentifier.CakeMoistureContentRf0);
 
+            IEquationParameter n = AddVariable(fsParameterIdentifier.NumberOfCyclones);
+            //IEquationParameter tc = AddVariable(fsParameterIdentifier.CycleTime);
+            IEquationParameter tr = AddVariable(fsParameterIdentifier.ResidualTime);
+            //IEquationParameter tf = AddVariable(fsParameterIdentifier.FiltrationTime);
+            IEquationParameter sf = AddVariable(fsParameterIdentifier.SpecificFiltrationTime);
+            
             #endregion
 
             #region Help Parameters
@@ -201,6 +208,14 @@ namespace StepCalculators
             AddEquation(new fsPcFromPcstarEquation(pc, hc, hce, pcstar));
             Equations.Add(new fsProductEquation(pcstar, K, viscosity));
             
+            #endregion
+
+            #region Time Equations 
+
+            Equations.Add(new fsDivisionInverseEquation(n, tc));
+            Equations.Add(new fsSumEquation(tc, tr, formationTime));
+            Equations.Add(new fsProductEquation(formationTime, tc, sf));
+
             #endregion
 
             #endregion
