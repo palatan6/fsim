@@ -16,7 +16,10 @@ namespace CalculatorModules
             splitContainer1.Panel2Collapsed = true;
         }
 
+        #region Showing/Hiding Diagram
+
         private bool m_isDiagramVisible;
+        private int m_windowHeightBeforeExpansion;
 
         public bool GetDiagramVisible()
         {
@@ -34,6 +37,8 @@ namespace CalculatorModules
 
             Control controlToResize = ControlToResizeForExpanding ?? Parent;
 
+            const int minHeightOfWindowWithDiagram = 600;
+
             if (isVisible)
             {
                 rightPanel.Visible = true;
@@ -46,6 +51,18 @@ namespace CalculatorModules
                     int s = splitContainer1.SplitterWidth;
                     int newWidth = (2 * w * w + s * a) / (2 * a);
                     controlToResize.Width += newWidth - w;
+                    if (controlToResize is Form)
+                    {
+                        var form = (Form) controlToResize;
+                        if (form.WindowState == FormWindowState.Normal)
+                        {
+                            m_windowHeightBeforeExpansion = controlToResize.Height;                                                    
+                        }
+                    }
+                    if (controlToResize.Height < minHeightOfWindowWithDiagram)
+                    {
+                        controlToResize.Height = minHeightOfWindowWithDiagram;
+                    }
                 }   
             }
             else
@@ -63,11 +80,15 @@ namespace CalculatorModules
                         }
                     }
                     controlToResize.Width -= splitContainer1.Panel2.Width + splitContainer1.SplitterWidth;
+
+                    controlToResize.Height = m_windowHeightBeforeExpansion;
                 }
                 splitContainer1.Panel2Collapsed = true;
                 rightPanel.Width = 0;
             }
         }
+
+        #endregion
 
         // This property allows user to see 'expand' button
         public bool AllowDiagramView
