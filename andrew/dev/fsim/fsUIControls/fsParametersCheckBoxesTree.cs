@@ -74,7 +74,7 @@ namespace fsUIControls
                 new[]
                 {
                     fsParameterIdentifier.NumberOfCyclones,                
-                    fsParameterIdentifier.CycleTime,
+                    fsParameterIdentifier.RotationalSpeed,
                     fsParameterIdentifier.ResidualTime
                 });
 

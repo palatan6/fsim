@@ -18,6 +18,8 @@ namespace Equations
         private readonly IEquationParameter rho;
         private readonly IEquationParameter eta;
 
+        //hc = (mc  / (2 * A * (rho  + cv  * (rho_s  - rho )))) + Sqrt(fsValue.Sqr(mc  / (2 * A  * (rho  + cv  * (rho_s  - rho )))) - ((2 * (rho_s  - rho ) * cv  * Dp  * tf  * pcstar ) / (eta  * (rho  + cv  * (rho_s  - rho )))))
+
         #endregion
 
         public fsHcFromMcAndPcstarEquation(

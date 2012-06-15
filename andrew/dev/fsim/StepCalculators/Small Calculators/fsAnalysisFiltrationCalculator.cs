@@ -16,7 +16,6 @@ namespace StepCalculators
             IEquationParameter cv = AddConstant(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
 
             IEquationParameter c = AddConstant(fsParameterIdentifier.SuspensionSolidsConcentration);
-            //IEquationParameter tc = AddConstant(fsParameterIdentifier.CycleTime);
             IEquationParameter tc = AddVariable(fsParameterIdentifier.CycleTime);
 
             IEquationParameter rho = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
@@ -50,7 +49,7 @@ namespace StepCalculators
             IEquationParameter rc = AddVariable(fsParameterIdentifier.CakeResistance);
             IEquationParameter alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
             IEquationParameter nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
-            IEquationParameter pressure = AddVariable(fsParameterIdentifier.PressureDifference);
+            IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
 
             IEquationParameter Qms = AddVariable(fsParameterIdentifier.Qms);
             IEquationParameter Qsus = AddVariable(fsParameterIdentifier.Qsus);
@@ -70,7 +69,7 @@ namespace StepCalculators
             IEquationParameter Rf = AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
             IEquationParameter Rf0 = AddVariable(fsParameterIdentifier.CakeMoistureContentRf0);
 
-            IEquationParameter n = AddVariable(fsParameterIdentifier.CycleFrequency);
+            IEquationParameter n = AddVariable(fsParameterIdentifier.RotationalSpeed);
             IEquationParameter tr = AddVariable(fsParameterIdentifier.ResidualTime);
             IEquationParameter sf = AddVariable(fsParameterIdentifier.SpecificFiltrationTime);
             
@@ -102,7 +101,7 @@ namespace StepCalculators
             AddEquation(new fsEpsKappaCvEquation(eps, kappa, cv));
             AddEquation(new fsCakeDrySolidsDensityEquation(rho_cd, eps, solidsDensity));
 
-            AddEquation(new fsFrom0AndDpEquation(eps, eps0, pressure, ne));
+            AddEquation(new fsFrom0AndDpEquation(eps, eps0, Dp, ne));
 
             AddEquation(new fsMoistureContentFromDensitiesAndPorosityEquation(Rf0, eps0, rho, solidsDensity));
                         
@@ -117,12 +116,12 @@ namespace StepCalculators
 
             #region Cake Hight Equations
 
-            AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
-            AddEquation(new fsCakeHeightFromDpTf(hc, hce, pc, kappa0, pressure, formationTime, viscosity));
-            AddEquation(new fsHcFromMsAndPcstarEquation(hc, ms, area, solidsDensity, cv, pressure, formationTime, pcstar, viscosity));
-            AddEquation(new fsHcFromMcAndPcstarEquation(hc, mc, area, solidsDensity, cv, pressure, formationTime, pcstar, rho, viscosity));
-            AddEquation(new fsHcFromMsAndAlphastarEquation(hc, ms, area, solidsDensity, cv, pressure, formationTime, alphastar, viscosity));
-            AddEquation(new fsHcFromMcAndAlphastarEquations(hc, mc, area, solidsDensity, cv, pressure, formationTime, alphastar, viscosity, rho));
+            AddEquation(new fsFrom0AndDpEquation(pc, pc0, Dp, nc));
+            AddEquation(new fsCakeHeightFromDpTf(hc, hce, pc, kappa0, Dp, formationTime, viscosity));
+            AddEquation(new fsHcFromMsAndPcstarEquation(hc, ms, area, solidsDensity, cv, Dp, formationTime, pcstar, viscosity));
+            AddEquation(new fsHcFromMcAndPcstarEquation(hc, mc, area, solidsDensity, cv, Dp, formationTime, pcstar, rho, viscosity));
+            AddEquation(new fsHcFromMsAndAlphastarEquation(hc, ms, area, solidsDensity, cv, Dp, formationTime, alphastar, viscosity));
+            AddEquation(new fsHcFromMcAndAlphastarEquations(hc, mc, area, solidsDensity, cv, Dp, formationTime, alphastar, viscosity, rho));
 
             Equations.Add(new fsProductsEquation(
                 new[] { oneMinusEps, solidsDensity, area, hc },
@@ -133,10 +132,10 @@ namespace StepCalculators
             AddEquation(new fsMcFromHcEquation(mc, area, hc, solidsDensity, eps, rho));
             Equations.Add(new fsProductsEquation(
                new[] { qmf, viscosity, hcPlusTwoTimesHce },
-               new[] { rho, constantTwo, pc, pressure }));
+               new[] { rho, constantTwo, pc, Dp }));
             Equations.Add(new fsProductsEquation(
                new[] { qf, viscosity, hcPlusTwoTimesHce },
-               new[] { constantTwo, pc, pressure }));
+               new[] { constantTwo, pc, Dp }));
 
             Equations.Add(new fsProductsEquation(
                 new[] { area, hc, onePlusKappa },
@@ -161,7 +160,7 @@ namespace StepCalculators
 
             AddEquation(new fsDivisionInverseEquation(pc0, rc0));
             AddEquation(new fsAlphaPcEquation(alpha0, pc0, eps0, solidsDensity));
-            AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
+            AddEquation(new fsFrom0AndDpEquation(pc, pc0, Dp, nc));
             AddEquation(new fsDivisionInverseEquation(pc, rc));
             AddEquation(new fsAlphaPcEquation(alpha, pc, eps, solidsDensity));
 
@@ -193,10 +192,10 @@ namespace StepCalculators
                 new[] { vf, rho }));
             
             Equations.Add(new fsProductsEquation(
-                new[] { pcstar, constantTwo, pressure },
+                new[] { pcstar, constantTwo, Dp },
                 new[] { viscosity, kappa, formationTime, qf, qf }));
             Equations.Add(new fsProductsEquation(
-                new[] { pcstar, constantTwo, pressure, kappa, formationTime },
+                new[] { pcstar, constantTwo, Dp, kappa, formationTime },
                 new[] { viscosity, hc, hc }));
 
             Equations.Add(new fsProductEquation(constantOne, rcstar, pcstar));

@@ -1,25 +1,21 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using Value;
-using System.Drawing;
+using System.Windows.Forms;
 
 namespace CalculatorModules.Cake_Fromation
 {
-    public partial class CakeFormationAnalysisControl : fsOptionsSingleTableAndCommentsCalculatorControl
+    public sealed partial class CakeFormationAnalysisControl : fsOptionsSingleTableAndCommentsCalculatorControl
     {
-
-        public CakeFormationAnalysisControl()
+        protected override void InitializeCalculators()
         {
-            InitializeComponent();
-
             Calculators.Add(new fsDensityConcentrationCalculator());
             Calculators.Add(new fsAnalysisFiltrationCalculator());
-
-            #region Groups
-
+        }
+        protected override void InitializeGroups()
+        {
             fsParametersGroup viscosityGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidViscosity);
             fsParametersGroup filtrateGroup = AddGroup(
@@ -36,7 +32,7 @@ namespace CalculatorModules.Cake_Fromation
             fsParametersGroup pressureGroup = AddGroup(
                 fsParameterIdentifier.PressureDifference);            
             fsParametersGroup timeGroup = AddGroup(
-                fsParameterIdentifier.CycleFrequency,                
+                fsParameterIdentifier.RotationalSpeed,                
                 fsParameterIdentifier.CycleTime,
                 fsParameterIdentifier.ResidualTime);
             fsParametersGroup sfGroup = AddGroup(
@@ -116,8 +112,7 @@ namespace CalculatorModules.Cake_Fromation
 
             ParameterToCell[fsParameterIdentifier.ResidualTime].OwningRow.Visible = false;
 
-            #endregion
-
+            
             fsMisc.FillList(filtrOptionBox.Items, typeof(fsCalculationOptions.fsFiltersKindOption));
             EstablishCalculationOption(fsCalculationOptions.fsFiltersKindOption.BatchFilterCalculations);
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsFiltersKindOption), filtrOptionBox);
@@ -131,13 +126,21 @@ namespace CalculatorModules.Cake_Fromation
             UpdateGroupsInputInfoFromCalculationOptions();
             UpdateEquationsFromCalculationOptions();
             Recalculate();
-            UpdateUIFromData();
-            ConnectUIWithDataUpdating(dataGrid, filtrOptionBox, simulationBox);
+            UpdateUIFromData();            
+        }
+
+        protected override Control[] GetUIControlsToConnectWithDataUpdating()
+        {
+            return new Control[] { dataGrid, filtrOptionBox, simulationBox };
+        }
+
+        public CakeFormationAnalysisControl()
+        {
+            InitializeComponent();
         }
 
         private void AssignDefaultValues()
         {
-            SetDefaultValue(fsParameterIdentifier.SpecificFiltrationTime, new fsValue(1));
             SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0));
             SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce, new fsValue(0));
             SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0));            
@@ -160,7 +163,7 @@ namespace CalculatorModules.Cake_Fromation
             ParameterToCell[fsParameterIdentifier.FiltrateVolume].OwningRow.Visible = isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.CakeVolume].OwningRow.Visible = isBatchFilterOption;
 
-            ParameterToCell[fsParameterIdentifier.CycleFrequency].OwningRow.Visible = ! isBatchFilterOption;
+            ParameterToCell[fsParameterIdentifier.RotationalSpeed].OwningRow.Visible = ! isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.CycleTime].OwningRow.Visible = !isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.SpecificFiltrationTime].OwningRow.Visible = ! isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.Qms].OwningRow.Visible = !isBatchFilterOption;
@@ -178,14 +181,14 @@ namespace CalculatorModules.Cake_Fromation
             ParameterToCell[fsParameterIdentifier.FilterMediumResistanceHce].OwningRow.Visible = !isDefaultSimulationCalculation;
             ParameterToCell[fsParameterIdentifier.FilterMediumResistanceRm].OwningRow.Visible = !isDefaultSimulationCalculation;
 
-            bool isMrSimulationOption = DefaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MrSimulationsCalculations;
+            bool isMrSimulationOption = DefaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MediumResistanceSimulationsCalculations;
 
             ParameterToCell[fsParameterIdentifier.CakePermeability0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
             ParameterToCell[fsParameterIdentifier.CakeResistance0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
             ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
             ParameterToCell[fsParameterIdentifier.CakeCompressibility].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
 
-            bool isMrAndCcSimulationOption = DefaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MrAndCcSimulationsCalculations;
+            bool isMrAndCcSimulationOption = DefaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MediumResistanceAndCakeCompressibilitySimulationsCalculations;
 
             ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;
             ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;

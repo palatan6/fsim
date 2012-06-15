@@ -21,11 +21,11 @@ namespace StepCalculators
             [Description("Default")]
             DefaultSimulationsCalculations,
             [Description("Medium Resistance considered")]
-            MrSimulationsCalculations,
+            MediumResistanceSimulationsCalculations,
             [Description("Medium Resistance and cake compressibility considered")]
-            MrAndCcSimulationsCalculations,
+            MediumResistanceAndCakeCompressibilitySimulationsCalculations,
             [Description("Show also ne")]
-            ShowAllSimulationsCalculations
+            ShowAlsoNeSimulationsCalculations
         }
 
         public enum fsSaltContentOption

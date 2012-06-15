@@ -11,6 +11,8 @@ namespace Equations
         private readonly IEquationParameter hce0;
         private readonly IEquationParameter pcstar;
 
+        //pcstar = hc * pc / (hc + 2 * hce0)
+
         #endregion
 
         public fsPcFromPcstarEquation(

@@ -15,6 +15,8 @@ namespace Equations
         private readonly IEquationParameter tf;
         private readonly IEquationParameter qft;
 
+        //eps = ((1 - cv) * mc / (A * rhos * cv * tf * qft) - 1) / (mc / (A * rhos * cv * tf * qft) + rho / rhos - 1);
+
         #endregion
 
         public fsEpsFromMcAndQfEquation(

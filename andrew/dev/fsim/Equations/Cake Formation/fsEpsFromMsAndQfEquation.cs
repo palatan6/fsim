@@ -14,6 +14,8 @@ namespace Equations
         private readonly IEquationParameter tf;
         private readonly IEquationParameter qft;
 
+        //eps = 1 - cv * (1 + 1 / (ms / (A * rhos * cv * tf * qft) - 1));
+
         #endregion
 
         public fsEpsFromMsAndQfEquation(
@@ -51,8 +53,7 @@ namespace Equations
 
         private void PorosityFormula()
         {
-            eps.Value = 1 - cv.Value * (1 + 1 / (ms.Value / (A.Value * rhos.Value * cv.Value * tf.Value * qft.Value) - 1));
-            //eps.Value = 1 + cv.Value;
+            eps.Value = 1 - cv.Value * (1 + 1 / (ms.Value / (A.Value * rhos.Value * cv.Value * tf.Value * qft.Value) - 1));            
         }
 
         #endregion

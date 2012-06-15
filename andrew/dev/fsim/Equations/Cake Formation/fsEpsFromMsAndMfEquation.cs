@@ -13,6 +13,8 @@ namespace Equations
         private readonly IEquationParameter rhos;
         private readonly IEquationParameter mf;
 
+        //eps = 1 - cv * (1 + 1 / ((ms * rho) / (rhos * cv * mf) - 1));
+
         #endregion
 
         public fsEpsFromMsAndMfEquation(

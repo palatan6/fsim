@@ -29,7 +29,7 @@ namespace StepCalculators
             IEquationParameter rc = AddVariable(fsParameterIdentifier.CakeResistance);
             IEquationParameter alpha = AddVariable(fsParameterIdentifier.CakeResistanceAlpha);
             IEquationParameter nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
-            IEquationParameter pressure = AddVariable(fsParameterIdentifier.PressureDifference);
+            IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
 
             IEquationParameter hc = AddVariable(fsParameterIdentifier.CakeHeight);
             IEquationParameter formationTime = AddVariable(fsParameterIdentifier.FiltrationTime);
@@ -37,7 +37,7 @@ namespace StepCalculators
             IEquationParameter liquidMass = AddVariable(fsParameterIdentifier.LiquidMassInSuspension);
             IEquationParameter suspensionMass = AddVariable(fsParameterIdentifier.SuspensionMass);
             IEquationParameter Rm = AddVariable(fsParameterIdentifier.FilterMediumResistanceRm);
-            IEquationParameter mf = AddVariable(fsParameterIdentifier.FiltrateMass);
+            IEquationParameter Mf = AddVariable(fsParameterIdentifier.FiltrateMass);
             IEquationParameter mc = AddVariable(fsParameterIdentifier.CakeMass);
             IEquationParameter ms = AddVariable(fsParameterIdentifier.SolidsMass);
             IEquationParameter qmf = AddVariable(fsParameterIdentifier.qmf);
@@ -71,8 +71,8 @@ namespace StepCalculators
 
             #region Equations Initialization
 
-            AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
-            AddEquation(new fsCakeHeightFromDpTf(hc, hce, pc, kappa0, pressure, formationTime, viscosity));
+            AddEquation(new fsFrom0AndDpEquation(pc, pc0, Dp, nc));
+            AddEquation(new fsCakeHeightFromDpTf(hc, hce, pc, kappa0, Dp, formationTime, viscosity));
             
             Equations.Add(new fsProductsEquation(
                 new[] { oneMinusEps0, solidsDensity, area, hc },
@@ -83,13 +83,13 @@ namespace StepCalculators
             AddEquation(new fsMcFromHcEquation(mc, area, hc, solidsDensity, eps, rho));
             Equations.Add(new fsProductsEquation(
                new[] { qmf, viscosity, hcPlusTwoTimesHce },
-               new[] { rho, constantTwo, pc, pressure }));
+               new[] { rho, constantTwo, pc, Dp }));
             Equations.Add(new fsProductsEquation(
                new[] { qf, viscosity, hcPlusTwoTimesHce },
-               new[] { constantTwo, pc, pressure }));
+               new[] { constantTwo, pc, Dp }));
             Equations.Add(new fsProductsEquation(
                new[] { hc, hc },
-               new[] { constantTwo, kappa, pressure, formationTime, K }));
+               new[] { constantTwo, kappa, Dp, formationTime, K }));
             Equations.Add(new fsProductsEquation(
                 new[] { K, viscosity, hcPlusTwoTimesHce },
                 new[] { hc, pc }));
@@ -103,7 +103,7 @@ namespace StepCalculators
                 new[] { suspensionMass, kappa},
                 new[] { rhosus, area, hc, onePlusKappa }));
             Equations.Add(new fsProductsEquation(
-                new[] { mf, kappa },
+                new[] { Mf, kappa },
                 new[] { rho, area, hc }));
             Equations.Add(new fsProductsEquation(
                 new[] { ms },
@@ -118,7 +118,7 @@ namespace StepCalculators
 
             AddEquation(new fsDivisionInverseEquation(pc0, rc0));
             AddEquation(new fsAlphaPcEquation(alpha0, pc0, eps0, solidsDensity));
-            AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressure, nc));
+            AddEquation(new fsFrom0AndDpEquation(pc, pc0, Dp, nc));
             AddEquation(new fsDivisionInverseEquation(pc, rc));
             AddEquation(new fsAlphaPcEquation(alpha, pc, eps, solidsDensity));
             

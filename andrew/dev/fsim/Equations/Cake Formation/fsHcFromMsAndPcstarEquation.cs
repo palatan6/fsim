@@ -17,6 +17,8 @@ namespace Equations
         private readonly IEquationParameter pcstar;
         private readonly IEquationParameter eta;
 
+        //hc = (ms / (2 * A * rho_s * cv)) * (1 - Sqrt(1 - (8 * A * A * rho_s * rho_s * cv * cv * Dp * tf * pcstar / (eta * ms * ms))));
+
         #endregion
 
         public fsHcFromMsAndPcstarEquation(
