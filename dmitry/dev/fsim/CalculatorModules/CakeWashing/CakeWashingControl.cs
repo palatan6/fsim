@@ -5,6 +5,8 @@ using Parameters;
 using StepCalculators;
 using StepCalculators.Simulation_Calculators;
 using Value;
+using System.ComponentModel;
+using System;
 
 
 namespace CalculatorModules.CakeWashing
@@ -229,6 +231,24 @@ namespace CalculatorModules.CakeWashing
             #endregion
         }
 
+        public enum fsCakeWashingOption
+        {
+            [Description("Cake washing")]
+            CakeWashing
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            EstablishCalculationOption(fsCakeWashingOption.CakeWashing);
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCakeWashingOption.CakeWashing },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.WashingRatioW,
+                    new DiagramConfiguration.DiagramRange(0, 3),
+                    new[] { fsParameterIdentifier.SpecificWashOutConcentration },
+                    new[] { fsParameterIdentifier.CakeWashOutContent }));
+        }
+
         protected override void InitializeParametersValues()
         {
             Values[fsParameterIdentifier.MotherLiquidViscosity].Value = new fsValue(1e-3);
@@ -257,7 +277,8 @@ namespace CalculatorModules.CakeWashing
             Values[fsParameterIdentifier.lambda].Value = new fsValue(0.2);
             Values[fsParameterIdentifier.u].Value = new fsValue(3.0 / 60);
             Values[fsParameterIdentifier.CakeHeight].Value = new fsValue(20e-3);
-            Values[fsParameterIdentifier.PressureDifference].Value = new fsValue(0.6e5);  
+            Values[fsParameterIdentifier.PressureDifference].Value = new fsValue(0.6e5);
+            Values[fsParameterIdentifier.WashingRatioW].Value = new fsValue(3);
         }
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
