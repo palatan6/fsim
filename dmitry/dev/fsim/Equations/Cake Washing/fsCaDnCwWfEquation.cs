@@ -87,12 +87,26 @@ namespace Equations.CakeWashing
 
         private void caFormula()
         {
-            fsValue sqrt = 2 * fsValue.Sqrt(m_wf.Value / m_Dn.Value);
-            m_ca.Value = (m_c0.Value - m_cw.Value) / (2 * m_wf.Value) *
-                         ((1 - m_wf.Value) * fsValue.Erfc((1 - m_wf.Value) / sqrt) -
-                           fsValue.Exp(m_Dn.Value) *
-                          (1 + m_wf.Value) * fsValue.Erfc((1 + m_wf.Value) / sqrt)
-                         ) + m_c0.Value; 
+            if (m_Dn.Value == fsValue.Zero)
+            {
+                m_ca.Value = m_cw.Value;
+                return;
+            }
+            if ((fsValue.Less(m_wf.Value, fsValue.Zero) || m_wf.Value == fsValue.Zero) &&
+                  m_wf.Value.Defined
+               )
+            {
+                m_ca.Value = m_c0.Value;
+            }
+            else
+            {
+                fsValue sqrt = 2 * fsValue.Sqrt(m_wf.Value / m_Dn.Value);
+                m_ca.Value = (m_c0.Value - m_cw.Value) / (2 * m_wf.Value) *
+                             ((1 - m_wf.Value) * fsValue.Erfc((1 - m_wf.Value) / sqrt) -
+                               fsValue.Exp(m_Dn.Value) *
+                              (1 + m_wf.Value) * fsValue.Erfc((1 + m_wf.Value) / sqrt)
+                             ) + m_c0.Value;
+            }
         }
 
         private void wfFormula()

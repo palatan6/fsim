@@ -84,18 +84,36 @@ namespace Equations.CakeWashing
 
         private void cStarFormula()
         {
-            fsValue sqrt = 2 * fsValue.Sqrt(m_wf.Value / m_Dn.Value);
-            m_cStar.Value = 1 - 0.5 *
-                           (fsValue.Erfc((1 - m_wf.Value) / sqrt) +
-                            fsValue.Exp(m_Dn.Value) * fsValue.Erfc((1 + m_wf.Value) / sqrt)
-                           );
+            if (m_Dn.Value == fsValue.Zero)
+            {
+                m_cStar.Value = fsValue.Zero;
+                return;
+            }
+            if ((fsValue.Less(m_wf.Value, fsValue.Zero) || m_wf.Value == fsValue.Zero) &&
+                  m_wf.Value.Defined
+               )
+            {
+                m_cStar.Value = fsValue.One;
+            }
+            else
+            {
+                fsValue sqrt = 2 * fsValue.Sqrt(m_wf.Value / m_Dn.Value);
+                m_cStar.Value = 1 - 0.5 *
+                               (fsValue.Erfc((1 - m_wf.Value) / sqrt) +
+                                fsValue.Exp(m_Dn.Value) * fsValue.Erfc((1 + m_wf.Value) / sqrt)
+                               );
+            }
         }
 
         private void wfFormula()
         {
+            if (fsValue.One == m_cStar.Value)
+            {
+                m_wf.Value = fsValue.Zero;
+                return;
+            }
             bool condEmpty = fsValue.Less(m_Dn.Value, fsValue.Zero) ||
-                             fsValue.Less(fsValue.One, m_cStar.Value) || 
-                             fsValue.One == m_cStar.Value;
+                             fsValue.Less(fsValue.One, m_cStar.Value);
             if (condEmpty)
             {
                 m_wf.Value = new fsValue();

@@ -49,17 +49,24 @@ namespace Equations.CakeWashing
         #region Formulas
 
         private void MwfFormula()
-        {           
-            if (fsValue.Less(m_wf.Value, fsValue.One))
+        {
+            if (fsValue.Less(m_wf.Value, fsValue.Zero) && m_wf.Value.Defined)
             {
-                m_Mwf.Value = m_eps.Value * m_Vc.Value * 
-                            ((m_rhow.Value - m_rho.Value)/2 *  fsValue.Sqr(m_wf.Value) + 
-                              m_rho.Value * m_wf.Value);
+                m_Mwf.Value = fsValue.Zero;
             }
             else
-            {              
-                m_Mwf.Value = m_eps.Value * m_Vc.Value *
-                             (m_rhow.Value * (m_wf.Value - 0.5) +  m_rho.Value/2);
+            {
+                if (fsValue.Less(m_wf.Value, fsValue.One))
+                {
+                    m_Mwf.Value = m_eps.Value * m_Vc.Value *
+                                ((m_rhow.Value - m_rho.Value) / 2 * fsValue.Sqr(m_wf.Value) +
+                                  m_rho.Value * m_wf.Value);
+                }
+                else
+                {
+                    m_Mwf.Value = m_eps.Value * m_Vc.Value *
+                                 (m_rhow.Value * (m_wf.Value - 0.5) + m_rho.Value / 2);
+                }
             }
         }
 

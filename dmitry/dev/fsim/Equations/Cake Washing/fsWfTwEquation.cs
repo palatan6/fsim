@@ -30,7 +30,7 @@ namespace Equations.CakeWashing
         private readonly IEquationParameter m_etaw;
         private readonly IEquationParameter m_eta;
 
-       #endregion
+        #endregion
 
         public fsWfTwEquation(
             IEquationParameter wf,
@@ -82,14 +82,21 @@ namespace Equations.CakeWashing
         private void twFormula()
         {
             fsValue diff = m_etaw.Value - m_eta.Value;
-            if (fsValue.Less(m_wf.Value, fsValue.One))
+            if (fsValue.Less(m_wf.Value, fsValue.Zero) && m_wf.Value.Defined)
             {
-               m_tw.Value = diff / (2 * m_c3.Value) * fsValue.Sqr(m_wf.Value) +
-                             m_eta.Value / m_c3.Value * m_wf.Value;
+                m_tw.Value = fsValue.Zero;
             }
             else
             {
-                m_tw.Value = (m_etaw.Value * (2 * m_wf.Value - 1) + m_eta.Value) / (2 * m_c3.Value);
+                if (fsValue.Less(m_wf.Value, fsValue.One))
+                {
+                    m_tw.Value = diff / (2 * m_c3.Value) * fsValue.Sqr(m_wf.Value) +
+                                  m_eta.Value / m_c3.Value * m_wf.Value;
+                }
+                else
+                {
+                    m_tw.Value = (m_etaw.Value * (2 * m_wf.Value - 1) + m_eta.Value) / (2 * m_c3.Value);
+                }
             }
         }
 

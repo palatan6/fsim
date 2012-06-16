@@ -94,7 +94,7 @@ namespace Equations.CakeWashing
             {
                 if (m_xStar.Value == fsValue.One)
                 {
-                    m_wf.Value = fsValue.One;
+                    m_wf.Value = fsValue.Zero;
                     return;
                 }
                 else
@@ -103,9 +103,13 @@ namespace Equations.CakeWashing
                     return;
                 }
             }
+            if (fsValue.One == m_xStar.Value)
+            {
+                m_wf.Value = fsValue.Zero;
+                return;
+            }
             bool condEmpty = fsValue.Less(m_Dn.Value, fsValue.Zero) ||
-                             fsValue.Less(fsValue.One, m_xStar.Value) ||
-                             fsValue.One == m_xStar.Value;
+                             fsValue.Less(fsValue.One, m_xStar.Value);
             if (condEmpty)
             {
                 m_wf.Value = new fsValue();

@@ -170,6 +170,9 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter fractRfw0 = AddVariable(new fsParameterIdentifier("(1 - Rfw0)/Rfw0"));
             Equations.Add(new fsSumEquation(invRfw0, fractRfw0, constantOne));
 
+            IEquationParameter epsVc = AddVariable(new fsParameterIdentifier("eps*Vc"));
+            Equations.Add(new fsProductEquation(epsVc, eps, Vc));
+
             IEquationParameter nsTtech = AddVariable(new fsParameterIdentifier("ns*ttech"));
             Equations.Add(new fsProductEquation(nsTtech, ns, ttech));
             IEquationParameter tcMinusNsTtech = AddVariable(new fsParameterIdentifier("tc - ns*ttech"));
@@ -197,10 +200,10 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsProductEquation(caStarC0MinusCw, caStar, c0MinusCw));
 
             IEquationParameter rhowf = AddVariable(new fsParameterIdentifier("rhowf"));
-            Equations.Add(new fsIfMoreOrLessThenOneEquation(rhowf, wf, rhow, rho));
+            Equations.Add(new fsIfMoreOrLessThenOneEquation(rhowf, wf, rhow, rho, rho, constantZero, rhow));
 
             IEquationParameter etawf = AddVariable(new fsParameterIdentifier("etawf"));
-            Equations.Add(new fsIfMoreOrLessThenOneEquation(etawf, wf, etaw, eta));
+            Equations.Add(new fsIfMoreOrLessThenOneEquation(etawf, wf, etaw, eta, eta, constantZero, etaw));
 
             IEquationParameter sw0PowFq = AddVariable(new fsParameterIdentifier("Sw0^fq")); 
             Equations.Add(new fsTechnicalTimeFrom0Equation(sw0PowFq, constantOne, Sw0, fq)); // It's a dirty trick, of course!
@@ -215,17 +218,7 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter rhocdAddRhowfEps = AddVariable(new fsParameterIdentifier("rhocd + rhowf*eps"));
             Equations.Add(new fsSumEquation(rhocdAddRhowfEps, rhocd, rhowfEps));
 
-            IEquationParameter oneMinusXStar = AddVariable(new fsParameterIdentifier("1 - x*"));
-            Equations.Add(new fsSumEquation(constantOne, xStar, oneMinusXStar));
-            IEquationParameter oneMinusXStarC0MinusCw = AddVariable(new fsParameterIdentifier("(c0 - cw)*(1 - x*)"));
-            Equations.Add(new fsProductEquation(oneMinusXStarC0MinusCw, c0MinusCw, oneMinusXStar));
-            IEquationParameter wfCw = AddVariable(new fsParameterIdentifier("wf*cw"));
-            Equations.Add(new fsProductEquation(wfCw, wf, cw));
-            IEquationParameter wfCwAddOneMinusXStarC0MinusCw = AddVariable(new fsParameterIdentifier("rhocd + rhowf*eps"));
-            Equations.Add(new fsSumEquation(wfCwAddOneMinusXStarC0MinusCw, wfCw, oneMinusXStarC0MinusCw));
-
             #endregion
-
 
             #endregion
 
@@ -283,7 +276,7 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsSumEquation(constantZero, v4, aw2));
             Equations.Add(new fsFrom0AndDpEquation(Dn, v2, v3, v4));
            
-            Equations.Add(new fsProductsEquation( // This equation need to be discussed as to the possible status "calculated" for u and Dp (only input parameter!)
+            Equations.Add(new fsProductsEquation( // This equation needs to be discussed as to the possible status "calculated" for u and Dp (only input parameter!)
                 new[] { u, eps, etaw, hcAddHce },
                 new[] { pc, Dp }));
 
@@ -339,10 +332,8 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsCaDnCwWfEquation(ca, cw, c0, Dn, wf));           
 
             Equations.Add(new fsWfTwEquation(wf, tw, c3, etaw, eta));
-            Equations.Add(new fsProductEquation(wfCwAddOneMinusXStarC0MinusCw, ca, wf));
-            Equations.Add(new fsProductsEquation(
-                new[] { eps, Vc, wf },
-                new[] { Vwf }));
+            Equations.Add(new fsCstarWfXstarEquation(ca, xStar, cw, c0, wf));
+            Equations.Add(new fsIfMoreOrLessThenOneEquation(Vwf, wf, epsVc, constantZero, constantZero, epsVc, constantZero));
             Equations.Add(new fsProductsEquation(
                 new[] { eps, c3, Vc },
                 new[] { Q, etawf }));
