@@ -332,7 +332,7 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsCaDnCwWfEquation(ca, cw, c0, Dn, wf));           
 
             Equations.Add(new fsWfTwEquation(wf, tw, c3, etaw, eta));
-            Equations.Add(new fsCstarWfXstarEquation(ca, xStar, cw, c0, wf));
+            Equations.Add(new fsCaWfXstarEquation(ca, xStar, cw, c0, wf));
             Equations.Add(new fsIfMoreOrLessThenOneEquation(Vwf, wf, epsVc, constantZero, constantZero, epsVc, constantZero));
             Equations.Add(new fsProductsEquation(
                 new[] { eps, c3, Vc },

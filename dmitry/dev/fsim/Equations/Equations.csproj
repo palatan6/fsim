@@ -65,7 +65,7 @@
     <Compile Include="Cake Formation\fsVsusFromHcAKappaEquation.cs" />
     <Compile Include="Cake Washing\fsCaDnCwWfEquation.cs" />
     <Compile Include="Cake Washing\fsCstarDnWfEquation.cs" />
-    <Compile Include="Cake Washing\fsCstarWfXstarEquation.cs" />
+    <Compile Include="Cake Washing\fsCaWfXstarEquation.cs" />
     <Compile Include="Cake Washing\fsIfMoreOrLessThenOneEquation.cs" />
     <Compile Include="Cake Washing\fsMwfVcWfEquation.cs" />
     <Compile Include="Cake Washing\fsWfTwEquation.cs" />

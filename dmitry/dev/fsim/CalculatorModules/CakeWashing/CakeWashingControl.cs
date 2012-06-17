@@ -231,17 +231,10 @@ namespace CalculatorModules.CakeWashing
             #endregion
         }
 
-        public enum fsCakeWashingOption
-        {
-            [Description("Cake washing")]
-            CakeWashing
-        }
-
         protected override void InitializeDefaultDiagrams()
         {
-            EstablishCalculationOption(fsCakeWashingOption.CakeWashing);
             m_defaultDiagrams.Add(
-                new Enum[] { fsCakeWashingOption.CakeWashing },
+                new Enum[] {},
                 new DiagramConfiguration(
                     fsParameterIdentifier.WashingRatioW,
                     new DiagramConfiguration.DiagramRange(0, 3),
