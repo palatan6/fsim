@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.filtrOptionBox = new System.Windows.Forms.ComboBox();
+            this.filtrationOptionBox = new System.Windows.Forms.ComboBox();
             this.simulationBox = new System.Windows.Forms.ComboBox();
             this.leftTopPanel.SuspendLayout();
             this.calculationOptionsPanel.SuspendLayout();
@@ -46,28 +46,29 @@
             // calculationOptionsPanel
             // 
             this.calculationOptionsPanel.Controls.Add(this.simulationBox);
-            this.calculationOptionsPanel.Controls.Add(this.filtrOptionBox);
+            this.calculationOptionsPanel.Controls.Add(this.filtrationOptionBox);
+            this.calculationOptionsPanel.Size = new System.Drawing.Size(278, 48);
             // 
             // tablesPanel
             // 
             this.tablesPanel.Size = new System.Drawing.Size(329, 427);
             // 
-            // filtrOptionBox
+            // filtrationOptionBox
             // 
-            this.filtrOptionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.filtrOptionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.filtrOptionBox.FormattingEnabled = true;
-            this.filtrOptionBox.Location = new System.Drawing.Point(71, 3);
-            this.filtrOptionBox.Name = "filtrOptionBox";
-            this.filtrOptionBox.Size = new System.Drawing.Size(150, 21);
-            this.filtrOptionBox.TabIndex = 0;
+            this.filtrationOptionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.filtrationOptionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.filtrationOptionBox.FormattingEnabled = true;
+            this.filtrationOptionBox.Location = new System.Drawing.Point(122, 3);
+            this.filtrationOptionBox.Name = "filtrationOptionBox";
+            this.filtrationOptionBox.Size = new System.Drawing.Size(150, 21);
+            this.filtrationOptionBox.TabIndex = 0;
             // 
             // simulationBox
             // 
             this.simulationBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.simulationBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.simulationBox.FormattingEnabled = true;
-            this.simulationBox.Location = new System.Drawing.Point(71, 27);
+            this.simulationBox.Location = new System.Drawing.Point(122, 27);
             this.simulationBox.Name = "simulationBox";
             this.simulationBox.Size = new System.Drawing.Size(150, 21);
             this.simulationBox.TabIndex = 1;
@@ -87,7 +88,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox filtrOptionBox;
+        private System.Windows.Forms.ComboBox filtrationOptionBox;
         private System.Windows.Forms.ComboBox simulationBox;
     }
 }

@@ -111,27 +111,18 @@ namespace CalculatorModules.Cake_Fromation
             }
 
             ParameterToCell[fsParameterIdentifier.ResidualTime].OwningRow.Visible = false;
-
-            
-            fsMisc.FillList(filtrOptionBox.Items, typeof(fsCalculationOptions.fsFiltersKindOption));
-            EstablishCalculationOption(fsCalculationOptions.fsFiltersKindOption.BatchFilterCalculations);
-            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsFiltersKindOption), filtrOptionBox);
-
-            fsMisc.FillList(simulationBox.Items, typeof(fsCalculationOptions.fsSimulationsOption));
-            EstablishCalculationOption(fsCalculationOptions.fsSimulationsOption.DefaultSimulationsCalculations);
-            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsSimulationsOption), simulationBox);
-
-            AssignDefaultValues();
-
-            UpdateGroupsInputInfoFromCalculationOptions();
-            UpdateEquationsFromCalculationOptions();
-            Recalculate();
-            UpdateUIFromData();            
         }
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
         {
-            return new Control[] { dataGrid, filtrOptionBox, simulationBox };
+            return new Control[] { dataGrid, filtrationOptionBox, simulationBox };
+        }
+
+        protected override void InitializeParametersValues()
+        {
+            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0));
+            SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce, new fsValue(0));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0)); 
         }
 
         public CakeFormationAnalysisControl()
@@ -139,11 +130,15 @@ namespace CalculatorModules.Cake_Fromation
             InitializeComponent();
         }
 
-        private void AssignDefaultValues()
+        protected override void InitializeCalculationOptionsUIControls()
         {
-            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0));
-            SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce, new fsValue(0));
-            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0));            
+            fsMisc.FillList(filtrationOptionBox.Items, typeof(fsCalculationOptions.fsFiltersKindOption));
+            EstablishCalculationOption(fsCalculationOptions.fsFiltersKindOption.BatchFilterCalculations);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsFiltersKindOption), filtrationOptionBox);
+
+            fsMisc.FillList(simulationBox.Items, typeof(fsCalculationOptions.fsSimulationsOption));
+            EstablishCalculationOption(fsCalculationOptions.fsSimulationsOption.DefaultSimulationsCalculations);
+            AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsSimulationsOption), simulationBox);
         }
 
         protected override void UpdateUIFromData()
