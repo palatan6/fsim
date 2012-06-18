@@ -238,7 +238,7 @@ namespace CalculatorModules.CakeWashing
                 new DiagramConfiguration(
                     fsParameterIdentifier.WashingRatioW,
                     new DiagramConfiguration.DiagramRange(0, 3),
-                    new[] { fsParameterIdentifier.SpecificWashOutConcentration },
+                    new[] { fsParameterIdentifier.WashLiquidVolFlowRate, fsParameterIdentifier.WashOutConcentrationInWashfiltrate },
                     new[] { fsParameterIdentifier.CakeWashOutContent }));
         }
 
@@ -246,25 +246,25 @@ namespace CalculatorModules.CakeWashing
         {
             Values[fsParameterIdentifier.MotherLiquidViscosity].Value = new fsValue(1e-3);
             Values[fsParameterIdentifier.MotherLiquidDensity].Value = new fsValue(1000);
-            Values[fsParameterIdentifier.SolidsDensity].Value = new fsValue(2500);
+            Values[fsParameterIdentifier.SolidsDensity].Value = new fsValue(1500);
             Values[fsParameterIdentifier.CakePorosity0].Value = new fsValue(55e-2);
             Values[fsParameterIdentifier.Ne].Value = new fsValue(0.02);
             Values[fsParameterIdentifier.CakePermeability0].Value = new fsValue(1.5e-13);
             Values[fsParameterIdentifier.CakeCompressibility].Value = new fsValue(0.3);
             Values[fsParameterIdentifier.FilterMediumResistanceHce].Value = new fsValue(3e-3);
-            Values[fsParameterIdentifier.CakeSaturationSw0].Value = new fsValue(70e-2);
+            Values[fsParameterIdentifier.CakeSaturationSw0].Value = new fsValue(1);
             Values[fsParameterIdentifier.PredeliquorFlowRate].Value = new fsValue(0.5);
-            Values[fsParameterIdentifier.CakeWashOutConcentration].Value = new fsValue(50);
+            Values[fsParameterIdentifier.CakeWashOutConcentration].Value = new fsValue(100);
             Values[fsParameterIdentifier.RemanentWashOutContent].Value = new fsValue(0.1e-2);
             Values[fsParameterIdentifier.WashLiquidDensity].Value = new fsValue(900);
             Values[fsParameterIdentifier.WashLiquidViscosity].Value = new fsValue(0.95e-3);
             Values[fsParameterIdentifier.LiquidWashOutConcentration].Value = new fsValue(0.5);
-            Values[fsParameterIdentifier.WashIndexFor0].Value = new fsValue(2);
-            Values[fsParameterIdentifier.AdaptationPar1].Value = new fsValue(0.11);
-            Values[fsParameterIdentifier.AdaptationPar2].Value = new fsValue(0.09);
+            Values[fsParameterIdentifier.WashIndexFor0].Value = new fsValue(5);
+            Values[fsParameterIdentifier.AdaptationPar1].Value = new fsValue(0.1);
+            Values[fsParameterIdentifier.AdaptationPar2].Value = new fsValue(0.1);
 
             Values[fsParameterIdentifier.FilterArea].Value = new fsValue(7);
-            Values[fsParameterIdentifier.ns].Value = new fsValue(10);
+            Values[fsParameterIdentifier.ns].Value = new fsValue(12);
             Values[fsParameterIdentifier.ls].Value = new fsValue(0.7);
             Values[fsParameterIdentifier.StandardTechnicalTime].Value = new fsValue(2);
             Values[fsParameterIdentifier.lambda].Value = new fsValue(0.2);
