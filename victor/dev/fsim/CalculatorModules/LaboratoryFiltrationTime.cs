@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
@@ -119,9 +120,30 @@ namespace CalculatorModules
 
         protected override void InitializeParametersValues()
         {
-            Values[fsParameterIdentifier.Ne].Value = new fsValue(0);
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidViscosity, new fsValue(1e-3));
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidDensity, new fsValue(1000));
+            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(1500));
+            SetDefaultValue(fsParameterIdentifier.SuspensionSolidsMassFraction, new fsValue(0.15));
+            SetDefaultValue(fsParameterIdentifier.CakePorosity, new fsValue(0.56));
+            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0));
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.4));
+            SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(3e-13));
+            SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce, new fsValue(0.002));
+            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(1));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(2e5));
+            SetDefaultValue(fsParameterIdentifier.SuspensionVolume, new fsValue(1));
         }
 
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[] { },
+                new DiagramConfiguration(
+                    fsParameterIdentifier.SuspensionVolume,
+                    new DiagramConfiguration.DiagramRange(0.5, 2),
+                    new[] { fsParameterIdentifier.FiltrationTime },
+                    new[] { fsParameterIdentifier.CakeHeight, fsParameterIdentifier.qf }));
+        }
 
         protected override void UpdateEquationsFromCalculationOptions()
         {
