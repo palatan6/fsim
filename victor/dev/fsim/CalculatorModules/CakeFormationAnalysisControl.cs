@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
@@ -9,6 +10,11 @@ namespace CalculatorModules.Cake_Fromation
 {
     public sealed partial class CakeFormationAnalysisControl : fsOptionsSingleTableAndCommentsCalculatorControl
     {
+        public CakeFormationAnalysisControl()
+        {
+            InitializeComponent();
+        }
+
         protected override void InitializeCalculators()
         {
             Calculators.Add(new fsDensityConcentrationCalculator());
@@ -120,14 +126,50 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void InitializeParametersValues()
         {
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidViscosity, new fsValue(1e-3));
+            SetDefaultValue(fsParameterIdentifier.MotherLiquidDensity, new fsValue(1000));
+            SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(1500));
+            SetDefaultValue(fsParameterIdentifier.SuspensionSolidsMassFraction, new fsValue(0.15));
+            SetDefaultValue(fsParameterIdentifier.FilterArea, new fsValue(20e-4));
+            SetDefaultValue(fsParameterIdentifier.PressureDifference, new fsValue(2e5));
+            SetDefaultValue(fsParameterIdentifier.FiltrationTime, new fsValue(95));
+            SetDefaultValue(fsParameterIdentifier.SuspensionMass, new fsValue(0.250));
             SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0));
             SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce, new fsValue(0));
-            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0)); 
+            SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0));
+            SetDefaultValue(fsParameterIdentifier.FiltrateMass, new fsValue(0.187)); 
         }
 
-        public CakeFormationAnalysisControl()
+        protected override void InitializeDefaultDiagrams()
         {
-            InitializeComponent();
+            var diagram = new DiagramConfiguration(
+                fsParameterIdentifier.FiltrateMass,
+                new DiagramConfiguration.DiagramRange(0.100, 0.200),
+                new[] {fsParameterIdentifier.CakePlusMediumPermeability},
+                new[] {fsParameterIdentifier.CakePorosity, fsParameterIdentifier.CakeHeight}); 
+
+            var firstOptions = new[]
+                                   {
+                                       fsCalculationOptions.fsFiltersKindOption.BatchFilterCalculations,
+                                       fsCalculationOptions.fsFiltersKindOption.ContinuousFilterCalculations
+                                   };
+            var secondOptions = new[]
+                                    {
+                                        fsCalculationOptions.fsSimulationsOption.DefaultSimulationsCalculations,
+                                        fsCalculationOptions.fsSimulationsOption.
+                                            MediumResistanceAndCakeCompressibilitySimulationsCalculations,
+                                        fsCalculationOptions.fsSimulationsOption.MediumResistanceSimulationsCalculations
+                                        ,
+                                        fsCalculationOptions.fsSimulationsOption.ShowAlsoNeSimulationsCalculations
+                                    };
+
+            foreach (fsCalculationOptions.fsFiltersKindOption e1 in firstOptions)
+            {
+                foreach (fsCalculationOptions.fsSimulationsOption e2 in secondOptions)
+                {
+                    m_defaultDiagrams.Add(new Enum[] {e1, e2}, diagram);
+                }
+            }
         }
 
         protected override void InitializeCalculationOptionsUIControls()

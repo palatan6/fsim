@@ -330,6 +330,9 @@
     <EmbeddedResource Include="Cake Fromation\Other Filters Controls\CommonCakeFormationControl.resx">
       <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CakeFormationAnalysisControl.resx">
+      <DependentUpon>CakeFormationAnalysisControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CakeMoistureContentFromCakeSaturationControl.resx">
       <DependentUpon>CakeMoistureContentFromCakeSaturationControl.cs</DependentUpon>
       <SubType>Designer</SubType>

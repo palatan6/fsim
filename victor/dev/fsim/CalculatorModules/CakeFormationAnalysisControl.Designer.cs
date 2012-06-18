@@ -37,7 +37,7 @@
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(329, 427);
+            this.dataGrid.Size = new System.Drawing.Size(329, 752);
             // 
             // leftTopPanel
             // 
@@ -51,7 +51,7 @@
             // 
             // tablesPanel
             // 
-            this.tablesPanel.Size = new System.Drawing.Size(329, 427);
+            this.tablesPanel.Size = new System.Drawing.Size(329, 752);
             // 
             // filtrationOptionBox
             // 
@@ -78,7 +78,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "CakeFormationAnalysisControl";
-            this.Size = new System.Drawing.Size(329, 475);
+            this.Size = new System.Drawing.Size(329, 800);
             this.leftTopPanel.ResumeLayout(false);
             this.calculationOptionsPanel.ResumeLayout(false);
             this.tablesPanel.ResumeLayout(false);

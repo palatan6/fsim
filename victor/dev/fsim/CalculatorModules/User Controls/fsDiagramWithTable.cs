@@ -163,6 +163,7 @@ namespace CalculatorModules.User_Controls
                         curveName += " * " + scale;
                     }
                     LineItem zedCurve = fmZedGraphControl1.GraphPane.AddCurve(curveName, pointList, color, SymbolType.None);
+                    zedCurve.Line.Width = i + 1;
                     zedCurve.IsY2Axis = isY2Axis;
                     zedCurve.Line.IsAntiAlias = true;
                 }
