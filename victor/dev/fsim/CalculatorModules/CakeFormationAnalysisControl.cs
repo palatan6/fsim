@@ -142,17 +142,18 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void InitializeDefaultDiagrams()
         {
-            var diagram = new DiagramConfiguration(
+            var batchFilterDiagram = new DiagramConfiguration(
                 fsParameterIdentifier.FiltrateMass,
                 new DiagramConfiguration.DiagramRange(0.100, 0.200),
                 new[] {fsParameterIdentifier.CakePlusMediumPermeability},
                 new[] {fsParameterIdentifier.CakePorosity, fsParameterIdentifier.CakeHeight}); 
 
-            var firstOptions = new[]
-                                   {
-                                       fsCalculationOptions.fsFiltersKindOption.BatchFilterCalculations,
-                                       fsCalculationOptions.fsFiltersKindOption.ContinuousFilterCalculations
-                                   };
+            var continuousFilterDiagram = new DiagramConfiguration(
+                fsParameterIdentifier.CakeHeight,
+                new DiagramConfiguration.DiagramRange(0.009, 0.015),
+                new[] {fsParameterIdentifier.CakePlusMediumPermeability},
+                new[] {fsParameterIdentifier.CakePorosity});
+
             var secondOptions = new[]
                                     {
                                         fsCalculationOptions.fsSimulationsOption.DefaultSimulationsCalculations,
@@ -163,12 +164,10 @@ namespace CalculatorModules.Cake_Fromation
                                         fsCalculationOptions.fsSimulationsOption.ShowAlsoNeSimulationsCalculations
                                     };
 
-            foreach (fsCalculationOptions.fsFiltersKindOption e1 in firstOptions)
+            foreach (fsCalculationOptions.fsSimulationsOption e2 in secondOptions)
             {
-                foreach (fsCalculationOptions.fsSimulationsOption e2 in secondOptions)
-                {
-                    m_defaultDiagrams.Add(new Enum[] {e1, e2}, diagram);
-                }
+                m_defaultDiagrams.Add(new Enum[] {fsCalculationOptions.fsFiltersKindOption.BatchFilterCalculations, e2}, batchFilterDiagram);
+                m_defaultDiagrams.Add(new Enum[] {fsCalculationOptions.fsFiltersKindOption.ContinuousFilterCalculations, e2}, continuousFilterDiagram);
             }
         }
 
