@@ -8,6 +8,8 @@ namespace Equations.Hydrocyclone
 {
     public class fsCUnderflowEquation : fsCalculatorEquation
     {
+        // Cu = C * (1 + (1 - rf) / rf * E'T)
+
         #region Parameters
 
         private readonly IEquationParameter m_Cu;

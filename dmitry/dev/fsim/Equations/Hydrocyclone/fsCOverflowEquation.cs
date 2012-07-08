@@ -8,6 +8,8 @@ namespace Equations.Hydrocyclone
 {
     public class fsCOverflowEquation : fsCalculatorEquation
     {
+        // Co = C * (1 - E'T)
+
         #region Parameters
 
         private readonly IEquationParameter m_Co;

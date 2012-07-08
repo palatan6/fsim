@@ -5,6 +5,8 @@ namespace Equations
 {
     public class fsMassConcentrationEquation : fsCalculatorEquation
     {
+        // Cm * rhoSus * (rhoF - rhoS) = rhoS * (rhoF - rhoSus)
+
         #region Parameters
 
         private readonly IEquationParameter m_filtrateDensity;
@@ -13,8 +15,6 @@ namespace Equations
         private readonly IEquationParameter m_suspensionDensity;
 
         #endregion
-
-        // Cm * rhoSus * (rhoF - rhoS) = rhoS * (rhoF - rhoSus)
 
         public fsMassConcentrationEquation(
             IEquationParameter solidsMassFraction,
@@ -56,7 +56,7 @@ namespace Equations
             fsValue cm = m_solidsMassFraction.Value;
             fsValue rhoS = m_solidsDensity.Value;
             fsValue rhoSus = m_suspensionDensity.Value;
-            m_filtrateDensity.Value = rhoS * rhoSus * (1 - cm) / (rhoS - cm * rhoSus);
+            m_filtrateDensity.Value = rhoSus * (1 - cm) / (1 - cm * rhoSus / rhoS);
         }
 
         private void SolidsDensityFormula()
@@ -64,7 +64,7 @@ namespace Equations
             fsValue cm = m_solidsMassFraction.Value;
             fsValue rhoF = m_filtrateDensity.Value;
             fsValue rhoSus = m_suspensionDensity.Value;
-            m_solidsDensity.Value = cm * rhoF * rhoSus / (rhoF - rhoSus * (1 - cm));
+            m_solidsDensity.Value = cm * rhoSus / (1 - rhoSus / rhoF * (1 - cm));
         }
 
         private void SuspensionDensityFormula()
@@ -72,7 +72,7 @@ namespace Equations
             fsValue cm = m_solidsMassFraction.Value;
             fsValue rhoF = m_filtrateDensity.Value;
             fsValue rhoS = m_solidsDensity.Value;
-            m_suspensionDensity.Value = rhoS * rhoF / (rhoS * (1 - cm) + cm * rhoF);
+            m_suspensionDensity.Value = rhoF / (1 + cm * (rhoF / rhoS - 1));
         }
 
         #endregion

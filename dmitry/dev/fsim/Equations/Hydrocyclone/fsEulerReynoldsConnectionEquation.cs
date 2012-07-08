@@ -9,6 +9,8 @@ namespace Equations.Hydrocyclone
 {
     public class fsEulerReynoldsConnectionEquation : fsCalculatorEquation
     {
+        // Eu = beta1 * Re^beta2 * exp(-beta3 * cv)
+
         #region Parameters
 
         private readonly IEquationParameter m_Eu;

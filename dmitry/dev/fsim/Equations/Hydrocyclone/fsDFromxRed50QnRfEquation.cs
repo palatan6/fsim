@@ -14,7 +14,7 @@ namespace Equations.Hydrocyclone
          *  
          *     /   2      xRed50^2 * (rhoS-rhoF) * Q * beta1 * (4 rhoF Q / Pi / etaF / n)^beta2 * exp(-beta3 * cv)  \^(1 / (3 + beta3))
          * D = | ----- * ------------------------------------------------------------------------------------------ |
-         *     \  9Pi                 etaF * n * alpha1 * pow(ln(1 / rf), alpha2) * exp(alpha3 * cv)                 /
+         *     \  9Pi                 etaF * n * alpha1 * pow(ln(1 / rf), alpha2) * exp(alpha3 * cv)                /
          * 
          * 
          * D = pow(C1 * xRed50^2 * (Q / n)^(1 + beta2) / pow(ln(1 / rf), alpha2), P1)
@@ -96,12 +96,12 @@ namespace Equations.Hydrocyclone
 
         private void DFormula()
         {
-            m_D.Value = fsValue.Pow(GetC1() * fsValue.Sqr(m_xRed50.Value) * fsValue.Pow(m_Q.Value / m_numberOfCyclones.Value, 1 + m_beta2.Value) / fsValue.Pow(fsValue.Log(1 / m_rf.Value), m_alpha2.Value), GetP1());
+            m_D.Value = fsValue.Pow(GetC1() * fsValue.Sqr(m_xRed50.Value) * fsValue.Pow(m_Q.Value / m_numberOfCyclones.Value, 1 + m_beta2.Value) / fsValue.Pow(-fsValue.Log(m_rf.Value), m_alpha2.Value), GetP1());
         }
 
         private void xRed50Formula()
         {
-            m_xRed50.Value = fsValue.Sqrt(fsValue.Pow(m_D.Value, 1 / GetP1()) * fsValue.Pow(fsValue.Log(1 / m_rf.Value), m_alpha2.Value) / (GetC1() * fsValue.Pow(m_Q.Value / m_numberOfCyclones.Value, 1 + m_beta2.Value)));
+            m_xRed50.Value = fsValue.Sqrt(fsValue.Pow(m_D.Value, 1 / GetP1()) * fsValue.Pow(-fsValue.Log(m_rf.Value), m_alpha2.Value) / (GetC1() * fsValue.Pow(m_Q.Value / m_numberOfCyclones.Value, 1 + m_beta2.Value)));
         }
 
         #region Help Functions

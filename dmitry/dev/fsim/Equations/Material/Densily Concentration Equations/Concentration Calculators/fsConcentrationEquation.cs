@@ -5,6 +5,8 @@ namespace Equations
 {
     public class fsConcentrationEquation : fsCalculatorEquation
     {
+        //  rhoSus = rhoF + c * (1 - rhoF / rhoS)
+
         #region Parameters
 
         private readonly IEquationParameter m_filtrateDensity;
@@ -46,7 +48,7 @@ namespace Equations
             fsValue rhoF = m_filtrateDensity.Value;
             fsValue rhoS = m_solidsDensity.Value;
             fsValue rhoSus = m_suspensionDensity.Value;
-            m_solidsConcentration.Value = rhoS * (rhoF - rhoSus) / (rhoF - rhoS);
+            m_solidsConcentration.Value = (rhoF - rhoSus) / (rhoF / rhoS - 1);
         }
 
         private void FiltrateDensityFormula()
@@ -54,7 +56,7 @@ namespace Equations
             fsValue c = m_solidsConcentration.Value;
             fsValue rhoS = m_solidsDensity.Value;
             fsValue rhoSus = m_suspensionDensity.Value;
-            m_filtrateDensity.Value = rhoS * (c - rhoSus) / (c - rhoS);
+            m_filtrateDensity.Value = (c - rhoSus) / (c / rhoS - 1);
         }
 
         private void SolidsDensityFormula()
@@ -62,7 +64,7 @@ namespace Equations
             fsValue c = m_solidsConcentration.Value;
             fsValue rhoF = m_filtrateDensity.Value;
             fsValue rhoSus = m_suspensionDensity.Value;
-            m_solidsDensity.Value = c * rhoF / (c + rhoF - rhoSus);
+            m_solidsDensity.Value = c / (1 + (c - rhoSus) / rhoF);
         }
 
         private void SuspensionDensityFormula()
@@ -70,7 +72,7 @@ namespace Equations
             fsValue c = m_solidsConcentration.Value;
             fsValue rhoF = m_filtrateDensity.Value;
             fsValue rhoS = m_solidsDensity.Value;
-            m_suspensionDensity.Value = (rhoS * rhoF + c * rhoS - c * rhoF) / rhoS;
+            m_suspensionDensity.Value = rhoF + c * (1 - rhoF / rhoS);
         }
 
         #endregion

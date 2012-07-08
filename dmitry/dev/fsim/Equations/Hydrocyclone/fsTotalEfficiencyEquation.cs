@@ -8,6 +8,8 @@ namespace Equations.Hydrocyclone
 {
     public class fsTotalEfficiencyEquation : fsCalculatorEquation
     {
+        // ET = (1 - rf) * E'T + rf
+        
         #region Parameters
 
         private readonly IEquationParameter m_TotalEfficiency;

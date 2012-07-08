@@ -5,6 +5,8 @@ namespace Equations
 {
     public class fsVolumeConcentrationEquation : fsCalculatorEquation
     {
+        //  rhoSus = (1 - cv) * rhoF + cv * rhoS 
+        
         #region Parameters
 
         private readonly IEquationParameter m_filtrateDensity;

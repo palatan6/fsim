@@ -9,6 +9,8 @@ namespace Equations.Hydrocyclone
 {
     public class fsDuOverDrfEuEquation : fsCalculatorEquation
     {
+        // rf = gamma1 * (Du/D)^gamma2 * Eu^(-gamma3)
+
         #region Parameters
 
         private readonly IEquationParameter m_DuOverD;

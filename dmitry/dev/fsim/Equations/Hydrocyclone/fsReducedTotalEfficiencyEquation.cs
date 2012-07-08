@@ -9,6 +9,12 @@ namespace Equations.Hydrocyclone
 {
     public class fsReducedTotalEfficiencyEquation : fsCalculatorEquation
     {
+        /*
+         *              /        /           ln(xg) - ln(x'50)               \ \   
+         *  E'T = 0.5 * | 1 + erf| ----------------------------------------- | | 
+         *              \        \ (2 * (ln(sigmaG)^2 + ln(sigmaS)^2))^(1/2) / / 
+         */ 
+        
         #region Parameters
 
         private readonly IEquationParameter m_ReducedTotalEfficiency;
@@ -43,7 +49,7 @@ namespace Equations.Hydrocyclone
 
         private void ReducedTotalEfficiencyFormula()
         {
-            fsValue A = fsValue.Log(m_xG.Value) - fsValue.Log(m_xRed50.Value);
+            fsValue A = fsValue.Log(m_xG.Value / m_xRed50.Value);
             fsValue B = fsValue.Sqrt(2 * (fsValue.Sqr(fsValue.Log(m_sigmaG.Value)) + fsValue.Sqr(fsValue.Log(m_sigmaS.Value))));
             m_ReducedTotalEfficiency.Value = 0.5 * (1 + fsValue.Erf(A / B));
         }
