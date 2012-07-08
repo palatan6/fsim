@@ -35,6 +35,7 @@ namespace Equations.Hydrocyclone
         protected override void InitFormulas()
         {
             AddFormula(m_Cu, CuFormula);
+            AddFormula(m_rf, rfFormula);
         }
 
         #region Formulas
@@ -42,6 +43,11 @@ namespace Equations.Hydrocyclone
         private void CuFormula()
         {
             m_Cu.Value = m_C.Value * (1 + (1 - m_rf.Value) / m_rf.Value * m_ReducedTotalEfficiency.Value);
+        }
+
+        private void rfFormula()
+        {
+            m_rf.Value = m_C.Value * m_ReducedTotalEfficiency.Value / (m_Cu.Value + m_C.Value * (m_ReducedTotalEfficiency.Value - 1));
         }
 
         #endregion
