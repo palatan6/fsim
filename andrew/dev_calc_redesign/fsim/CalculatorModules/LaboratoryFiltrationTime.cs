@@ -12,9 +12,9 @@ namespace CalculatorModules
     {
         protected override void InitializeCalculators()
         {
-            Calculators.Add(new fsDensityConcentrationCalculator());
-            Calculators.Add(new fsPorosityCalculator());
-            Calculators.Add(new fsLaboratoryFiltrationCalculator());
+            Calculator.AddEquations(new fsDensityConcentrationCalculator());
+            Calculator.AddEquations(new fsPorosityCalculator());
+            Calculator.AddEquations(new fsLaboratoryFiltrationCalculator());
         }
 
         protected override void InitializeGroups()

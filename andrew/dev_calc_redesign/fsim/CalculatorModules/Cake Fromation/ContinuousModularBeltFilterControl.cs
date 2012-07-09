@@ -14,7 +14,7 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void AddCakeFormationCalculator()
         {
-            Calculators.Add(new fsContinuousModularBeltFilterCalculator());
+            Calculator.AddEquations(new fsContinuousModularBeltFilterCalculator());
         }
 
         protected override void InitializeParametersValues()

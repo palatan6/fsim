@@ -27,8 +27,8 @@ namespace CalculatorModules.Hydrocyclone
 
         protected override void InitializeCalculators()
         {
-            Calculators.Add(new fsDensityConcentrationCalculator());
-            Calculators.Add(new fsHydrocycloneCalculator());
+            Calculator.AddEquations(new fsDensityConcentrationCalculator());
+            Calculator.AddEquations(new fsHydrocycloneCalculator());
         }
 
         protected override void InitializeGroups()

@@ -10,7 +10,7 @@ namespace CalculatorModules
         public static void ProcessCalculatorParameters(
             Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> values,
             Dictionary<fsParameterIdentifier, fsParametersGroup> parameterToGroup,
-            List<fsCalculator> calculators)
+            fsCalculator calculator)
         {
             var localValues = new Dictionary<fsParameterIdentifier, fsCalculatorParameter>();
 
@@ -22,12 +22,9 @@ namespace CalculatorModules
                                              : new fsCalculatorParameter(parameter);
             }
 
-            foreach (fsCalculator calc in calculators)
-            {
-                calc.ReadDataFromStorage(localValues);
-                calc.Calculate();
-                calc.CopyValuesToStorage(localValues);
-            }
+            calculator.ReadDataFromStorage(localValues);
+            calculator.Calculate();
+            calculator.CopyValuesToStorage(localValues);
 
             foreach (fsParameterIdentifier parameter in values.Keys)
             {

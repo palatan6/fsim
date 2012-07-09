@@ -197,19 +197,16 @@
       <DependentUpon>CakeMoistureContentFromCakeSaturationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CakeMoistureContentFromWetAndDryCakeMassControl.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CakeMoistureContentFromWetAndDryCakeMassControl.designer.cs">
       <DependentUpon>CakeMoistureContentFromWetAndDryCakeMassControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CakePorossityControl.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CakePorossityControl.designer.cs">
       <DependentUpon>CakePorossityControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CakeWashOutContentControl.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CakeWashOutContentControl.designer.cs">
       <DependentUpon>CakeWashOutContentControl.cs</DependentUpon>
@@ -236,7 +233,6 @@
       <DependentUpon>LaboratoryFiltrationTime.cs</DependentUpon>
     </Compile>
     <Compile Include="MsusAndHcControl.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MsusAndHcControl.designer.cs">
       <DependentUpon>MsusAndHcControl.cs</DependentUpon>
@@ -248,14 +244,12 @@
       <DependentUpon>PermeabilityControl.cs</DependentUpon>
     </Compile>
     <Compile Include="PkeFromPcRcControl.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PkeFromPcRcControl.Designer.cs">
       <DependentUpon>PkeFromPcRcControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SuspensionSolidsMassFractionControl.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SuspensionSolidsMassFractionControl.Designer.cs">
       <DependentUpon>SuspensionSolidsMassFractionControl.cs</DependentUpon>

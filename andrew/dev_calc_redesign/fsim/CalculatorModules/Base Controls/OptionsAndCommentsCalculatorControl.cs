@@ -224,7 +224,7 @@ namespace CalculatorModules
             fsTableAndChart1.AssignCalculatorData(Values,
                 Groups,
                 ParameterToGroup,
-                Calculators);
+                Calculator);
             fsTableAndChart1.RefreshAndRecalculateAll();
         }
 

@@ -70,7 +70,7 @@ namespace CalculatorModules
 
         protected virtual void InitializeCalculators()
         {
-            // This method should contain initialization of Calculators in derived class.
+            // This method should contain initialization of Calculator in derived class.
         }
 
         protected virtual void InitializeGroups()
@@ -121,7 +121,7 @@ namespace CalculatorModules
             Values = new Dictionary<fsParameterIdentifier, fsSimulationModuleParameter>();
             ParameterToCell = new Dictionary<fsParameterIdentifier, DataGridViewCell>();
             CellToParameter = new Dictionary<DataGridViewCell, fsParameterIdentifier>();
-            Calculators = new List<fsCalculator>();
+            Calculator = new fsCalculator();
             Groups = new List<fsParametersGroup>();
             ParameterToGroup = new Dictionary<fsParameterIdentifier, fsParametersGroup>();
 
@@ -132,7 +132,7 @@ namespace CalculatorModules
 
         #region Routines
 
-        protected List<fsCalculator> Calculators { get; set; }
+        protected fsCalculator Calculator { get; set; }
         protected List<fsParametersGroup> Groups { get; private set; }
         protected Dictionary<fsParameterIdentifier, fsParametersGroup> ParameterToGroup { get; private set; }
 
@@ -330,7 +330,7 @@ namespace CalculatorModules
 
         protected void Recalculate()
         {
-            fsCalculationProcessor.ProcessCalculatorParameters(Values, ParameterToGroup, Calculators);
+            fsCalculationProcessor.ProcessCalculatorParameters(Values, ParameterToGroup, Calculator);
         }
 
         protected void WriteValuesToDataGrid()

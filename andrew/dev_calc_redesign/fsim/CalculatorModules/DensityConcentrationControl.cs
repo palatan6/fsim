@@ -27,7 +27,7 @@ namespace CalculatorModules
         
         protected override void InitializeCalculators()
         {
-            Calculators.Add(new fsDensityConcentrationCalculator());
+            Calculator.AddEquations(new fsDensityConcentrationCalculator());
         }
 
         protected override void InitializeGroups()

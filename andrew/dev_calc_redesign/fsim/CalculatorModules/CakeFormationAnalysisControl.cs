@@ -11,8 +11,8 @@ namespace CalculatorModules.Cake_Fromation
     {
         protected override void InitializeCalculators()
         {
-            Calculators.Add(new fsDensityConcentrationCalculator());
-            Calculators.Add(new fsAnalysisFiltrationCalculator());
+            Calculator.AddEquations(new fsDensityConcentrationCalculator());
+            Calculator.AddEquations(new fsAnalysisFiltrationCalculator());
         }
         protected override void InitializeGroups()
         {

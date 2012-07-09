@@ -21,7 +21,7 @@ namespace CalculatorModules.CakeWashing
 
         protected override void InitializeCalculators()
         {
-            Calculators.Add(new fsCakeWashingCalculator());
+            Calculator.AddEquations(new fsCakeWashingCalculator());
         }
 
         protected override void InitializeGroups()

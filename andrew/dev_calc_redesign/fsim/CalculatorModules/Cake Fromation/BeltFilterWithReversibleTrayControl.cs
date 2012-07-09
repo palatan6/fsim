@@ -15,7 +15,7 @@ namespace CalculatorModules.BeltFiltersWithReversibleTrays
 
         protected override void AddCakeFormationCalculator()
         {
-            Calculators.Add(new fsBeltFiltersWithReversibleTraysCalculator());
+            Calculator.AddEquations(new fsBeltFiltersWithReversibleTraysCalculator());
         }
 
         protected override void InitializeParametersValues()

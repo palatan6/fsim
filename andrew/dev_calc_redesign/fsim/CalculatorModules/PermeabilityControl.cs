@@ -25,7 +25,7 @@ namespace CalculatorModules
 
         protected override void InitializeCalculators()
         {
-            Calculators.Add(new fsPermeabilityCalculator());
+            Calculator.AddEquations(new fsPermeabilityCalculator());
         }
 
         protected override void InitializeGroups()

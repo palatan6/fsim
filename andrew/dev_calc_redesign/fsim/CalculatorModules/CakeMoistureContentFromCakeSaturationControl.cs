@@ -25,7 +25,7 @@ namespace CalculatorModules
 
         protected override void InitializeCalculators()
         {
-            Calculators.Add(new fsRfFromCakeSaturationCalculator());
+            Calculator.AddEquations(new fsRfFromCakeSaturationCalculator());
         }
 
         protected override void InitializeGroups()

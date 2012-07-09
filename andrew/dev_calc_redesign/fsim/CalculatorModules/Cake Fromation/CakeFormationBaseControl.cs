@@ -26,10 +26,10 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void InitializeCalculators()
         {
-            Calculators.Add(new fsDensityConcentrationCalculator());
-            Calculators.Add(new fsPorosityCalculator());
-            Calculators.Add(new fsPermeabilityCalculator());
-            Calculators.Add(new fsRm0Hce0Calculator());
+            Calculator.AddEquations(new fsDensityConcentrationCalculator());
+            Calculator.AddEquations(new fsPorosityCalculator());
+            Calculator.AddEquations(new fsPermeabilityCalculator());
+            Calculator.AddEquations(new fsRm0Hce0Calculator());
             AddCakeFormationCalculator();
         }
 

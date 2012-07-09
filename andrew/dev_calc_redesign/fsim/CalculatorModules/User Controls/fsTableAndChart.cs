@@ -18,7 +18,7 @@ namespace CalculatorModules.User_Controls
 
         private readonly List<fsDiagramWithTable.fsNamedArray> m_y2Curves = new List<fsDiagramWithTable.fsNamedArray>();
         private readonly List<fsDiagramWithTable.fsNamedArray> m_yCurves = new List<fsDiagramWithTable.fsNamedArray>();
-        private List<fsCalculator> m_calculators;
+        private fsCalculator m_calculator;
 
         private Dictionary<fsParameterIdentifier, List<fsSimulationModuleParameter>> m_data =
             new Dictionary<fsParameterIdentifier, List<fsSimulationModuleParameter>>();
@@ -48,12 +48,12 @@ namespace CalculatorModules.User_Controls
             Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> values,
             List<fsParametersGroup> groups,
             Dictionary<fsParameterIdentifier, fsParametersGroup> parameterToGroup,
-            List<fsCalculator> calculators)
+            fsCalculator calculator)
         {
             m_values = new Dictionary<fsParameterIdentifier, fsSimulationModuleParameter>(values);
             m_groups = new List<fsParametersGroup>(groups);
             m_parameterToGroup = new Dictionary<fsParameterIdentifier, fsParametersGroup>(parameterToGroup);
-            m_calculators = new List<fsCalculator>(calculators);
+            m_calculator = calculator;
         }
 
         public void SetDiagram(
@@ -222,7 +222,7 @@ namespace CalculatorModules.User_Controls
                 SubstituteGroup(m_parameterToGroup, xInitialgroup, xNewGroup);
 
                 currentValues[m_iterationParameter].Value = from + (to - from) * i / detalization;
-                fsCalculationProcessor.ProcessCalculatorParameters(currentValues, m_parameterToGroup, m_calculators);
+                fsCalculationProcessor.ProcessCalculatorParameters(currentValues, m_parameterToGroup, m_calculator);
 
                 SubstituteGroup(m_parameterToGroup, xNewGroup, xInitialgroup);
 
