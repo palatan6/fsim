@@ -20,14 +20,14 @@ namespace WinFormsCakeFormationSample
             public Dictionary<fsParameterIdentifier, DataGridViewCell> m_parameterCell;
             public Dictionary<DataGridViewCell, fsParameterIdentifier> m_cellParameter;
             public Dictionary<fsParameterIdentifier, fsCalculatorParameter> m_parameterValue;
-            public List<fsCalculator> m_calculatorList;
+            public fsCalculator m_calculator;
 
             public DataContainer()
             {
                 m_parameterCell = new Dictionary<fsParameterIdentifier, DataGridViewCell>();
                 m_cellParameter = new Dictionary<DataGridViewCell, fsParameterIdentifier>();
                 m_parameterValue = new Dictionary<fsParameterIdentifier, fsCalculatorParameter>();
-                m_calculatorList = new List<fsCalculator>();
+                m_calculator = new fsCalculator();
             }
         }
 
@@ -59,12 +59,12 @@ namespace WinFormsCakeFormationSample
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            materialData.m_calculatorList.Add(new fsDensityConcentrationCalculator());
+            materialData.m_calculator.AddEquations(new fsDensityConcentrationCalculator());
 
-            cakeFormationData.m_calculatorList.Add(new fsPorosityCalculator());
-            cakeFormationData.m_calculatorList.Add(new fsPermeabilityCalculator());
-            cakeFormationData.m_calculatorList.Add(new fsRm0Hce0Calculator());
-            cakeFormationData.m_calculatorList.Add(new fsCakeFormationDpConstCalculator());
+            cakeFormationData.m_calculator.AddEquations(new fsPorosityCalculator());
+            cakeFormationData.m_calculator.AddEquations(new fsPermeabilityCalculator());
+            cakeFormationData.m_calculator.AddEquations(new fsRm0Hce0Calculator());
+            cakeFormationData.m_calculator.AddEquations(new fsCakeFormationDpConstCalculator());
 
             dataContainers = new[] {
                 materialData,
@@ -234,12 +234,9 @@ namespace WinFormsCakeFormationSample
             var calcsList = new List<KeyValuePair<fsCalculator, Dictionary<fsParameterIdentifier, fsCalculatorParameter>>>();
             foreach (var dataContainer in dataContainers)
             {
-                foreach (var calculator in dataContainer.m_calculatorList)
-                {
-                    calcsList.Add(new KeyValuePair<fsCalculator,Dictionary<fsParameterIdentifier,fsCalculatorParameter>>(
-                        calculator,
-                        dataContainer.m_parameterValue));
-                }
+                calcsList.Add(new KeyValuePair<fsCalculator,Dictionary<fsParameterIdentifier,fsCalculatorParameter>>(
+                    dataContainer.m_calculator,
+                    dataContainer.m_parameterValue));
             }
 
             var progressSplitters = new double[calcsList.Count + 1];
