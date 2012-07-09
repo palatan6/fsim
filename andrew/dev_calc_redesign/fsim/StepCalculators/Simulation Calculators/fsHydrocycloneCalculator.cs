@@ -9,78 +9,78 @@ using Equations.Hydrocyclone;
 
 namespace StepCalculators.Simulation_Calculators
 {
-    public class fsHydrocycloneCalculator : fsCalculator
+    public class fsHydrocycloneCalculator : fsCalculatorEquationsList
     {
-        public fsHydrocycloneCalculator()
+        public override void AddToCalculator(fsCalculator calculator)
         {
             #region Parameters Initialization
 
-            IEquationParameter etaf = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
-            IEquationParameter rhoS = AddConstant(fsParameterIdentifier.SolidsDensity);
-            IEquationParameter rhoF = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
-            IEquationParameter rhoSus = AddConstant(fsParameterIdentifier.SuspensionDensity);
-            IEquationParameter cv = AddConstant(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
-            IEquationParameter cm = AddConstant(fsParameterIdentifier.SuspensionSolidsMassFraction);
+            IEquationParameter etaf = calculator.AddVariable(fsParameterIdentifier.MotherLiquidViscosity);
+            IEquationParameter rhoS = calculator.AddVariable(fsParameterIdentifier.SolidsDensity);
+            IEquationParameter rhoF = calculator.AddVariable(fsParameterIdentifier.MotherLiquidDensity);
+            IEquationParameter rhoSus = calculator.AddVariable(fsParameterIdentifier.SuspensionDensity);
+            IEquationParameter cv = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
+            IEquationParameter cm = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsMassFraction);
 
-            IEquationParameter xG = AddVariable(fsParameterIdentifier.xg);
-            IEquationParameter sigmaG = AddVariable(fsParameterIdentifier.sigma_g);
-            IEquationParameter sigmaS = AddVariable(fsParameterIdentifier.sigma_s);
+            IEquationParameter xG = calculator.AddVariable(fsParameterIdentifier.xg);
+            IEquationParameter sigmaG = calculator.AddVariable(fsParameterIdentifier.sigma_g);
+            IEquationParameter sigmaS = calculator.AddVariable(fsParameterIdentifier.sigma_s);
 
-            IEquationParameter rf = AddVariable(fsParameterIdentifier.rf);
-            IEquationParameter DuOverD = AddVariable(fsParameterIdentifier.DuOverD);
-            IEquationParameter xRed50 = AddVariable(fsParameterIdentifier.ReducedCutSize);
-            IEquationParameter D = AddVariable(fsParameterIdentifier.MachineDiameter);
+            IEquationParameter rf = calculator.AddVariable(fsParameterIdentifier.rf);
+            IEquationParameter DuOverD = calculator.AddVariable(fsParameterIdentifier.DuOverD);
+            IEquationParameter xRed50 = calculator.AddVariable(fsParameterIdentifier.ReducedCutSize);
+            IEquationParameter D = calculator.AddVariable(fsParameterIdentifier.MachineDiameter);
 
-            IEquationParameter numberOfCyclones = AddVariable(fsParameterIdentifier.NumberOfCyclones);
-            IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
+            IEquationParameter numberOfCyclones = calculator.AddVariable(fsParameterIdentifier.NumberOfCyclones);
+            IEquationParameter Dp = calculator.AddVariable(fsParameterIdentifier.PressureDifference);
 
-            IEquationParameter Q = AddVariable(fsParameterIdentifier.FeedVolumeFlowRate);
-            IEquationParameter Qm = AddVariable(fsParameterIdentifier.FeedSolidsMassFlowRate);
-            IEquationParameter Qms = AddVariable(fsParameterIdentifier.Qms);
+            IEquationParameter Q = calculator.AddVariable(fsParameterIdentifier.FeedVolumeFlowRate);
+            IEquationParameter Qm = calculator.AddVariable(fsParameterIdentifier.FeedSolidsMassFlowRate);
+            IEquationParameter Qms = calculator.AddVariable(fsParameterIdentifier.Qms);
 
-            IEquationParameter Cu = AddVariable(fsParameterIdentifier.UnderflowSolidsConcentration);
-            IEquationParameter Co = AddVariable(fsParameterIdentifier.OverflowSolidsConcentration);
-            IEquationParameter C = AddConstant(fsParameterIdentifier.SuspensionSolidsConcentration);
+            IEquationParameter Cu = calculator.AddVariable(fsParameterIdentifier.UnderflowSolidsConcentration);
+            IEquationParameter Co = calculator.AddVariable(fsParameterIdentifier.OverflowSolidsConcentration);
+            IEquationParameter C = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsConcentration);
 
-            IEquationParameter ReducedTotalEfficiency = AddVariable(fsParameterIdentifier.ReducedTotalEfficiency);
-            IEquationParameter TotalEfficiency = AddVariable(fsParameterIdentifier.TotalEfficiency);
+            IEquationParameter ReducedTotalEfficiency = calculator.AddVariable(fsParameterIdentifier.ReducedTotalEfficiency);
+            IEquationParameter TotalEfficiency = calculator.AddVariable(fsParameterIdentifier.TotalEfficiency);
 
-            IEquationParameter StokesNumber = AddVariable(fsParameterIdentifier.StokesNumber);
-            IEquationParameter EulerNumber = AddVariable(fsParameterIdentifier.EulerNumber);
-            IEquationParameter ReynoldsNumber = AddVariable(fsParameterIdentifier.ReynoldsNumber);
-            IEquationParameter v = AddVariable(fsParameterIdentifier.AverageVelocity);
+            IEquationParameter StokesNumber = calculator.AddVariable(fsParameterIdentifier.StokesNumber);
+            IEquationParameter EulerNumber = calculator.AddVariable(fsParameterIdentifier.EulerNumber);
+            IEquationParameter ReynoldsNumber = calculator.AddVariable(fsParameterIdentifier.ReynoldsNumber);
+            IEquationParameter v = calculator.AddVariable(fsParameterIdentifier.AverageVelocity);
 
             
-            IEquationParameter alpha1 = AddVariable(fsParameterIdentifier.Alpha1);
-            IEquationParameter alpha2 = AddVariable(fsParameterIdentifier.Alpha2);
-            IEquationParameter alpha3 = AddVariable(fsParameterIdentifier.Alpha3);
-            IEquationParameter beta1 = AddVariable(fsParameterIdentifier.Beta1);
-            IEquationParameter beta2 = AddVariable(fsParameterIdentifier.Beta2);
-            IEquationParameter beta3 = AddVariable(fsParameterIdentifier.Beta3);
-            IEquationParameter gamma1 = AddVariable(fsParameterIdentifier.Gamma1);
-            IEquationParameter gamma2 = AddVariable(fsParameterIdentifier.Gamma2);
-            IEquationParameter gamma3 = AddVariable(fsParameterIdentifier.Gamma3);
+            IEquationParameter alpha1 = calculator.AddVariable(fsParameterIdentifier.Alpha1);
+            IEquationParameter alpha2 = calculator.AddVariable(fsParameterIdentifier.Alpha2);
+            IEquationParameter alpha3 = calculator.AddVariable(fsParameterIdentifier.Alpha3);
+            IEquationParameter beta1 = calculator.AddVariable(fsParameterIdentifier.Beta1);
+            IEquationParameter beta2 = calculator.AddVariable(fsParameterIdentifier.Beta2);
+            IEquationParameter beta3 = calculator.AddVariable(fsParameterIdentifier.Beta3);
+            IEquationParameter gamma1 = calculator.AddVariable(fsParameterIdentifier.Gamma1);
+            IEquationParameter gamma2 = calculator.AddVariable(fsParameterIdentifier.Gamma2);
+            IEquationParameter gamma3 = calculator.AddVariable(fsParameterIdentifier.Gamma3);
 
-            IEquationParameter LOverD = AddVariable(fsParameterIdentifier.bigLOverD);
-            IEquationParameter lOverD = AddVariable(fsParameterIdentifier.smallLOverD);
-            IEquationParameter DiOverD = AddVariable(fsParameterIdentifier.DiOverD);
-            IEquationParameter DoOverD = AddVariable(fsParameterIdentifier.DoOverD);
+            IEquationParameter LOverD = calculator.AddVariable(fsParameterIdentifier.bigLOverD);
+            IEquationParameter lOverD = calculator.AddVariable(fsParameterIdentifier.smallLOverD);
+            IEquationParameter DiOverD = calculator.AddVariable(fsParameterIdentifier.DiOverD);
+            IEquationParameter DoOverD = calculator.AddVariable(fsParameterIdentifier.DoOverD);
 
-            IEquationParameter L = AddVariable(fsParameterIdentifier.CycloneLength);
-            IEquationParameter l = AddVariable(fsParameterIdentifier.LengthOfCylindricalPart);
-            IEquationParameter Di = AddVariable(fsParameterIdentifier.InletDiameter);
-            IEquationParameter Do = AddVariable(fsParameterIdentifier.OutletDiameter);
-            IEquationParameter Du = AddVariable(fsParameterIdentifier.UnderflowDiameter);
-            IEquationParameter Qo = AddVariable(fsParameterIdentifier.OverflowVolumeFlowRate);
-            IEquationParameter Qu = AddVariable(fsParameterIdentifier.UnderflowVolumeFlowRate);
-            IEquationParameter Qmo = AddVariable(fsParameterIdentifier.OverflowMassFlowRate);
-            IEquationParameter Qmu = AddVariable(fsParameterIdentifier.UnderflowMassFlowRate);
-            IEquationParameter Qso = AddVariable(fsParameterIdentifier.OverflowSolidsMassFlowRate);
-            IEquationParameter Qsu = AddVariable(fsParameterIdentifier.UnderflowSolidsMassFlowRate);
-            IEquationParameter cmo = AddVariable(fsParameterIdentifier.OverflowSolidsMassFraction);
-            IEquationParameter cmu = AddVariable(fsParameterIdentifier.UnderflowSolidsMassFraction);
-            IEquationParameter cvo = AddVariable(fsParameterIdentifier.OverflowSolidsVolumeFraction);
-            IEquationParameter cvu = AddVariable(fsParameterIdentifier.UnderflowSolidsVolumeFraction);
+            IEquationParameter L = calculator.AddVariable(fsParameterIdentifier.CycloneLength);
+            IEquationParameter l = calculator.AddVariable(fsParameterIdentifier.LengthOfCylindricalPart);
+            IEquationParameter Di = calculator.AddVariable(fsParameterIdentifier.InletDiameter);
+            IEquationParameter Do = calculator.AddVariable(fsParameterIdentifier.OutletDiameter);
+            IEquationParameter Du = calculator.AddVariable(fsParameterIdentifier.UnderflowDiameter);
+            IEquationParameter Qo = calculator.AddVariable(fsParameterIdentifier.OverflowVolumeFlowRate);
+            IEquationParameter Qu = calculator.AddVariable(fsParameterIdentifier.UnderflowVolumeFlowRate);
+            IEquationParameter Qmo = calculator.AddVariable(fsParameterIdentifier.OverflowMassFlowRate);
+            IEquationParameter Qmu = calculator.AddVariable(fsParameterIdentifier.UnderflowMassFlowRate);
+            IEquationParameter Qso = calculator.AddVariable(fsParameterIdentifier.OverflowSolidsMassFlowRate);
+            IEquationParameter Qsu = calculator.AddVariable(fsParameterIdentifier.UnderflowSolidsMassFlowRate);
+            IEquationParameter cmo = calculator.AddVariable(fsParameterIdentifier.OverflowSolidsMassFraction);
+            IEquationParameter cmu = calculator.AddVariable(fsParameterIdentifier.UnderflowSolidsMassFraction);
+            IEquationParameter cvo = calculator.AddVariable(fsParameterIdentifier.OverflowSolidsVolumeFraction);
+            IEquationParameter cvu = calculator.AddVariable(fsParameterIdentifier.UnderflowSolidsVolumeFraction);
             
             #region Help Parameters and Constants
 
@@ -90,11 +90,11 @@ namespace StepCalculators.Simulation_Calculators
             var constantEighteen = new fsCalculatorConstant(new fsParameterIdentifier("18")) { Value = new fsValue(18) };
             var constantPi = new fsCalculatorConstant(new fsParameterIdentifier("Pi")) { Value = new fsValue(Math.PI) };
 
-            IEquationParameter rhoSMinusRhoF = AddVariable(new fsParameterIdentifier("rho_s - rho_f"));
-            Equations.Add(new fsSumEquation(rhoS, rhoF, rhoSMinusRhoF));
+            IEquationParameter rhoSMinusRhoF = calculator.AddVariable(new fsParameterIdentifier("rho_s - rho_f"));
+            calculator.AddEquation(new fsSumEquation(rhoS, rhoF, rhoSMinusRhoF));
 
-            IEquationParameter rhoSusOverflow = AddVariable(new fsParameterIdentifier("rho_sus_overflow"));
-            IEquationParameter rhoSusUnderflow = AddVariable(new fsParameterIdentifier("rho_sus_underflow"));
+            IEquationParameter rhoSusOverflow = calculator.AddVariable(new fsParameterIdentifier("rho_sus_overflow"));
+            IEquationParameter rhoSusUnderflow = calculator.AddVariable(new fsParameterIdentifier("rho_sus_underflow"));
 
             #endregion
 
@@ -102,53 +102,53 @@ namespace StepCalculators.Simulation_Calculators
 
             #region Equations Initialization
 
-            Equations.Add(new fsProductEquation(Qm, Q, rhoSus));
-            Equations.Add(new fsProductEquation(Qms, Qm, cm));
+            calculator.AddEquation(new fsProductEquation(Qm, Q, rhoSus));
+            calculator.AddEquation(new fsProductEquation(Qms, Qm, cm));
 
-            Equations.Add(new fsReducedTotalEfficiencyEquation(ReducedTotalEfficiency, xG, xRed50, sigmaG, sigmaS));
-            Equations.Add(new fsTotalEfficiencyEquation(TotalEfficiency, rf, ReducedTotalEfficiency));
+            calculator.AddEquation(new fsReducedTotalEfficiencyEquation(ReducedTotalEfficiency, xG, xRed50, sigmaG, sigmaS));
+            calculator.AddEquation(new fsTotalEfficiencyEquation(TotalEfficiency, rf, ReducedTotalEfficiency));
 
-            Equations.Add(new fsProductEquation(Qu, rf, Q));
-            Equations.Add(new fsCUnderflowEquation(Cu, C, rf, ReducedTotalEfficiency));
-            Equations.Add(new fsCOverflowEquation(Co, C, ReducedTotalEfficiency));
+            calculator.AddEquation(new fsProductEquation(Qu, rf, Q));
+            calculator.AddEquation(new fsCUnderflowEquation(Cu, C, rf, ReducedTotalEfficiency));
+            calculator.AddEquation(new fsCOverflowEquation(Co, C, ReducedTotalEfficiency));
 
-            Equations.Add(new fsDFromxRed50QnDuOverDEquation(D, xRed50, Q, numberOfCyclones, DuOverD, rhoS, rhoF, etaf, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsDFromxRed50QnDuOverDEquation(D, xRed50, Q, numberOfCyclones, DuOverD, rhoS, rhoF, etaf, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3));
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { v, constantPi, D, D, numberOfCyclones },
                 new[] { constantFour, Q }));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { StokesNumber, constantEighteen, etaf, D },
                 new[] { xRed50, xRed50, rhoSMinusRhoF, v }));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { EulerNumber, rhoF, v, v },
                 new[] { constantTwo, Dp }));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { ReynoldsNumber, etaf },
                 new[] { rhoF, D, v }));
-            Equations.Add(new fsDFromxRed50QnRfEquation(D, xRed50, rhoS, rhoF, Q, etaf, numberOfCyclones, cv, rf, alpha1, alpha2, alpha3, beta1, beta2, beta3));
-            Equations.Add(new fsDuOverDrfEuEquation(DuOverD, rf, EulerNumber, gamma1, gamma2, gamma3));
-            Equations.Add(new fsEulerReynoldsConnectionEquation(EulerNumber, ReynoldsNumber, cv, beta1, beta2, beta3));
-            Equations.Add(new fsReynoldsFromXRed50Equation(ReynoldsNumber, xRed50, rhoS, rhoF, etaf, Dp, rf, cv, alpha1, alpha2, alpha3));
-            Equations.Add(new fsvDuOverDxRed50Equation(v, DuOverD, xRed50, rhoS, rhoF, etaf, Dp, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3));
-            Equations.Add(new fsQnDpDEquation(Q, Dp, numberOfCyclones, D, rhoF, etaf, cv, beta1, beta2, beta3));
+            calculator.AddEquation(new fsDFromxRed50QnRfEquation(D, xRed50, rhoS, rhoF, Q, etaf, numberOfCyclones, cv, rf, alpha1, alpha2, alpha3, beta1, beta2, beta3));
+            calculator.AddEquation(new fsDuOverDrfEuEquation(DuOverD, rf, EulerNumber, gamma1, gamma2, gamma3));
+            calculator.AddEquation(new fsEulerReynoldsConnectionEquation(EulerNumber, ReynoldsNumber, cv, beta1, beta2, beta3));
+            calculator.AddEquation(new fsReynoldsFromXRed50Equation(ReynoldsNumber, xRed50, rhoS, rhoF, etaf, Dp, rf, cv, alpha1, alpha2, alpha3));
+            calculator.AddEquation(new fsvDuOverDxRed50Equation(v, DuOverD, xRed50, rhoS, rhoF, etaf, Dp, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3));
+            calculator.AddEquation(new fsQnDpDEquation(Q, Dp, numberOfCyclones, D, rhoF, etaf, cv, beta1, beta2, beta3));
 
-            Equations.Add(new fsProductEquation(L, LOverD, D));
-            Equations.Add(new fsProductEquation(l, lOverD, D));
-            Equations.Add(new fsProductEquation(Di, DiOverD, D));
-            Equations.Add(new fsProductEquation(Do, DoOverD, D));
-            Equations.Add(new fsProductEquation(Du, DuOverD, D));
-            Equations.Add(new fsProductEquation(Qu, rf, Q));
-            Equations.Add(new fsSumEquation(Q, Qo, Qu));
-            Equations.Add(new fsQmFromQCEquation(Qmo, Qo, Co, rhoF, rhoS));
-            Equations.Add(new fsQmFromQCEquation(Qmu, Qu, Cu, rhoF, rhoS));
-            Equations.Add(new fsProductEquation(Qsu, Qu, Cu));
-            Equations.Add(new fsProductEquation(Qso, Qo, Co));
-            Equations.Add(new fsConcentrationEquation(Co, rhoF, rhoS, rhoSusOverflow));
-            Equations.Add(new fsConcentrationEquation(Cu, rhoF, rhoS, rhoSusUnderflow));
-            Equations.Add(new fsMassConcentrationEquation(cmu, rhoF, rhoS, rhoSusUnderflow));
-            Equations.Add(new fsMassConcentrationEquation(cmo, rhoF, rhoS, rhoSusOverflow));
-            Equations.Add(new fsVolumeConcentrationEquation(cvu, rhoF, rhoS, rhoSusUnderflow));
-            Equations.Add(new fsVolumeConcentrationEquation(cvo, rhoF, rhoS, rhoSusOverflow));
+            calculator.AddEquation(new fsProductEquation(L, LOverD, D));
+            calculator.AddEquation(new fsProductEquation(l, lOverD, D));
+            calculator.AddEquation(new fsProductEquation(Di, DiOverD, D));
+            calculator.AddEquation(new fsProductEquation(Do, DoOverD, D));
+            calculator.AddEquation(new fsProductEquation(Du, DuOverD, D));
+            calculator.AddEquation(new fsProductEquation(Qu, rf, Q));
+            calculator.AddEquation(new fsSumEquation(Q, Qo, Qu));
+            calculator.AddEquation(new fsQmFromQCEquation(Qmo, Qo, Co, rhoF, rhoS));
+            calculator.AddEquation(new fsQmFromQCEquation(Qmu, Qu, Cu, rhoF, rhoS));
+            calculator.AddEquation(new fsProductEquation(Qsu, Qu, Cu));
+            calculator.AddEquation(new fsProductEquation(Qso, Qo, Co));
+            calculator.AddEquation(new fsConcentrationEquation(Co, rhoF, rhoS, rhoSusOverflow));
+            calculator.AddEquation(new fsConcentrationEquation(Cu, rhoF, rhoS, rhoSusUnderflow));
+            calculator.AddEquation(new fsMassConcentrationEquation(cmu, rhoF, rhoS, rhoSusUnderflow));
+            calculator.AddEquation(new fsMassConcentrationEquation(cmo, rhoF, rhoS, rhoSusOverflow));
+            calculator.AddEquation(new fsVolumeConcentrationEquation(cvu, rhoF, rhoS, rhoSusUnderflow));
+            calculator.AddEquation(new fsVolumeConcentrationEquation(cvo, rhoF, rhoS, rhoSusOverflow));
 
             #endregion
         }

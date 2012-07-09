@@ -9,59 +9,59 @@ using Value;
 
 namespace StepCalculators.Simulation_Calculators.Cake_Formation
 {
-    public class fsContinuousModularBeltFilterCalculator : fsCalculator
+    public class fsContinuousModularBeltFilterCalculator : fsCalculatorEquationsList
     {
-        public fsContinuousModularBeltFilterCalculator()
+        public override void AddToCalculator(fsCalculator calculator)
         {
             #region Parameters Initialization
 
-            IEquationParameter etaf = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
-            IEquationParameter rhoS = AddConstant(fsParameterIdentifier.SolidsDensity);
-            IEquationParameter rhoF = AddConstant(fsParameterIdentifier.MotherLiquidDensity);
-            IEquationParameter rhoSus = AddConstant(fsParameterIdentifier.SuspensionDensity);
-            IEquationParameter cv = AddConstant(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
-            IEquationParameter cm = AddConstant(fsParameterIdentifier.SuspensionSolidsMassFraction);
-            IEquationParameter pc0 = AddConstant(fsParameterIdentifier.CakePermeability0);
-            IEquationParameter nc = AddConstant(fsParameterIdentifier.CakeCompressibility);
-            IEquationParameter hce0 = AddConstant(fsParameterIdentifier.FilterMediumResistanceHce0);
+            IEquationParameter etaf = calculator.AddVariable(fsParameterIdentifier.MotherLiquidViscosity);
+            IEquationParameter rhoS = calculator.AddVariable(fsParameterIdentifier.SolidsDensity);
+            IEquationParameter rhoF = calculator.AddVariable(fsParameterIdentifier.MotherLiquidDensity);
+            IEquationParameter rhoSus = calculator.AddVariable(fsParameterIdentifier.SuspensionDensity);
+            IEquationParameter cv = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
+            IEquationParameter cm = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsMassFraction);
+            IEquationParameter pc0 = calculator.AddVariable(fsParameterIdentifier.CakePermeability0);
+            IEquationParameter nc = calculator.AddVariable(fsParameterIdentifier.CakeCompressibility);
+            IEquationParameter hce0 = calculator.AddVariable(fsParameterIdentifier.FilterMediumResistanceHce0);
 
-            IEquationParameter rhoCd = AddConstant(fsParameterIdentifier.DryCakeDensity);
-            IEquationParameter eps = AddConstant(fsParameterIdentifier.CakePorosity);
-            IEquationParameter kappa = AddConstant(fsParameterIdentifier.Kappa);
+            IEquationParameter rhoCd = calculator.AddVariable(fsParameterIdentifier.DryCakeDensity);
+            IEquationParameter eps = calculator.AddVariable(fsParameterIdentifier.CakePorosity);
+            IEquationParameter kappa = calculator.AddVariable(fsParameterIdentifier.Kappa);
 
-            IEquationParameter ns = AddVariable(fsParameterIdentifier.ns);
-            IEquationParameter Qms = AddVariable(fsParameterIdentifier.Qms);
-            IEquationParameter Qs = AddVariable(fsParameterIdentifier.Qs);
-            IEquationParameter Qmsus = AddVariable(fsParameterIdentifier.SuspensionMassFlowrate);
-            IEquationParameter Qsus = AddVariable(fsParameterIdentifier.Qsus);
+            IEquationParameter ns = calculator.AddVariable(fsParameterIdentifier.ns);
+            IEquationParameter Qms = calculator.AddVariable(fsParameterIdentifier.Qms);
+            IEquationParameter Qs = calculator.AddVariable(fsParameterIdentifier.Qs);
+            IEquationParameter Qmsus = calculator.AddVariable(fsParameterIdentifier.SuspensionMassFlowrate);
+            IEquationParameter Qsus = calculator.AddVariable(fsParameterIdentifier.Qsus);
             
-            IEquationParameter ls = AddVariable(fsParameterIdentifier.ls);
-            IEquationParameter lOverB = AddVariable(fsParameterIdentifier.l_over_b);
-            IEquationParameter lsOverB = AddVariable(fsParameterIdentifier.ls_over_b);
+            IEquationParameter ls = calculator.AddVariable(fsParameterIdentifier.ls);
+            IEquationParameter lOverB = calculator.AddVariable(fsParameterIdentifier.l_over_b);
+            IEquationParameter lsOverB = calculator.AddVariable(fsParameterIdentifier.ls_over_b);
 
-            IEquationParameter u = AddVariable(fsParameterIdentifier.u);
-            IEquationParameter n = AddVariable(fsParameterIdentifier.RotationalSpeed);
-            IEquationParameter tc = AddVariable(fsParameterIdentifier.CycleTime);
-            IEquationParameter nsf = AddVariable(fsParameterIdentifier.nsf);
-            IEquationParameter nsr = AddVariable(fsParameterIdentifier.nsr);
-            IEquationParameter sf = AddVariable(fsParameterIdentifier.SpecificFiltrationTime);
-            IEquationParameter sr = AddVariable(fsParameterIdentifier.SpecificResidualTime);
-            IEquationParameter tr = AddVariable(fsParameterIdentifier.ResidualTime);
+            IEquationParameter u = calculator.AddVariable(fsParameterIdentifier.u);
+            IEquationParameter n = calculator.AddVariable(fsParameterIdentifier.RotationalSpeed);
+            IEquationParameter tc = calculator.AddVariable(fsParameterIdentifier.CycleTime);
+            IEquationParameter nsf = calculator.AddVariable(fsParameterIdentifier.nsf);
+            IEquationParameter nsr = calculator.AddVariable(fsParameterIdentifier.nsr);
+            IEquationParameter sf = calculator.AddVariable(fsParameterIdentifier.SpecificFiltrationTime);
+            IEquationParameter sr = calculator.AddVariable(fsParameterIdentifier.SpecificResidualTime);
+            IEquationParameter tr = calculator.AddVariable(fsParameterIdentifier.ResidualTime);
 
-            IEquationParameter cakeHeigth = AddVariable(fsParameterIdentifier.CakeHeight);
-            IEquationParameter filtrationTime = AddVariable(fsParameterIdentifier.FiltrationTime);
+            IEquationParameter cakeHeigth = calculator.AddVariable(fsParameterIdentifier.CakeHeight);
+            IEquationParameter filtrationTime = calculator.AddVariable(fsParameterIdentifier.FiltrationTime);
 
-            IEquationParameter pressureDifference = AddVariable(fsParameterIdentifier.PressureDifference);
+            IEquationParameter pressureDifference = calculator.AddVariable(fsParameterIdentifier.PressureDifference);
 
-            IEquationParameter pc = AddVariable(fsParameterIdentifier.CakePermeability);
+            IEquationParameter pc = calculator.AddVariable(fsParameterIdentifier.CakePermeability);
 
-            IEquationParameter filterArea = AddVariable(fsParameterIdentifier.FilterArea);
-            IEquationParameter filterAreaAs = AddVariable(fsParameterIdentifier.As);
-            IEquationParameter machineWidth = AddVariable(fsParameterIdentifier.MachineWidth);
-            IEquationParameter filterLength = AddVariable(fsParameterIdentifier.FilterLength);
+            IEquationParameter filterArea = calculator.AddVariable(fsParameterIdentifier.FilterArea);
+            IEquationParameter filterAreaAs = calculator.AddVariable(fsParameterIdentifier.As);
+            IEquationParameter machineWidth = calculator.AddVariable(fsParameterIdentifier.MachineWidth);
+            IEquationParameter filterLength = calculator.AddVariable(fsParameterIdentifier.FilterLength);
 
-            IEquationParameter qft = AddVariable(fsParameterIdentifier.qft);
-            IEquationParameter qmft = AddVariable(fsParameterIdentifier.qmft);
+            IEquationParameter qft = calculator.AddVariable(fsParameterIdentifier.qft);
+            IEquationParameter qmft = calculator.AddVariable(fsParameterIdentifier.qmft);
 
             #region Help Parameters and Constants
 
@@ -69,14 +69,14 @@ namespace StepCalculators.Simulation_Calculators.Cake_Formation
             var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) {Value = fsValue.One};
             var constantTwo = new fsCalculatorConstant(new fsParameterIdentifier("1")) {Value = new fsValue(2)};
             
-            IEquationParameter hcAddHce = AddVariable(new fsParameterIdentifier("hc + hce"));
-            Equations.Add(new fsSumEquation(hcAddHce, cakeHeigth, hce0));
+            IEquationParameter hcAddHce = calculator.AddVariable(new fsParameterIdentifier("hc + hce"));
+            calculator.AddEquation(new fsSumEquation(hcAddHce, cakeHeigth, hce0));
             
-            IEquationParameter hcAdd2Hce = AddVariable(new fsParameterIdentifier("hc + 2 hce"));
-            Equations.Add(new fsSumEquation(hcAdd2Hce, hcAddHce, hce0));
+            IEquationParameter hcAdd2Hce = calculator.AddVariable(new fsParameterIdentifier("hc + 2 hce"));
+            calculator.AddEquation(new fsSumEquation(hcAdd2Hce, hcAddHce, hce0));
 
-            IEquationParameter oneMinusEps = AddVariable(new fsParameterIdentifier("1 - eps"));
-            Equations.Add(new fsSumEquation(constantOne, eps, oneMinusEps));
+            IEquationParameter oneMinusEps = calculator.AddVariable(new fsParameterIdentifier("1 - eps"));
+            calculator.AddEquation(new fsSumEquation(constantOne, eps, oneMinusEps));
                         
             #endregion
 
@@ -84,97 +84,97 @@ namespace StepCalculators.Simulation_Calculators.Cake_Formation
 
             #region Equations Initialization
 
-            Equations.Add(new fsAreaOfBeltWithReversibleTraysEquation(filterArea, lsOverB, ns, Qms, rhoCd, u, cakeHeigth));
+            calculator.AddEquation(new fsAreaOfBeltWithReversibleTraysEquation(filterArea, lsOverB, ns, Qms, rhoCd, u, cakeHeigth));
 
-            Equations.Add(new fsProductEquation(Qms, rhoS, Qs));
-            Equations.Add(new fsProductEquation(Qmsus, rhoSus, Qsus));
-            Equations.Add(new fsProductEquation(Qs, Qsus, cv));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductEquation(Qms, rhoS, Qs));
+            calculator.AddEquation(new fsProductEquation(Qmsus, rhoSus, Qsus));
+            calculator.AddEquation(new fsProductEquation(Qs, Qsus, cv));
+            calculator.AddEquation(new fsProductsEquation(
                 new[] {ls, rhoCd, u, cakeHeigth},
                 new[] {lsOverB, Qms}));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { Qms, tc },
                 new[] { rhoCd, filterArea, cakeHeigth }));
-            Equations.Add(new fsProductEquation(lOverB, ns, lsOverB));
-            Equations.Add(new fsProductEquation(nsf, ns, sf));
-            Equations.Add(new fsFrom0AndDpEquation(pc, pc0, pressureDifference, nc));
-            Equations.Add(new fsProductEquation(filterArea, filterLength, machineWidth));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductEquation(lOverB, ns, lsOverB));
+            calculator.AddEquation(new fsProductEquation(nsf, ns, sf));
+            calculator.AddEquation(new fsFrom0AndDpEquation(pc, pc0, pressureDifference, nc));
+            calculator.AddEquation(new fsProductEquation(filterArea, filterLength, machineWidth));
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { filterAreaAs, lsOverB },
                 new[] { ls, ls }));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { filterArea },
                 new[] { lOverB, machineWidth, machineWidth }));
-            Equations.Add(new fsProductEquation(filterLength, ns, ls));
-            Equations.Add(new fsProductEquation(filterLength, tc, u));
-            Equations.Add(new fsDivisionInverseEquation(tc, n));
-            Equations.Add(new fsCakeHeightFromDpTf(cakeHeigth, hce0, pc, kappa, pressureDifference, filtrationTime, etaf));
-            Equations.Add(new fsSumEquation(ns, nsf, nsr));
-            Equations.Add(new fsSumEquation(tc, tr, filtrationTime));
-            Equations.Add(new fsSumEquation(constantOne, sr, sf));
-            Equations.Add(new fsTrSrTtechNsTcEquation(sr, tr, tc, ns, constantZero));
-            Equations.Add(new fsTfSfTtechNsTcEquation(sf, filtrationTime, tc, ns, constantZero));
-            Equations.Add(new fsProductEquation(ls, lsOverB, machineWidth));
-            Equations.Add(new fsSfFromEtafHcHceKappaPcDpNsLsUTtechEquation(
+            calculator.AddEquation(new fsProductEquation(filterLength, ns, ls));
+            calculator.AddEquation(new fsProductEquation(filterLength, tc, u));
+            calculator.AddEquation(new fsDivisionInverseEquation(tc, n));
+            calculator.AddEquation(new fsCakeHeightFromDpTf(cakeHeigth, hce0, pc, kappa, pressureDifference, filtrationTime, etaf));
+            calculator.AddEquation(new fsSumEquation(ns, nsf, nsr));
+            calculator.AddEquation(new fsSumEquation(tc, tr, filtrationTime));
+            calculator.AddEquation(new fsSumEquation(constantOne, sr, sf));
+            calculator.AddEquation(new fsTrSrTtechNsTcEquation(sr, tr, tc, ns, constantZero));
+            calculator.AddEquation(new fsTfSfTtechNsTcEquation(sf, filtrationTime, tc, ns, constantZero));
+            calculator.AddEquation(new fsProductEquation(ls, lsOverB, machineWidth));
+            calculator.AddEquation(new fsSfFromEtafHcHceKappaPcDpNsLsUTtechEquation(
                 sf, etaf, cakeHeigth, hce0, kappa, pc, pressureDifference, ns, ls, u, constantZero));
-            Equations.Add(new fsUFromLsOverBQmsHcDpTtech0LambdaNsfMaterialEquation(
+            calculator.AddEquation(new fsUFromLsOverBQmsHcDpTtech0LambdaNsfMaterialEquation(
                 u, constantOne, nsf, lsOverB, Qms, rhoCd, cakeHeigth, etaf, hce0, kappa, pc, pressureDifference, constantZero));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { qft, etaf, hcAdd2Hce },
                 new[] { constantTwo, pc, pressureDifference }));
-            Equations.Add(new fsProductEquation(qmft, qft, rhoF));
-            Equations.Add(new fsHcQmsEquation(cakeHeigth, Qms, filterArea, rhoCd, hce0, ns, constantZero, kappa, pc, pressureDifference, sf, etaf));
+            calculator.AddEquation(new fsProductEquation(qmft, qft, rhoF));
+            calculator.AddEquation(new fsHcQmsEquation(cakeHeigth, Qms, filterArea, rhoCd, hce0, ns, constantZero, kappa, pc, pressureDifference, sf, etaf));
 
             #region Only Calculated Parameters
 
-            IEquationParameter meanHeightRate = AddVariable(fsParameterIdentifier.MeanHeightRate);
-            IEquationParameter hcOverTc = AddVariable(fsParameterIdentifier.HcOverTc);
-            IEquationParameter diffHeightrate = AddVariable(fsParameterIdentifier.DiffHeightRate);
-            Equations.Add(new fsProductEquation(cakeHeigth, filtrationTime, meanHeightRate));
-            Equations.Add(new fsProductEquation(cakeHeigth, tc, hcOverTc));
-            Equations.Add(new fsProductsEquation(
+            IEquationParameter meanHeightRate = calculator.AddVariable(fsParameterIdentifier.MeanHeightRate);
+            IEquationParameter hcOverTc = calculator.AddVariable(fsParameterIdentifier.HcOverTc);
+            IEquationParameter diffHeightrate = calculator.AddVariable(fsParameterIdentifier.DiffHeightRate);
+            calculator.AddEquation(new fsProductEquation(cakeHeigth, filtrationTime, meanHeightRate));
+            calculator.AddEquation(new fsProductEquation(cakeHeigth, tc, hcOverTc));
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { diffHeightrate, etaf, hcAddHce },
                 new[] { kappa, pressureDifference, pc }));
 
-            IEquationParameter Ms = AddVariable(fsParameterIdentifier.SolidsMass);
-            IEquationParameter Vs = AddVariable(fsParameterIdentifier.SolidsVolume);
-            IEquationParameter Msus = AddVariable(fsParameterIdentifier.SuspensionMass);
-            IEquationParameter Vsus = AddVariable(fsParameterIdentifier.SuspensionVolume);
-            Equations.Add(new fsProductsEquation(
+            IEquationParameter Ms = calculator.AddVariable(fsParameterIdentifier.SolidsMass);
+            IEquationParameter Vs = calculator.AddVariable(fsParameterIdentifier.SolidsVolume);
+            IEquationParameter Msus = calculator.AddVariable(fsParameterIdentifier.SuspensionMass);
+            IEquationParameter Vsus = calculator.AddVariable(fsParameterIdentifier.SuspensionVolume);
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { Ms },
                 new[] { rhoCd, filterArea, cakeHeigth }));
-            Equations.Add(new fsProductEquation(Ms, Msus, cm));
-            Equations.Add(new fsProductEquation(Ms, Vs, rhoS));
-            Equations.Add(new fsProductEquation(Vs, Vsus, cv));
+            calculator.AddEquation(new fsProductEquation(Ms, Msus, cm));
+            calculator.AddEquation(new fsProductEquation(Ms, Vs, rhoS));
+            calculator.AddEquation(new fsProductEquation(Vs, Vsus, cv));
 
-            IEquationParameter msus = AddVariable(fsParameterIdentifier.SpecificSuspensionMass);
-            IEquationParameter vsus = AddVariable(fsParameterIdentifier.SpecificSuspensionVolume);
-            Equations.Add(new fsProductEquation(Msus, msus, filterArea));
-            Equations.Add(new fsProductEquation(Vsus, vsus, filterArea));
+            IEquationParameter msus = calculator.AddVariable(fsParameterIdentifier.SpecificSuspensionMass);
+            IEquationParameter vsus = calculator.AddVariable(fsParameterIdentifier.SpecificSuspensionVolume);
+            calculator.AddEquation(new fsProductEquation(Msus, msus, filterArea));
+            calculator.AddEquation(new fsProductEquation(Vsus, vsus, filterArea));
 
-            IEquationParameter qmsusd = AddVariable(fsParameterIdentifier.qmsusd);
-            IEquationParameter qsusd = AddVariable(fsParameterIdentifier.qsusd);
-            IEquationParameter Qmsusd = AddVariable(fsParameterIdentifier.Qmsusd);
-            IEquationParameter Qsusd = AddVariable(fsParameterIdentifier.Qsusd);
-            Equations.Add(new fsProductsEquation(
+            IEquationParameter qmsusd = calculator.AddVariable(fsParameterIdentifier.qmsusd);
+            IEquationParameter qsusd = calculator.AddVariable(fsParameterIdentifier.qsusd);
+            IEquationParameter Qmsusd = calculator.AddVariable(fsParameterIdentifier.Qmsusd);
+            IEquationParameter Qsusd = calculator.AddVariable(fsParameterIdentifier.Qsusd);
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { qsusd, cv },
                 new[] { oneMinusEps, diffHeightrate }));
-            Equations.Add(new fsProductsEquation(
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { qmsusd, cv },
                 new[] { rhoCd, diffHeightrate }));
-            Equations.Add(new fsProductEquation(Qmsusd, qmsusd, filterArea));
-            Equations.Add(new fsProductEquation(Qsusd, qsusd, filterArea));
+            calculator.AddEquation(new fsProductEquation(Qmsusd, qmsusd, filterArea));
+            calculator.AddEquation(new fsProductEquation(Qsusd, qsusd, filterArea));
 
-            IEquationParameter qmsust = AddVariable(fsParameterIdentifier.qmsust);
-            IEquationParameter qsust = AddVariable(fsParameterIdentifier.qsust);
-            IEquationParameter Qmsust = AddVariable(fsParameterIdentifier.Qmsust);
-            IEquationParameter Qsust = AddVariable(fsParameterIdentifier.Qsust);
-            Equations.Add(new fsProductsEquation(
+            IEquationParameter qmsust = calculator.AddVariable(fsParameterIdentifier.qmsust);
+            IEquationParameter qsust = calculator.AddVariable(fsParameterIdentifier.qsust);
+            IEquationParameter Qmsust = calculator.AddVariable(fsParameterIdentifier.Qmsust);
+            IEquationParameter Qsust = calculator.AddVariable(fsParameterIdentifier.Qsust);
+            calculator.AddEquation(new fsProductsEquation(
                 new[] { qmsust, cv },
                 new[] { oneMinusEps, meanHeightRate }));
-            Equations.Add(new fsProductEquation(qmsust, rhoSus, qsust));
-            Equations.Add(new fsProductEquation(Qmsust, qmsust, filterArea));
-            Equations.Add(new fsProductEquation(Qsust, qsust, filterArea));
+            calculator.AddEquation(new fsProductEquation(qmsust, rhoSus, qsust));
+            calculator.AddEquation(new fsProductEquation(Qmsust, qmsust, filterArea));
+            calculator.AddEquation(new fsProductEquation(Qsust, qsust, filterArea));
             
             #endregion
 

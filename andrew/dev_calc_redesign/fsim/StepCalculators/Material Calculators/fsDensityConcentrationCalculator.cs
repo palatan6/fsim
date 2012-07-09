@@ -3,33 +3,26 @@ using Equations;
 
 namespace StepCalculators
 {
-    public class fsDensityConcentrationCalculator : fsCalculator
+    public class fsDensityConcentrationCalculator : fsCalculatorEquationsList
     {
-        readonly fsCalculatorVariable m_filtrateDensity;
-        readonly fsCalculatorVariable m_solidsDensity;
-        readonly fsCalculatorVariable m_suspensionDensity;
-        readonly fsCalculatorVariable m_solidsMassFraction;
-        readonly fsCalculatorVariable m_solidsVolumeFraction;
-        readonly fsCalculatorVariable m_solidsConcentration;
-
-        public fsDensityConcentrationCalculator()
+        public override void AddToCalculator(fsCalculator calculator)
         {
             #region Parameters Initialization
 
-            m_filtrateDensity = AddVariable(fsParameterIdentifier.MotherLiquidDensity);
-            m_solidsDensity = AddVariable(fsParameterIdentifier.SolidsDensity);
-            m_suspensionDensity = AddVariable(fsParameterIdentifier.SuspensionDensity);
-            m_solidsMassFraction = AddVariable(fsParameterIdentifier.SuspensionSolidsMassFraction);
-            m_solidsVolumeFraction = AddVariable(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
-            m_solidsConcentration = AddVariable(fsParameterIdentifier.SuspensionSolidsConcentration);
+            IEquationParameter filtrateDensity = calculator.AddVariable(fsParameterIdentifier.MotherLiquidDensity);
+            IEquationParameter solidsDensity = calculator.AddVariable(fsParameterIdentifier.SolidsDensity);
+            IEquationParameter suspensionDensity = calculator.AddVariable(fsParameterIdentifier.SuspensionDensity);
+            IEquationParameter solidsMassFraction = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsMassFraction);
+            IEquationParameter solidsVolumeFraction = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
+            IEquationParameter solidsConcentration = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsConcentration);
 
             #endregion
 
             #region Equations Initialization
 
-            AddEquation(new fsMassConcentrationEquation(m_solidsMassFraction, m_filtrateDensity, m_solidsDensity, m_suspensionDensity));
-            AddEquation(new fsVolumeConcentrationEquation(m_solidsVolumeFraction, m_filtrateDensity, m_solidsDensity, m_suspensionDensity));
-            AddEquation(new fsConcentrationEquation(m_solidsConcentration, m_filtrateDensity, m_solidsDensity, m_suspensionDensity));
+            calculator.AddEquation(new fsMassConcentrationEquation(solidsMassFraction, filtrateDensity, solidsDensity, suspensionDensity));
+            calculator.AddEquation(new fsVolumeConcentrationEquation(solidsVolumeFraction, filtrateDensity, solidsDensity, suspensionDensity));
+            calculator.AddEquation(new fsConcentrationEquation(solidsConcentration, filtrateDensity, solidsDensity, suspensionDensity));
 
             #endregion
         }

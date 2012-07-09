@@ -3,29 +3,23 @@ using Equations.Material;
 
 namespace StepCalculators
 {
-    public class fsRfFromCakeSaturationCalculator : fsCalculator
+    public class fsRfFromCakeSaturationCalculator : fsCalculatorEquationsList
     {
-        readonly fsCalculatorConstant m_liquidDensity;
-        readonly fsCalculatorConstant m_solidsDensity;
-        readonly fsCalculatorVariable m_cakePorosity;
-        readonly fsCalculatorVariable m_cakeSaturation;
-        readonly fsCalculatorVariable m_cakeMoistureContent;
-
-        public fsRfFromCakeSaturationCalculator()
+        public override void AddToCalculator(fsCalculator calculator)
         {
             #region Parameters Initialization
 
-            m_liquidDensity = AddConstant(fsParameterIdentifier.LiquidDensity);
-            m_solidsDensity = AddConstant(fsParameterIdentifier.SolidsDensity);
-            m_cakePorosity = AddVariable(fsParameterIdentifier.CakePorosity);
-            m_cakeSaturation = AddVariable(fsParameterIdentifier.CakeSaturation);
-            m_cakeMoistureContent = AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
+            IEquationParameter liquidDensity = calculator.AddVariable(fsParameterIdentifier.LiquidDensity);
+            IEquationParameter solidsDensity = calculator.AddVariable(fsParameterIdentifier.SolidsDensity);
+            IEquationParameter cakePorosity = calculator.AddVariable(fsParameterIdentifier.CakePorosity);
+            IEquationParameter cakeSaturation = calculator.AddVariable(fsParameterIdentifier.CakeSaturation);
+            IEquationParameter cakeMoistureContent = calculator.AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
 
             #endregion
 
             #region Equations Initialization
 
-            Equations.Add(new fsMoistureContentFromCakeSaturationEquation(m_liquidDensity, m_solidsDensity, m_cakePorosity, m_cakeMoistureContent, m_cakeSaturation));
+            calculator.AddEquation(new fsMoistureContentFromCakeSaturationEquation(liquidDensity, solidsDensity, cakePorosity, cakeMoistureContent, cakeSaturation));
 
             #endregion
         }

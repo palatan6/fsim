@@ -3,62 +3,44 @@ using Parameters;
 
 namespace StepCalculators
 {
-    public class fsMsusHcConvexCylindricAreaCalculator : fsCalculator
+    public class fsMsusHcConvexCylindricAreaCalculator : fsCalculatorEquationsList
     {
-        readonly fsCalculatorVariable m_filtrateDensity;
-        readonly fsCalculatorVariable m_solidsDensity;
-        readonly fsCalculatorVariable m_suspensionDensity;
-        readonly fsCalculatorVariable m_solidsMassFraction;
-        readonly fsCalculatorVariable m_solidsVolumeFraction;
-        readonly fsCalculatorVariable m_solidsConcentration;
-
-        readonly fsCalculatorVariable m_porosity;
-        readonly fsCalculatorVariable m_kappa;
-        
-        readonly fsCalculatorVariable m_filterArea;
-        readonly fsCalculatorVariable m_filterElementDiameter;
-
-        readonly fsCalculatorVariable m_cakeHeight;
-
-        readonly fsCalculatorVariable m_suspensionMass;
-        readonly fsCalculatorVariable m_suspensionVolume;
-
-        public fsMsusHcConvexCylindricAreaCalculator()
+        public override void AddToCalculator(fsCalculator calculator)
         {
             #region Parameters Initialization
 
-            m_filtrateDensity = AddVariable(fsParameterIdentifier.MotherLiquidDensity);
-            m_solidsDensity = AddVariable(fsParameterIdentifier.SolidsDensity);
-            m_suspensionDensity = AddVariable(fsParameterIdentifier.SuspensionDensity);
-            m_solidsMassFraction = AddVariable(fsParameterIdentifier.SuspensionSolidsMassFraction);
-            m_solidsVolumeFraction = AddVariable(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
-            m_solidsConcentration = AddVariable(fsParameterIdentifier.SuspensionSolidsConcentration);
+            IEquationParameter filtrateDensity = calculator.AddVariable(fsParameterIdentifier.MotherLiquidDensity);
+            IEquationParameter solidsDensity = calculator.AddVariable(fsParameterIdentifier.SolidsDensity);
+            IEquationParameter suspensionDensity = calculator.AddVariable(fsParameterIdentifier.SuspensionDensity);
+            IEquationParameter solidsMassFraction = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsMassFraction);
+            IEquationParameter solidsVolumeFraction = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsVolumeFraction);
+            IEquationParameter solidsConcentration = calculator.AddVariable(fsParameterIdentifier.SuspensionSolidsConcentration);
 
-            m_porosity = AddVariable(fsParameterIdentifier.CakePorosity);
-            m_kappa = AddVariable(fsParameterIdentifier.Kappa);
-            
-            m_filterArea = AddVariable(fsParameterIdentifier.FilterArea);
-            m_filterElementDiameter = AddVariable(fsParameterIdentifier.FilterElementDiameter);
+            IEquationParameter porosity = calculator.AddVariable(fsParameterIdentifier.CakePorosity);
+            IEquationParameter kappa = calculator.AddVariable(fsParameterIdentifier.Kappa);
 
-            m_cakeHeight = AddVariable(fsParameterIdentifier.CakeHeight);
-            m_suspensionMass = AddVariable(fsParameterIdentifier.SuspensionMass);
-            m_suspensionVolume = AddVariable(fsParameterIdentifier.SuspensionVolume);
+            IEquationParameter filterArea = calculator.AddVariable(fsParameterIdentifier.FilterArea);
+            IEquationParameter filterElementDiameter = calculator.AddVariable(fsParameterIdentifier.FilterElementDiameter);
+
+            IEquationParameter cakeHeight = calculator.AddVariable(fsParameterIdentifier.CakeHeight);
+            IEquationParameter suspensionMass = calculator.AddVariable(fsParameterIdentifier.SuspensionMass);
+            IEquationParameter suspensionVolume = calculator.AddVariable(fsParameterIdentifier.SuspensionVolume);
 
             #endregion
 
             #region Equations Initialization
 
-            AddEquation(new fsMassConcentrationEquation(m_solidsMassFraction, m_filtrateDensity, m_solidsDensity, m_suspensionDensity));
-            AddEquation(new fsVolumeConcentrationEquation(m_solidsVolumeFraction, m_filtrateDensity, m_solidsDensity, m_suspensionDensity));
-            AddEquation(new fsConcentrationEquation(m_solidsConcentration, m_filtrateDensity, m_solidsDensity, m_suspensionDensity));
+            calculator.AddEquation(new fsMassConcentrationEquation(solidsMassFraction, filtrateDensity, solidsDensity, suspensionDensity));
+            calculator.AddEquation(new fsVolumeConcentrationEquation(solidsVolumeFraction, filtrateDensity, solidsDensity, suspensionDensity));
+            calculator.AddEquation(new fsConcentrationEquation(solidsConcentration, filtrateDensity, solidsDensity, suspensionDensity));
 
-            AddEquation(new fsEpsKappaCvEquation(m_porosity, m_kappa, m_solidsVolumeFraction));
+            calculator.AddEquation(new fsEpsKappaCvEquation(porosity, kappa, solidsVolumeFraction));
 
-            AddEquation(new fsSuspensionMassFromHcEpsConvexCylindircAreaEquation(m_suspensionMass, m_porosity, m_solidsDensity, m_filterArea, m_filterElementDiameter, m_cakeHeight, m_solidsMassFraction));
-            //AddEquation(new fsSuspensionVolumeFromHcEpsConvexCylindircAreaEquation(m_suspensionVolume, m_porosity, m_filterArea, m_cakeHeight, m_solidsVolumeFraction));
-            //AddEquation(new fsSuspensionVolumeFromHcKappaConvexCylindircAreaEquation(m_suspensionVolume, m_kappa, m_filterArea, m_cakeHeight));
+            calculator.AddEquation(new fsSuspensionMassFromHcEpsConvexCylindircAreaEquation(suspensionMass, porosity, solidsDensity, filterArea, filterElementDiameter, cakeHeight, solidsMassFraction));
+            //calculator.AddEquation(new fsSuspensionVolumeFromHcEpsConvexCylindircAreaEquation(suspensionVolume, porosity, filterArea, cakeHeight, solidsVolumeFraction));
+            //calculator.AddEquation(new fsSuspensionVolumeFromHcKappaConvexCylindircAreaEquation(suspensionVolume, kappa, filterArea, cakeHeight));
 
-            AddEquation(new fsProductEquation(m_suspensionMass, m_suspensionVolume, m_suspensionDensity));
+            calculator.AddEquation(new fsProductEquation(suspensionMass, suspensionVolume, suspensionDensity));
             
             #endregion
         }

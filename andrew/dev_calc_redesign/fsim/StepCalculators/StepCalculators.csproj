@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="fsCalculator.cs" />
+    <Compile Include="fsCalculatorEquationsList.cs" />
     <Compile Include="Machine Area Calculators\fsConcaveCakeAreaEquation.cs" />
     <Compile Include="Machine Area Calculators\fsConvexCakeAreaEquation.cs" />
     <Compile Include="Simulation Calculators\Cake Formation\fsCakeFormationDpConstCalculator.cs" />

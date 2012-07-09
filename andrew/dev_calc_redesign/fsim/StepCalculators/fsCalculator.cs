@@ -22,7 +22,7 @@ namespace StepCalculators
      * Then calculator can be used with public methods
      * 
      * */
-    public abstract class fsCalculator
+    public class fsCalculator
     {
         private readonly Dictionary<fsParameterIdentifier, fsCalculatorVariable> m_variables = new Dictionary<fsParameterIdentifier, fsCalculatorVariable>();
         private readonly Dictionary<fsParameterIdentifier, fsCalculatorConstant> m_constants = new Dictionary<fsParameterIdentifier, fsCalculatorConstant>();
@@ -82,31 +82,23 @@ namespace StepCalculators
             #endregion
         }
 
+        public void AddEquations(fsCalculatorEquationsList equationsList)
+        {
+            equationsList.AddToCalculator(this);
+        }
+
         #region Service Methods For Adding Parameters And Equations
 
-        protected fsCalculatorVariable AddVariable(fsParameterIdentifier identifier)
+        public fsCalculatorVariable AddVariable(fsParameterIdentifier identifier)
         {
-            var p = new fsCalculatorVariable(identifier);
-            if (m_variables.ContainsKey(identifier))
+            if (!m_variables.ContainsKey(identifier))
             {
-                throw new Exception("Parameter " + identifier.ToString() + " already exists in variables.");
+                m_variables.Add(identifier, new fsCalculatorVariable(identifier));
             }
-            m_variables[identifier] = p;
-            return p;
+            return m_variables[identifier];
         }
-
-        protected fsCalculatorConstant AddConstant(fsParameterIdentifier identifier)
-        {
-            var c = new fsCalculatorConstant(identifier);
-            if (m_constants.ContainsKey(identifier))
-            {
-                throw new Exception("Parameter " + identifier.ToString() + " already exists in constants.");
-            }
-            m_constants[identifier] = c;
-            return c;
-        }
-
-        protected void AddEquation(fsCalculatorEquation equation)
+      
+        public void AddEquation(fsCalculatorEquation equation)
         {
             Equations.Add(equation);
         }
