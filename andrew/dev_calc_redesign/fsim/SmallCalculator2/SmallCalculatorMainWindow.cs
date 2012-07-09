@@ -38,17 +38,18 @@ namespace SmallCalculator2
                                                  new KeyValuePair<string, fsCalculatorControl>(
                                                      "Densities and Suspension Solids Content",
                                                      new fsDensityConcentrationControl()),
-                                                 new KeyValuePair<string, fsCalculatorControl>(
-                                                     "Suspension Solids Mass Fraction",
-                                                     new SuspensionSolidsMassFractionControl())
+//                                                  new KeyValuePair<string, fsCalculatorControl>(
+//                                                      "Suspension Solids Mass Fraction",
+//                                                      new SuspensionSolidsMassFractionControl())
                                              });
             AddGroupToTree("Filter Cake", new[]
                                               {
-                                                  new KeyValuePair<string, fsCalculatorControl>(
-                                                      "Filter Cake & Suspension Relations", new fsMsusAndHcControl()),
-                                                  new KeyValuePair<string, fsCalculatorControl>("Cake Porosity from Test Data",
-                                                                                                new fsCakePorossityControl
-                                                                                                    ()),
+//                                                   new KeyValuePair<string, fsCalculatorControl>(
+//                                                       "Filter Cake & Suspension Relations",
+//                                                       new fsMsusAndHcControl()),
+//                                                   new KeyValuePair<string, fsCalculatorControl>(
+//                                                       "Cake Porosity from Test Data",
+//                                                       new fsCakePorossityControl()),
                                                   new KeyValuePair<string, fsCalculatorControl>(
                                                       "Cake Permeability/Resistance and Cake Compressibility",
                                                       new fsPermeabilityControl())
@@ -60,21 +61,21 @@ namespace SmallCalculator2
                                                  });
             AddGroupToTree("Cake Deliquoring", new[]
                                                    {
-                                                       new KeyValuePair<string, fsCalculatorControl>(
-                                                           "Cake Moisture Content from Wet and Dry Cake Mass",
-                                                           new fsCakeMoistureContentFromWetAndDryCakeMassControl()),
+//                                                        new KeyValuePair<string, fsCalculatorControl>(
+//                                                            "Cake Moisture Content from Wet and Dry Cake Mass",
+//                                                            new fsCakeMoistureContentFromWetAndDryCakeMassControl()),
                                                        new KeyValuePair<string, fsCalculatorControl>(
                                                            "Cake Moisture Content from Cake Saturation",
                                                            new fsCakeMoistureContentFromCakeSaturationControl()),
-                                                       new KeyValuePair<string, fsCalculatorControl>(
-                                                           "Capillary Pressure pke from Cake Permeability/Resistance",
-                                                           new fsPkeFromPcRcControl())
+//                                                        new KeyValuePair<string, fsCalculatorControl>(
+//                                                            "Capillary Pressure pke from Cake Permeability/Resistance",
+//                                                            new fsPkeFromPcRcControl())
                                                    });
-            AddGroupToTree("Cake Washing", new[]
-                                               {
-                                                   new KeyValuePair<string, fsCalculatorControl>(
-                                                       "Cake Wash Out Content X", new fsCakeWashOutContentControl())
-                                               });
+//             AddGroupToTree("Cake Washing", new[]
+//                                                {
+//                                                    new KeyValuePair<string, fsCalculatorControl>(
+//                                                        "Cake Wash Out Content X", new fsCakeWashOutContentControl())
+//                                                });
 
             treeView1.ExpandAll();
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0];
