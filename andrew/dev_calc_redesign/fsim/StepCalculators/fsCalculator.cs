@@ -26,7 +26,7 @@ namespace StepCalculators
     {
         private readonly Dictionary<fsParameterIdentifier, fsCalculatorVariable> m_variables = new Dictionary<fsParameterIdentifier, fsCalculatorVariable>();
         private readonly Dictionary<fsParameterIdentifier, fsCalculatorConstant> m_constants = new Dictionary<fsParameterIdentifier, fsCalculatorConstant>();
-        protected List<fsCalculatorEquation> Equations = new List<fsCalculatorEquation>();
+        public List<fsCalculatorEquation> Equations = new List<fsCalculatorEquation>();
         private fsCalculatorUpdateHandler m_updateHandler;
 
         public void Calculate()
