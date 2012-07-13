@@ -43,6 +43,7 @@ namespace Equations.Hydrocyclone
         protected override void InitFormulas()
         {
             AddFormula(m_ReducedTotalEfficiency, ReducedTotalEfficiencyFormula);
+            AddFormula(m_xRed50, xRed50Formula);
         }
 
         #region Formulas
@@ -52,6 +53,12 @@ namespace Equations.Hydrocyclone
             fsValue A = fsValue.Log(m_xG.Value / m_xRed50.Value);
             fsValue B = fsValue.Sqrt(2 * (fsValue.Sqr(fsValue.Log(m_sigmaG.Value)) + fsValue.Sqr(fsValue.Log(m_sigmaS.Value))));
             m_ReducedTotalEfficiency.Value = 0.5 * (1 + fsValue.Erf(A / B));
+        }
+
+        private void xRed50Formula()
+        {
+            fsValue B = -fsValue.Sqrt(2 * (fsValue.Sqr(fsValue.Log(m_sigmaG.Value)) + fsValue.Sqr(fsValue.Log(m_sigmaS.Value))));
+            m_xRed50.Value = m_xG.Value * fsValue.Exp(B * fsValue.InvErf(2 * m_ReducedTotalEfficiency.Value - 1));
         }
 
         #endregion

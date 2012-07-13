@@ -70,6 +70,7 @@
     <Compile Include="Cake Washing\fsMwfVcWfEquation.cs" />
     <Compile Include="Cake Washing\fsWfTwEquation.cs" />
     <Compile Include="Cake Washing\fsXstarDnWfEquation.cs" />
+    <Compile Include="Hydrocyclone\fsReducedTotalEfficiencyFromCmoEquation.cs" />
     <Compile Include="Hydrocyclone\fsCOverflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsCUnderflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsDFromxRed50QnDuOverDEquation.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Hydrocyclone\fsReducedTotalEfficiencyEquation.cs" />
     <Compile Include="Hydrocyclone\fsReynoldsFromXRed50Equation.cs" />
     <Compile Include="Hydrocyclone\fsTotalEfficiencyEquation.cs" />
+    <Compile Include="Hydrocyclone\fsXRed50Equation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentFromCakeSaturationEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentFromDensitiesAndPorosityEquation.cs" />

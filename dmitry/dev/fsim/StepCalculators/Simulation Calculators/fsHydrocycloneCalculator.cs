@@ -102,42 +102,43 @@ namespace StepCalculators.Simulation_Calculators
 
             #region Equations Initialization
 
-            Equations.Add(new fsProductEquation(Qm, Q, rhoSus)); // (18)
-            Equations.Add(new fsProductEquation(Qms, Qm, cm));   // (19')
+            Equations.Add(new fsProductEquation(Qm, Q, rhoSus)); // (18)!
+            Equations.Add(new fsProductEquation(Qms, Qm, cm));   // (19')!
 
-            Equations.Add(new fsReducedTotalEfficiencyEquation(ReducedTotalEfficiency, xG, xRed50, sigmaG, sigmaS)); // (11)
-            Equations.Add(new fsTotalEfficiencyEquation(TotalEfficiency, rf, ReducedTotalEfficiency)); // (10)
+            Equations.Add(new fsReducedTotalEfficiencyEquation(ReducedTotalEfficiency, xG, xRed50, sigmaG, sigmaS)); // (11)!
+            Equations.Add(new fsTotalEfficiencyEquation(TotalEfficiency, rf, ReducedTotalEfficiency)); // (10)!
 
-            Equations.Add(new fsProductEquation(Qu, rf, Q)); // (15)
-            Equations.Add(new fsCUnderflowEquation(Cu, C, rf, ReducedTotalEfficiency)); // (16)
-            Equations.Add(new fsCOverflowEquation(Co, C, ReducedTotalEfficiency)); // (17)
+            Equations.Add(new fsProductEquation(Qu, rf, Q)); // (15)!
+            Equations.Add(new fsCUnderflowEquation(Cu, C, rf, ReducedTotalEfficiency)); // (16)!
+            Equations.Add(new fsCOverflowEquation(Co, C, ReducedTotalEfficiency)); // (17)!
 
-            Equations.Add(new fsDFromxRed50QnDuOverDEquation(D, xRed50, Q, numberOfCyclones, DuOverD, rhoS, rhoF, etaf, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3)); // (67)
-            Equations.Add(new fsProductsEquation( // (26)
+            Equations.Add(new fsDFromxRed50QnDuOverDEquation(D, xRed50, Q, numberOfCyclones, DuOverD, rhoS, rhoF, etaf, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3)); // (67)!
+            Equations.Add(new fsProductsEquation( // (26)!
                 new[] { v, constantPi, D, D, numberOfCyclones },
                 new[] { constantFour, Q }));
-            Equations.Add(new fsProductsEquation( // (23)
+            Equations.Add(new fsProductsEquation( // (23)!
                 new[] { StokesNumber, constantEighteen, etaf, D },
                 new[] { xRed50, xRed50, rhoSMinusRhoF, v }));
-            Equations.Add(new fsProductsEquation( // (24)
+            Equations.Add(new fsProductsEquation( // (24)!
                 new[] { EulerNumber, rhoF, v, v },
                 new[] { constantTwo, Dp }));
-            Equations.Add(new fsProductsEquation( // (25)
+            Equations.Add(new fsProductsEquation( // (25)!
                 new[] { ReynoldsNumber, etaf },
                 new[] { rhoF, D, v }));
-            Equations.Add(new fsDFromxRed50QnRfEquation(D, xRed50, rhoS, rhoF, Q, etaf, numberOfCyclones, cv, rf, alpha1, alpha2, alpha3, beta1, beta2, beta3)); // (27)
-            Equations.Add(new fsDuOverDrfEuEquation(DuOverD, rf, EulerNumber, gamma1, gamma2, gamma3)); // (22)
-            Equations.Add(new fsEulerReynoldsConnectionEquation(EulerNumber, ReynoldsNumber, cv, beta1, beta2, beta3)); // (21)
-            Equations.Add(new fsReynoldsFromXRed50Equation(ReynoldsNumber, xRed50, rhoS, rhoF, etaf, Dp, rf, cv, alpha1, alpha2, alpha3)); // (52)
-            Equations.Add(new fsvDuOverDxRed50Equation(v, DuOverD, xRed50, rhoS, rhoF, etaf, Dp, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3)); // (80)
-            Equations.Add(new fsQnDpDEquation(Q, Dp, numberOfCyclones, D, rhoF, etaf, cv, beta1, beta2, beta3)); // (97)
+            Equations.Add(new fsDFromxRed50QnRfEquation(D, xRed50, rhoS, rhoF, Q, etaf, numberOfCyclones, cv, rf, alpha1, alpha2, alpha3, beta1, beta2, beta3)); // (27)!
+            Equations.Add(new fsDuOverDrfEuEquation(DuOverD, rf, EulerNumber, gamma1, gamma2, gamma3)); // (22)!
+            Equations.Add(new fsEulerReynoldsConnectionEquation(EulerNumber, ReynoldsNumber, cv, beta1, beta2, beta3)); // (21)!
+            Equations.Add(new fsReynoldsFromXRed50Equation(ReynoldsNumber, xRed50, rhoS, rhoF, etaf, Dp, rf, cv, alpha1, alpha2, alpha3)); // (52)!
+            Equations.Add(new fsvDuOverDxRed50Equation(v, DuOverD, xRed50, rhoS, rhoF, etaf, Dp, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3)); // (80)!
+            Equations.Add(new fsQnDpDEquation(Q, Dp, numberOfCyclones, D, rhoF, etaf, cv, beta1, beta2, beta3)); // (97)!
 
+            Equations.Add(new fsReducedTotalEfficiencyFromCmoEquation(ReducedTotalEfficiency, cmo, C, rhoS, rhoF)); // (x1)
+            
             Equations.Add(new fsProductEquation(L, LOverD, D)); // (39.5)
             Equations.Add(new fsProductEquation(l, lOverD, D)); // (39.4)
             Equations.Add(new fsProductEquation(Di, DiOverD, D)); // (39.3)
             Equations.Add(new fsProductEquation(Do, DoOverD, D)); // (39.2)
             Equations.Add(new fsProductEquation(Du, DuOverD, D)); // (39.1)
-            //Equations.Add(new fsProductEquation(Qu, rf, Q)); // (15)
             Equations.Add(new fsSumEquation(Q, Qo, Qu)); // (38.3)
             Equations.Add(new fsQmFromQCEquation(Qmo, Qo, Co, rhoF, rhoS)); // (38.7)
             Equations.Add(new fsQmFromQCEquation(Qmu, Qu, Cu, rhoF, rhoS)); //(38.6)
