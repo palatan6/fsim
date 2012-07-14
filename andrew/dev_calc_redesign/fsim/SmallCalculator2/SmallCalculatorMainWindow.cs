@@ -71,11 +71,11 @@ namespace SmallCalculator2
 //                                                            "Capillary Pressure pke from Cake Permeability/Resistance",
 //                                                            new fsPkeFromPcRcControl())
                                                    });
-//             AddGroupToTree("Cake Washing", new[]
-//                                                {
-//                                                    new KeyValuePair<string, fsCalculatorControl>(
-//                                                        "Cake Wash Out Content X", new fsCakeWashOutContentControl())
-//                                                });
+             AddGroupToTree("Cake Washing", new[]
+                                                {
+                                                    new KeyValuePair<string, fsCalculatorControl>(
+                                                        "Cake Wash Out Content X", new fsCakeWashOutContentControl())
+                                                });
 
             treeView1.ExpandAll();
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0];

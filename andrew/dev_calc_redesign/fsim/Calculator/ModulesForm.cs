@@ -157,8 +157,8 @@ namespace Calculator
             AddGroupToTree("Cake Washing", node.Nodes, new[]
                                                {   new KeyValuePair<string, fsCalculatorControl>(
                                                        "Calculation of Cake Washing", new fsCakeWashingControl()),
-//                                                    new KeyValuePair<string, fsCalculatorControl>(
-//                                                        "Cake Wash Out Content X", new fsCakeWashOutContentControl())
+                                                    new KeyValuePair<string, fsCalculatorControl>(
+                                                        "Cake Wash Out Content X", new fsCakeWashOutContentControl())
                                                });
             AddGroupToTree("Hydrocyclone", node.Nodes, new[]
                                                {
