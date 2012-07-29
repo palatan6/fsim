@@ -7,6 +7,8 @@ namespace fsNumericalMethods
 { 
     public class fsSpecialFunctions
     {
+        #region Lln(x,y)
+
         #region LlnMinus(x,y)
 
         /*
@@ -36,7 +38,7 @@ namespace fsNumericalMethods
             }
         }
 
-        static public fsValue LlnMinus(fsValue x, fsValue y)
+        static private fsValue LlnMinus(fsValue x, fsValue y)
         {
             if (y < fsValue.Zero)
             {
@@ -92,7 +94,7 @@ namespace fsNumericalMethods
          *
          *        ln(z) = y * z - x         (*lln+*)
          *        
-         *  has exactly 2 solution z1, z2 (z1 < z2) for every pair (x,y), x >= 0, y > 0,
+         *  has exactly 2 solution z1, z2 (z1 < z2) for every pair (x,y), y > 0,
          *  satisfying the following condition:
          *  
          *        1 - x + ln(y) <= 0        (*cond*) 
@@ -132,6 +134,7 @@ namespace fsNumericalMethods
                                          (fsValue.Log(frac * fsValue.Log(frac) / (x - 1))).Value
                                        ) / (fsValue.Log(x)).Value
                          );
+            fsValue result = frac;
             for (int i = 1; i <= n; i++)
             {
                 result = frac + fsValue.Log(result) / y;
@@ -139,9 +142,9 @@ namespace fsNumericalMethods
             return result;
         }
 
-        static public fsValue LlnPlus(fsValue x, fsValue y)
+        static private fsValue LlnPlus(fsValue x, fsValue y)
         {
-            if (x < fsValue.Zero || y <= fsValue.Zero)
+            if (y <= fsValue.Zero)
             {
                 return new fsValue();
             }
@@ -189,6 +192,20 @@ namespace fsNumericalMethods
             }
         }
 
+        #endregion
+
+        static public fsValue Lln(fsValue x, fsValue y)
+        {
+            if (y < fsValue.Zero)
+            {
+                return LlnMinus(x, -y);
+            }
+            else
+            {
+                return LlnPlus(-x, y);
+            }
+        }
+        
         #endregion
     }
 }
