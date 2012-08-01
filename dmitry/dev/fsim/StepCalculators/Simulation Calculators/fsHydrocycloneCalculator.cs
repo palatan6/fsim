@@ -133,7 +133,7 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsQnDpDEquation(Q, Dp, numberOfCyclones, D, rhoF, etaf, cv, beta1, beta2, beta3)); // (97)!
 
             Equations.Add(new fsReducedTotalEfficiencyFromCmoEquation(ReducedTotalEfficiency, cmo, C, rhoS, rhoF)); // (x1)
-            Equations.Add(new fsXRed50Equation(xRed50, D, Q, numberOfCyclones, rhoS, rhoF, etaf, C, Cu, cv, xG, sigmaG, sigmaS, alpha1, alpha2, alpha3, beta1, beta2, beta3));
+            Equations.Add(new fsXRed50Equation(xRed50, D, Q, numberOfCyclones, rhoS, rhoF, etaf, C, Cu, cv, xG, sigmaG, sigmaS, alpha1, alpha2, alpha3, beta1, beta2, beta3)); // (x2)
             
             Equations.Add(new fsProductEquation(L, LOverD, D)); // (39.5)
             Equations.Add(new fsProductEquation(l, lOverD, D)); // (39.4)
