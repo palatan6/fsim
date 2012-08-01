@@ -79,7 +79,7 @@ namespace Equations.CakeWashing
             {
                 fsValue x2a = fsValue.Sqrt(fsValue.Sqr(x) + m_a);
                 return 1 / m_a * (x + x2a) *
-                      (fsValue.Exp(m_a) * x2a * fsValue.Erfc(x2a) - x * fsValue.Erfc(x)) - m_u;
+                      (fsValue.Exp(m_a) * x2a * fsSpecialFunctions.Erfc(x2a) - x * fsSpecialFunctions.Erfc(x)) - m_u;
             }
         }
 
@@ -102,9 +102,9 @@ namespace Equations.CakeWashing
             {
                 fsValue sqrt = 2 * fsValue.Sqrt(m_wf.Value / m_Dn.Value);
                 m_ca.Value = (m_c0.Value - m_cw.Value) / (2 * m_wf.Value) *
-                             ((1 - m_wf.Value) * fsValue.Erfc((1 - m_wf.Value) / sqrt) -
+                             ((1 - m_wf.Value) * fsSpecialFunctions.Erfc((1 - m_wf.Value) / sqrt) -
                                fsValue.Exp(m_Dn.Value) *
-                              (1 + m_wf.Value) * fsValue.Erfc((1 + m_wf.Value) / sqrt)
+                              (1 + m_wf.Value) * fsSpecialFunctions.Erfc((1 + m_wf.Value) / sqrt)
                              ) + m_c0.Value;
             }
         }
@@ -154,7 +154,7 @@ namespace Equations.CakeWashing
                 var f = new wfCalculationFunction(m_Dn.Value, u);
                 fsValue lowerBound;
                 fsValue upperBound;
-                if (fsValue.Less(u, fsValue.Exp(m_Dn.Value) * fsValue.Erfc(fsValue.Sqrt(m_Dn.Value))))
+                if (fsValue.Less(u, fsValue.Exp(m_Dn.Value) * fsSpecialFunctions.Erfc(fsValue.Sqrt(m_Dn.Value))))
                 {
                     lowerBound = fsValue.Zero;
                     fsValue sqrt = 1 / fsValue.Sqrt(m_Dn.Value);

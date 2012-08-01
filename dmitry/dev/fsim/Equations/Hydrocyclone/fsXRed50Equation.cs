@@ -173,7 +173,7 @@ namespace Equations.Hydrocyclone
             { 
                 if (fsValue.Greater(x, new fsValue(-7)))
                 {
-                    return fsValue.Log(fsValue.Log(1 + a / (1 + fsValue.Erf(x))));
+                    return fsValue.Log(fsValue.Log(1 + a / (1 + fsSpecialFunctions.Erf(x))));
                 }
                 {
                     x = -x;

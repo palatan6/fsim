@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Parameters;
 using Value;
+using fsNumericalMethods;
 
 namespace Equations.Hydrocyclone
 {
@@ -52,13 +53,13 @@ namespace Equations.Hydrocyclone
         {
             fsValue A = fsValue.Log(m_xG.Value / m_xRed50.Value);
             fsValue B = fsValue.Sqrt(2 * (fsValue.Sqr(fsValue.Log(m_sigmaG.Value)) + fsValue.Sqr(fsValue.Log(m_sigmaS.Value))));
-            m_ReducedTotalEfficiency.Value = 0.5 * (1 + fsValue.Erf(A / B));
+            m_ReducedTotalEfficiency.Value = 0.5 * (1 + fsSpecialFunctions.Erf(A / B));
         }
 
         private void xRed50Formula()
         {
             fsValue B = -fsValue.Sqrt(2 * (fsValue.Sqr(fsValue.Log(m_sigmaG.Value)) + fsValue.Sqr(fsValue.Log(m_sigmaS.Value))));
-            m_xRed50.Value = m_xG.Value * fsValue.Exp(B * fsValue.InvErf(2 * m_ReducedTotalEfficiency.Value - 1));
+            m_xRed50.Value = m_xG.Value * fsValue.Exp(B * fsSpecialFunctions.InvErf(2 * m_ReducedTotalEfficiency.Value - 1));
         }
 
         #endregion

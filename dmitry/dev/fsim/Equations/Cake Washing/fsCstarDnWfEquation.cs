@@ -69,12 +69,12 @@ namespace Equations.CakeWashing
             {
                 if (m_a == fsValue.Zero)
                 {
-                    return 2 * fsValue.Erfc(x) - m_u;
+                    return 2 * fsSpecialFunctions.Erfc(x) - m_u;
                 }
                 else 
                 {
-                    return fsValue.Erfc(x) +
-                           fsValue.Exp(m_a) * fsValue.Erfc(fsValue.Sqrt(fsValue.Sqr(x) + m_a)) - m_u;
+                    return fsSpecialFunctions.Erfc(x) +
+                           fsValue.Exp(m_a) * fsSpecialFunctions.Erfc(fsValue.Sqrt(fsValue.Sqr(x) + m_a)) - m_u;
                 }
                 
             }
@@ -99,8 +99,8 @@ namespace Equations.CakeWashing
             {
                 fsValue sqrt = 2 * fsValue.Sqrt(m_wf.Value / m_Dn.Value);
                 m_cStar.Value = 1 - 0.5 *
-                               (fsValue.Erfc((1 - m_wf.Value) / sqrt) +
-                                fsValue.Exp(m_Dn.Value) * fsValue.Erfc((1 + m_wf.Value) / sqrt)
+                               (fsSpecialFunctions.Erfc((1 - m_wf.Value) / sqrt) +
+                                fsValue.Exp(m_Dn.Value) * fsSpecialFunctions.Erfc((1 + m_wf.Value) / sqrt)
                                );
             }
         }
@@ -124,7 +124,7 @@ namespace Equations.CakeWashing
                 var f = new wfCalculationFunction(m_Dn.Value, u);
                 fsValue lowerBound;
                 fsValue upperBound;
-                if (fsValue.Less(u, 1.0 + fsValue.Exp(m_Dn.Value) * fsValue.Erfc(fsValue.Sqrt(m_Dn.Value))))
+                if (fsValue.Less(u, 1.0 + fsValue.Exp(m_Dn.Value) * fsSpecialFunctions.Erfc(fsValue.Sqrt(m_Dn.Value))))
                 {
                     lowerBound = fsValue.Zero;
                     upperBound = fsValue.Max(fsValue.One,
@@ -133,7 +133,7 @@ namespace Equations.CakeWashing
                 }
                 else
                 {
-                    lowerBound = -1.0 * fsValue.InvErf(u - 1.0); 
+                    lowerBound = -1.0 * fsSpecialFunctions.InvErf(u - 1.0); 
                     upperBound = fsValue.Zero;
                 }
                 

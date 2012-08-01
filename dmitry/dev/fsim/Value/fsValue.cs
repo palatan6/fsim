@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using AGLibrary;
+//using AGLibrary;
 
 namespace Value
 {
@@ -353,64 +353,7 @@ namespace Value
             return res;
         }
 
-        #endregion
-
-        #region Special functions
-
-        public static fsValue LambertW(fsValue x)
-        {
-            if (x.Value < -Math.Exp(-1.0) || x.Defined == false)
-            {
-                return new fsValue();
-            }
-            if (x.Value > 0)
-            {
-                double y = 0.5 * x.Value, dy = 0.25 * x.Value;
-                while (dy > 1e-9)
-                {
-                    double f = y * Math.Exp(y);
-                    if (f > x.Value) y -= dy;
-                    else y += dy;
-                    dy *= 0.5;
-                }
-                return new fsValue(y);
-            }
-            else
-            {
-                double y = 0.5, dy = 0.25;
-                while (dy > 1e-9)
-                {
-                    double f = -y * Math.Exp(-y);
-                    if (f < x.Value) y -= dy;
-                    else y += dy;
-                    dy *= 0.5;
-                }
-                return new fsValue(-y);
-            }
-        }
-
-        public static fsValue Erf(fsValue op)
-        {
-            var res = new fsValue {Defined = op.Defined};
-            res.Value = res.Defined ? normaldistr.erf(op.Value) : 1;
-            return res;
-        }
-
-        public static fsValue Erfc(fsValue op)
-        {
-            var res = new fsValue { Defined = op.Defined };
-            res.Value = res.Defined ? normaldistr.erfc(op.Value) : 1;
-            return res;
-        }
-
-        public static fsValue InvErf(fsValue op)
-        {
-            var res = new fsValue { Defined = op.Defined };
-            res.Value = res.Defined ? normaldistr.inverf(op.Value) : 1;
-            return res;
-        }
-
-        #endregion
+        #endregion      
 
         #region Specific
 
