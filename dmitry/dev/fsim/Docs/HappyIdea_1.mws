@@ -1,0 +1,480 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{CSTYLE "" 0 21 "" 0 1 0 0 0 1 0 0 0 0 2 0 0 0 0 1 }{PSTYLE "Normal" 
+-1 0 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }1 1 
+0 0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Heading 1" -1 3 1 {CSTYLE "" -1 -1 "
+Times" 1 18 0 0 0 1 2 1 2 2 2 2 1 1 1 1 }1 1 0 0 8 4 1 0 1 0 2 2 0 1 }
+{PSTYLE "Heading 2" -1 4 1 {CSTYLE "" -1 -1 "Times" 1 14 0 0 0 1 2 1 
+2 2 2 2 1 1 1 1 }1 1 0 0 8 2 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Output" 
+-1 11 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }3 
+3 0 0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Output" -1 12 1 {CSTYLE "" 
+-1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }1 3 0 0 0 0 1 0 1 0 2 
+2 0 1 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 8 "restart:" }}}{SECT 1 
+{PARA 3 "" 0 "" {TEXT -1 42 "bounds, shifts and rootsErfc, invRootsErf
+c" }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 747 "bounds := Array([0.5, \+
+0.69, 0.88, 1.07, 1.165, 1.26, 1.3075, 1.355, 1.4025, 1.45, 1.4975, 1.
+545, 1.5925, 1.64, 1.735, 1.83, 1.85375, 1.8775, 1.90125, 1.925, 1.948
+75, 1.9725, 1.99625, 2.02, 2.04375, 2.0675, 2.09125, 2.115, 2.13875, 2
+.1625, 2.18625, 2.21, 2.229, 2.248, 2.267, 2.286, 2.305, 2.324, 2.343,
+ 2.362, 2.381, 2.4, 2.42375, 2.4475, 2.47125, 2.495, 2.51875, 2.5425, \+
+2.56625, 2.59, 2.61375, 2.6375, 2.66125, 2.685, 2.70875, 2.7325, 2.756
+25, 2.78, 2.8275, 2.875, 2.9225, 2.97, 3.0175, 3.065, 3.1125, 3.16, 3.
+2075, 3.255, 3.3025, 3.35, 3.54, 3.73, 3.92, 4.11, 4.3, 4.49, 4.68, 4.
+87, 5.06, 5.25, 5.44, 5.63, 5.82, 6.01, 6.2, 6.39, 6.58, 6.77, 6.96, 7
+.15, 7.34, 7.53, 7.72, 7.91, 8.1, 8.29, 8.48, 8.67, 8.86, 9.05, 9.24, \+
+9.43, 9.62, 9.81, 10.0]):" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+2798 "shifts := Array([0.59500000000916770659387, 0.784999999998763087
+205591, 0.975000000006184563972056, 1.11750000000283762346953, 1.21249
+999999763531377539, 1.28375000000487489160151, 1.331249999997817212715
+75, 1.37874999999967258190736, 1.42625000000152795109898, 1.4737499999
+9447027221322, 1.52124999999632564140484, 1.56874999999818101059646, 1
+.61625000000003637978806, 1.68749999999836290953682, 1.782499999999845
+38590069, 1.84187499999770807335154, 1.86562500000309228198601, 1.8893
+7499999956344254315, 1.91312500000049112713896, 1.93687500000141881173
+478, 1.96062499999788997229188, 1.98437500000327418092638, 2.008124999
+9997453414835, 2.03187500000067302607931, 2.05562500000160071067511, 2
+.07937500000030013325158, 2.10312500000011368683773, 2.126874999999927
+24042386, 2.15062500000085492501968, 2.17437499999955434759613, 2.1981
+2499999825377017261, 2.21950000000042564352043, 2.23849999999938518158
+16, 2.25750000000057298166212, 2.27650000000176078174264, 2.2955000000
+0072031980381, 2.31449999999967985786497, 2.33349999999863939592615, 2
+.35249999999982719600667, 2.37149999999655847204851, 2.390499999999974
+53414835, 2.41187499999991814547685, 2.43562499999861756805331, 2.4593
+749999995452526491, 2.48312500000047293724491, 2.506875000001400621840
+73, 2.53062500000232830643655, 2.55437499999879946699366, 2.5781249999
+9972715158947, 2.60187500000009777068044, 2.6256250000015825207811, 2.
+64937500000251020537688, 2.673124999998981365934, 2.696875000004365574
+56851, 2.72062499999972260411596, 2.74437499999730789568275, 2.7681250
+0000269210431725, 2.80375000000185536919161, 2.85125000000371073838324
+, 2.89875000000110958353616, 2.9462499999985084286891, 2.9937500000003
+6379788071, 3.04124999999330611899495, 3.08875000000407453626394, 3.13
+624999999924511939752, 3.1837499999988722265698, 3.2312500000007275957
+6141, 3.27875000000258296495305, 3.32625000000443833414465, 3.44500000
+001353328116238, 3.6350000000031286617741, 3.82499999999272404238581, \+
+4.01500000000014551915228, 4.20500000000756699591876, 4.39500000001498
+847268522, 4.58500000002240994945169, 4.77499999999417923390864, 4.965
+00000000160071067511, 5.15500000000902218744159, 5.3449999999986175680
+5331, 5.53499999998821294866504, 5.72499999999563442543149, 5.91500000
+000305590219796, 6.10500000000156433088705, 6.29500000005355104804039,
+ 6.48499999998966814018785, 6.67499999999708961695432, 6.8650000000045
+110937208, 7.05500000001193257048727, 7.24499999998370185494423, 7.435
+00000002677552402019, 7.62499999999854480847715, 7.8149999999703140929
+3413, 8.00500000001338776201009, 8.19499999998515704646707, 8.38500000
+002823071554303, 8.575, 8.76500000004307366907597, 8.95500000001484295
+353293, 9.14499999998661223798991, 9.33500000002968590706587, 9.525000
+00000145519152285, 9.71500000000887666828931, 9.7999999999643478076905
+1]):" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 22 "ArrayNumElems(bound
+s);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#\"$0\"" }}}{EXCHG {PARA 0 "" 0 
+"" {MPLTEXT 0 21 55 "nops(convert(bounds,list));\nnops(convert(shifts,
+list));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#\"$0\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#\"$/\"" }}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 220 "fo
+r i to nops(bounds) - 1\n  do\n    if not ( (shifts[i] = TParNewSort[i
+,3]) and\n             (bounds[i] = TParNewSort[i,1]) and\n           \+
+  (bounds[i + 1] = TParNewSort[i,2])\n           )\n      then print(i
+)\n    fi\n  od:" }}}{EXCHG {PARA 0 "" 0 "" {TEXT -1 3 "OK!" }}}
+{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 485 "rootsErfc := Array([-2.01199
+0988834727338016931+2.299389575759744880828399*I, -2.12866750618338065
+9929532+1.526718281020067812840610*I, -2.199867743354566898691747+.881
+6534555639560428500526*I, -2.234378479765364350242444+.288857444897141
+1623585044*I, -2.234378479765364350242444-.2888574448971411623585044*I
+, -2.199867743354566898691747-.8816534555639560428500526*I, -2.1286675
+06183380659929532-1.526718281020067812840610*I, -2.0119909888347273380
+16931-2.299389575759744880828399*I]):" }}}{EXCHG {PARA 0 "" 0 "" 
+{MPLTEXT 0 21 120 "ord := (x,y)-> (Re(x) < Re(y)) or (Re(x) = Re(y) an
+d Im(x) <= Im(y)):\nrootsErfc1 = sort(convert(rootsErfc, list), ord); \+
+" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#/%+rootsErfc1G7*^$$!:WCC]VOl(z%yVB
+#!#C$!:W]eB;Tr*[Wd))G!#D^$F'$\":W]eB;Tr*[Wd))GF,^$$!:Z<p)*ocaLun)*>#F)
+$!:E0]G/cRcbMl\"))F,^$F1$\":E0]G/cRcbMl\"))F,^$$!:K&H*f1Q$=1vmG@F)$!:5
+1%G\"y1?5G=n_\"F)^$F9$\":51%G\"y1?5G=n_\"F)^$$!:Jp,QtsM)))4*>,#F)$!:*R
+G3)[ufdd*Q*H#F)^$FA$\":*RG3)[ufdd*Q*H#F)" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 484 "rootsErfc:= Array([-2.234378479765364350242444-.2888
+574448971411623585044*I, -2.234378479765364350242444+.2888574448971411
+623585044*I, -2.199867743354566898691747-.8816534555639560428500526*I,
+ -2.199867743354566898691747+.8816534555639560428500526*I, -2.12866750
+6183380659929532-1.526718281020067812840610*I, -2.12866750618338065992
+9532+1.526718281020067812840610*I, -2.011990988834727338016931-2.29938
+9575759744880828399*I, -2.011990988834727338016931+2.29938957575974488
+0828399*I]):" }}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 65 "inv := map( \+
+el -> evalf[24](el^(-1)), convert(rootsErfc, list) );" }}{PARA 12 "" 
+1 "" {XPPMATH 20 "6#>%$invG7*^$$!9Q3^&\\G]'zy%>S%!#C$\"9wL`jTT(z,z2p&!
+#D^$F'$!9wL`jTT(z,z2p&F,^$$!9Vg9tL4k!oLm\"RF)$\"9Tp5$pQ>SY\"pp:F)^$F1$
+!9Tp5$pQ>SY\"pp:F)^$$!9(oQ(*Gtg/$p1-JF)$\"9]54(3*3\"**pd[A#F)^$F9$!9]5
+4(3*3\"**pd[A#F)^$$!9E%4I#yl#=X]_:#F)$\"9?A52m-+LE6jCF)^$FA$!9?A52m-+L
+E6jCF)" }}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 50 "for i to 8 do eval
+f[24](rootsErfc[i] * inv[i]) od;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#^$
+$\"9************************!#C$!8#R,(*)o')[pkR\"z!#[" }}{PARA 11 "" 
+1 "" {XPPMATH 20 "6#^$$\"9************************!#C$\"8#R,(*)o')[pkR
+\"z!#[" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#^$$\"9+++++++++++5!#B$\"9HN&
+[(*o(=rh]mK!#[" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#^$$\"9+++++++++++5!#
+B$!9HN&[(*o(=rh]mK!#[" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#^$$\"9+++++++
+++++5!#B$!9VF?h&>8!yV#pU\"!#Z" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#^$$\"
+9+++++++++++5!#B$\"9VF?h&>8!yV#pU\"!#Z" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#^$$\"9+++++++++++5!#B$\"9!Q\"zGr3*Q)*H[P\"!#Z" }}{PARA 11 "" 1 "
+" {XPPMATH 20 "6#^$$\"9+++++++++++5!#B$!9!Q\"zGr3*Q)*H[P\"!#Z" }}}
+{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 480 "invRootsErfc := Array([[-.44
+0194787965028495510838+.569077901797414163533376e-1*I, -.4401947879650
+28495510838-.569077901797414163533376e-1*I, -.391663368064093373146043
++.156969146401938693106941*I, -.391663368064093373146043-.156969146401
+938693106941*I, -.310206693046073289738687+.222485769991089087091050*I
+, -.310206693046073289738687-.222485769991089087091050*I, -.2155250451
+82657823009426+.246311263300026607102220*I, -.215525045182657823009426
+-.246311263300026607102220*I]]):" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 148 "k := 8:\nT := table([]):\nfor i to ArrayNumElems(shi
+fts)\n  do\n    T[i] := abs( (rootsErfc[k] + shifts[i])^(-1) ):\n  od:
+\nsort([entries(T, 'nolist')]); " }}{PARA 12 "" 1 "" {XPPMATH 20 "6#7d
+q$\"+8AZJ7!#5$\"+w[&RC\"F&$\"+?*\\FF\"F&$\"+:G%GI\"F&$\"+3!=VL\"F&$\"+
+VoEn8F&$\"+(=)y,9F&$\"+8\"*)zV\"F&$\"+Rc)fZ\"F&$\"+9N!f^\"F&$\"+e!zyb
+\"F&$\"+T+1-;F&$\"+'e1'[;F&$\"+%3#p(p\"F&$\"+!3/&\\<F&$\"+s]C/=F&$\"+y
+J8i=F&$\"+SDSB>F&$\"+MLI))>F&$\"+'=,r0#F&$\"+8d2I@F&$\"+'z<v?#F&$\"+&3
+D(*G#F&$\"+L]*pP#F&$\"+GXhpCF&$\"+`\\%yc#F&$\"+a6!>n#F&$\"+$\\A>y#F&$
+\"+cQ$z*GF&$\"+5Wz>IF&$\"+*=Kr9$F&$\"+5OEzKF&$\"+o$*4:MF&$\"+>B/`NF&$
+\"+R&*)3p$F&$\"+W+U-PF&$\"+mWuvPF&$\"+y%z\"4QF&$\"+(>&)o$QF&$\"+/$QA%Q
+F&$\"+N(f[(QF&$\"+S,)p!RF&$\"+DO`QRF&$\"+5bYkRF&$\"+WAXpRF&$\"+Dim**RF
+&$\"+]U5HSF&$\"+#)35`SF&$\"+lPpdSF&$\"+Q8O&3%F&$\"+2Cw2TF&$\"+OI.7TF&$
+\"+W(Q88%F&$\"+7&fQ9%F&$\"+xT,YTF&$\"+B)*3cTF&$\"+x0-oTF&$\"+e/2qTF&$
+\"+eFkzTF&$\"+Pu%4>%F&$\"+!G')G>%F&$\"+/e#>?%F&$\"+q\"pD@%F&$\"+y3R9UF
+&$\"+&**oGA%F&$\"+-p\"GB%F&$\"+%e:XB%F&$\"+\"p/CC%F&$\"+gVi^UF&$\"+wV>
+`UF&$\"+?\"o/E%F&$\"+7%G*oUF&$\"+BWOqUF&$\"+Fz*pF%F&$\"+='pYG%F&$\"+Lm
+'fG%F&$\"+.%G7H%F&$\"+$[znH%F&$\"++Z1-VF&$\"+>;J1VF&$\"+(*432VF&$\"+fa
+#=J%F&$\"+6`H;VF&$\"+>z[?VF&$\"+03SCVF&$\"+X0[FVF&$\"+U;.GVF&$\"+f#y8L
+%F&$\"+\")4![L%F&$\"+zo7PVF&$\"+xf<QVF&$\"+`i>SVF&$\"+Wt4TVF&$\"+\"35G
+M%F&$\"+5BcVVF&$\"+ye'\\M%F&$\"+E&obM%F&$\"+(ehmM%F&$\"+zS6ZVF&$\"+&e&
+*yM%F&$\"+([(>[VF&$\"+\"pm'[VF&$\"+:x\")[VF&$\"+nT(*[VF&" }}}}{SECT 0 
+{PARA 3 "" 0 "" {TEXT -1 18 "Parfrac, multsErfc" }}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 959 "x := 'x':\np := evalf[25]( 0.0 ):\np := evalf
+[25]( 0.5641877825507397413087057563 + x * p ):\np := evalf[25]( 9.675
+807882987265400604202961 + x * p ):\np := evalf[25]( 77.08161730368428
+609781633646 + x * p ):\np := evalf[25]( 368.5196154710010637133875746
+ + x * p ):\np := evalf[25]( 1143.262070703886173606073338 + x * p ):
+\np := evalf[25]( 2320.439590251635247384768711 + x * p ):\np := evalf
+[25]( 2898.0293292167655611275846 + x * p ):\np := evalf[25]( 1826.334
+8842295112592168999 + x * p ):\nq := evalf[25]( 1.0 ):\nq := evalf[25]
+( 17.14980943627607849376131193 + x * q ):\nq := evalf[25]( 137.125596
+0500622202878443578 + x * q ):\nq := evalf[25]( 661.736120710765346921
+1984771 + x * q ):\nq := evalf[25]( 2094.384367789539593790281779 + x \+
+* q ):\nq := evalf[25]( 4429.612803883682726711528526 + x * q ):\nq :=
+ evalf[25]( 6089.5424232724435504633068 + x * q ):\nq := evalf[25]( 49
+58.82756472114071495438422 + x * q ):\nq := evalf[25]( 1826.3348842295
+112595576438 + x * q ):" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 63 "
+numer_ := evalf[25](expand(p));\ndenom_ := evalf[25](expand(q));" }}
+{PARA 12 "" 1 "" {XPPMATH 20 "6#>%'numer_G,2$\":+p@f7^HU)[LE=!#@\"\"\"
+*&$\":&eF6cln@H$H!)*GF(F)%\"xGF)F)*&$\":pZQZ_j^-fR/K#F(F))F-\"\"#F)F)*
+&$\":tggth)Qqq?EV6F(F))F-\"\"$F)F)*&$\":wQ8P1,5Z:'>&o$!#AF))F-\"\"%F)F
+)*&$\":M;y4'G%o.th\"3x!#BF))F-\"\"&F)F)*&$\":.Ug+aE()H)y!en*!#CF))F-\"
+\"'F)F)*&$\":eq38uR2b#y(=k&!#DF))F-\"\"(F)F)" }}{PARA 12 "" 1 "" 
+{XPPMATH 20 "6#>%'denom_G,4$\":Wwbf7^HU)[LE=!#@\"\"\"*&$\":%Qa\\rS6skv
+#)e\\F(F)%\"xGF)F)*&$\":2LY]NWsKUU&*3'F(F))F-\"\"#F)F)*&$\":H:rEFo$)Q!
+GhHWF(F))F-\"\"$F)F)*&$\":#G!z$fR&*ynVQ%4#F(F))F-\"\"%F)F)*&$\":&)>@pM
+l2r?hth'!#AF))F-\"\"&F)F)*&$\":W%yG?A1]gfDr8F@F))F-\"\"'F)F)*&$\":JhP
+\\ygFO%4)\\r\"!#BF))F-\"\"(F)F)*&$\"#5!\"\"F))F-\"\")F)F)" }}}{EXCHG 
+{PARA 0 "" 0 "" {MPLTEXT 0 21 37 "[seq(coeff(numer_, x, i), i = 0..7)]
+;" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#7*$\":+p@f7^HU)[LE=!#@$\":&eF6cln
+@H$H!)*GF&$\":pZQZ_j^-fR/K#F&$\":tggth)Qqq?EV6F&$\":wQ8P1,5Z:'>&o$!#A$
+\":M;y4'G%o.th\"3x!#B$\":.Ug+aE()H)y!en*!#C$\":eq38uR2b#y(=k&!#D" }}}
+{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 37 "[seq(coeff(denom_, x, i), i =
+ 0..8)];" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#7+$\":Wwbf7^HU)[LE=!#@$\":
+%Qa\\rS6skv#)e\\F&$\":2LY]NWsKUU&*3'F&$\":H:rEFo$)Q!GhHWF&$\":#G!z$fR&
+*ynVQ%4#F&$\":&)>@pMl2r?hth'!#A$\":W%yG?A1]gfDr8F1$\":JhP\\ygFO%4)\\r
+\"!#B$\"#5!\"\"" }}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 54 "evalf[25]
+(convert(numer_ / denom_, parfrac, complex));" }}{PARA 12 "" 1 "" 
+{XPPMATH 20 "6#,2*&^$$!:L+ZRIn#)Q0ZaN)!#E$\":+/;vA9n0RBf$o!#G\"\"\",&^
+$$\"3[p!zV)3*>,#!#<$\"398\\\"pn*Q*H#F1F,%\"xGF,!\"\"F,*&^$$!:%HE+V*z*p
+5V6=x!#C$!:S$pk<*)R`.$*4;$)F:F,,&^$$\"3ADyQ;\"p)*>#F1$\"3UvY@'RRl\"))!
+#=F,F4F,F5F,*&^$$\":g(4n72B)=O:!z=F:$!:!)o164AFJp_<#o!#DF,,&^$$\"3[0A
+\"[Nn'G@F1$!3Wo8B%f<n_\"F1F,F4F,F5F,*&^$$!:+ytRIn#)Q0ZaN)F($!:+g3%HUrc
+!RBf$oF+F,,&^$F/$!398\\\"pn*Q*H#F1F,F4F,F5F,*&^$$!:\")R**H%*z*p5V6=xF:
+$\":2UTw\"*)R`.$*4;$)F:F,,&^$F?$!3UvY@'RRl\"))FCF,F4F,F5F,*&^$$\":WeqE
+rI#)=O:!z=F:$\":WLG64AFJp_<#oFJF,,&^$FM$\"3Wo8B%f<n_\"F1F,F4F,F5F,*&^$
+$\":&y.V!*)oJ1JZZ?'F:$!:<r<3OvHdPM_U#!#BF,,&^$$\"3F67UktPMAF1$!3/GWJUv
+e))GFCF,F4F,F5F,*&^$$\":q;S/*)oJ1JZZ?'F:$\":b1=3OvHdPM_U#F_pF,,&^$Fbp$
+\"3/GWJUve))GFCF,F4F,F5F," }}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 
+465 "[-2.234378479765364350242444-.2888574448971411623585044*I, -2.234
+378479765364350242444+.2888574448971411623585044*I, -2.199867743354566
+898691747-.8816534555639560428500526*I, -2.199867743354566898691747+.8
+816534555639560428500526*I, -2.128667506183380659929532-1.526718281020
+067812840610*I, -2.128667506183380659929532+1.526718281020067812840610
+*I, -2.011990988834727338016931-2.299389575759744880828399*I, -2.01199
+0988834727338016931+2.299389575759744880828399*I]:" }}}{EXCHG {PARA 0 
+"" 0 "" {TEXT -1 14 "Not very good!" }}}{EXCHG {PARA 0 "" 0 "" 
+{MPLTEXT 0 21 32 "evalf[25](solve(numer_ = 0, x));" }}{PARA 12 "" 1 "
+" {XPPMATH 20 "6)^$$!:%[%HHN[k5VP[N\"!#C$\":;&y-kZxJJiV#*>F&^$$!:!GZUp
+xs`S\"*=y?F&$\":w/j+,[>!\\!G+\\#F&^$$!:7f$[HOQ3vr;hJF&$\":\"*y\"3&eHKn
+nh0%=F&$!:L*=Fe\"eP`>!fhRF&^$F/$!:\"*y\"3&eHKnnh0%=F&^$F*$!:w/j+,[>!\\
+!G+\\#F&^$F$$!:;&y-kZxJJiV#*>F&" }}}{SECT 0 {PARA 4 "" 0 "" {TEXT -1 
+9 "MyParFrac" }}{EXCHG {PARA 0 "" 0 "" {TEXT -1 146 "CoeffsNumer = [a[
+0], a[1], ..., a[k-1]], where numerator = a[0] + a[1] * x +... + a[k-1
+] * x^(k-1)\nThe same is  regarding  the denominator coeffs." }
+{MPLTEXT 1 0 128 "\nMyParFrac := \nproc(CoeffsNumer::list, RootsDenom:
+:list, CoeffsDenomin::list, d::posint)\nlocal n, mpf_aux, cT, a, b, i,
+ res;\n   " }{TEXT -1 35 "-----------------------------------" }
+{MPLTEXT 1 0 405 "\n   n := nops(CoeffsNumer);\n   if n <> nops(RootsD
+enom)\n     then error \"The number of numerator coeffs do not coincid
+e with the number of denominator roots\"\n   fi;\n   if nops(CoeffsDen
+omin) <> n + 1\n     then error \"The number of denominator coeffs do \+
+not coincide with the <number of denominator roots> + 1\"\n   fi;\n   \+
+if nops(CoeffsNumer) = 0 then error \"The list of denominator coeffs i
+s empty\" fi;\n   " }{TEXT -1 53 "------------------------------------
+----------------\n" }{MPLTEXT 1 0 245 "   mpf_aux := \n   proc(a, beta
+::list, b)\n   local k, beta1, b_, i, delta, zeta, denc, c, d_;\n     \+
+ k := nops(beta);\n      beta1 := beta[1];\n      if beta1 = 0 then er
+ror \"There is a zero root of denominator. We don't serve this case!\"
+ fi;\n      " }{TEXT -1 15 "---------------" }{MPLTEXT 1 0 200 "\n    \+
+  b_ := table([]);\n      b_[0] := evalf[d]( -b[0] / beta1 );\n      f
+or i to k - 2\n        do\n          b_[i] := evalf[d]( (b_[i - 1] - b
+[i]) / beta1 );\n        od;\n      b_[k - 1] := b[k];\n      " }
+{TEXT -1 15 "---------------" }{MPLTEXT 1 0 315 "\n      delta := tabl
+e([]);\n      zeta  := table([]);\n      delta[0] := evalf[d]( - b_[k \+
+- 1] );\n      zeta[0]  := a[k - 1];\n      for i to k - 2\n        do
+\n          delta[i] := evalf[d]( beta1 * delta[i - 1] - b_[k - 1 - i]
+ );\n          zeta[i]  := evalf[d]( beta1 * zeta[i - 1] + a[k - 1 - i
+] )\n        od;\n      " }{TEXT -1 15 "---------------" }{MPLTEXT 1 
+0 373 "\n      denc := evalf[d]( b_[0] - beta1 * delta[k - 2] );\n    \+
+  if denc = 0 then error \"There are common roots of numerator and den
+ominator. We don't serve this case!\" fi;\n      c := evalf[d]( (a[0] \+
++ beta1 * zeta[k - 2]) / denc );\n      d_ := table([]);\n      for i \+
+from 0 to k - 2\n        do\n          d_[k - 2 - i] := evalf[d]( c * \+
+delta[i] + zeta[i] )\n        od;\n      " }{TEXT -1 14 "-------------
+-" }{MPLTEXT 1 0 42 "\n      return [c, d_, b_]\n   end proc:\n   " }
+{TEXT -1 52 "----------------------------------------------------" }
+{MPLTEXT 1 0 332 "\n   cT := table([]);\n   a := table([seq(i - 1 = Co
+effsNumer[i], i = 1..n)]);\n   b := table([seq(i - 1 = CoeffsDenomin[i
+], i = 1..n + 1)]);\n     for i to n - 1\n       do\n         res := m
+pf_aux(a, RootsDenom[i..n], b );\n         cT[i] := res[1];\n         \+
+a := eval(res[2]);\n         b := eval(res[3])\n       od;\n   cT[n] :
+= a[0];\n   " }{TEXT -1 28 "----------------------------" }{MPLTEXT 1 
+0 39 "\n   return convert(cT, list);\nend proc:" }}}{EXCHG {PARA 0 "" 
+0 "" {MPLTEXT 0 21 158 "x := 'x':\nnormal( 2.5 /(x - 1.1) - 0.312 / (x
+ - 2.456) + 1.123 / (x + 2.11) - 1.28 / (x + 1.4) );\nexpand( (x - 1.1
+) * (x - 2.456) * (x + 2.11) * (x + 1.4) ); " }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#*,,**&$\"++++J?!\"*\"\"\")%\"xG\"\"$F)F)*&$\"++?x78F(F)
+)F+\"\"#F)F)*&$\"+glUH5!\")F)F+F)!\"\"$\"+'Hxs,#F5F6F),&F+F)$\"+++++9F
+(F)F6,&F+F)$\"++++5@F(F)F6,&F+F)$\"++++cCF(F6F6,&F+F)$\"+++++6F(F6F6" 
+}}{PARA 11 "" 1 "" {XPPMATH 20 "6#,,*$)%\"xG\"\"%\"\"\"F(*&$\"#Y!\"$F(
+)F&\"\"$F(!\"\"*&$\"''f#o!\"&F()F&\"\"#F(F/*&$\"(3=-\"!\"'F(F&F(F/$\")
+k_!)z!\"(F(" }}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 225 "CoeffsNumer:
+=[-20.17277296, -10.29426560, 1.312772000, 2.031000000]:\nRootsDenom:=
+ [1.1, 2.456, -2.11, -1.4]:\nCoeffsDenomin := [7.9805264, -1.021808, -
+6.82596, -.46e-1, 1]:\nMyParFrac(CoeffsNumer, RootsDenom, CoeffsDenomi
+n, 9);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#7&$\"*+++]#!\")$!*+++7$!\"*$
+\"*++I7\"F&$!*+++G\"F&" }}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 751 "n
+ := 14:\nMults := table([]):\nRootsDenom := table([]):\nfor i to n\n  \+
+do\n    s1 := rand(1..2)():\n    s2 := rand(1..2)():\n    roo := evalf
+(rand(1..1000)() / 1000):\n    mult := evalf(rand(1..1000)() / 100):\n
+    if s1 = 2 then roo := -roo fi:\n    if s2 = 2 then mult := - mult \+
+fi:\n    Mults[i] := mult:\n    RootsDenom[i] := roo:\n  od:\nMults :=
+ convert(Mults, list):\nRootsDenom := convert(RootsDenom, list):\nx :=
+ 'x':\ni := 'i':\nrati := normal( sum(Mults[i] / (x - RootsDenom[i]), \+
+i = 1..n) ):\nCoeffsNumer := [seq(coeff(numer(rati), x, i), i = 0..n-1
+)]:\nCoeffsDenomin := [seq(coeff(denom(rati), x, i), i = 0..n)]:\nMFr \+
+:= MyParFrac(CoeffsNumer, RootsDenom, CoeffsDenomin, 10):\nmax( seq(ev
+alf[24]( abs(MFr[i] - Mults[i]) ), i = 1..n\n        ) \n   );\nMFr;\n
+Mults;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#$\"0+++0#48`!\"*" }}{PARA 
+12 "" 1 "" {XPPMATH 20 "6#70$!+4l)**H*!#5$!+e)***>b!\"*$\"+'\\'**p()F)
+$!+8e_IU!\"($\"+5ehI9!\"&$\"+zd*>i)F1$\"+Uc0+v!\")$!+=W_1&*F6$!+]z,8`!
+\"%$\"+G:Z2qF1$\"+@-qZ=F;$!+q@B@FF;$!+'=]?l%F1$\"+y&e.&\\F;" }}{PARA 
+12 "" 1 "" {XPPMATH 20 "6#70$!+++++$*!#5$!++++?b!\"*$\"++++q()F)$!++++
+!\\*F)$!++++SYF)$\"+++++cF&$\"++++ghF)$\"++++SlF)$\"++++5uF)$\"+++++EF
+)$\"++++!\\&F)$!++++IoF)$\"++++5]F)$\"++++q_F)" }}}{EXCHG {PARA 0 "" 
+0 "" {MPLTEXT 0 21 5 "rati;" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#*@,>*&$
+\"+183*e\"!#7\"\"\")%\"xG\"\"#F)F)*&$\"+Z(pH2#!\")F))F+\"\"*F)F)*&$\"+
+1?O%3#F0F))F+\"#5F)!\"\"*&$\"+qa8zOF0F))F+\"#6F)F8*&$\"+++UW6F0F))F+\"
+#7F)F)*&$\"++++S?F0F))F+\"#8F)F)*&$\"+tyo1[!#8F)F+F)F8*&$\"+7`r6V!#6F)
+)F+\"\"$F)F)*&$\"+gH%zc\"!#5F))F+\"\"%F)F)*&$\"+XT)y?%FUF))F+\"\"&F)F8
+*&$\"+J/!=T$!\"*F))F+\"\"'F)F8*&$\"+z%GY3$FjnF))F+\"\"(F)F8*&$\"+ukpw8
+F0F))F+\"\")F)F)$\"+zts(\\%!#9F8F),&F+F)$\"++++![&FUF)F8,&F+F)$\"++++!
+o(FUF)F8,&F+F)$\"+++++;FOF8F8,&F+F)$\"++++g9FUF)F8,&F+F)$\"++++gfFUF)F
+8,&F+F)$\"++++!G(FUF8F8,&F+F)$\"++++!p#FUF8F8,&F+F)$\"++++?CFUF8F8,&F+
+F)$\"++++]BFUF)F8,&F+F)$\"+++++@FUF)F8,&F+F)$\"++++I\")FUF8F8,&F+F)$\"
+++++gyFUF8F8,&F+F)$\"++++INFUF)F8,&F+F)$\"++++ICFUF)F8" }}}{EXCHG 
+{PARA 0 "" 0 "" {MPLTEXT 0 21 12 "numer(rati);" }}{PARA 12 "" 1 "" 
+{XPPMATH 20 "6#,>*&$\"+183*e\"!#7\"\"\")%\"xG\"\"#F(F(*&$\"+Z(pH2#!\")
+F()F*\"\"*F(F(*&$\"+1?O%3#F/F()F*\"#5F(!\"\"*&$\"+qa8zOF/F()F*\"#6F(F7
+*&$\"+++UW6F/F()F*\"#7F(F(*&$\"++++S?F/F()F*\"#8F(F(*&$\"+tyo1[!#8F(F*
+F(F7*&$\"+7`r6V!#6F()F*\"\"$F(F(*&$\"+gH%zc\"!#5F()F*\"\"%F(F(*&$\"+XT
+)y?%FTF()F*\"\"&F(F7*&$\"+J/!=T$!\"*F()F*\"\"'F(F7*&$\"+z%GY3$FinF()F*
+\"\"(F(F7*&$\"+ukpw8F/F()F*\"\")F(F($\"+zts(\\%!#9F7" }}}{EXCHG {PARA 
+0 "" 0 "" {MPLTEXT 0 21 26 "solve(numer(rati) = 0, x);" }}{PARA 12 "" 
+1 "" {XPPMATH 20 "6/$\"+fv]m6!#5$\"+_o0lDF%$\"++c%f@(F%^$$\"+H[<4\")F%
+$\"+0]oej!#6^$$!+@#>'\\8F%$\"+yM)\\G)F/$!+%HM;9#F%$!+Z&)3(R#F%$!+&=u5F
+$F%$!+rp\"Q_&F%$!+-PLQkF%$!+\\vXI5!\"*^$F1$!+yM)\\G)F/^$F+$!+0]oejF/" 
+}}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 1021 "CoeffsNumer:= [1826.33
+4884229511259216900, 2898.029329216765561127585, 2320.4395902516352473
+84769, 1143.262070703886173606073, 368.5196154710010637133876, 77.0816
+1730368428609781634, 9.675807882987265400604203, .56418778255073974130
+87058]:\nRootsDenom:= [-2.234378479765364350242444-.288857444897141162
+3585044*I, -2.234378479765364350242444+.2888574448971411623585044*I, -
+2.199867743354566898691747-.8816534555639560428500526*I, -2.1998677433
+54566898691747+.8816534555639560428500526*I, -2.1286675061833806599295
+32-1.526718281020067812840610*I, -2.128667506183380659929532+1.5267182
+81020067812840610*I, -2.011990988834727338016931-2.2993895757597448808
+28399*I, -2.011990988834727338016931+2.299389575759744880828399*I]:\nC
+oeffsDenomin := [1826.334884229511259557644, 4958.82756472114071495438
+4, 6089.542423272443550463307, 4429.612803883682726711529, 2094.384367
+789539593790282, 661.7361207107653469211985, 137.125596050062220287844
+4, 17.14980943627607849376131, 1.0]:\nMyParFrac(CoeffsNumer, RootsDeno
+m, CoeffsDenomin, 50);" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#7*^$$\"Sb@Ko
+uKC.faGA=b4\"3Wj(*ye)y/i!#\\$\"S#*)R&o]9#zX[K/\\YX)GT9c\"ohR_U#!#[^$$
+\"S4>H!=H&=NJXIx@^4\"3Wj(*ye)y/iF'$!Sr-<$yF8#=!ok,@VX)GT9c\"ohR_U#F*^$
+$!S,6i5)RD?$4AENs&))\\g4^CSO[\"=xF'$!Sv\\cc!=D2kM5BaK=uWxz%H@\\1;$)F'^
+$$!SLW%4-Cc7VjoF$G())\\g4^CSO[\"=xF'$\"Sghoc]6'Q8Vg-n*yTZu(z%H@\\1;$)F
+'^$$\"SAM.YlH)zX0]j(4q4\\([&QN>#3!z=F'$\"S05,]xLZC\\.)zP'=X^QZ#RR$Rw@o
+!#]^$$\"Sjf<4F\"y=!3Z?Pss4\\([&QN>#3!z=F'$!S$H3^(Hu\"3v9o_BM^9&QZ#RR$R
+w@oF?^$$!SaHp/Wl*\\0jAA&*=Dg'=X3;&>baN)!#^$\"SH:'z<N.a=L^#46`=i*o`>!=U
+?No!#`^$$!SY\")4@Gb!eWIo\"fb6.m=X3;&>baN)FH$!SHNia#[O$=!4UF5!)*ph*o`>!
+=U?NoFK" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 921 "multsErfc := [6.204788587897634408
+1095518222854590324327468322155+24.25239616815614412884546490432484579
+2145068539892*I, 6.2047885878976344081095121773045313518529180291909-2
+4.252396168156144128845432101646801821327783170271*I, -7.7181483640245
+109604988572352622093202539810621101-8.3160649212947977447418325423103
+464072518056564975*I, -7.718148364024510960498872832768634312562402094
+4433+8.3160649212947977447417896702604313386115056686160*I, 1.87900821
+93538548749097009763500545798296546033422+.682176393393924738514518637
+79803492447337750011005*I, 1.87900821935385487490972723720470801878127
+09175963-.68217639339392473851451342352681475081742975108293*I, -.8355
+4551951608451866025189522226305499654404692954e-1+.6835204218019536896
+2185311092513318540335177961529e-3*I, -.835545519516084518660311555916
+83044580552821098146e-1-.683520421801953689616998010274209018336482546
+23529e-3*I]:\nmultsErfc := evalf[24](multsErfc);" }}{PARA 12 "" 1 "" 
+{XPPMATH 20 "6#>%*multsErfcG7*^$$\"9b4\"3Wj(*ye)y/i!#B$\"9b%)GT9c\"ohR
+_U#!#A^$$\"9^4\"3Wj(*ye)y/iF)$!9a%)GT9c\"ohR_U#F,^$$!9'))\\g4^CSO[\"=x
+F)$!9$=uWxz%H@\\1;$)F)^$$!9())\\g4^CSO[\"=xF)$\"9zTZu(z%H@\\1;$)F)^$$
+\"9q4\\([&QN>#3!z=F)$\"9>X^QZ#RR$Rw@o!#C^$$\"9t4\\([&QN>#3!z=F)$!98X^Q
+Z#RR$Rw@oFA^$$!9_-m=X3;&>baN)!#D$\"9`=i*o`>!=U?No!#F^$$!97.m=X3;&>baN)
+FJ$!9)*ph*o`>!=U?NoFM" }}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 470 "mu
+ltsErfc := [6.20478858789763440810955+24.2523961681561441288455*I, 6.2
+0478858789763440810951-24.2523961681561441288454*I, -7.718148364024510
+96049886-8.31606492129479774474183*I, -7.71814836402451096049887+8.316
+06492129479774474179*I, 1.87900821935385487490970+.6821763933939247385
+14519*I, 1.87900821935385487490973-.682176393393924738514513*I, -.8355
+45519516084518660252e-1+.683520421801953689621853e-3*I, -.835545519516
+084518660312e-1-.683520421801953689616998e-3*I]:" }}}{EXCHG {PARA 0 "
+" 0 "" {TEXT -1 49 "\323\361\360\345\344\355\345\355\350\345 \361\356
+\365\360\340\355\345\355\350\345 \361\356\357\360\377\346\345\355\355
+\356\361\362\350 \352\356\375\364\364\350\366\350\345\355\362\356\342
+" }{MPLTEXT 1 0 466 "\nmultsErfc := [6.20478858789763440810953+24.2523
+961681561441288454*I, 6.20478858789763440810953-24.2523961681561441288
+454*I, -7.71814836402451096049886-8.31606492129479774474181*I, -7.7181
+4836402451096049886+8.31606492129479774474181*I, 1.8790082193538548749
+0971+.682176393393924738514516*I, 1.87900821935385487490971-.682176393
+3939247385145136*I, -.835545519516084518660282e-1+.6835204218019536896
+24e-3*I, -.835545519516084518660282e-1-.683520421801953689624e-3*I]:" 
+}}}{EXCHG {PARA 0 "" 0 "" {MPLTEXT 0 21 383 "x := 'x':\nval := -1.5308
+:\nprint(\"multsErfc\", \nevalf[24]( subs( x = val, \n                \+
+ numer_/ denom_ - \n                 add(multsErfc[i] / (x - rootsErfc
+[i]), i = 1..8)\n               )\n         ));\nprint(\"multsErfc2\",
+ \nevalf[24]( subs( x = val, \n                 numer_/ denom_ - \n   \+
+              add(multsErfc2[i] / (x - rootsErfc[i]), i = 1..8)\n     \+
+          )\n         ));" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$Q*multsEr
+fc6\"^$$!)*p:g\"!#E$!$f)!#D" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$Q+mults
+Erfc26\"^$$!)!oDg\"!#E$!#5!#D" }}}}{SECT 0 {PARA 3 "" 0 "" {TEXT -1 
+14 "ExpRationalInt" }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 75 "a := '
+a':\nb := 'b':\nt := 't':\nn := 'n':\ndiff(exp(-(a * t + b)^2) * t^n, \+
+t);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#,&*,\"\"#\"\"\",&*&%\"aGF&%\"tG
+F&F&%\"bGF&F&F)F&-%$expG6#,$*$)F'F%F&!\"\"F&)F*%\"nGF&F2**F,F&F3F&F4F&
+F*F2F&" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 90 "a := 'a':\nb := '
+b':\nt := 't':\nn := 'n':\ny = 'y':\nint(exp(-(a * t + b)^2), t = y[1]
+..y[2]);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#,$*&#\"\"\"\"\"#F&*(%#PiG#
+F&F',&-%$erfG6#,&*&%\"aGF&&%\"yG6#F&F&F&%\"bGF&F&-F-6#,&*&F1F&&F36#F'F
+&F&F5F&!\"\"F&F1F<F&F<" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 94 "a
+ := 'a':\nb := 'b':\nt := 't':\nn := 'n':\ny = 'y':\nint(exp(-(a * t +
+ b)^2) * t, t = y[1]..y[2]);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#,$*&#
+\"\"\"\"\"#F&*&,*-%$expG6#,(*&)%\"aGF'F&)&%\"yG6#F&F'F&!\"\"**F'F&F0F&
+F2F&%\"bGF&F5*$)F7F'F&F5F&*(F7F&%#PiGF%-%$erfG6#,&*&F0F&F2F&F&F7F&F&F&
+-F+6#,(*&F/F&)&F36#F'F'F&F5**F'F&F0F&FFF&F7F&F5F8F5F5*(F7F&F;F%-F=6#,&
+*&F0F&FFF&F&F7F&F&F5F&F0!\"#F&F&" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 92 "condEps := \nproc(v, eps)\n   if eps < 1 then  evalf[
+24](abs(v)) > eps  else true fi\nend proc:" }}}{EXCHG {PARA 0 "> " 0 "
+" {MPLTEXT 1 0 456 "#ExpRationalInt := \n#proc(y1::numeric, y2::numeri
+c, a::numeric, b::numeric, p, eps::numeric, n)\nExpRationalInt := \npr
+oc(y1::numeric, y2::numeric, a::numeric, b::numeric, p, eps::numeric)
+\nlocal i, val, term_prev_prev_defined, term_prev_defined, term_define
+d,\n      epsSqr, cond1, cond2, term_prev_prev, term_prev, term,\n    \+
+  ay1b, ay2b, erfAB1, erfAB2, expAB1, expAB2, invASqr, PiSqrt,\n      \+
+intgr_prev_prev, intgr_prev, intgr, coef, sum, powy1, powy2;\n   " }
+{TEXT -1 27 "---------------------------" }{MPLTEXT 1 0 168 "\n   epsS
+qr := evalf[24]( eps^2 );\n   cond1 := false;\n   cond2 := false;\n   \+
+term_prev_prev_defined := false;\n   term_prev_defined := false;\n   t
+erm_defined := false;\n   " }{TEXT -1 27 "---------------------------
+" }{MPLTEXT 1 0 308 "\n   ay1b := evalf[24]( a * y1 + b );\n   ay2b :=
+ evalf[24]( a * y2 + b );\n   erfAB1 := evalf[24]( erf(ay1b) );\n   er
+fAB2 := evalf[24]( erf(ay2b) );\n   expAB1 := evalf[24]( exp(-ay1b^2) \+
+);\n   expAB2 := evalf[24]( exp(-ay2b^2) );\n   invASqr := evalf[24]( \+
+1 / (2 * a^2) );\n   PiSqrt := evalf[24]( Pi^(1/2) );\n   " }{TEXT -1 
+27 "---------------------------" }{MPLTEXT 1 0 359 "\n   intgr_prev_pr
+ev := evalf[24]( 0.5 * PiSqrt / a * (erfAB2 - erfAB1));\n\n#if n = 0 t
+hen return intgr_prev_prev fi;\n\n   coef:= 1.0;\n   val := evalf[24](
+ intgr_prev_prev );\n   sum := val;\n   if condEps(val, epsSqr) \n    \+
+ then term_prev_prev := val;\n          term_prev_prev_defined := true
+;\n          cond1:= evalf[24]( abs(term_prev_prev) ) <= eps;\n   fi;
+\n   " }{TEXT -1 27 "---------------------------" }{MPLTEXT 1 0 604 "
+\n   intgr_prev := evalf[24]( invASqr * (expAB1 - expAB2 + b * PiSqrt \+
+* (erfAB1 - erfAB2)) );\n\n#if n = 1 then return intgr_prev fi;\n\n\n \+
+  coef:= evalf[24]( -coef * p );\n   val := evalf[24]( coef * intgr_pr
+ev );\n   if condEps(val, epsSqr)\n     then sum := evalf[24]( sum + v
+al );\n          if term_prev_prev_defined\n            then term_prev
+ := val;\n                 term_prev_defined := true;\n            els
+e term_prev_prev := val;\n                 term_prev_prev_defined := t
+rue;\n                 cond1:= evalf[24]( abs(term_prev_prev) ) <= eps
+;\n          fi\n   fi;\n   powy1 := 1.0;\n   powy2 := 1.0;\n   " }
+{TEXT -1 27 "---------------------------" }{MPLTEXT 1 0 189 "\n   i :=
+ 1:\n   while true\n     do \n       if (i > 10) and not (term_prev_pr
+ev_defined and term_prev_defined and term_defined) \n         then ret
+urn 0.0\n       fi;\n       i := i + 1;\n       " }{TEXT -1 41 "----- \+
+Calculation of the integral -------" }{MPLTEXT 1 0 421 "\n       powy1
+ := evalf[24]( y1 * powy1 );\n       powy2 := evalf[24]( y2 * powy2 );
+\n       intgr := evalf[24]( invASqr * (-2 * a * b * intgr_prev + (i -
+ 1) * intgr_prev_prev +\n                                       expAB1
+ * powy1 - expAB2 * powy2\n                                     )\n   \+
+                      );\n\n#if n = i then return intgr fi;\n\n\n     \+
+  intgr_prev_prev := intgr_prev;\n       intgr_prev := intgr;\n       \+
+" }{TEXT -1 39 "---------------------------------------" }{MPLTEXT 1 
+0 920 "\n       coef := evalf[24]( -coef * p );\n       val := evalf[2
+4]( coef * intgr );\n\n       if i > 1000 then error cat(\"val = \", c
+onvert(val, string), \"\\n\",\n                                 \"term
+_prev_prev = \", convert(term_prev_prev, string), \"\\n\",\n          \+
+                       \"term_prev = \", convert(term_prev, string), \+
+\"\\n\",\n                                 \"term = \", convert(term, \+
+string)\n                                )\n       fi;\n\n       if co
+ndEps(val, epsSqr)\n         then sum := evalf[24]( sum + val );\n    \+
+          if term_prev_prev_defined\n                then if term_prev
+_defined\n                       then term := val;\n                  \+
+          term_defined := true;\n                            cond2 := \+
+evalf[24]( 1 / 3 * (abs(term) + abs(term_prev) + abs(term_prev_prev)) \+
+) <= eps;\n                            if cond1 and cond2 \nthen print
+(\"Number of steps\", i); return evalf[24]( sum ) fi;   " }{TEXT -1 3 
+"!!!" }{MPLTEXT 1 0 520 "\n                            term_prev_prev \+
+:= term_prev;\n                            term_prev := term;\n       \+
+                     cond1:= evalf[24]( abs(term_prev_prev) ) <= eps;
+\n                       else term_prev := val;\n                     \+
+       term_prev_defined := true;\n                     fi;\n         \+
+       else term_prev_prev := val;\n                     term_prev_pre
+v_defined := true;\n                     cond1:= evalf[24]( abs(term_p
+rev_prev) ) <= eps;\n              fi\n       fi\n     od;\nend proc:
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 16 "eps := 10^(-9):\n" }
+{TEXT -1 9 "---------" }{MPLTEXT 1 0 64 "\ni := 3:\ny1 := bounds[i]:\n
+y2 := bounds[i + 1]:\nsh := shifts[i]:\n" }{TEXT -1 9 "---------" }
+{MPLTEXT 1 0 98 "\ni := 8:\np := rootsErfc[i]:\ninv := evalf[24]( (sh \+
++ p)^(-1) ):  print(\"Inv abs value\", abs(inv));\n" }{TEXT -1 9 "----
+-----" }{MPLTEXT 1 0 23 "\na := 4.1:\nb := -0.25:\n" }{TEXT -1 9 "----
+-----" }{MPLTEXT 1 0 556 "\nt := 't':\n#n := 150:\n#int1 := ExpRationa
+lInt( y1 - sh, y2 - sh, a, b + sh * a, inv, eps, n );\n#int2 := evalf[
+24]( Int( exp(-(a * t + b + sh * a)^2) * t^n, t = y1 - sh..y2 - sh ) )
+;\n#int1 := ExpRationalInt( y1, y2, a, b, inv, eps, n );\n#int2 := eva
+lf[24]( Int( exp(-(a * t + b)^2) * t^n, t = y1..y2 ) );\nint1 := inv *
+ ExpRationalInt( evalf[24]( y1 - sh ), evalf[24]( y2 - sh ), a, evalf[
+24]( b + sh * a ), inv, eps ):\nint2 := evalf[24]( Int( exp(-(a * t + \+
+b)^2) / (t + p), t = y1..y2 ) ):\nprint(\"Result integrals difference
+\", evalf[24](abs(int1 - int2)) );" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$
+Q.Inv~abs~value6\"$\"+5bYkR!#5" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$Q0Nu
+mber~of~steps6\"\"\"%" }}{PARA 11 "" 1 "" {XPPMATH 20 "6$Q<Result~inte
+grals~difference6\"$\"9'z.)))3[5.St)>%!#Q" }}}{EXCHG {PARA 0 "> " 0 "
+" {MPLTEXT 1 0 158 "evalf[24](\nabs( \n  Int( exp(-(a * t + b)^2) / (t
+ + p), t = y1..y2 ) - \n  inv * Int( exp(-(a * t + b + sh * a)^2) / (1
+ + inv * t), t = y1 - sh..y2 - sh )\n) \n);" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6#$\"9f/#[[*)\\())R.=6!#[" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 0 "" }}}}}{MARK "2 4 0 0" 37 }{VIEWOPTS 1 1 1 1 1 1803 1 
+1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

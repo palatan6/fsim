@@ -78,7 +78,7 @@ namespace AGLibrary
                  * for x = 0.49 instead of announced by the authors 1.0e-16. We correct this 
                  * situation using row expansion for erf(). Our code gives an accuracy < .2759017e-17
                  * for |x| < 0.5 (fixed by Tyshkevich Dmitry) 
-                 */ 
+                 */
                 //xsq = x * x;
                 //p = 0.007547728033418631287834;
                 //p = 0.288805137207594084924010 + xsq * p;
@@ -99,25 +99,25 @@ namespace AGLibrary
                 xsq = x * x;
                 q = xsq;
                 p = 1.0 - q / 3.0;
-                q = q * xsq ;
-                p = p + q * 0.1 ;
-                q = q * xsq ;
+                q = q * xsq;
+                p = p + q * 0.1;
+                q = q * xsq;
                 p = p - q / 42.0;
-                q = q * xsq ;
+                q = q * xsq;
                 p = p + q / 216.0;
-                q = q * xsq ;
+                q = q * xsq;
                 p = p - q / 1320.0;
-                q = q * xsq ;
+                q = q * xsq;
                 p = p + q / 9360.0;
-                q = q * xsq ;
+                q = q * xsq;
                 p = p - q / 75600.0;
-                q = q * xsq ;
+                q = q * xsq;
                 p = p + q / 685440.0;
-                q = q * xsq ;
+                q = q * xsq;
                 p = p - q / 6894720.0;
-                q = q * xsq ;
+                q = q * xsq;
                 p = p + q / 76204800.0;
-                q = q * xsq ;
+                q = q * xsq;
                 p = p - q / 918086400.0;
                 result = s * 1.1283791670955125738961589031 * x * p;
                 return result;

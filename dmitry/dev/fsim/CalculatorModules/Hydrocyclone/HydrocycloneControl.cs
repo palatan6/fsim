@@ -112,7 +112,6 @@ namespace CalculatorModules.Hydrocyclone
             fsParametersGroup gamma3Group = AddGroup(
                 fsParameterIdentifier.Gamma3);
 
-
             fsParametersGroup bigLOverDGroup = AddGroup(
                 fsParameterIdentifier.bigLOverD);
 
@@ -149,6 +148,9 @@ namespace CalculatorModules.Hydrocyclone
                 fsParameterIdentifier.OverflowSolidsConcentration,
                 fsParameterIdentifier.UnderflowSolidsVolumeFraction,
                 fsParameterIdentifier.UnderflowSolidsConcentration);
+
+            fsParametersGroup iGroup = AddGroup(
+                fsParameterIdentifier.PercentageOfParticles);
             var groups = new[]
                              {
                                  etaGroup,
@@ -159,6 +161,7 @@ namespace CalculatorModules.Hydrocyclone
                                  sigma_gGroup,
                                  sigma_sGroup,
                                  underFlowGroup,
+                                 iGroup,
                                  cxdGroup,
                                  numCyclonesGroup,
                                  pressureGroup,
@@ -208,10 +211,10 @@ namespace CalculatorModules.Hydrocyclone
         {
             Values[fsParameterIdentifier.MotherLiquidViscosity].Value = new fsValue(1e-3);
             Values[fsParameterIdentifier.MotherLiquidDensity].Value = new fsValue(1000);
-            Values[fsParameterIdentifier.SolidsDensity].Value = //new fsValue(2000); 
-                                                                new fsValue(1200);
-            Values[fsParameterIdentifier.SuspensionSolidsMassFraction].Value = //new fsValue(5e-2);
-                                                                               new fsValue(9e-2);
+            Values[fsParameterIdentifier.SolidsDensity].Value = new fsValue(2000);
+            Values[fsParameterIdentifier.SuspensionSolidsMassFraction].Value = new fsValue(5e-2);
+
+            Values[fsParameterIdentifier.PercentageOfParticles].Value = new fsValue(0.9);
 
             Values[fsParameterIdentifier.xg].Value = new fsValue(100e-6);
             Values[fsParameterIdentifier.sigma_g].Value = new fsValue(3);
@@ -219,13 +222,6 @@ namespace CalculatorModules.Hydrocyclone
             ParameterToGroup[fsParameterIdentifier.ReducedCutSize].Representator = fsParameterIdentifier.ReducedCutSize;
             Values[fsParameterIdentifier.rf].Value = new fsValue(5e-2);
             Values[fsParameterIdentifier.ReducedCutSize].Value = new fsValue(100e-6);
-            //------------------------
-            //ParameterToGroup[fsParameterIdentifier.MachineDiameter].Representator = fsParameterIdentifier.MachineDiameter;//для отладки
-            //ParameterToGroup[fsParameterIdentifier.UnderflowSolidsMassFraction].Representator = fsParameterIdentifier.UnderflowSolidsMassFraction; //для отладки
-            //Values[fsParameterIdentifier.UnderflowSolidsMassFraction].Value = //new fsValue(42.4e-2);  //cmu, для отладки
-            //                                                                  new fsValue(10e-2);
-            //Values[fsParameterIdentifier.MachineDiameter].Value = new fsValue(2.41); //D, для отладки
-            //------------------------
             Values[fsParameterIdentifier.NumberOfCyclones].Value = new fsValue(3);
             Values[fsParameterIdentifier.FeedVolumeFlowRate].Value = new fsValue(16900/3600.0);
 

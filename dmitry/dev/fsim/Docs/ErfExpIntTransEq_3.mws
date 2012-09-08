@@ -1,0 +1,671 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{CSTYLE "" 0 21 "" 0 1 0 0 0 1 0 0 0 0 2 0 0 0 0 1 }{CSTYLE "" -1 256 
+"" 1 18 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }{CSTYLE "" -1 272 "" 1 18 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 }{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "Times
+" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }1 1 0 0 0 0 1 0 1 0 2 2 0 1 }
+{PSTYLE "Heading 1" -1 3 1 {CSTYLE "" -1 -1 "Times" 1 18 0 0 0 1 2 1 
+2 2 2 2 1 1 1 1 }1 1 0 0 8 4 1 0 1 0 2 2 0 1 }{PSTYLE "Heading 2" -1 
+4 1 {CSTYLE "" -1 -1 "Times" 1 14 0 0 0 1 2 1 2 2 2 2 1 1 1 1 }1 1 0 
+0 8 2 1 0 1 0 2 2 0 1 }{PSTYLE "Heading 3" -1 5 1 {CSTYLE "" -1 -1 "Ti
+mes" 1 12 0 0 0 1 1 1 2 2 2 2 1 1 1 1 }1 1 0 0 0 0 1 0 1 0 2 2 0 1 }
+{PSTYLE "Maple Output" -1 11 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 
+2 2 2 2 2 2 1 1 1 1 }3 3 0 0 0 0 1 0 1 0 2 2 0 1 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 8 "restart:" }}}{SECT 1 
+{PARA 4 "" 0 "" {TEXT 256 31 "intExpATSqrB,   intExpATSqrBInf" }}
+{SECT 1 {PARA 5 "" 0 "" {TEXT -1 11 "Description" }}{EXCHG {PARA 0 "" 
+0 "" {TEXT -1 27 "Calculation of the integral" }{MPLTEXT 0 21 99 "\nal
+pha := 'alpha':\nbeta := 'beta':\nt := 't':\n2/ Pi^(1/2) * int(exp(-((
+alpha * t)^2 + beta *t)), t);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#*(-%$
+expG6#,$*(\"\"%!\"\"%%betaG\"\"#%&alphaG!\"#\"\"\"F/F-F*-%$erfG6#,&*&F
+-F/%\"tGF/F/*(F,F*F+F/F-F*F/F/" }}}}{EXCHG }{SECT 0 {PARA 4 "" 0 "" 
+{TEXT -1 12 "intExpATSqrB" }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+100 "intExpATSqrB :=\nproc(alpha, beta, y1, y2)\nlocal bOver2a, ay1bOv
+er2a, ay2bOver2a, erfAB1, erfAB2;\n   " }{TEXT -1 27 "----------------
+-----------" }{MPLTEXT 1 0 242 "\n   bOver2a  := evalf[24]( 0.5 * beta
+ / alpha );\n   ay1bOver2a := evalf[24]( alpha * y1 + bOver2a );\n   a
+y2bOver2a := evalf[24]( alpha * y2 + bOver2a );\n   erfAB1 := evalf[24
+]( erf(ay1bOver2a) );\n   erfAB2 := evalf[24]( erf(ay2bOver2a) );\n   \+
+" }{TEXT -1 27 "---------------------------" }{MPLTEXT 1 0 77 "\n   re
+turn evalf[24]( exp(bOver2a^2) / alpha * (erfAB2 - erfAB1) );\nend pro
+c:" }}}}{SECT 0 {PARA 4 "" 0 "" {TEXT -1 15 "intExpATSqrBInf" }}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 69 "intExpATSqrBInf :=\nproc(alp
+ha, beta, y)\nlocal bOver2a, aybOver2a;\n   " }{TEXT -1 27 "----------
+-----------------" }{MPLTEXT 1 0 102 "\n   bOver2a  := evalf[24]( 0.5 \+
+* beta / alpha );\n   aybOver2a := evalf[24]( alpha * y + bOver2a );\n
+   " }{TEXT -1 27 "---------------------------" }{MPLTEXT 1 0 90 "\n  \+
+ return evalf[24]( exp(bOver2a^2) / alpha * (sign(alpha) - erf(aybOver
+2a)) );\nend proc:" }}}{EXCHG }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+0 "" }}}}{SECT 1 {PARA 3 "" 0 "" {TEXT -1 32 "ErfExpIntLowPos,  ErfExp
+IntUpPos" }}{EXCHG }{EXCHG }{EXCHG }{EXCHG }{EXCHG }{SECT 1 {PARA 3 "
+" 0 "" {TEXT -1 20 "int2Low_x,  int2Up_x" }}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 523 "int2Low_x :=\nproc( a::numeric, b::numeric, x::numer
+ic,\n      b2:: numeric,\n      erfB2::numeric, erfX::numeric)\n   if \+
+evalf[24]( a * x + b ) <= -2 \n     then return evalf[24]( 1.995322265
+018952734162069256367 * (1 + erfX) )\n   fi;\n   return evalf[24]( 0.4
+97661132509476367081034628184 * \n                     (0.564189583547
+756286948079451561 * a * (exp(-x^2) - exp(-b2^2)) -\n                 \+
+     b * (erfX + erfB2)\n                     ) +\n                   \+
+  1 + erfX + 0.995322265018952734162 * (1 - erfB2) )\nend proc:" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 340 "int2Up_x :=\nproc( a::numer
+ic, b::numeric, x::numeric,\n      b2:: numeric,\n      erfB2::numeric
+, erfX::numeric)\n   if evalf[24]( a * x + b ) <= -2\n     then return
+ evalf[24]( 2 * (1 + erfX) )\n   fi;\n   return evalf[24]( 0.995322265
+018952734162069256367 * \n                     (erfB2 + erfX) + 2 + er
+fX - erfB2\n                   )\nend proc:" }}}}{EXCHG }{SECT 1 
+{PARA 3 "" 0 "" {TEXT -1 30 "int2Low_bOverA,  int2Up_bOverA" }}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 436 "int2Low_bOverA :=\nproc( a::numeri
+c, b::numeric,\n      b2:: numeric, bOverA::numeric, \n      erfB2::nu
+meric, erfBOverA::numeric)\n   return evalf[24]( 0.4976611325094763670
+81034628184 * \n                     (0.564189583547756286948079451561
+ * a * (exp(-bOverA^2) - exp(-b2^2)) -\n                      b * (erf
+B2 - erfBOverA)\n                     ) + \n                     1 - e
+rfBOverA + 0.995322265018952734162 * (1 - erfB2) )\nend proc:" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 278 "int2Up_bOverA :=\nproc( a::
+numeric, b::numeric,\n      b2:: numeric, bOverA::numeric,\n      erfB
+2::numeric, erfBOverA::numeric)\n   return evalf[24]( 0.99532226501895
+2734162069256367 * (erfB2 - erfBOverA) + \n                     2 - er
+fBOverA - erfB2\n                   )\nend proc:" }}}}{EXCHG }{SECT 1 
+{PARA 4 "" 0 "" {TEXT -1 33 "ErfExpIntLowPos,   ErfExpIntUpPos" }}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 225 "ErfExpIntLowPos := \nproc(a
+::numeric, b::numeric, x::numeric,\n     b2::numeric, bOverA::numeric,
+ halfBOverA::numeric, oneBOverA::numeric,\n     erfB2::numeric, erfX::
+numeric, erfBOverA::numeric, erfHalfBOverA::numeric\n    )\n   " }
+{TEXT -1 25 "-------------------------" }{MPLTEXT 1 0 1206 "\n   if x \+
+< -bOverA\n     then return int2Low_x(a, b, x, b2, erfB2, erfX)\n   el
+if x < halfBOverA\n     then return evalf[24]( int2Low_bOverA(a, b, b2
+, bOverA, erfB2, erfBOverA) +\n                            erfc(a * x \+
++ b) * (erfX + erfBOverA) )\n   elif  x < oneBOverA\n     then return \+
+evalf[24]( int2Low_bOverA(a, b, b2, bOverA, erfB2, erfBOverA) + \n    \+
+                        0.479500122186953462317253346108 * (erfHalfBOv
+erA + erfBOverA) +\n                            erfc(a * x + b) * (erf
+X - erfHalfBOverA) \n                          )\n     else return eva
+lf[24]( int2Low_bOverA(a, b, b2, bOverA, erfB2, erfBOverA) + \n       \+
+                   0.479500122186953462317253346108 * (erfHalfBOverA +
+ erfBOverA) +\n                          0.157299207050285130658779364
+917 * (erf(oneBOverA) - erfHalfBOverA) +\n                          0.
+206507720129041778112344897057 * exp(-b * (b * 1.866025403784438646763
+72317077 +1) + 1) *\n                            intExpATSqrB((1.86602
+540378443864676372317077 * a^2 + 1)^(1/2), \n                         \+
+                a * (3.73205080756887729352744634154 * b + 1), \n     \+
+                                    oneBOverA, x)\n                   \+
+       )\n   fi\nend proc:" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+224 "ErfExpIntUpPos :=\nproc(a::numeric, b::numeric, x::numeric,\n    \+
+ b2:: numeric, bOverA::numeric, halfBOverA::numeric, oneBOverA::numeri
+c,\n     erfB2::numeric, erfX::numeric, erfBOverA::numeric, erfHalfBOv
+erA::numeric\n    )\n   " }{TEXT -1 25 "-------------------------" }
+{MPLTEXT 1 0 942 "\n   if    x < -bOverA\n     then return int2Up_x(a,
+ b, x, b2, erfB2, erfX)\n   elif  x < halfBOverA\n     then return eva
+lf[24]( int2Up_bOverA(a, b, b2, bOverA, erfB2, erfBOverA) +\n         \+
+                   erfX + erfBOverA )\n   elif  x < oneBOverA\n     th
+en return evalf[24]( int2Up_bOverA(a, b, b2, bOverA, erfB2, erfBOverA)
+ + \n                            erfHalfBOverA + erfBOverA +\n        \+
+                    0.479500122186953462317253346108 * (erfX - erfHalf
+BOverA) \n                          )\n     else return evalf[24]( int
+2Up_bOverA(a, b, b2, bOverA, erfB2, erfBOverA) + \n                   \+
+         erf(halfBOverA) + erfBOverA +\n                            0.
+479500122186953462317253346108 * (erf(oneBOverA) - erf(halfBOverA)) +
+\n                            0.564189583547756286948079451561 * exp(-
+b^2) * \n                            intExpATSqrB( (1 + a^2)^(1/2), 2 \+
+* a * b, oneBOverA, x)\n                          )\n   fi\nend proc:
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}}{SECT 1 {PARA 3 "
+" 0 "" {TEXT -1 32 "ErfExpIntLowNeg,  ErfExpIntUpNeg" }}{EXCHG }
+{EXCHG }{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 363 "ErfExpIntLowNeg := \+
+\nproc(a::numeric, b::numeric, x::numeric,\n     y::numeric, aInv::num
+eric, bOverA::numeric, halfBOverA::numeric, oneBOverA::numeric,\n     \+
+multLow::numeric, a1Low::numeric, b1Low::numeric, expBOverAsqr::numeri
+c, expXsqr::numeric,\n     erfX::numeric, erfcY::numeric, erfBOverA::n
+umeric, erfHalfBOverA::numeric,\n     erfOneBOverA::numeric\n    )\n  \+
+ " }{TEXT -1 46 "----------------------------------------------" }
+{MPLTEXT 1 0 1126 "\n   if   y > 1 \n     then return evalf[24]( multL
+ow * intExpATSqrBInf(a1Low, b1Low, y) )\n   elif y > 0.5\n     then re
+turn evalf[24]( multLow * intExpATSqrBInf(a1Low, b1Low, 1) +\n        \+
+                    0.157299207050285130658779364917 * ( erfX - erfOne
+BOverA )\n                          )\n   elif y > 0\n     then return
+ evalf[24]( multLow * intExpATSqrBInf(a1Low, b1Low, 1) +\n            \+
+                0.157299207050285130658779364917 * ( erfHalfBOverA - e
+rfOneBOverA ) +\n                            0.47950012218695346231725
+3346108 * ( erfX - erfHalfBOverA )\n                          )\n   el
+se return evalf[24]( multLow * intExpATSqrBInf(a1Low, b1Low, 1) +\n   \+
+                       0.157299207050285130658779364917 * (erfHalfBOve
+rA - erfOneBOverA) -\n                          0.47950012218695346231
+7253346108 * (erfBOverA + erfHalfBOverA) + \n                         \+
+ erfX + erfBOverA + (erfcY - 1) / y *\n                         ( b * \+
+(erfX + erfBOverA) + \n                           0.564189583547756286
+948079451561 * a * (expBOverAsqr - expXsqr)\n                         \+
+)\n                        )\n   fi\nend proc:" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 317 "ErfExpIntUpNeg :=\nproc(a::numeric, b::numeri
+c, x::numeric,\n     y::numeric, aInv::numeric, bOverA::numeric, halfB
+OverA::numeric, oneBOverA::numeric,\n     multUp::numeric, a1Up::numer
+ic, b1Up::numeric,\n     erfX::numeric, erfcY::numeric, erfBOverA::num
+eric, erfHalfBOverA::numeric,\n     erfOneBOverA::numeric\n    )\n   \+
+" }{TEXT -1 46 "----------------------------------------------" }
+{MPLTEXT 1 0 847 "\n   if   y > 1 \n     then return evalf[24]( multUp
+ * intExpATSqrBInf(a1Up, b1Up, y) )\n   elif y > 0.5\n     then return
+ evalf[24]( multUp * intExpATSqrBInf(a1Up, b1Up, 1) +\n               \+
+             erfcY * ( erfX - erfOneBOverA )\n                        \+
+  )\n   elif y > 0\n     then return evalf[24]( multUp * intExpATSqrBI
+nf(a1Up, b1Up, 1) +\n                            0.4795001221869534623
+17253346108 * ( erfHalfBOverA - erfOneBOverA ) +\n                    \+
+        erfcY * ( erfX - erfHalfBOverA )\n                          )
+\n   else return evalf[24]( multUp * intExpATSqrBInf(a1Up, b1Up, 1) +
+\n                          0.479500122186953462317253346108 * ( erfHa
+lfBOverA - erfOneBOverA ) -\n                          erfBOverA - erf
+HalfBOverA +  \n                          erfcY * ( erfX + erfBOverA )
+\n                        )\n   fi\nend proc:" }}}}{SECT 0 {PARA 3 "" 
+0 "" {TEXT -1 18 "getRootNeighborPos" }}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 454 "getRootNeighborPos := \nproc( n::posint, \n      eps
+::numeric,\n      left::numeric, right::numeric, \n      a::numeric, x
+::numeric, \n      s::numeric, d::numeric\n    )\nlocal i,\n      lowL
+eft, lowRight, lowStop, upLeft, upRight, upStop, lbLow, ubLow, lbUp, u
+bUp, lbLow1,\n      ubLow1, lbLow2, ubLow2, leftLow, rightLow, lbUp1, \+
+ubUp1, lbUp2, ubUp2, leftUp, rightUp,\n      erfX, aInv, b2, bOverA, h
+alfBOverA, oneBOverA, erfB2, erfBOverA, erfHalfBOverA, sd;\n   " }
+{TEXT -1 35 "-----------------------------------" }{MPLTEXT 1 0 65 "\n
+   erfX := evalf[24]( erf(x) );\n   aInv := evalf[24](1 / a);\n   " }
+{TEXT -1 27 "---------------------------" }{MPLTEXT 1 0 746 "\n   b2 :
+= evalf[24]( (2 + left) * aInv );\n   bOverA := evalf[24]( left * aInv
+ );\n   halfBOverA := evalf[24]( (0.5 - left) * aInv );\n   oneBOverA \+
+:= evalf[24]( (1 - left) * aInv );\n   erfB2 := evalf[24]( erf(b2) );
+\n   erfBOverA := evalf[24]( erf(bOverA) );\n   erfHalfBOverA := evalf
+[24]( erf(halfBOverA) );\n   sd := evalf[24]( s * erfc(d * left) );\n \+
+  lowLeft := evalf[24]( ErfExpIntLowPos(a, left, x, b2, bOverA, halfBO
+verA, \n                                         oneBOverA, erfB2, erf
+X, erfBOverA, erfHalfBOverA) - sd\n                       );\n   upLef
+t := evalf[24]( ErfExpIntUpPos(a, left, x, b2, bOverA, halfBOverA, \n \+
+                                      oneBOverA, erfB2, erfX, erfBOver
+A, erfHalfBOverA) - sd\n                      );\n   " }{TEXT -1 23 "-
+----------------------" }{MPLTEXT 1 0 763 "\n   b2 := evalf[24]( (2 + \+
+right) * aInv );\n   bOverA := evalf[24]( right * aInv );\n   halfBOve
+rA := evalf[24]( (0.5 - right) * aInv );\n   oneBOverA := evalf[24]( (
+1 - right) * aInv );\n   erfB2 := evalf[24]( erf(b2) );\n   erfBOverA \+
+:= evalf[24]( erf(bOverA) );\n   erfHalfBOverA := evalf[24]( erf(halfB
+OverA) );\n   sd := evalf[24]( s * erfc(d * right) );\n   lowRight := \+
+evalf[24]( ErfExpIntLowPos(a, right, x, b2, bOverA, halfBOverA, \n    \+
+                                      oneBOverA, erfB2, erfX, erfBOver
+A, erfHalfBOverA) - sd\n                        );\n   upRight := eval
+f[24]( ErfExpIntUpPos(a, right, x, b2, bOverA, halfBOverA, \n         \+
+                                   oneBOverA, erfB2, erfX, erfBOverA, \+
+erfHalfBOverA) - sd\n                       );\n   " }{TEXT -1 8 "----
+----" }{MPLTEXT 1 0 45 "\n   lowStop := false;\n   upStop := false;\n \+
+  " }{TEXT -1 35 "-----------------------------------" }{MPLTEXT 1 0 
+236 "\n   if (evalf[24](lowLeft + eps) > 0) and (evalf[24](lowRight + \+
+eps) > 0) or\n      (evalf[24](lowLeft - eps) < 0) and (evalf[24](lowR
+ight - eps) < 0)\n     then lowStop := true\n     else lbLow := left;
+\n          ubLow := right\n   fi;\n   " }{TEXT -1 9 "--------\n" }
+{MPLTEXT 1 0 229 "   if (evalf[24](upLeft + eps) > 0) and (evalf[24](u
+pRight + eps) > 0) or\n      (evalf[24](upLeft - eps) < 0) and (evalf[
+24](upRight - eps) < 0)\n     then upStop := true\n     else lbUp := l
+eft;\n          ubUp := right;\n   fi;\n   " }{TEXT -1 35 "-----------
+------------------------" }{MPLTEXT 1 0 47 "\n   if lowStop and upStop
+ then return 0 fi;\n   " }{TEXT -1 35 "-------------------------------
+----" }{MPLTEXT 1 0 223 "\n   if not lowStop\n     then for i to n\n  \+
+          do\n              lbLow1 := lbLow;\n              ubLow1 := \+
+evalf[24]( 0.5 * (ubLow + lbLow) );\n              lbLow2 := ubLow1;\n
+              ubLow2 := ubLow;\n              " }{TEXT -1 26 "--------
+------------------" }{MPLTEXT 1 0 699 "\n              b2 := evalf[24]
+( (2 + lbLow1) * aInv );\n              bOverA := evalf[24]( lbLow1 * \+
+aInv );\n              halfBOverA := evalf[24]( (0.5 - lbLow1) * aInv \+
+);\n              oneBOverA := evalf[24]( (1 - lbLow1) * aInv );\n    \+
+          erfB2 := evalf[24]( erf(b2) );\n              erfBOverA := e
+valf[24]( erf(bOverA) );\n              erfHalfBOverA := evalf[24]( er
+f(halfBOverA) );\n              sd := evalf[24]( s * erfc(d * lbLow1) \+
+);\n              lowLeft := evalf[24]( ErfExpIntLowPos(a, lbLow1, x, \+
+b2, bOverA, halfBOverA, \n                                            \+
+            oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd\n  \+
+                                );\n              " }{TEXT -1 26 "----
+----------------------" }{MPLTEXT 1 0 702 "\n              b2 := evalf
+[24]( (2 + ubLow1) * aInv );\n              bOverA := evalf[24]( ubLow
+1 * aInv );\n              halfBOverA := evalf[24]( (0.5 - ubLow1) * a
+Inv );\n              oneBOverA := evalf[24]( (1 - ubLow1) * aInv );\n
+              erfB2 := evalf[24]( erf(b2) );\n              erfBOverA \+
+:= evalf[24]( erf(bOverA) );\n              erfHalfBOverA := evalf[24]
+( erf(halfBOverA) );\n              sd := evalf[24]( s * erfc(d * ubLo
+w1) );\n              lowRight := evalf[24]( ErfExpIntLowPos(a, ubLow1
+, x, b2, bOverA, halfBOverA, \n                                       \+
+                  oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - \+
+sd\n                                   );\n              " }{TEXT -1 
+26 "--------------------------" }{MPLTEXT 1 0 428 "\n              if \+
+(evalf[24](lowLeft + eps) >= 0) and (evalf[24](lowRight - eps) <= 0) o
+r\n                 (evalf[24](lowLeft - eps) <= 0) and (evalf[24](low
+Right + eps) >= 0)\n                then lbLow := lbLow1;\n           \+
+          ubLow := ubLow1\n                else lbLow := lbLow2;\n    \+
+                 ubLow := ubLow2\n              fi\n            od;\n \+
+          leftLow := lbLow;\n           rightLow := ubLow;\n   fi;\n  \+
+ " }{TEXT -1 35 "-----------------------------------" }{MPLTEXT 1 0 
+213 "\n   if not upStop\n     then for i to n\n            do\n       \+
+       lbUp1 := lbUp;\n              ubUp1 := evalf[24]( 0.5 * (ubUp +
+ lbUp) );\n              lbUp2 := ubUp1;\n              ubUp2 := ubUp;
+\n              " }{TEXT -1 26 "--------------------------" }{MPLTEXT 
+1 0 688 "\n              b2 := evalf[24]( (2 + lbUp1) * aInv );\n     \+
+         bOverA := evalf[24]( lbUp1 * aInv );\n              halfBOver
+A := evalf[24]( (0.5 - lbUp1) * aInv );\n              oneBOverA := ev
+alf[24]( (1 - lbUp1) * aInv );\n              erfB2 := evalf[24]( erf(
+b2) );\n              erfBOverA := evalf[24]( erf(bOverA) );\n        \+
+      erfHalfBOverA := evalf[24]( erf(halfBOverA) );\n              sd
+ := evalf[24]( s * erfc(d * lbUp1) );\n              upLeft := evalf[2
+4]( ErfExpIntUpPos(a, lbUp1, x, b2, bOverA, halfBOverA, \n            \+
+                                          oneBOverA, erfB2, erfX, erfB
+OverA, erfHalfBOverA) - sd\n                                 );\n     \+
+         " }{TEXT -1 26 "--------------------------" }{MPLTEXT 1 0 
+689 "\n              b2 := evalf[24]( (2 + ubUp1) * aInv );\n         \+
+     bOverA := evalf[24]( ubUp1 * aInv );\n              halfBOverA :=
+ evalf[24]( (0.5 - ubUp1) * aInv );\n              oneBOverA := evalf[
+24]( (1 - ubUp1) * aInv );\n              erfB2 := evalf[24]( erf(b2) \+
+);\n              erfBOverA := evalf[24]( erf(bOverA) );\n            \+
+  erfHalfBOverA := evalf[24]( erf(halfBOverA) );\n              sd := \+
+evalf[24]( s * erfc(d * ubUp1) );\n              upRight := evalf[24](
+ ErfExpIntUpPos(a, ubUp1, x, b2, bOverA, halfBOverA, \n               \+
+                                       oneBOverA, erfB2, erfX, erfBOve
+rA, erfHalfBOverA) - sd\n                                 );\n        \+
+      " }{TEXT -1 26 "--------------------------" }{MPLTEXT 1 0 412 "
+\n              if (evalf[24](upLeft + eps) >= 0) and (evalf[24](upRig
+ht - eps) <= 0) or\n                 (evalf[24](upLeft - eps) <= 0) an
+d (evalf[24](upRight + eps) >= 0)\n                then lbUp := lbUp1;
+\n                     ubUp := ubUp1\n                else lbUp := lbU
+p2;\n                     ubUp := ubUp2\n              fi\n           \+
+ od;\n           leftUp := lbUp;\n           rightUp := ubUp;\n   fi;
+\n   " }{TEXT -1 34 "----------------------------------" }{MPLTEXT 1 
+0 255 "\n   if not (lowStop or upStop)\n     then return evalf[24]( 0.
+25 * (leftLow + rightLow + leftUp + rightUp) )\n   elif not lowStop\n \+
+    then return evalf[24]( 0.5 * (leftLow + rightLow) )\n   else   ret
+urn evalf[24]( 0.5 * (leftUp + rightUp) )\n   fi\nend proc:" }}}}
+{SECT 0 {PARA 3 "" 0 "" {TEXT -1 18 "getRootNeighborNeg" }}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 552 "getRootNeighborNeg := \nproc( n::p
+osint, \n      eps::numeric,\n      left::numeric, right::numeric, \n \+
+     a::numeric, x::numeric, \n      s::numeric, d::numeric\n    )\nlo
+cal i,\n      lowLeft, lowRight, lowStop, upLeft, upRight, upStop, lbL
+ow, ubLow, lbUp, ubUp, lbLow1,\n      ubLow1, lbLow2, ubLow2, leftLow,
+ rightLow, lbUp1, ubUp1, lbUp2, ubUp2, leftUp, rightUp,\n      erfX, a
+Inv, bOverA, halfBOverA, oneBOverA, erfB2, erfBOverA, erfHalfBOverA, s
+d,\n      expXsqr, a1Up, a1Low, y, expBOverAsqr, mult, multUp, b1Up, m
+ultLow, b1Low, erfcY, erfOneBOverA;\n   " }{TEXT -1 35 "--------------
+---------------------" }{MPLTEXT 1 0 222 "\n   erfX := evalf[24]( erf(
+x) );\n   aInv := evalf[24](1 / a);\n   expXsqr := evalf[24]( exp(-x^2
+) );\n   a1Up := evalf[24]( (1 + aInv^2)^(1/2) ):\n   a1Low := evalf[2
+4]( (1.86602540378443864676372317077 + aInv^2)^(1/2) ):\n   " }{TEXT 
+-1 27 "---------------------------" }{MPLTEXT 1 0 1168 "\n   bOverA :=
+ evalf[24]( left * aInv );\n   halfBOverA := evalf[24]( (0.5 - left) *
+ aInv );\n   oneBOverA := evalf[24]( (1 - left) * aInv );\n   y := eva
+lf[24]( a * x + left );\n   sd := evalf[24]( s * erfc(d * left) );\n  \+
+ erfBOverA := evalf[24]( erf(bOverA) );\n   erfHalfBOverA := evalf[24]
+( erf(halfBOverA) );\n   expBOverAsqr := evalf[24]( exp(-bOverA^2) );
+\n   mult := evalf[24]( -aInv * expBOverAsqr );\n   multUp := evalf[24
+]( mult * 0.564189583547756286948079451561 ):\n   b1Up := evalf[24]( -
+2 * bOverA * aInv ):\n   multLow := evalf[24]( mult * 0.56134618306328
+0465485947633796 ):\n   b1Low := evalf[24]( 1 + b1Up):\n   erfcY := ev
+alf[24]( erfc(y) );\n   erfOneBOverA  := evalf[24]( erf(oneBOverA) );
+\n   lowLeft := evalf[24]( ErfExpIntLowNeg(a, left, x, y, aInv, bOverA
+, halfBOverA, oneBOverA, multLow, a1Low, \n                         b1
+Low, expBOverAsqr, expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA,erfO
+neBOverA) - sd\n                       );\n   upLeft := evalf[24]( Erf
+ExpIntUpNeg(a, left, x, y, aInv, bOverA, halfBOverA, oneBOverA, multUp
+, \n                        a1Up, b1Up, erfX, erfcY, erfBOverA, erfHal
+fBOverA, erfOneBOverA) - sd\n                      );\n   " }{TEXT -1 
+23 "-----------------------" }{MPLTEXT 1 0 1181 "\n   bOverA := evalf[
+24]( right * aInv );\n   halfBOverA := evalf[24]( (0.5 - right) * aInv
+ );\n   oneBOverA := evalf[24]( (1 - right) * aInv );\n   y := evalf[2
+4]( a * x + right );\n   sd := evalf[24]( s * erfc(d * right) );\n   e
+rfBOverA := evalf[24]( erf(bOverA) );\n   erfHalfBOverA := evalf[24]( \+
+erf(halfBOverA) );\n   expBOverAsqr := evalf[24]( exp(-bOverA^2) );\n \+
+  mult := evalf[24]( -aInv * expBOverAsqr );\n   multUp := evalf[24]( \+
+mult * 0.564189583547756286948079451561 ):\n   b1Up := evalf[24]( -2 *
+ bOverA * aInv ):\n   multLow := evalf[24]( mult * 0.56134618306328046
+5485947633796 ):\n   b1Low := evalf[24]( 1 + b1Up):\n   erfcY := evalf
+[24]( erfc(y) );\n   erfOneBOverA  := evalf[24]( erf(oneBOverA) );\n  \+
+ lowRight := evalf[24]( ErfExpIntLowNeg(a, right, x, y, aInv, bOverA, \+
+halfBOverA, oneBOverA, multLow, a1Low, \n                          b1L
+ow, expBOverAsqr, expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA,erfOn
+eBOverA) - sd\n                        );\n   upRight := evalf[24]( Er
+fExpIntUpNeg(a, right, x, y, aInv, bOverA, halfBOverA, oneBOverA, mult
+Up, \n                         a1Up, b1Up, erfX, erfcY, erfBOverA, erf
+HalfBOverA, erfOneBOverA) - sd\n                       );\n   " }
+{TEXT -1 8 "--------" }{MPLTEXT 1 0 45 "\n   lowStop := false;\n   upS
+top := false;\n   " }{TEXT -1 35 "-----------------------------------
+" }{MPLTEXT 1 0 236 "\n   if (evalf[24](lowLeft + eps) > 0) and (evalf
+[24](lowRight + eps) > 0) or\n      (evalf[24](lowLeft - eps) < 0) and
+ (evalf[24](lowRight - eps) < 0)\n     then lowStop := true\n     else
+ lbLow := left;\n          ubLow := right\n   fi;\n   " }{TEXT -1 9 "-
+-------\n" }{MPLTEXT 1 0 229 "   if (evalf[24](upLeft + eps) > 0) and \+
+(evalf[24](upRight + eps) > 0) or\n      (evalf[24](upLeft - eps) < 0)
+ and (evalf[24](upRight - eps) < 0)\n     then upStop := true\n     el
+se lbUp := left;\n          ubUp := right;\n   fi;\n   " }{TEXT -1 35 
+"-----------------------------------" }{MPLTEXT 1 0 47 "\n   if lowSto
+p and upStop then return 0 fi;\n   " }{TEXT -1 35 "-------------------
+----------------" }{MPLTEXT 1 0 223 "\n   if not lowStop\n     then fo
+r i to n\n            do\n              lbLow1 := lbLow;\n            \+
+  ubLow1 := evalf[24]( 0.5 * (ubLow + lbLow) );\n              lbLow2 \+
+:= ubLow1;\n              ubLow2 := ubLow;\n              " }{TEXT -1 
+26 "--------------------------" }{MPLTEXT 1 0 1207 "\n              bO
+verA := evalf[24]( lbLow1 * aInv );\n              halfBOverA := evalf
+[24]( (0.5 - lbLow1) * aInv );\n              oneBOverA := evalf[24]( \+
+(1 - lbLow1) * aInv );\n              sd := evalf[24]( s * erfc(d * lb
+Low1) );\n              y := evalf[24]( a * x + lbLow1 );\n           \+
+   erfBOverA := evalf[24]( erf(bOverA) );\n              erfHalfBOverA
+ := evalf[24]( erf(halfBOverA) );\n              expBOverAsqr := evalf
+[24]( exp(-bOverA^2) );\n              mult := evalf[24]( -aInv * expB
+OverAsqr );\n              multUp := evalf[24]( mult * 0.5641895835477
+56286948079451561 ):\n              b1Up := evalf[24]( -2 * bOverA * a
+Inv ):\n              multLow := evalf[24]( mult * 0.56134618306328046
+5485947633796 ):\n              b1Low := evalf[24]( 1 + b1Up):\n      \+
+        erfcY := evalf[24]( erfc(y) );\n              erfOneBOverA  :=
+ evalf[24]( erf(oneBOverA) );\n              lowLeft := evalf[24]( Erf
+ExpIntLowNeg(a, lbLow1, x, y, aInv, bOverA, halfBOverA, \n            \+
+                        oneBOverA, multLow, a1Low, b1Low, expBOverAsqr
+, \n                                    expXsqr, erfX, erfcY, erfBOver
+A, erfHalfBOverA,erfOneBOverA) - sd\n                                 \+
+ );\n              " }{TEXT -1 26 "--------------------------" }
+{MPLTEXT 1 0 1211 "\n              bOverA := evalf[24]( ubLow1 * aInv \+
+);\n              halfBOverA := evalf[24]( (0.5 - ubLow1) * aInv );\n \+
+             oneBOverA := evalf[24]( (1 - ubLow1) * aInv );\n         \+
+     sd := evalf[24]( s * erfc(d * ubLow1) );\n              y := eval
+f[24]( a * x + ubLow1 );\n              erfBOverA := evalf[24]( erf(bO
+verA) );\n              erfHalfBOverA := evalf[24]( erf(halfBOverA) );
+\n              expBOverAsqr := evalf[24]( exp(-bOverA^2) );\n        \+
+      mult := evalf[24]( -aInv * expBOverAsqr );\n              multUp
+ := evalf[24]( mult * 0.564189583547756286948079451561 ):\n           \+
+   b1Up := evalf[24]( -2 * bOverA * aInv ):\n              multLow := \+
+evalf[24]( mult * 0.561346183063280465485947633796 ):\n              b
+1Low := evalf[24]( 1 + b1Up):\n              erfcY := evalf[24]( erfc(
+y) );\n              erfOneBOverA  := evalf[24]( erf(oneBOverA) );\n  \+
+            lowRight := evalf[24]( ErfExpIntLowNeg(a, ubLow1, x, y, aI
+nv, bOverA, halfBOverA, \n                                     oneBOve
+rA, multLow, a1Low, b1Low, expBOverAsqr, \n                           \+
+          expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA,erfOneBOverA)
+ - sd\n                                   );\n              " }{TEXT 
+-1 26 "--------------------------" }{MPLTEXT 1 0 428 "\n              \+
+if (evalf[24](lowLeft + eps) >= 0) and (evalf[24](lowRight - eps) <= 0
+) or\n                 (evalf[24](lowLeft - eps) <= 0) and (evalf[24](
+lowRight + eps) >= 0)\n                then lbLow := lbLow1;\n        \+
+             ubLow := ubLow1\n                else lbLow := lbLow2;\n \+
+                    ubLow := ubLow2\n              fi\n            od;
+\n           leftLow := lbLow;\n           rightLow := ubLow;\n   fi;
+\n   " }{TEXT -1 35 "-----------------------------------" }{MPLTEXT 1 
+0 213 "\n   if not upStop\n     then for i to n\n            do\n     \+
+         lbUp1 := lbUp;\n              ubUp1 := evalf[24]( 0.5 * (ubUp
+ + lbUp) );\n              lbUp2 := ubUp1;\n              ubUp2 := ubU
+p;\n              " }{TEXT -1 26 "--------------------------" }
+{MPLTEXT 1 0 1171 "\n              bOverA := evalf[24]( lbUp1 * aInv )
+;\n              halfBOverA := evalf[24]( (0.5 - lbUp1) * aInv );\n   \+
+           oneBOverA := evalf[24]( (1 - lbUp1) * aInv );\n            \+
+  sd := evalf[24]( s * erfc(d * lbUp1) );\n              y := evalf[24
+]( a * x + lbUp1 );\n              erfBOverA := evalf[24]( erf(bOverA)
+ );\n              erfHalfBOverA := evalf[24]( erf(halfBOverA) );\n   \+
+           expBOverAsqr := evalf[24]( exp(-bOverA^2) );\n             \+
+ mult := evalf[24]( -aInv * expBOverAsqr );\n              multUp := e
+valf[24]( mult * 0.564189583547756286948079451561 ):\n              b1
+Up := evalf[24]( -2 * bOverA * aInv ):\n              multLow := evalf
+[24]( mult * 0.561346183063280465485947633796 ):\n              b1Low \+
+:= evalf[24]( 1 + b1Up):\n              erfcY := evalf[24]( erfc(y) );
+\n              erfOneBOverA  := evalf[24]( erf(oneBOverA) );\n       \+
+       upLeft := evalf[24]( ErfExpIntUpNeg(a, lbUp1, x, y, aInv, bOver
+A, halfBOverA, \n                                   oneBOverA, multUp,
+ a1Up, b1Up, erfX, erfcY, \n                                   erfBOve
+rA, erfHalfBOverA, erfOneBOverA) - sd\n                               \+
+  );\n              " }{TEXT -1 26 "--------------------------" }
+{MPLTEXT 1 0 1174 "\n              bOverA := evalf[24]( ubUp1 * aInv )
+;\n              halfBOverA := evalf[24]( (0.5 - ubUp1) * aInv );\n   \+
+           oneBOverA := evalf[24]( (1 - ubUp1) * aInv );\n            \+
+  sd := evalf[24]( s * erfc(d * ubUp1) );\n              y := evalf[24
+]( a * x + ubUp1 );\n              erfBOverA := evalf[24]( erf(bOverA)
+ );\n              erfHalfBOverA := evalf[24]( erf(halfBOverA) );\n   \+
+           expBOverAsqr := evalf[24]( exp(-bOverA^2) );\n             \+
+ mult := evalf[24]( -aInv * expBOverAsqr );\n              multUp := e
+valf[24]( mult * 0.564189583547756286948079451561 ):\n              b1
+Up := evalf[24]( -2 * bOverA * aInv ):\n              multLow := evalf
+[24]( mult * 0.561346183063280465485947633796 ):\n              b1Low \+
+:= evalf[24]( 1 + b1Up):\n              erfcY := evalf[24]( erfc(y) );
+\n              erfOneBOverA  := evalf[24]( erf(oneBOverA) );\n       \+
+       upRight := evalf[24]( ErfExpIntUpNeg(a, ubUp1, x, y, aInv, bOve
+rA, halfBOverA, \n                                    oneBOverA, multU
+p, a1Up, b1Up, erfX, erfcY, \n                                    erfB
+OverA, erfHalfBOverA, erfOneBOverA) - sd\n                            \+
+     );\n              " }{TEXT -1 26 "--------------------------" }
+{MPLTEXT 1 0 412 "\n              if (evalf[24](upLeft + eps) >= 0) an
+d (evalf[24](upRight - eps) <= 0) or\n                 (evalf[24](upLe
+ft - eps) <= 0) and (evalf[24](upRight + eps) >= 0)\n                t
+hen lbUp := lbUp1;\n                     ubUp := ubUp1\n              \+
+  else lbUp := lbUp2;\n                     ubUp := ubUp2\n           \+
+   fi\n            od;\n           leftUp := lbUp;\n           rightUp
+ := ubUp;\n   fi;\n   " }{TEXT -1 34 "--------------------------------
+--" }{MPLTEXT 1 0 255 "\n   if not (lowStop or upStop)\n     then retu
+rn evalf[24]( 0.25 * (leftLow + rightLow + leftUp + rightUp) )\n   eli
+f not lowStop\n     then return evalf[24]( 0.5 * (leftLow + rightLow) \+
+)\n   else   return evalf[24]( 0.5 * (leftUp + rightUp) )\n   fi\nend \+
+proc:" }}}}{EXCHG }{EXCHG }{EXCHG }{EXCHG }{EXCHG }{EXCHG }{EXCHG }
+{SECT 1 {PARA 3 "" 0 "" {TEXT -1 12 "getIntervPos" }}{EXCHG {PARA 0 ">
+ " 0 "" {MPLTEXT 1 0 425 "getIntervPos := \nproc( n::posint, \n      e
+ps::numeric,\n      left::numeric, right::numeric, \n      a::numeric,
+ b::numeric, h::numeric\n    )\nlocal i,\n      lowLeft, lowRight, low
+Stop, upLeft, upRight, upStop, lbLow, ubLow, lbUp, ubUp, lbLow1,\n    \+
+  ubLow1, lbLow2, ubLow2, leftLow, rightLow, lbUp1, ubUp1, lbUp2, ubUp
+2, leftUp, rightUp,\n      erfX, aInv, b2, bOverA, halfBOverA, oneBOve
+rA, erfB2, erfBOverA, erfHalfBOverA;\n   " }{TEXT -1 27 "-------------
+--------------" }{MPLTEXT 1 0 326 "\n   aInv := evalf[24](1 / a);\n   \+
+b2 := evalf[24]( (2 + b) * aInv );\n   bOverA := evalf[24]( b * aInv )
+;\n   halfBOverA := evalf[24]( (0.5 - b) * aInv );\n   oneBOverA := ev
+alf[24]( (1 - b) * aInv );\n   erfB2 := evalf[24]( erf(b2) );\n   erfB
+OverA := evalf[24]( erf(bOverA) );\n   erfHalfBOverA := evalf[24]( erf
+(halfBOverA) );\n   " }{TEXT -1 35 "----------------------------------
+-" }{MPLTEXT 1 0 440 "\n   erfX := evalf[24]( erf(left) );\n   lowLeft
+ := evalf[24]( ErfExpIntLowPos(a, b, left, b2, bOverA, halfBOverA, \n \+
+                                            oneBOverA, erfB2, erfX, er
+fBOverA, erfHalfBOverA) - h\n                       );\n   upLeft := e
+valf[24]( ErfExpIntUpPos(a, b, left, b2, bOverA, halfBOverA, \n       \+
+                                    oneBOverA, erfB2, erfX, erfBOverA,
+ erfHalfBOverA) - h\n                      );\n   " }{TEXT -1 23 "----
+-------------------" }{MPLTEXT 1 0 449 "\n   erfX := evalf[24]( erf(ri
+ght) );\n   lowRight := evalf[24]( ErfExpIntLowPos(a, b, right, b2, bO
+verA, halfBOverA, \n                                              oneB
+OverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h\n                   \+
+     );\n   upRight := evalf[24]( ErfExpIntUpPos(a, b, right, b2, bOve
+rA, halfBOverA, \n                                            oneBOver
+A, erfB2, erfX, erfBOverA, erfHalfBOverA) - h\n                       \+
+);\n   " }{TEXT -1 8 "--------" }{MPLTEXT 1 0 45 "\n   lowStop := fals
+e;\n   upStop := false;\n   " }{TEXT -1 35 "--------------------------
+---------" }{MPLTEXT 1 0 236 "\n   if (evalf[24](lowLeft + eps) > 0) a
+nd (evalf[24](lowRight + eps) > 0) or\n      (evalf[24](lowLeft - eps)
+ < 0) and (evalf[24](lowRight - eps) < 0)\n     then lowStop := true\n
+     else lbLow := left;\n          ubLow := right\n   fi;\n   " }
+{TEXT -1 9 "--------\n" }{MPLTEXT 1 0 229 "   if (evalf[24](upLeft + e
+ps) > 0) and (evalf[24](upRight + eps) > 0) or\n      (evalf[24](upLef
+t - eps) < 0) and (evalf[24](upRight - eps) < 0)\n     then upStop := \+
+true\n     else lbUp := left;\n          ubUp := right;\n   fi;\n   " 
+}{TEXT -1 35 "-----------------------------------" }{MPLTEXT 1 0 43 "
+\n   if upStop then return [0, 0, 0] fi;\n   " }{TEXT -1 35 "---------
+--------------------------" }{MPLTEXT 1 0 223 "\n   if not lowStop\n  \+
+   then for i to n\n            do\n              lbLow1 := lbLow;\n  \+
+            ubLow1 := evalf[24]( 0.5 * (ubLow + lbLow) );\n           \+
+   lbLow2 := ubLow1;\n              ubLow2 := ubLow;\n              " 
+}{TEXT -1 26 "--------------------------" }{MPLTEXT 1 0 301 "\n       \+
+       erfX := evalf[24]( erf(lbLow1) );\n              lowLeft := eva
+lf[24]( ErfExpIntLowPos(a, b, lbLow1, b2, bOverA, halfBOverA, \n      \+
+                                                  oneBOverA, erfB2, er
+fX, erfBOverA, erfHalfBOverA) - h\n                                  )
+;\n              " }{TEXT -1 26 "--------------------------" }
+{MPLTEXT 1 0 304 "\n              erfX := evalf[24]( erf(ubLow1) );\n \+
+             lowRight := evalf[24]( ErfExpIntLowPos(a, b, ubLow1, b2, \+
+bOverA, halfBOverA, \n                                                \+
+         oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h\n      \+
+                             );\n              " }{TEXT -1 26 "-------
+-------------------" }{MPLTEXT 1 0 428 "\n              if (evalf[24](
+lowLeft + eps) >= 0) and (evalf[24](lowRight - eps) <= 0) or\n        \+
+         (evalf[24](lowLeft - eps) <= 0) and (evalf[24](lowRight + eps
+) >= 0)\n                then lbLow := lbLow1;\n                     u
+bLow := ubLow1\n                else lbLow := lbLow2;\n               \+
+      ubLow := ubLow2\n              fi\n            od;\n           l
+eftLow := lbLow;\n           rightLow := ubLow;\n   fi;\n   " }{TEXT 
+-1 35 "-----------------------------------" }{MPLTEXT 1 0 196 "\n     \+
+     for i to n\n            do\n              lbUp1 := lbUp;\n       \+
+       ubUp1 := evalf[24]( 0.5 * (ubUp + lbUp) );\n              lbUp2
+ := ubUp1;\n              ubUp2 := ubUp;\n              " }{TEXT -1 
+26 "--------------------------" }{MPLTEXT 1 0 294 "\n              erf
+X := evalf[24]( erf(lbUp1) );\n              upLeft := evalf[24]( ErfE
+xpIntUpPos(a, b, lbUp1, b2, bOverA, halfBOverA, \n                    \+
+                                  oneBOverA, erfB2, erfX, erfBOverA, e
+rfHalfBOverA) - h\n                                 );\n              \+
+" }{TEXT -1 26 "--------------------------" }{MPLTEXT 1 0 296 "\n     \+
+         erfX := evalf[24]( erf(ubUp1) );\n              upRight := ev
+alf[24]( ErfExpIntUpPos(a, b, ubUp1, b2, bOverA, halfBOverA, \n       \+
+                                                oneBOverA, erfB2, erfX
+, erfBOverA, erfHalfBOverA) - h\n                                 );\n
+              " }{TEXT -1 26 "--------------------------" }{MPLTEXT 1 
+0 405 "\n              if (evalf[24](upLeft + eps) >= 0) and (evalf[24
+](upRight - eps) <= 0) or\n                 (evalf[24](upLeft - eps) <
+= 0) and (evalf[24](upRight + eps) >= 0)\n                then lbUp :=
+ lbUp1;\n                     ubUp := ubUp1\n                else lbUp
+ := lbUp2;\n                     ubUp := ubUp2\n              fi\n    \+
+        od;\n           leftUp := lbUp;\n           rightUp := ubUp;\n
+   " }{TEXT -1 34 "----------------------------------" }{MPLTEXT 1 0 
+214 "\n   if not (lowStop or upStop)\n     then return [1, evalf[24]( \+
+0.5 * (leftUp + rightUp) ), evalf[24]( 0.5 * (leftLow + rightLow) )]\n
+     else return [2, evalf[24]( 0.5 * (leftUp + rightUp) ), right]\n  \+
+ fi\nend proc:" }}}}{SECT 0 {PARA 3 "" 0 "" {TEXT -1 12 "getIntervNeg
+" }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 523 "getIntervNeg := \nproc(
+ n::posint, \n      eps::numeric,\n      left::numeric, right::numeric
+, \n      a::numeric, b::numeric, h::numeric\n    )\nlocal i,\n      l
+owLeft, lowRight, lowStop, upLeft, upRight, upStop, lbLow, ubLow, lbUp
+, ubUp, lbLow1,\n      ubLow1, lbLow2, ubLow2, leftLow, rightLow, lbUp
+1, ubUp1, lbUp2, ubUp2, leftUp, rightUp,\n      erfX, aInv, bOverA, ha
+lfBOverA, oneBOverA, erfB2, erfBOverA, erfHalfBOverA,\n      expXsqr, \+
+a1Up, a1Low, y, expBOverAsqr, mult, multUp, b1Up, multLow, b1Low, erfc
+Y, erfOneBOverA;\n   " }{TEXT -1 35 "---------------------------------
+--" }{MPLTEXT 1 0 729 "\n   aInv := evalf[24](1 / a);\n   a1Up := eval
+f[24]( (1 + aInv^2)^(1/2) ):\n   a1Low := evalf[24]( (1.86602540378443
+864676372317077 + aInv^2)^(1/2) ):\n   bOverA := evalf[24]( b * aInv )
+;\n   halfBOverA := evalf[24]( (0.5 - b) * aInv );\n   oneBOverA := ev
+alf[24]( (1 - b) * aInv );\n   erfBOverA := evalf[24]( erf(bOverA) );
+\n   erfHalfBOverA := evalf[24]( erf(halfBOverA) );\n   expBOverAsqr :
+= evalf[24]( exp(-bOverA^2) );\n   mult := evalf[24]( -aInv * expBOver
+Asqr );\n   multUp := evalf[24]( mult * 0.5641895835477562869480794515
+61 ):\n   b1Up := evalf[24]( -2 * bOverA * aInv ):\n   multLow := eval
+f[24]( mult * 0.561346183063280465485947633796 ):\n   b1Low := evalf[2
+4]( 1 + b1Up):\n   erfOneBOverA  := evalf[24]( erf(oneBOverA) );\n   \+
+" }{TEXT -1 27 "---------------------------" }{MPLTEXT 1 0 614 "\n   e
+rfX := evalf[24]( erf(left) );\n   expXsqr := evalf[24]( exp(-left^2) \+
+);\n   y := evalf[24]( a * left + b );\n   erfcY := evalf[24]( erfc(y)
+ );\n   lowLeft := evalf[24]( ErfExpIntLowNeg(a, b, left, y, aInv, bOv
+erA, halfBOverA, oneBOverA, multLow, a1Low, \n                        \+
+ b1Low, expBOverAsqr, expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA,e
+rfOneBOverA) - h\n                       );\n   upLeft := evalf[24]( E
+rfExpIntUpNeg(a, b, left, y, aInv, bOverA, halfBOverA, oneBOverA, mult
+Up, \n                        a1Up, b1Up, erfX, erfcY, erfBOverA, erfH
+alfBOverA, erfOneBOverA) - h\n                      );\n   " }{TEXT 
+-1 23 "-----------------------" }{MPLTEXT 1 0 626 "\n   erfX := evalf[
+24]( erf(right) );\n   expXsqr := evalf[24]( exp(-right^2) );\n   y :=
+ evalf[24]( a * right + b );\n   erfcY := evalf[24]( erfc(y) );\n   lo
+wRight := evalf[24]( ErfExpIntLowNeg(a, b, right,  y, aInv, bOverA, ha
+lfBOverA, oneBOverA, multLow, a1Low, \n                          b1Low
+, expBOverAsqr, expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA,erfOneB
+OverA) - h\n                        );\n   upRight := evalf[24]( ErfEx
+pIntUpNeg(a, b, right, y, aInv, bOverA, halfBOverA, oneBOverA, multUp,
+ \n                         a1Up, b1Up, erfX, erfcY, erfBOverA, erfHal
+fBOverA, erfOneBOverA) - h\n                       );\n   " }{TEXT -1 
+8 "--------" }{MPLTEXT 1 0 45 "\n   lowStop := false;\n   upStop := fa
+lse;\n   " }{TEXT -1 35 "-----------------------------------" }
+{MPLTEXT 1 0 236 "\n   if (evalf[24](lowLeft + eps) > 0) and (evalf[24
+](lowRight + eps) > 0) or\n      (evalf[24](lowLeft - eps) < 0) and (e
+valf[24](lowRight - eps) < 0)\n     then lowStop := true\n     else lb
+Low := left;\n          ubLow := right\n   fi;\n   " }{TEXT -1 9 "----
+----\n" }{MPLTEXT 1 0 229 "   if (evalf[24](upLeft + eps) > 0) and (ev
+alf[24](upRight + eps) > 0) or\n      (evalf[24](upLeft - eps) < 0) an
+d (evalf[24](upRight - eps) < 0)\n     then upStop := true\n     else \+
+lbUp := left;\n          ubUp := right;\n   fi;\n   " }{TEXT -1 35 "--
+---------------------------------" }{MPLTEXT 1 0 43 "\n   if upStop th
+en return [0, 0, 0] fi;\n   " }{TEXT -1 35 "--------------------------
+---------" }{MPLTEXT 1 0 223 "\n   if not lowStop\n     then for i to \+
+n\n            do\n              lbLow1 := lbLow;\n              ubLow
+1 := evalf[24]( 0.5 * (ubLow + lbLow) );\n              lbLow2 := ubLo
+w1;\n              ubLow2 := ubLow;\n              " }{TEXT -1 26 "---
+-----------------------" }{MPLTEXT 1 0 529 "\n              erfX := ev
+alf[24]( erf(lbLow1) );\n              expXsqr := evalf[24]( exp(-lbLo
+w1^2) );\n              y := evalf[24]( a * lbLow1 + b );\n           \+
+   erfcY := evalf[24]( erfc(y) );\n              lowLeft := evalf[24](
+ ErfExpIntLowNeg(a, b, lbLow1, y, aInv, bOverA, halfBOverA, \n        \+
+                            oneBOverA, multLow, a1Low, b1Low, expBOver
+Asqr, \n                                    expXsqr, erfX, erfcY, erfB
+OverA, erfHalfBOverA,erfOneBOverA) - h\n                              \+
+    );\n              " }{TEXT -1 26 "--------------------------" }
+{MPLTEXT 1 0 533 "\n              erfX := evalf[24]( erf(ubLow1) );\n \+
+             expXsqr := evalf[24]( exp(-ubLow1^2) );\n              y \+
+:= evalf[24]( a * ubLow1 + b );\n              erfcY := evalf[24]( erf
+c(y) );\n              lowRight := evalf[24]( ErfExpIntLowNeg(a, b, ub
+Low1, y, aInv, bOverA, halfBOverA, \n                                 \+
+    oneBOverA, multLow, a1Low, b1Low, expBOverAsqr, \n                \+
+                     expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA,er
+fOneBOverA) - h\n                                   );\n              \+
+" }{TEXT -1 26 "--------------------------" }{MPLTEXT 1 0 428 "\n     \+
+         if (evalf[24](lowLeft + eps) >= 0) and (evalf[24](lowRight - \+
+eps) <= 0) or\n                 (evalf[24](lowLeft - eps) <= 0) and (e
+valf[24](lowRight + eps) >= 0)\n                then lbLow := lbLow1;
+\n                     ubLow := ubLow1\n                else lbLow := \+
+lbLow2;\n                     ubLow := ubLow2\n              fi\n     \+
+       od;\n           leftLow := lbLow;\n           rightLow := ubLow
+;\n   fi;\n   " }{TEXT -1 35 "-----------------------------------" }
+{MPLTEXT 1 0 195 "\n         for i to n\n            do\n             \+
+ lbUp1 := lbUp;\n              ubUp1 := evalf[24]( 0.5 * (ubUp + lbUp)
+ );\n              lbUp2 := ubUp1;\n              ubUp2 := ubUp;\n    \+
+          " }{TEXT -1 26 "--------------------------" }{MPLTEXT 1 0 
+495 "\n              erfX := evalf[24]( erf(lbUp1) );\n              e
+xpXsqr := evalf[24]( exp(-lbUp1^2) );\n              y := evalf[24]( a
+ * lbUp1 + b );\n              erfcY := evalf[24]( erfc(y) );\n       \+
+       upLeft := evalf[24]( ErfExpIntUpNeg(a, b, lbUp1, y, aInv, bOver
+A, halfBOverA, \n                                   oneBOverA, multUp,
+ a1Up, b1Up, erfX, erfcY, \n                                   erfBOve
+rA, erfHalfBOverA, erfOneBOverA) - h\n                                \+
+ );\n              " }{TEXT -1 26 "--------------------------" }
+{MPLTEXT 1 0 499 "\n              erfX := evalf[24]( erf(ubUp1) );\n  \+
+            expXsqr := evalf[24]( exp(-ubUp1^2) );\n              y :=
+ evalf[24]( a * ubUp1 + b );\n              erfcY := evalf[24]( erfc(y
+) );\n              upRight := evalf[24]( ErfExpIntUpNeg(a, b, ubUp1, \+
+y, aInv, bOverA, halfBOverA, \n                                    one
+BOverA, multUp, a1Up, b1Up, erfX, erfcY, \n                           \+
+         erfBOverA, erfHalfBOverA, erfOneBOverA) - h\n                \+
+                  );\n              " }{TEXT -1 26 "------------------
+--------" }{MPLTEXT 1 0 405 "\n              if (evalf[24](upLeft + ep
+s) >= 0) and (evalf[24](upRight - eps) <= 0) or\n                 (eva
+lf[24](upLeft - eps) <= 0) and (evalf[24](upRight + eps) >= 0)\n      \+
+          then lbUp := lbUp1;\n                     ubUp := ubUp1\n   \+
+             else lbUp := lbUp2;\n                     ubUp := ubUp2\n
+              fi\n            od;\n           leftUp := lbUp;\n       \+
+    rightUp := ubUp;\n   " }{TEXT -1 34 "-----------------------------
+-----" }{MPLTEXT 1 0 214 "\n   if not (lowStop or upStop)\n     then r
+eturn [1, evalf[24]( 0.5 * (leftUp + rightUp) ), evalf[24]( 0.5 * (lef
+tLow + rightLow) )]\n     else return [2, evalf[24]( 0.5 * (leftUp + r
+ightUp) ), right]\n   fi\nend proc:" }}}}{EXCHG }{SECT 0 {PARA 3 "" 0 
+"" {TEXT -1 15 "getRootNeighbor" }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 
+1 0 314 "getRootNeighbor := \nproc( n::posint, \n      eps::numeric,\n
+      left::numeric, right::numeric, \n      a::numeric, x::numeric, \+
+\n      s::numeric, d::numeric\n    )\n   if a > 0 \n     then getRoot
+NeighborPos(n, eps, left, right, a, x, s, d)\n     else getRootNeighbo
+rNeg(n, eps, left, right, a, x, s, d)\n   fi\nend proc:" }}}}{EXCHG }
+{SECT 0 {PARA 3 "" 0 "" {TEXT -1 9 "getInterv" }}{EXCHG {PARA 0 "> " 
+0 "" {MPLTEXT 1 0 271 "getInterv := \nproc( n::posint, \n      eps::nu
+meric,\n      left::numeric, right::numeric, \n      a::numeric, b::nu
+meric, h::numeric\n    )\n   if a > 0 \n     then getIntervPos(n, eps,
+ left, right, a, b, h)\n     else getIntervNeg(n, eps, left, right, a,
+ b, h)\n   fi\nend proc:" }}}}{SECT 1 {PARA 4 "" 0 "" {TEXT 272 7 "Tes
+ting" }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 23 "a := -0.11:\nb := -0
+.5:\n" }{TEXT -1 16 "----------------" }{MPLTEXT 1 0 57 "\ns := 0.4:\n
+d := -0.1:\nh := evalf[24]( s * erfc(d * b) ):\n" }{TEXT -1 16 "------
+----------" }{MPLTEXT 1 0 27 "\nleft := -10:\nright := 10:\n" }{TEXT 
+-1 16 "----------------" }{MPLTEXT 1 0 27 "\neps := 10^(-10):\nn := 20
+:\n" }{TEXT -1 16 "----------------" }{MPLTEXT 1 0 41 "\ngetInterv(n, \+
+eps, left, right, a, b, h);" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#7%\"\"
+\"$!5]7yDR_CBJz!#?$!5]7y+3#Q5h!yF'" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 22 "a := 1.11:\nx := 0.13:\n" }{TEXT -1 16 "-------------
+---" }{MPLTEXT 1 0 23 "\ns := 0.78:\nd := 0.09:\n" }{TEXT -1 16 "-----
+-----------" }{MPLTEXT 1 0 27 "\nleft := -10:\nright := 10:\n" }{TEXT 
+-1 16 "----------------" }{MPLTEXT 1 0 27 "\neps := 10^(-10):\nn := 20
+:\n" }{TEXT -1 16 "----------------" }{MPLTEXT 1 0 50 "\ngetRootNeighb
+or(n, eps, left, right, a, x, s, d);" }}{PARA 11 "" 1 "" {XPPMATH 20 "
+6#$\"6++v=UKd7&G**!#@" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }
+}}{EXCHG }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 
+0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 
+0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "18 1 0 0" 256 }{VIEWOPTS 1 1 
+1 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

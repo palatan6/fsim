@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using fsNumericalMethods;
 using AGLibrary;
+using ErfExpIntCalculator;
 using Value;
 
 namespace fsNumericalMethods
@@ -232,6 +233,11 @@ namespace fsNumericalMethods
             return res;
         }
 
+        public static fsValue InvErfc(fsValue op)
+        {
+            return InvErf(1 - op);
+        }
+
         #endregion
 
         public static fsValue LambertW(fsValue x)
@@ -265,5 +271,52 @@ namespace fsNumericalMethods
                 return new fsValue(-y);
             }
         }
+
+        #region ErfExpInt(a, b, x)
+
+        /*                   
+         *                                   x      
+         *                                   /
+         *                           2       |
+         *  ErfExpInt(a, b, x) =  -------- * | erf(a * t + b) * exp(-t^2) dt
+         *                        pi^(1/2)   |
+         *                                   /
+         *                               - infinity
+         *  Accuracy 0.2e-8  (In most cases it is considerably less, ~1.0e-16)                           
+         */
+
+
+
+        public static fsValue ErfExpInt(fsValue a, fsValue b, fsValue x)
+        {
+            var res = new fsValue { Defined = a.Defined && b.Defined && x.Defined };
+            res.Value = res.Defined ? fsErfExpIntCalculator.ErfExpInt(a.Value, b.Value, x.Value) : 1;
+            return res;
+        }
+
+        #endregion 
+
+        
+
+        #region ErfcExpInt(a, b, x)
+
+        /*                   
+         *                                    x      
+         *                                    /
+         *                            2       |
+         *  ErfcExpInt(a, b, x) =  -------- * | erfc(a * t + b) * exp(-t^2) dt
+         *                         pi^(1/2)   |
+         *                                    /
+         *                                - infinity                           
+         */
+
+
+
+        public static fsValue ErfcExpInt(fsValue a, fsValue b, fsValue x)
+        {
+            return 1 + Erf(x) - ErfExpInt(a, b, x);
+        }
+
+        #endregion 
     }
 }

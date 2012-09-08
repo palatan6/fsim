@@ -12,7 +12,7 @@ namespace StepCalculators.Simulation_Calculators
     public class fsHydrocycloneCalculator : fsCalculator
     {
         public fsHydrocycloneCalculator()
-        {
+        {  
             #region Parameters Initialization
 
             IEquationParameter etaf = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
@@ -30,6 +30,9 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter DuOverD = AddVariable(fsParameterIdentifier.DuOverD);
             IEquationParameter xRed50 = AddVariable(fsParameterIdentifier.ReducedCutSize);
             IEquationParameter D = AddVariable(fsParameterIdentifier.MachineDiameter);
+
+            IEquationParameter xoi = AddVariable(fsParameterIdentifier.OverflowParticleSize);
+            IEquationParameter i = AddVariable(fsParameterIdentifier.PercentageOfParticles);
 
             IEquationParameter numberOfCyclones = AddVariable(fsParameterIdentifier.NumberOfCyclones);
             IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
@@ -134,6 +137,7 @@ namespace StepCalculators.Simulation_Calculators
 
             Equations.Add(new fsReducedTotalEfficiencyFromCmoEquation(ReducedTotalEfficiency, cmo, C, rhoS, rhoF)); // (x1)
             Equations.Add(new fsXRed50Equation(xRed50, D, Q, numberOfCyclones, rhoS, rhoF, etaf, C, Cu, cv, xG, sigmaG, sigmaS, alpha1, alpha2, alpha3, beta1, beta2, beta3)); // (x2)
+            Equations.Add(new fsXoiXred50Equation(xRed50, xoi, sigmaG, sigmaS, xG, i));  // (x3)
             
             Equations.Add(new fsProductEquation(L, LOverD, D)); // (39.5)
             Equations.Add(new fsProductEquation(l, lOverD, D)); // (39.4)

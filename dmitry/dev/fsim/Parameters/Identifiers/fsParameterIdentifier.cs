@@ -523,7 +523,7 @@ namespace Parameters
             new fsParameterIdentifier("x’50", "Reduced cut size", fsCharacteristic.ParticleSize);
 
         public static fsParameterIdentifier OverflowParticleSize =
-            new fsParameterIdentifier("x0i", "Overflow particle size", fsCharacteristic.ParticleSize);
+            new fsParameterIdentifier("xoi", "Overflow particle size", fsCharacteristic.ParticleSize);
 
         public static fsParameterIdentifier OverflowSolidsMassFraction =
             new fsParameterIdentifier("cmo", "Overflow solids mass fraction", fsCharacteristic.Concentration);
@@ -666,16 +666,19 @@ namespace Parameters
             new fsParameterIdentifier("x50,u", "Underflow mean particle size", fsCharacteristic.ParticleSize);
 
         public static fsParameterIdentifier OverflowSolidsVolumeFraction =
-            new fsParameterIdentifier("cvo", fsCharacteristic.Concentration);
+            new fsParameterIdentifier("cvo", "Overflow solids volume fraction", fsCharacteristic.Concentration);
 
         public static fsParameterIdentifier UnderflowSolidsVolumeFraction =
-            new fsParameterIdentifier("cvu", fsCharacteristic.Concentration);
+            new fsParameterIdentifier("cvu", "Underflow solids volume fraction", fsCharacteristic.Concentration);
 
         public static fsParameterIdentifier OverflowSolidsConcentration =
-            new fsParameterIdentifier("Co", fsCharacteristic.SolidsConcentration);
+            new fsParameterIdentifier("Co", "Overflow solids concentration", fsCharacteristic.SolidsConcentration);
 
         public static fsParameterIdentifier UnderflowSolidsConcentration =
-            new fsParameterIdentifier("Cu", fsCharacteristic.SolidsConcentration);
+            new fsParameterIdentifier("Cu", "Underflow solids concentration", fsCharacteristic.SolidsConcentration);
+
+        public static fsParameterIdentifier PercentageOfParticles =
+            new fsParameterIdentifier("i", "Percentage of particles", fsCharacteristic.Concentration);
 
         #endregion
     }

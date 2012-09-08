@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Parameters;
 using Value;
-using System.Windows.Forms; // for test
 
 namespace Equations.Hydrocyclone
 {
@@ -103,7 +102,6 @@ namespace Equations.Hydrocyclone
         private void xRed50Formula()
         {
             m_xRed50.Value = fsValue.Sqrt(fsValue.Pow(m_D.Value, 1 / GetP1()) * fsValue.Pow(-fsValue.Log(m_rf.Value), m_alpha2.Value) / (GetC1() * fsValue.Pow(m_Q.Value / m_numberOfCyclones.Value, 1 + m_beta2.Value)));
-            //MessageBox.Show("x'50 = " + m_xRed50.Value.Value, "Testing", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         #region Help Functions
