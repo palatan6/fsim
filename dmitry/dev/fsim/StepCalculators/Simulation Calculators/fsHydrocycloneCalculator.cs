@@ -34,6 +34,8 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter xoi = AddVariable(fsParameterIdentifier.OverflowParticleSize);
             IEquationParameter i = AddVariable(fsParameterIdentifier.PercentageOfParticles);
 
+            IEquationParameter xo50 = AddVariable(fsParameterIdentifier.OverflowMeanParticleSize);
+
             IEquationParameter numberOfCyclones = AddVariable(fsParameterIdentifier.NumberOfCyclones);
             IEquationParameter Dp = AddVariable(fsParameterIdentifier.PressureDifference);
 
@@ -87,6 +89,7 @@ namespace StepCalculators.Simulation_Calculators
             
             #region Help Parameters and Constants
 
+            var constantHalf = new fsCalculatorConstant(new fsParameterIdentifier("0.5")) { Value = new fsValue(0.5) };
             var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) { Value = fsValue.One };
             var constantTwo = new fsCalculatorConstant(new fsParameterIdentifier("2")) { Value = new fsValue(2) };
             var constantFour = new fsCalculatorConstant(new fsParameterIdentifier("4")) { Value = new fsValue(4) };
@@ -138,6 +141,8 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsReducedTotalEfficiencyFromCmoEquation(ReducedTotalEfficiency, cmo, C, rhoS, rhoF)); // (x1)
             Equations.Add(new fsXRed50Equation(xRed50, D, Q, numberOfCyclones, rhoS, rhoF, etaf, C, Cu, cv, xG, sigmaG, sigmaS, alpha1, alpha2, alpha3, beta1, beta2, beta3)); // (x2)
             Equations.Add(new fsXoiXred50Equation(xRed50, xoi, sigmaG, sigmaS, xG, i));  // (x3)
+
+            Equations.Add(new fsXoiXred50Equation(xRed50, xo50, sigmaG, sigmaS, xG, constantHalf));
             
             Equations.Add(new fsProductEquation(L, LOverD, D)); // (39.5)
             Equations.Add(new fsProductEquation(l, lOverD, D)); // (39.4)
