@@ -116,6 +116,13 @@ namespace StepCalculators
                 new[] { vs },
                 new[] { area, hc, oneMinusEps }));
 
+            Equations.Add(new fsProductsEquation(
+                new[] { hc, qf },
+                new[] { constantTwo, Dp, K }));
+            Equations.Add(new fsProductsEquation(
+                new[] { hc, qmf },
+                new[] { constantTwo, Dp, K, rho }));
+
             AddEquation(new fsDivisionInverseEquation(pc0, rc0));
             AddEquation(new fsAlphaPcEquation(alpha0, pc0, eps0, solidsDensity));
             AddEquation(new fsFrom0AndDpEquation(pc, pc0, Dp, nc));

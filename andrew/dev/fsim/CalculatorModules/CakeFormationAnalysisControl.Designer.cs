@@ -41,7 +41,7 @@
             // 
             // leftTopPanel
             // 
-            this.leftTopPanel.Size = new System.Drawing.Size(329, 48);
+            this.leftTopPanel.Size = new System.Drawing.Size(329, 72);
             // 
             // calculationOptionsPanel
             // 
@@ -58,9 +58,9 @@
             this.filtrationOptionBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.filtrationOptionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filtrationOptionBox.FormattingEnabled = true;
-            this.filtrationOptionBox.Location = new System.Drawing.Point(122, 3);
+            this.filtrationOptionBox.Location = new System.Drawing.Point(6, 8);
             this.filtrationOptionBox.Name = "filtrationOptionBox";
-            this.filtrationOptionBox.Size = new System.Drawing.Size(150, 21);
+            this.filtrationOptionBox.Size = new System.Drawing.Size(272, 21);
             this.filtrationOptionBox.TabIndex = 0;
             // 
             // simulationBox
@@ -68,9 +68,9 @@
             this.simulationBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.simulationBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.simulationBox.FormattingEnabled = true;
-            this.simulationBox.Location = new System.Drawing.Point(122, 27);
+            this.simulationBox.Location = new System.Drawing.Point(6, 40);
             this.simulationBox.Name = "simulationBox";
-            this.simulationBox.Size = new System.Drawing.Size(150, 21);
+            this.simulationBox.Size = new System.Drawing.Size(272, 21);
             this.simulationBox.TabIndex = 1;
             // 
             // CakeFormationAnalysisControl
