@@ -223,7 +223,7 @@ namespace Equations.Hydrocyclone
             fsValue upperBound = a1 - a2 * fsValue.Log(fsValue.Log(1 + a3 / 2));
 
             var f = new xCalculationFunction(a1, a2, a3);
-            fsValue x = fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60);
+            fsValue x = fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60, new fsValue(1e-8));
 
             m_xRed50.Value = fsValue.Exp((C - x) * E);
             

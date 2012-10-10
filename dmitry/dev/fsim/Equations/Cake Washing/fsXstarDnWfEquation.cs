@@ -133,7 +133,7 @@ namespace Equations.CakeWashing
                     upperBound = fsValue.Zero;
                 }
 
-                fsValue x = fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60);
+                fsValue x = fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60, new fsValue(1e-8));
                 x = 2 * x / fsValue.Sqrt(m_Dn.Value);
                 m_wf.Value = 1 + 0.5 * x * (x - fsValue.Sqrt(fsValue.Sqr(x) + 4));
             }

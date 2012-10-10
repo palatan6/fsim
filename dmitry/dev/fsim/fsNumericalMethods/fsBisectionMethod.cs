@@ -5,7 +5,7 @@ namespace fsNumericalMethods
 {
     public class fsBisectionMethod
     {
-        public static bool FindRootRange(fsFunction function, fsValue beginArg, fsValue endArg, int iterationsCount, out fsValue beginRes, out fsValue endRes)
+        public static bool FindRootRange(fsFunction function, fsValue beginArg, fsValue endArg, int iterationsCount, out fsValue beginRes, out fsValue endRes, fsValue eps)
         {
             beginRes = new fsValue();
             endRes = new fsValue();
@@ -14,18 +14,13 @@ namespace fsNumericalMethods
             {
                 return false;
             }
-            
+
             fsValue len = endArg - beginArg;
-            var eps = new fsValue(1e-8);
             if (len.Value < 0)
             {
                 eps = -eps;
             }
-            if (fsValue.Abs(len) < new fsValue(1))
-            {
-                eps = eps * fsValue.Abs(len);
-            }
-
+        
             fsValue beginValue = function.Eval(beginArg + eps);
             fsValue endValue = function.Eval(endArg - eps);
             if (beginValue.Defined == false || endValue.Defined == false)
@@ -38,7 +33,7 @@ namespace fsNumericalMethods
                 {
                     if (function.Eval(beginArg).Value == 0)
                     {
-                        beginRes = endRes = endArg;
+                        beginRes = endRes = beginArg;
                         return true;
                     }
                     beginRes = beginArg + eps;
@@ -53,7 +48,7 @@ namespace fsNumericalMethods
 
                 return false;
             }
-            
+
             fsValue beginSign = fsValue.Sign(beginValue, eps);
             fsValue endSign = fsValue.Sign(endValue, eps);
             if ((beginSign * endSign).Value > 0)
@@ -64,11 +59,13 @@ namespace fsNumericalMethods
             for (int i = 0; i < iterationsCount; ++i)
             {
                 fsValue middle = 0.5 * (left + right);
+                if (fsValue.Abs(middle - left) < eps || fsValue.Abs(middle - right) < eps) break;
                 fsValue value = function.Eval(middle);
 
                 if (!value.Defined)
-                    throw new Exception("Function given to BisectionMethod not defind in point " + middle.Value);
-
+                    throw new Exception("The function given to BisectionMethod is not defined at the point " 
+                                        + middle.Value + " inside the given interval <" + beginArg.Value + ", " + endArg.Value + ">"); 
+                
                 fsValue midSign = fsValue.Sign(value, eps);
                 if (midSign.Value == 0 || midSign == endSign)
                     right = middle;
@@ -80,16 +77,18 @@ namespace fsNumericalMethods
             endRes = right;
             return true;
         }
-        public static fsValue FindRoot(fsFunction function, fsValue beginArg, fsValue endArg, int iterationsCount)
+
+        public static fsValue FindRoot(fsFunction function, fsValue beginArg, fsValue endArg, int iterationsCount, fsValue eps)
         {
             fsValue beginRes;
             fsValue endRes;
-            if (FindRootRange(function, beginArg, endArg, iterationsCount, out beginRes, out endRes))
+            if (FindRootRange(function, beginArg, endArg, iterationsCount, out beginRes, out endRes, eps))
             {
                 return 0.5 * (beginRes + endRes);
             }
             return new fsValue();
         }
+        
         public static fsValue FindBreakInUnimodalFunction(fsFunction function, fsValue beginArg, fsValue endArg, int iterationsCount)
         {
             if (beginArg.Defined == false || endArg.Defined == false)

@@ -129,12 +129,12 @@ namespace fmCalculationLibrary.Equations
 
             if (!x0.Defined)
             {
-                result.Add(fsBisectionMethod.FindRoot(new fsFunctionC1Xp1C2Xp2C3(c1, p1, c2, p2, c3), Zero, upperBoundForBisection, iterations));
+                result.Add(fsBisectionMethod.FindRoot(new fsFunctionC1Xp1C2Xp2C3(c1, p1, c2, p2, c3), Zero, upperBoundForBisection, iterations, new fsValue(1e-11)));
                 return result;
             }
 
-            result.Add(fsBisectionMethod.FindRoot(new fsFunctionC1Xp1C2Xp2C3(c1, p1, c2, p2, c3), Zero, x0, iterations));
-            result.Add(fsBisectionMethod.FindRoot(new fsFunctionC1Xp1C2Xp2C3(c1, p1, c2, p2, c3), x0, upperBoundForBisection, iterations));
+            result.Add(fsBisectionMethod.FindRoot(new fsFunctionC1Xp1C2Xp2C3(c1, p1, c2, p2, c3), Zero, x0, iterations, new fsValue(1e-11)));
+            result.Add(fsBisectionMethod.FindRoot(new fsFunctionC1Xp1C2Xp2C3(c1, p1, c2, p2, c3), x0, upperBoundForBisection, iterations, new fsValue(1e-11)));
 
             if (!result[1].Defined)
             {
@@ -202,7 +202,7 @@ namespace fmCalculationLibrary.Equations
             breakPoints.Insert(0, Zero);
             breakPoints.Add(Infinity);
 
-            const int interations = 100;  // precision is 1e20 / 2^100 ~~ 1e-11
+            const int iterations = 100;  // precision is 1e20 / 2^100 ~~ 1e-11
 
             var result = new List<fsValue>();
 
@@ -210,7 +210,7 @@ namespace fmCalculationLibrary.Equations
             {
                 fsValue localRoot = fsBisectionMethod.FindRoot(
                     new fsFunctionC1Xp1C2Xp2C3P3C4(c1, p1, c2, p2, c3, p3, c4),
-                    breakPoints[i - 1], breakPoints[i], interations);
+                    breakPoints[i - 1], breakPoints[i], iterations, new fsValue(1e-11));
                 if (localRoot.Defined)
                     result.Add(localRoot);
             }
@@ -315,7 +315,7 @@ namespace fmCalculationLibrary.Equations
             {
                 fsValue localSolution = fsBisectionMethod.FindRoot(new fsFunctionPowerSum(freeCoeff, coeffsAndPowers),
                                                                    changingPoints[i - 1],
-                                                                   changingPoints[i], iterations);
+                                                                   changingPoints[i], iterations, new fsValue(1e-11));
                 if (localSolution.Defined)
                 {
                     result.Add(localSolution);

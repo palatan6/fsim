@@ -65,7 +65,7 @@ namespace fsNumericalMethods
             {
                 lowerBound = fsValue.Exp(x - y);
                 upperBound = fsValue.One;
-                return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 40);
+                return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 40, new fsValue(1e-8));
             }
 
             fsValue frac = x / y;
@@ -73,18 +73,18 @@ namespace fsNumericalMethods
             {
                 lowerBound = frac;
                 upperBound = fsValue.One;
-                return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 40);
+                return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 40, new fsValue(1e-8));
             }
 
             lowerBound = fsValue.One;
             upperBound = fsValue.Exp(x);
             if (upperBound <= frac)
             {
-                return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60);
+                return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60, new fsValue(1e-8));
             }
 
             upperBound = frac;
-            return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60);
+            return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 60, new fsValue(1e-8));
         }
 
         #endregion
@@ -173,7 +173,7 @@ namespace fsNumericalMethods
                     fsValue lowerBound = 1 / y;
                     fsValue upperBound = (1 + kappa) * (x - fsValue.Log(y)) / y;
                     var f = new LlnPlusCalculationFunction(x, y);
-                    return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 40);
+                    return fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 40, new fsValue(1e-8));
                 }
             }
             else
@@ -189,7 +189,7 @@ namespace fsNumericalMethods
                     fsValue lowerBound = a / y;
                     fsValue upperBound = a * (1 + kappa) * (5 - fsValue.Log(y / a)) / y;
                     var f = new LlnPlusCalculationFunction(new fsValue(5), y /a);
-                    return (fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 50) / a);
+                    return (fsBisectionMethod.FindRoot(f, lowerBound, upperBound, 50, new fsValue(1e-8)) / a);
                 }
             }
         }
