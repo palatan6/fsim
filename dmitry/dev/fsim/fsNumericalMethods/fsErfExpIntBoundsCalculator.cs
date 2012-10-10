@@ -759,9 +759,9 @@ namespace ErfExpIntBoundsCalculator
             leftUp = lbUp;
             rightUp = ubUp;
             if (!(lowStop || upStop))
-                cgret = new[] { 1, 0.5e0 * (leftUp + rightUp), 0.5e0 * (leftLow + rightLow) };
+                cgret = new[] { 1.0, 0.5e0 * (leftUp + rightUp), 0.5e0 * (leftLow + rightLow) };
             else
-                cgret = new[] { 2, 0.5e0 * (leftUp + rightUp), right };
+                cgret = new[] { 2.0, 0.5e0 * (leftUp + rightUp), right };
             return cgret;
         }
 
@@ -927,9 +927,9 @@ namespace ErfExpIntBoundsCalculator
             leftUp = lbUp;
             rightUp = ubUp;
             if (!(lowStop || upStop))
-                cgret = new[] { 1, 0.5e0 * (leftUp + rightUp), 0.5e0 * (leftLow + rightLow) };
+                cgret = new[] { 1.0, 0.5e0 * (leftUp + rightUp), 0.5e0 * (leftLow + rightLow) };
             else
-                cgret = new[] { 2, 0.5e0 * (leftUp + rightUp), right };
+                cgret = new[] { 2.0, 0.5e0 * (leftUp + rightUp), right };
             return cgret;
         }
     }
