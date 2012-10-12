@@ -49,6 +49,7 @@
     <Compile Include="fsDefiniteIntegral.cs" />
     <Compile Include="fsErfExpIntBoundsCalculator.cs" />
     <Compile Include="fsErfExpIntCalculator.cs" />
+    <Compile Include="fsExpLinCalculator.cs" />
     <Compile Include="fsFunction.cs" />
     <Compile Include="fsMathEquations.cs" />
     <Compile Include="fsQuadraticEquation.cs" />

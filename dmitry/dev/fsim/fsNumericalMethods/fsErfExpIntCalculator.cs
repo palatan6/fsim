@@ -9,7 +9,8 @@ namespace ErfExpIntCalculator
          * This class was automatically generated from the Maple module using CodeGeneration[CSharp] procedure
          * and then slightly tuned.
          * What's happening here is a terrible mystery! :-)
-         * See the attached Maple doc (if I'll have a time and a possibility to attach it!), 
+         * See the attached Maple doc (if I'll have a time and a possibility to attach it!).
+         * Also see the comments in fsSpecialFunctions.cs
          * ---Tyshkevich Dmitry---.
          */
         public static double ErfExpInt(double a, double b, double x)

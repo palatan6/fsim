@@ -5,6 +5,7 @@ using System.Text;
 using Parameters;
 using Value;
 using fsNumericalMethods;
+using ExpLinCalculator;
 
 namespace Equations.Hydrocyclone
 {
@@ -23,7 +24,7 @@ namespace Equations.Hydrocyclone
          * xRed50, etaF, rhoS, rhoF, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3, DuOverD, Dp
          * 
          *              
-         * Put     A = 2 * Dp / rhoF ;       C = gamma3 * beta2 * alpha2;
+         * Put     A = 2 * Dp / rhoF ; 
          *              
          *                                xRed50^2 * (rhoS - rhoF) * Dp
          *         B = ------------------------------------------------------------------------------ ;
@@ -31,16 +32,24 @@ namespace Equations.Hydrocyclone
          *             9 * etaF^2 * | ------------------------ |          * alpha1 * exp(alpha3 * cv)
          *                          \ beta1 * exp(-beta3 * cv) /
          *                          
-         *         x = (-ln(gamma1) - gamma2 * ln(DuOverD) + gamma3 * ln(A)) / C ,
-         *         y = -B^(1 / alpha2) / C ,
-         *         z = v^(2 / (beta2 * alpha2)) .
+         *         C = -ln(gamma1) - gamma2 * ln(DuOverD) + gamma3 * ln(A);
+         *         D = 1 / (alpha2 * beta2 * gamma3);
+         *         E = exp(C * D);
+         *         
+         * Let connect z and v by the formula
+         * 
+         *         v = (E * exp(z))^(alpha2 * beta2 / 2)
+         *         
+         * and put
+         * 
+         *         x = - B^(1 / alpha2) * D * E.
          *         
          * Then the equation (*eq*) is equivalent to the equation
          * 
-         *               ln(z) = y * z + x                     (*lln*)
+         *               z = x * exp(z)
          *               
-         * with respect to z given fixed x, y; 
-         * so we can apply the function Lln (see fsSpecialFunctions.cs) 
+         * with respect to z given fixed x < 0; 
+         * so we can apply the function ExpLinNeg (see fsSpecialFunctions.cs) 
          */
 
         #region Parameters
@@ -117,11 +126,13 @@ namespace Equations.Hydrocyclone
             fsValue B = m_xRed50.Value * m_xRed50.Value * (m_rhoS.Value - m_rhoF.Value) * m_Dp.Value /
                         (9 * m_etaF.Value * m_etaF.Value * m_alpha1.Value * fsValue.Exp(m_alpha3.Value * m_cv.Value) *
                          fsValue.Pow(A * fsValue.Exp(m_beta3.Value * m_cv.Value) / m_beta1.Value, 1 / m_beta2.Value));
-            fsValue C = m_gamma3.Value * m_beta2.Value * m_alpha2.Value;
-            fsValue x = (m_gamma3.Value * fsValue.Log(A) - fsValue.Log(m_gamma1.Value) -
-                         m_gamma2.Value * fsValue.Log(m_DuOverD.Value)) / C;
-            fsValue y = -fsValue.Pow(B, 1 / m_alpha2.Value) / C;
-            m_v.Value = fsValue.Pow(fsSpecialFunctions.Lln(x, y), m_alpha2.Value * m_beta2.Value / 2);
+            fsValue C = (m_gamma3.Value * fsValue.Log(A) - fsValue.Log(m_gamma1.Value) -
+                         m_gamma2.Value * fsValue.Log(m_DuOverD.Value));
+            fsValue D = 1 / (m_alpha2.Value * m_beta2.Value * m_gamma3.Value);
+            fsValue E = fsValue.Exp(D * C);
+            fsValue x = -(D * fsValue.Pow(B, 1 / m_alpha2.Value) * E);
+            fsValue z = fsSpecialFunctions.ExpLinNeg(x);
+            m_v.Value = fsValue.Pow(E * fsValue.Exp(z), 0.5 * m_alpha2.Value * m_beta2.Value);
         }
 
         #endregion

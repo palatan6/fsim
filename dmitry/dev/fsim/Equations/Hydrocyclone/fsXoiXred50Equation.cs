@@ -150,8 +150,8 @@ namespace Equations.Hydrocyclone
                     fsValue lnXG = fsValue.Log(m_xG.Value);
                     fsValue a = lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaG) + fsValue.Sqr(lnSigmaS));
                     fsValue b = lnSigmaG / lnSigmaS;
-                    fsValue x = (fsValue.Log(m_xoi.Value) - lnXG) / (Math.Sqrt(2.0) * lnSigmaG);
-                    double neigh = fsErfExpIntBoundsCalculator.getRootNeighbor(20, 1E-20, -9.8, 9.8, b.Value, x.Value, 2.0 * m_i.Value.Value, a.Value);
+                    fsValue z = (fsValue.Log(m_xoi.Value) - lnXG) / (Math.Sqrt(2.0) * lnSigmaG);
+                    double neigh = fsErfExpIntBoundsCalculator.getRootNeighbor(20, 1E-20, -9.8, 9.8, b.Value, z.Value, 2.0 * m_i.Value.Value, a.Value);
                     if (neigh == 1000000.0)
                     {
                         m_xRed50.Value = new fsValue();
@@ -162,7 +162,7 @@ namespace Equations.Hydrocyclone
                         fsValue two = new fsValue(2.0);
                         for (int i = 0; i < 30; i++)
                         {
-                            fsValue erfcExpInt = fsSpecialFunctions.ErfcExpInt(b, zRed50, x);
+                            fsValue erfcExpInt = fsSpecialFunctions.ErfcExpInt(b, zRed50, z);
                             fsValue val = (0.5 * erfcExpInt) / m_i.Value;
                             if (fsValue.Less(fsValue.Zero, val) && fsValue.Less(val, two))
                             {

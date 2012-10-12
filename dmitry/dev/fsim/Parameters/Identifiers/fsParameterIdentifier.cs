@@ -508,7 +508,7 @@ namespace Parameters
             new fsParameterIdentifier("sigma_g", "Standard deviation of the feed particle size distribution", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier sigma_s =
-            new fsParameterIdentifier("sigma_s", "Sdandard deviation of the Grade efficiency curve", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("sigma_s", "Standard deviation of the Grade efficiency curve", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier rf =
             new fsParameterIdentifier("rf", "Underflow volume rate to feed volume flow rate", fsCharacteristic.Concentration);

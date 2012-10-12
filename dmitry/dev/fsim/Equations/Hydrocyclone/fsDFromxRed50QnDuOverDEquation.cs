@@ -21,27 +21,48 @@ namespace Equations.Hydrocyclone
          * xRed50, etaF, rhoS, rhoF, cv, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3, DuOverD, n, Q
          * 
          *                      / 4 * rhoF * Q  \^beta2
-         * Put     A =  beta1 * | ------------- |       * exp(-beta3 * cv) ;
+         * Put     A =  beta1 * | ------------- |       * exp(-beta3 * cv) ;      (*A*)
          *                      \ pi * etaF * n /
          *
          *                     2 * xRed50^2 * (rhoS - rhoF) * Q  
-         *         B = --------------------------------------------- ;
+         *         B = --------------------------------------------- ;            (*B*)
          *             9 * pi * etaF * n * alpha1 * exp(alpha3 * cv)
          *             
-         *             gamma3 * beta2 * alpha2 
-         *         C = ----------------------- ;
-         *                    3 + beta2
-         *                    
-         *         x = (ln(gamma1) + gamma2 * ln(DuOverD) - gamma3 * ln(A)) / C ,
-         *         y = (A * B)^(1 / alpha2) / C ,
-         *         z = D^((-3 - beta2) / alpha2) .
+         * 
+         *         E = -ln(gamma1) - gamma2 * ln(DuOverD) + gamma3 * ln(A);       (*E*)   
+         * 
+         *                   3 + beta2
+         *         F = ----------------------- ;                                  (*F*)
+         *             gamma3 * beta2 * alpha2
+         *             
+         *         G = exp(-E * F);                                               (*G*)
          *         
+         * Let connect z and D by the formula
+         * 
+         *         D = (G * exp(z))^(-alpha2 / (3 + m_beta2.Value))               (*D*)
+         *         
+         * and put
+         * 
+         *         x = (A * B)^(1 / alpha2) * F * G                               (*x*)
+         *                    
          * Then the equation (*eq*) is equivalent to the equation
          * 
-         *               ln(z) = y * z + x                     (*lln*)
+         *         z = x * exp(z)                                                 (*ExpLin*)
          *               
-         * with respect to z given fixed x, y; 
-         * so we can apply the function Lln (see fsSpecialFunctions.cs)
+         * with respect to z given fixed x > 0; 
+         * so we can apply the function ExpLinPos (see fsSpecialFunctions.cs)
+         * 
+         * To decide which branch of (*ExpLin*) we have to choose let make some simple reasonings. 
+         * From (*A*) - (*G*) we have:
+         *         if Q -> 0 then A -> 0 and B -> 0;  F, G do not depend on Q     (1)
+         * By (1) and (*x*) we have:
+         *         if Q -> 0 then x -> 0          (2)
+         * By (*x*) we have:
+         *         if z -> infinity then D -> 0   (3)
+         * By basic formulae we have:
+         *         if Q -> 0 then D -> 0          (4) 
+         * So, by (2) - (4), we must choose such a branch of (*ExpLin*) for which  
+         *         if x -> 0 then z -> infinity
          */
 
         #region Parameters
@@ -123,11 +144,13 @@ namespace Equations.Hydrocyclone
             fsValue B = 2 * m_xRed50.Value * m_xRed50.Value * (m_rhoS.Value - m_rhoF.Value) * m_Q.Value /
                         (9 * Math.PI * m_etaF.Value * m_n.Value * m_alpha1.Value *
                          fsValue.Exp(m_alpha3.Value * m_cv.Value));
-            fsValue C = m_gamma3.Value * m_beta2.Value * m_alpha2.Value / (3 + m_beta2.Value);
-            fsValue x = (fsValue.Log(m_gamma1.Value) + m_gamma2.Value * fsValue.Log(m_DuOverD.Value) -
-                         m_gamma3.Value * fsValue.Log(A)) / C;
-            fsValue y = fsValue.Pow(A * B, 1 / m_alpha2.Value) / C;
-            m_D.Value = fsValue.Pow(fsSpecialFunctions.Lln(x, y), -m_alpha2.Value / (3 + m_beta2.Value));
+            fsValue E = m_gamma3.Value * fsValue.Log(A) - fsValue.Log(m_gamma1.Value) -
+                        m_gamma2.Value * fsValue.Log(m_DuOverD.Value);
+            fsValue F = (3 + m_beta2.Value) / (m_alpha2.Value * m_beta2.Value * m_gamma3.Value);
+            fsValue G = fsValue.Exp(-E * F);
+            fsValue x = fsValue.Pow(A * B, 1 / m_alpha2.Value) * F * G;
+            fsValue z = fsSpecialFunctions.ExpLinPosInfinity(x);
+            m_D.Value = fsValue.Pow(G * fsValue.Exp(z), -m_alpha2.Value / (3 + m_beta2.Value));
         }
 
         #endregion

@@ -32,9 +32,9 @@ namespace fsNumericalMethods
                 fsValue val2 = function.Eval(mid2);
 
                 if (!val1.Defined)
-                    throw new Exception("Function given to TernaryMethod not defind in point " + mid1.Value);
+                    throw new Exception("Function given to TernaryMethod is not defined at the point " + mid1.Value);
                 if (!val2.Defined)
-                    throw new Exception("Function given to TernaryMethod not defind in point " + mid2.Value);
+                    throw new Exception("Function given to TernaryMethod is not defined at the point " + mid2.Value);
 
                 if (val1 > val2)
                     left = mid1;
