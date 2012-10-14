@@ -62,7 +62,47 @@ namespace Equations.Hydrocyclone
 
         #region Formulas
 
-        #region Help Equation Class
+        #region Help Equation Classes
+
+        // Function for fast estimating for zoi
+        private class fzoi : fsFunction
+        {
+            private readonly fsValue m_a;
+            private readonly fsValue m_i;
+            private readonly fsValue m_zRed50;
+
+            public fzoi(fsValue a, fsValue zRed50, fsValue i)
+            {
+                m_a = a;
+                m_zRed50 = zRed50;
+                m_i = i;
+            }
+
+            public override fsValue Eval(fsValue zoi)
+            {
+                return (2.0 * m_i) * fsSpecialFunctions.Erfc(m_a * m_zRed50);
+            }
+        }
+
+        // Function for fast estimating for zRed50
+        private class fzRed50 : fsFunction
+        {
+            private readonly fsValue m_a;
+            private readonly fsValue m_i;
+
+            public fzRed50(fsValue a, fsValue i)
+            {
+                m_a = a;
+                m_i = i;
+            }
+
+            public override fsValue Eval(fsValue zRed50)
+            {
+                return (2.0 * m_i) * fsSpecialFunctions.Erfc(m_a * zRed50);
+            }
+        }
+
+        // ------------------------------\\
 
         private class zoiCalculationFunction : fsFunction
         {
@@ -106,8 +146,8 @@ namespace Equations.Hydrocyclone
                     fsValue a = lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaG) + fsValue.Sqr(lnSigmaS));
                     fsValue b = lnSigmaG / lnSigmaS;
                     fsValue zRed50 = (fsValue)((fsValue.Log(m_xG.Value) - fsValue.Log(m_xRed50.Value)) / (Math.Sqrt(2.0) * lnSigmaS));
-                    double h = (2.0 * m_i.Value.Value) * normaldistr.erfc(a.Value * zRed50.Value);
-                    double[] bounds = fsErfExpIntBoundsCalculator.getInterv(20, 1E-20, -9.8, 9.8, b.Value, zRed50.Value, h);
+                    fsFunction f = new fzoi(a, zRed50, m_i.Value);
+                    double[] bounds = fsErfExpIntBoundsCalculator.getInterv(20, 1e-20, -9.8, 9.8, b.Value, zRed50.Value, f);
                     if (bounds[0] == 0.0)
                     {
                         m_xoi.Value = new fsValue();
@@ -116,13 +156,9 @@ namespace Equations.Hydrocyclone
                     {
                         int n;
                         if (bounds[0] == 1.0)
-                        {
                             n = 25;
-                        }
                         else
-                        {
                             n = 50;
-                        }
                         zoiCalculationFunction function = new zoiCalculationFunction(a, b, zRed50, m_i.Value);
                         fsValue zoi = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-8));
                         m_xoi.Value = m_xG.Value * fsValue.Exp((zoi * Math.Sqrt(2.0)) * lnSigmaG);
@@ -151,7 +187,8 @@ namespace Equations.Hydrocyclone
                     fsValue a = lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaG) + fsValue.Sqr(lnSigmaS));
                     fsValue b = lnSigmaG / lnSigmaS;
                     fsValue z = (fsValue.Log(m_xoi.Value) - lnXG) / (Math.Sqrt(2.0) * lnSigmaG);
-                    double neigh = fsErfExpIntBoundsCalculator.getRootNeighbor(20, 1E-20, -9.8, 9.8, b.Value, z.Value, 2.0 * m_i.Value.Value, a.Value);
+                    fsFunction f = new fzRed50(a, m_i.Value);
+                    double neigh = fsErfExpIntBoundsCalculator.getRootNeighbor(20, 1e-20, -9.8, 9.8, b.Value, z.Value, f);
                     if (neigh == 1000000.0)
                     {
                         m_xRed50.Value = new fsValue();

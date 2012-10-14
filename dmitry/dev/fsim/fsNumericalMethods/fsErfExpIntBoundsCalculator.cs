@@ -1,5 +1,7 @@
 ﻿using System;
+using Value;
 using AGLibrary;
+using fsNumericalMethods;
 
 namespace ErfExpIntBoundsCalculator
 {
@@ -19,12 +21,12 @@ namespace ErfExpIntBoundsCalculator
           double right,
           double a,
           double b,
-          double h)
+          fsFunction f)
         {
             if (0.0e0 < a)
-                return getIntervPos(n, eps, left, right, a, b, h);
+                return getIntervPos(n, eps, left, right, a, b, f);
             else
-                return getIntervNeg(n, eps, left, right, a, b, h);
+                return getIntervNeg(n, eps, left, right, a, b, f);
         }
 
         public static double getRootNeighbor(
@@ -34,13 +36,12 @@ namespace ErfExpIntBoundsCalculator
           double right,
           double a,
           double x,
-          double s,
-          double d)
+          fsFunction f)
         {
             if (0.0e0 < a)
-                return getRootNeighborPos(n, eps, left, right, a, x, s, d);
+                return getRootNeighborPos(n, eps, left, right, a, x, f);
             else
-                return getRootNeighborNeg(n, eps, left, right, a, x, s, d);
+                return getRootNeighborNeg(n, eps, left, right, a, x, f);
         }
 
         private static double intExpATSqrB(
@@ -242,8 +243,7 @@ namespace ErfExpIntBoundsCalculator
           double right,
           double a,
           double x,
-          double s,
-          double d)
+          fsFunction f)
         {
             int i;
             bool lowStop;
@@ -287,7 +287,7 @@ namespace ErfExpIntBoundsCalculator
             erfB2 = normaldistr.erf(b2);
             erfBOverA = normaldistr.erf(bOverA);
             erfHalfBOverA = normaldistr.erf(halfBOverA);
-            sd = s * normaldistr.erfc(d * left);
+            sd = f.Eval(new fsValue(left)).Value;
             lowLeft = ErfExpIntLowPos(a, left, x, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd;
             upLeft = ErfExpIntUpPos(a, left, x, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd;
             b2 = (0.2e1 + right) * aInv;
@@ -297,7 +297,7 @@ namespace ErfExpIntBoundsCalculator
             erfB2 = normaldistr.erf(b2);
             erfBOverA = normaldistr.erf(bOverA);
             erfHalfBOverA = normaldistr.erf(halfBOverA);
-            sd = s * normaldistr.erfc(d * right);
+            sd = f.Eval(new fsValue(right)).Value;
             lowRight = ErfExpIntLowPos(a, right, x, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd;
             upRight = ErfExpIntUpPos(a, right, x, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd;
             lowStop = false;
@@ -333,7 +333,7 @@ namespace ErfExpIntBoundsCalculator
                     erfB2 = normaldistr.erf(b2);
                     erfBOverA = normaldistr.erf(bOverA);
                     erfHalfBOverA = normaldistr.erf(halfBOverA);
-                    sd = s * normaldistr.erfc(d * lbLow1);
+                    sd = f.Eval(new fsValue(lbLow1)).Value;
                     lowLeft = ErfExpIntLowPos(a, lbLow1, x, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd;
                     b2 = (0.2e1 + ubLow1) * aInv;
                     bOverA = ubLow1 * aInv;
@@ -342,7 +342,7 @@ namespace ErfExpIntBoundsCalculator
                     erfB2 = normaldistr.erf(b2);
                     erfBOverA = normaldistr.erf(bOverA);
                     erfHalfBOverA = normaldistr.erf(halfBOverA);
-                    sd = s * normaldistr.erfc(d * ubLow1);
+                    sd = f.Eval(new fsValue(ubLow1)).Value;
                     lowRight = ErfExpIntLowPos(a, ubLow1, x, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd;
                     if (0 <= lowLeft + eps && lowRight - eps <= 0 || lowLeft - eps <= 0 && 0 <= lowRight + eps)
                     {
@@ -373,7 +373,7 @@ namespace ErfExpIntBoundsCalculator
                     erfB2 = normaldistr.erf(b2);
                     erfBOverA = normaldistr.erf(bOverA);
                     erfHalfBOverA = normaldistr.erf(halfBOverA);
-                    sd = s * normaldistr.erfc(d * lbUp1);
+                    sd = f.Eval(new fsValue(lbUp1)).Value;
                     upLeft = ErfExpIntUpPos(a, lbUp1, x, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd;
                     b2 = (0.2e1 + ubUp1) * aInv;
                     bOverA = ubUp1 * aInv;
@@ -382,7 +382,7 @@ namespace ErfExpIntBoundsCalculator
                     erfB2 = normaldistr.erf(b2);
                     erfBOverA = normaldistr.erf(bOverA);
                     erfHalfBOverA = normaldistr.erf(halfBOverA);
-                    sd = s * normaldistr.erfc(d * ubUp1);
+                    sd = f.Eval(new fsValue(ubUp1)).Value;
                     upRight = ErfExpIntUpPos(a, ubUp1, x, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - sd;
                     if (0 <= upLeft + eps && upRight - eps <= 0 || upLeft - eps <= 0 && 0 <= upRight + eps)
                     {
@@ -413,8 +413,7 @@ namespace ErfExpIntBoundsCalculator
           double right,
           double a,
           double x,
-          double s,
-          double d)
+          fsFunction f)
         {
             int i;
             bool lowStop;
@@ -468,7 +467,7 @@ namespace ErfExpIntBoundsCalculator
             halfBOverA = (0.5e0 - left) * aInv;
             oneBOverA = (0.1e1 - left) * aInv;
             y = a * x + left;
-            sd = s * normaldistr.erfc(d * left);
+            sd = f.Eval(new fsValue(left)).Value;
             erfBOverA = normaldistr.erf(bOverA);
             erfHalfBOverA = normaldistr.erf(halfBOverA);
             expBOverAsqr = Math.Exp(-bOverA * bOverA);
@@ -485,7 +484,7 @@ namespace ErfExpIntBoundsCalculator
             halfBOverA = (0.5e0 - right) * aInv;
             oneBOverA = (0.1e1 - right) * aInv;
             y = a * x + right;
-            sd = s * normaldistr.erfc(d * right);
+            sd = f.Eval(new fsValue(right)).Value;
             erfBOverA = normaldistr.erf(bOverA);
             erfHalfBOverA = normaldistr.erf(halfBOverA);
             expBOverAsqr = Math.Exp(-bOverA * bOverA);
@@ -527,7 +526,7 @@ namespace ErfExpIntBoundsCalculator
                     bOverA = lbLow1 * aInv;
                     halfBOverA = (0.5e0 - lbLow1) * aInv;
                     oneBOverA = (0.1e1 - lbLow1) * aInv;
-                    sd = s * normaldistr.erfc(d * lbLow1);
+                    sd = f.Eval(new fsValue(lbLow1)).Value;
                     y = a * x + lbLow1;
                     erfBOverA = normaldistr.erf(bOverA);
                     erfHalfBOverA = normaldistr.erf(halfBOverA);
@@ -543,7 +542,7 @@ namespace ErfExpIntBoundsCalculator
                     bOverA = ubLow1 * aInv;
                     halfBOverA = (0.5e0 - ubLow1) * aInv;
                     oneBOverA = (0.1e1 - ubLow1) * aInv;
-                    sd = s * normaldistr.erfc(d * ubLow1);
+                    sd = f.Eval(new fsValue(ubLow1)).Value;
                     y = a * x + ubLow1;
                     erfBOverA = normaldistr.erf(bOverA);
                     erfHalfBOverA = normaldistr.erf(halfBOverA);
@@ -581,7 +580,7 @@ namespace ErfExpIntBoundsCalculator
                     bOverA = lbUp1 * aInv;
                     halfBOverA = (0.5e0 - lbUp1) * aInv;
                     oneBOverA = (0.1e1 - lbUp1) * aInv;
-                    sd = s * normaldistr.erfc(d * lbUp1);
+                    sd = f.Eval(new fsValue(lbUp1)).Value;
                     y = a * x + lbUp1;
                     erfBOverA = normaldistr.erf(bOverA);
                     erfHalfBOverA = normaldistr.erf(halfBOverA);
@@ -597,7 +596,7 @@ namespace ErfExpIntBoundsCalculator
                     bOverA = ubUp1 * aInv;
                     halfBOverA = (0.5e0 - ubUp1) * aInv;
                     oneBOverA = (0.1e1 - ubUp1) * aInv;
-                    sd = s * normaldistr.erfc(d * ubUp1);
+                    sd = f.Eval(new fsValue(ubUp1)).Value;
                     y = a * x + ubUp1;
                     erfBOverA = normaldistr.erf(bOverA);
                     erfHalfBOverA = normaldistr.erf(halfBOverA);
@@ -639,7 +638,7 @@ namespace ErfExpIntBoundsCalculator
           double right,
           double a,
           double b,
-          double h)
+          fsFunction f)
         {
             int i;
             bool lowStop;
@@ -673,6 +672,7 @@ namespace ErfExpIntBoundsCalculator
             double erfB2;
             double erfBOverA;
             double erfHalfBOverA;
+            double h;
             aInv = 0.1e1 / a;
             b2 = (0.2e1 + b) * aInv;
             bOverA = b * aInv;
@@ -682,9 +682,11 @@ namespace ErfExpIntBoundsCalculator
             erfBOverA = normaldistr.erf(bOverA);
             erfHalfBOverA = normaldistr.erf(halfBOverA);
             erfX = normaldistr.erf(left);
+            h = f.Eval(new fsValue(left)).Value;
             lowLeft = ErfExpIntLowPos(a, b, left, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
             upLeft = ErfExpIntUpPos(a, b, left, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
             erfX = normaldistr.erf(right);
+            h = f.Eval(new fsValue(right)).Value;
             lowRight = ErfExpIntLowPos(a, b, right, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
             upRight = ErfExpIntUpPos(a, b, right, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
             lowStop = false;
@@ -718,8 +720,10 @@ namespace ErfExpIntBoundsCalculator
                     lbLow2 = ubLow1;
                     ubLow2 = ubLow;
                     erfX = normaldistr.erf(lbLow1);
+                    h = f.Eval(new fsValue(lbLow1)).Value;
                     lowLeft = ErfExpIntLowPos(a, b, lbLow1, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
                     erfX = normaldistr.erf(ubLow1);
+                    h = f.Eval(new fsValue(ubLow1)).Value;
                     lowRight = ErfExpIntLowPos(a, b, ubLow1, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
                     if (0 <= lowLeft + eps && lowRight - eps <= 0 || lowLeft - eps <= 0 && 0 <= lowRight + eps)
                     {
@@ -742,8 +746,10 @@ namespace ErfExpIntBoundsCalculator
                 lbUp2 = ubUp1;
                 ubUp2 = ubUp;
                 erfX = normaldistr.erf(lbUp1);
+                h = f.Eval(new fsValue(lbUp1)).Value;
                 upLeft = ErfExpIntUpPos(a, b, lbUp1, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
                 erfX = normaldistr.erf(ubUp1);
+                h = f.Eval(new fsValue(ubUp1)).Value;
                 upRight = ErfExpIntUpPos(a, b, ubUp1, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
                 if (0 <= upLeft + eps && upRight - eps <= 0 || upLeft - eps <= 0 && 0 <= upRight + eps)
                 {
@@ -772,7 +778,7 @@ namespace ErfExpIntBoundsCalculator
           double right,
           double a,
           double b,
-          double h)
+          fsFunction f)
         {
             int i;
             bool lowStop;
@@ -816,6 +822,7 @@ namespace ErfExpIntBoundsCalculator
             double b1Low;
             double erfcY;
             double erfOneBOverA;
+            double h;
             aInv = 0.1e1 / a;
             a1Up = Math.Sqrt(0.1e1 + aInv * aInv);
             a1Low = Math.Sqrt(0.186602540378443864676372317077e1 + aInv * aInv);
@@ -835,12 +842,14 @@ namespace ErfExpIntBoundsCalculator
             expXsqr = Math.Exp(-left * left);
             y = a * left + b;
             erfcY = normaldistr.erfc(y);
+            h = f.Eval(new fsValue(left)).Value;
             lowLeft = ErfExpIntLowNeg(a, b, left, y, aInv, bOverA, halfBOverA, oneBOverA, multLow, a1Low, b1Low, expBOverAsqr, expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
             upLeft = ErfExpIntUpNeg(a, b, left, y, aInv, bOverA, halfBOverA, oneBOverA, multUp, a1Up, b1Up, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
             erfX = normaldistr.erf(right);
             expXsqr = Math.Exp(-right * right);
             y = a * right + b;
             erfcY = normaldistr.erfc(y);
+            h = f.Eval(new fsValue(right)).Value;
             lowRight = ErfExpIntLowNeg(a, b, right, y, aInv, bOverA, halfBOverA, oneBOverA, multLow, a1Low, b1Low, expBOverAsqr, expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
             upRight = ErfExpIntUpNeg(a, b, right, y, aInv, bOverA, halfBOverA, oneBOverA, multUp, a1Up, b1Up, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
             lowStop = false;
@@ -877,11 +886,13 @@ namespace ErfExpIntBoundsCalculator
                     expXsqr = Math.Exp(-lbLow1 * lbLow1);
                     y = a * lbLow1 + b;
                     erfcY = normaldistr.erfc(y);
+                    h = f.Eval(new fsValue(lbLow1)).Value;
                     lowLeft = ErfExpIntLowNeg(a, b, lbLow1, y, aInv, bOverA, halfBOverA, oneBOverA, multLow, a1Low, b1Low, expBOverAsqr, expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
                     erfX = normaldistr.erf(ubLow1);
                     expXsqr = Math.Exp(-ubLow1 * ubLow1);
                     y = a * ubLow1 + b;
                     erfcY = normaldistr.erfc(y);
+                    h = f.Eval(new fsValue(ubLow1)).Value;
                     lowRight = ErfExpIntLowNeg(a, b, ubLow1, y, aInv, bOverA, halfBOverA, oneBOverA, multLow, a1Low, b1Low, expBOverAsqr, expXsqr, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
                     if (0 <= lowLeft + eps && lowRight - eps <= 0 || lowLeft - eps <= 0 && 0 <= lowRight + eps)
                     {
@@ -907,11 +918,13 @@ namespace ErfExpIntBoundsCalculator
                 expXsqr = Math.Exp(-lbUp1 * lbUp1);
                 y = a * lbUp1 + b;
                 erfcY = normaldistr.erfc(y);
+                h = f.Eval(new fsValue(lbUp1)).Value;
                 upLeft = ErfExpIntUpNeg(a, b, lbUp1, y, aInv, bOverA, halfBOverA, oneBOverA, multUp, a1Up, b1Up, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
                 erfX = normaldistr.erf(ubUp1);
                 expXsqr = Math.Exp(-ubUp1 * ubUp1);
                 y = a * ubUp1 + b;
                 erfcY = normaldistr.erfc(y);
+                h = f.Eval(new fsValue(ubUp1)).Value;
                 upRight = ErfExpIntUpNeg(a, b, ubUp1, y, aInv, bOverA, halfBOverA, oneBOverA, multUp, a1Up, b1Up, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
                 if (0 <= upLeft + eps && upRight - eps <= 0 || upLeft - eps <= 0 && 0 <= upRight + eps)
                 {
