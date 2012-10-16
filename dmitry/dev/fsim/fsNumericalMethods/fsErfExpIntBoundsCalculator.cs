@@ -5,14 +5,20 @@ using fsNumericalMethods;
 
 namespace ErfExpIntBoundsCalculator
 {
+    /*
+     * This class was automatically generated from the Maple module using CodeGeneration[CSharp] procedure
+     * and then slightly tuned.
+     * What's happening here in details is a terrible mystery! :-)
+     * See the attached Maple doc (if I'll have a time and a possibility to attach it!). 
+     * ---Tyshkevich Dmitry---.
+     */
     public class fsErfExpIntBoundsCalculator
     {
         /*
-         * This class was automatically generated from the Maple module using CodeGeneration[CSharp] procedure
-         * and then slightly tuned.
-         * What's happening here is a terrible mystery! :-)
-         * See the attached Maple doc (if I'll have a time and a possibility to attach it!). 
-         * ---Tyshkevich Dmitry---.
+         * Determines in a fast way (for Bisection Method) a shorter interval inside [left, right]  
+         * in which the solution of the equation
+         *                ErfcExpInt(a, b, x) = f(x)
+         * lies
          */
         public static double[] getInterv(
           int n,
@@ -29,7 +35,11 @@ namespace ErfExpIntBoundsCalculator
                 return getIntervNeg(n, eps, left, right, a, b, f);
         }
 
-        public static double getRootNeighbor(
+        /*
+         * Determines in a fast way a point near the solution of the equation
+         *                ErfcExpInt(a, b, x) = f(b)
+         */
+        public static double getRootNeighborSecondArg(
           int n,
           double eps,
           double left,
@@ -42,6 +52,29 @@ namespace ErfExpIntBoundsCalculator
                 return getRootNeighborPos(n, eps, left, right, a, x, f);
             else
                 return getRootNeighborNeg(n, eps, left, right, a, x, f);
+        }
+
+        /*
+         * Determines in a fast way a point near the solution of the equation
+         *                ErfcExpInt(a, b, x) = f(x)
+         */
+        public static double getRootNeighborThirdArg(
+          int n,
+          double eps,
+          double left,
+          double right,
+          double a,
+          double b,
+          fsFunction f)
+        {
+            double[] bounds = getInterv(n, eps, left, right, a, b, f);
+            if (bounds[0] == 0.0)
+                return 0.5 * (left + right);
+            if (bounds[0] == 2.0)
+                return bounds[1];
+            if (bounds[0] == 3.0)
+                return bounds[2];
+            return 0.5 * (bounds[1] + bounds[2]);
         }
 
         private static double intExpATSqrB(
@@ -324,6 +357,8 @@ namespace ErfExpIntBoundsCalculator
                 {
                     lbLow1 = lbLow;
                     ubLow1 = 0.5e0 * (ubLow + lbLow);
+                    if (Math.Abs(ubLow1 - ubLow) < eps)
+                        break;
                     lbLow2 = ubLow1;
                     ubLow2 = ubLow;
                     b2 = (0.2e1 + lbLow1) * aInv;
@@ -364,6 +399,8 @@ namespace ErfExpIntBoundsCalculator
                 {
                     lbUp1 = lbUp;
                     ubUp1 = 0.5e0 * (ubUp + lbUp);
+                    if (Math.Abs(ubUp1 - ubUp) < eps)
+                        break;
                     lbUp2 = ubUp1;
                     ubUp2 = ubUp;
                     b2 = (0.2e1 + lbUp1) * aInv;
@@ -521,6 +558,8 @@ namespace ErfExpIntBoundsCalculator
                 {
                     lbLow1 = lbLow;
                     ubLow1 = 0.5e0 * (ubLow + lbLow);
+                    if (Math.Abs(ubLow - ubLow1) < eps)
+                        break;
                     lbLow2 = ubLow1;
                     ubLow2 = ubLow;
                     bOverA = lbLow1 * aInv;
@@ -575,6 +614,8 @@ namespace ErfExpIntBoundsCalculator
                 {
                     lbUp1 = lbUp;
                     ubUp1 = 0.5e0 * (ubUp + lbUp);
+                    if (Math.Abs(ubUp1 - ubUp) < eps)
+                        break;
                     lbUp2 = ubUp1;
                     ubUp2 = ubUp;
                     bOverA = lbUp1 * aInv;
@@ -661,8 +702,8 @@ namespace ErfExpIntBoundsCalculator
             double ubUp1;
             double lbUp2;
             double ubUp2;
-            double leftUp;
-            double rightUp;
+            double leftUp = 0.0;
+            double rightUp = 0.0;
             double erfX;
             double aInv;
             double b2;
@@ -706,9 +747,9 @@ namespace ErfExpIntBoundsCalculator
                 ubUp = right;
             }
             double[] cgret;
-            if (upStop)
+            if (lowStop && upStop)
             {
-                cgret = new[] { 0e0, 0, 0 };
+                cgret = new[] { 0e0, left, right };
                 return cgret;
             }
             if (!lowStop)
@@ -717,6 +758,8 @@ namespace ErfExpIntBoundsCalculator
                 {
                     lbLow1 = lbLow;
                     ubLow1 = 0.5e0 * (ubLow + lbLow);
+                    if (Math.Abs(ubLow - ubLow1) < eps)
+                        break;
                     lbLow2 = ubLow1;
                     ubLow2 = ubLow;
                     erfX = normaldistr.erf(lbLow1);
@@ -739,35 +782,48 @@ namespace ErfExpIntBoundsCalculator
                 leftLow = lbLow;
                 rightLow = ubLow;
             }
-            for (i = 1; i <= n; i++)
+            if (!upStop)
             {
-                lbUp1 = lbUp;
-                ubUp1 = 0.5e0 * (ubUp + lbUp);
-                lbUp2 = ubUp1;
-                ubUp2 = ubUp;
-                erfX = normaldistr.erf(lbUp1);
-                h = f.Eval(new fsValue(lbUp1)).Value;
-                upLeft = ErfExpIntUpPos(a, b, lbUp1, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
-                erfX = normaldistr.erf(ubUp1);
-                h = f.Eval(new fsValue(ubUp1)).Value;
-                upRight = ErfExpIntUpPos(a, b, ubUp1, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
-                if (0 <= upLeft + eps && upRight - eps <= 0 || upLeft - eps <= 0 && 0 <= upRight + eps)
+                for (i = 1; i <= n; i++)
                 {
-                    lbUp = lbUp1;
-                    ubUp = ubUp1;
+                    lbUp1 = lbUp;
+                    ubUp1 = 0.5e0 * (ubUp + lbUp);
+                    if (Math.Abs(ubUp - ubUp1) < eps)
+                        break;
+                    lbUp2 = ubUp1;
+                    ubUp2 = ubUp;
+                    erfX = normaldistr.erf(lbUp1);
+                    h = f.Eval(new fsValue(lbUp1)).Value;
+                    upLeft = ErfExpIntUpPos(a, b, lbUp1, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
+                    erfX = normaldistr.erf(ubUp1);
+                    h = f.Eval(new fsValue(ubUp1)).Value;
+                    upRight = ErfExpIntUpPos(a, b, ubUp1, b2, bOverA, halfBOverA, oneBOverA, erfB2, erfX, erfBOverA, erfHalfBOverA) - h;
+                    if (0 <= upLeft + eps && upRight - eps <= 0 || upLeft - eps <= 0 && 0 <= upRight + eps)
+                    {
+                        lbUp = lbUp1;
+                        ubUp = ubUp1;
+                    }
+                    else
+                    {
+                        lbUp = lbUp2;
+                        ubUp = ubUp2;
+                    }
                 }
-                else
-                {
-                    lbUp = lbUp2;
-                    ubUp = ubUp2;
-                }
-            }
-            leftUp = lbUp;
-            rightUp = ubUp;
+                leftUp = lbUp;
+                rightUp = ubUp; 
+            } 
             if (!(lowStop || upStop))
                 cgret = new[] { 1.0, 0.5e0 * (leftUp + rightUp), 0.5e0 * (leftLow + rightLow) };
+            else if (!upStop)
+                if (upLeft < 0)
+                    cgret = new[] { 2.0, 0.5e0 * (leftUp + rightUp), right };
+                else
+                    cgret = new[] { 3.0, left, 0.5e0 * (leftUp + rightUp) };
             else
-                cgret = new[] { 2.0, 0.5e0 * (leftUp + rightUp), right };
+                if (lowLeft > 0)
+                    cgret = new[] { 2.0, 0.5e0 * (leftLow + rightLow), right };
+                else
+                    cgret = new[] { 3.0, left, 0.5e0 * (leftLow + rightLow) };
             return cgret;
         }
 
@@ -801,8 +857,8 @@ namespace ErfExpIntBoundsCalculator
             double ubUp1;
             double lbUp2;
             double ubUp2;
-            double leftUp;
-            double rightUp;
+            double leftUp = 0.0;
+            double rightUp = 0.0;
             double erfX;
             double aInv;
             double bOverA;
@@ -869,9 +925,9 @@ namespace ErfExpIntBoundsCalculator
                 ubUp = right;
             }
             double[] cgret;
-            if (upStop)
+            if (lowStop && upStop)
             {
-                cgret = new[] { 0.0, 0.0, 0.0 };
+                cgret = new[] { 0.0, left, right };
                 return cgret;
             }
             if (!lowStop)
@@ -880,6 +936,8 @@ namespace ErfExpIntBoundsCalculator
                 {
                     lbLow1 = lbLow;
                     ubLow1 = 0.5e0 * (ubLow + lbLow);
+                    if (Math.Abs(ubLow - ubLow1) < eps)
+                        break;
                     lbLow2 = ubLow1;
                     ubLow2 = ubLow;
                     erfX = normaldistr.erf(lbLow1);
@@ -908,41 +966,54 @@ namespace ErfExpIntBoundsCalculator
                 leftLow = lbLow;
                 rightLow = ubLow;
             }
-            for (i = 1; i <= n; i++)
+            if (!upStop)
             {
-                lbUp1 = lbUp;
-                ubUp1 = 0.5e0 * (ubUp + lbUp);
-                lbUp2 = ubUp1;
-                ubUp2 = ubUp;
-                erfX = normaldistr.erf(lbUp1);
-                expXsqr = Math.Exp(-lbUp1 * lbUp1);
-                y = a * lbUp1 + b;
-                erfcY = normaldistr.erfc(y);
-                h = f.Eval(new fsValue(lbUp1)).Value;
-                upLeft = ErfExpIntUpNeg(a, b, lbUp1, y, aInv, bOverA, halfBOverA, oneBOverA, multUp, a1Up, b1Up, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
-                erfX = normaldistr.erf(ubUp1);
-                expXsqr = Math.Exp(-ubUp1 * ubUp1);
-                y = a * ubUp1 + b;
-                erfcY = normaldistr.erfc(y);
-                h = f.Eval(new fsValue(ubUp1)).Value;
-                upRight = ErfExpIntUpNeg(a, b, ubUp1, y, aInv, bOverA, halfBOverA, oneBOverA, multUp, a1Up, b1Up, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
-                if (0 <= upLeft + eps && upRight - eps <= 0 || upLeft - eps <= 0 && 0 <= upRight + eps)
+                for (i = 1; i <= n; i++)
                 {
-                    lbUp = lbUp1;
-                    ubUp = ubUp1;
+                    lbUp1 = lbUp;
+                    ubUp1 = 0.5e0 * (ubUp + lbUp);
+                    if (Math.Abs(ubUp - ubUp1) < eps)
+                        break;
+                    lbUp2 = ubUp1;
+                    ubUp2 = ubUp;
+                    erfX = normaldistr.erf(lbUp1);
+                    expXsqr = Math.Exp(-lbUp1 * lbUp1);
+                    y = a * lbUp1 + b;
+                    erfcY = normaldistr.erfc(y);
+                    h = f.Eval(new fsValue(lbUp1)).Value;
+                    upLeft = ErfExpIntUpNeg(a, b, lbUp1, y, aInv, bOverA, halfBOverA, oneBOverA, multUp, a1Up, b1Up, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
+                    erfX = normaldistr.erf(ubUp1);
+                    expXsqr = Math.Exp(-ubUp1 * ubUp1);
+                    y = a * ubUp1 + b;
+                    erfcY = normaldistr.erfc(y);
+                    h = f.Eval(new fsValue(ubUp1)).Value;
+                    upRight = ErfExpIntUpNeg(a, b, ubUp1, y, aInv, bOverA, halfBOverA, oneBOverA, multUp, a1Up, b1Up, erfX, erfcY, erfBOverA, erfHalfBOverA, erfOneBOverA) - h;
+                    if (0 <= upLeft + eps && upRight - eps <= 0 || upLeft - eps <= 0 && 0 <= upRight + eps)
+                    {
+                        lbUp = lbUp1;
+                        ubUp = ubUp1;
+                    }
+                    else
+                    {
+                        lbUp = lbUp2;
+                        ubUp = ubUp2;
+                    }
                 }
-                else
-                {
-                    lbUp = lbUp2;
-                    ubUp = ubUp2;
-                }
+                leftUp = lbUp;
+                rightUp = ubUp; 
             }
-            leftUp = lbUp;
-            rightUp = ubUp;
             if (!(lowStop || upStop))
                 cgret = new[] { 1.0, 0.5e0 * (leftUp + rightUp), 0.5e0 * (leftLow + rightLow) };
+            else if (!upStop)
+                if (upLeft < 0)
+                    cgret = new[] { 2.0, 0.5e0 * (leftUp + rightUp), right };
+                else
+                    cgret = new[] { 3.0, left, 0.5e0 * (leftUp + rightUp) };
             else
-                cgret = new[] { 2.0, 0.5e0 * (leftUp + rightUp), right };
+                if (lowLeft > 0)
+                    cgret = new[] { 2.0, 0.5e0 * (leftLow + rightLow), right };
+                else
+                    cgret = new[] { 3.0, left, 0.5e0 * (leftLow + rightLow) };
             return cgret;
         }
     }

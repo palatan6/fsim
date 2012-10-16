@@ -16,14 +16,28 @@ namespace Equations.Hydrocyclone
         /*
          * We have to solve the transcendental equation
          * 
-         *          ErfcExpInt(b, zRed50, zoi) = 2 * i * erfc(a * zRed50)      (eq)
+         *          ErfcExpInt(b, zRed50, zoi) = 2 * i * erfc(a * zRed50)         (*eq*)
          *       
-         * where  
-         *          a = ln(sigmaS) / (ln(sigmaS)^2 + ln(sigmaG)^2)^(1/2),
-         *          b = ln(sigmaG) / ln(sigmaS)
-         * Getting calculated zRed50 or zoi we then can calculate xRed50 and xoi by the formulae:
-         *          xoi = xG * exp(2^(1/2) * zoi * ln(sigmaG)),
-         *          xRed50 = xG * exp(-2^(1/2) * zRed50 * ln(sigmaS))
+         * with respect to zoi or zRed50 where
+         * 
+         *          a = ln(sigmaS) / ( ln(sigmaS)^2 + ln(sigmaG)^2)^(1/2) ),
+         *          b = ln(sigmaG) / ln(sigmaS), 
+         *          zRed50 = (ln(xG) - ln(xRed50) ) / ( 2^(1/2) * ln(sigmaS) )    (*Red50*)
+         *          
+         * Getting calculated zoi or zRed50 we then can calculate xoi and xRed50 by (*Red50*) and the relation:
+         * 
+         *          xoi = xG * exp(2^(1/2) * zoi * ln(sigmaG))                    (*oi*)
+         *          
+         * The equation (*eq*) (under relations (*oi*), (*Red50*)) is equivalent to the equation 
+         * 
+         *          Fo(xoi) = i       (*xoi*)
+         *  
+         * (i in (*xoi*) is dimensionless, 0 <= i <= 1) because of the equality
+         * 
+         *          
+         *                            ErfcExpInt(b, zRed50, zoi)
+         *          Fo(xoi) =  0.5 * --------------------------
+         *                                 erfc(a * zRed50)
          */
 
         #region Parameters
@@ -64,27 +78,23 @@ namespace Equations.Hydrocyclone
 
         #region Help Equation Classes
 
-        // Function for fast estimating for zoi
+        // The function for fast zoi-estimating
         private class fzoi : fsFunction
         {
-            private readonly fsValue m_a;
-            private readonly fsValue m_i;
-            private readonly fsValue m_zRed50;
+            private readonly fsValue m_h;
 
-            public fzoi(fsValue a, fsValue zRed50, fsValue i)
+            public fzoi(fsValue h)
             {
-                m_a = a;
-                m_zRed50 = zRed50;
-                m_i = i;
+                m_h = h;
             }
 
             public override fsValue Eval(fsValue zoi)
             {
-                return (2.0 * m_i) * fsSpecialFunctions.Erfc(m_a * m_zRed50);
+                return m_h;
             }
         }
 
-        // Function for fast estimating for zRed50
+        // The function for fast zRed50-estimating
         private class fzRed50 : fsFunction
         {
             private readonly fsValue m_a;
@@ -102,26 +112,22 @@ namespace Equations.Hydrocyclone
             }
         }
 
-        // ------------------------------\\
-
         private class zoiCalculationFunction : fsFunction
         {
-            private readonly fsValue m_a;
             private readonly fsValue m_b;
-            private readonly fsValue m_i;
             private readonly fsValue m_zRed50;
+            private readonly fsValue m_h;
 
-            public zoiCalculationFunction(fsValue a, fsValue b, fsValue zRed50, fsValue i)
+            public zoiCalculationFunction(fsValue b, fsValue zRed50, fsValue h)
             {
-                m_a = a;
                 m_b = b;
                 m_zRed50 = zRed50;
-                m_i = i;
+                m_h = h;
             }
 
             public override fsValue Eval(fsValue zoi)
             {
-                return fsSpecialFunctions.ErfcExpInt(m_b, m_zRed50, zoi) - (2.0 * m_i) * fsSpecialFunctions.Erfc(m_a * m_zRed50);
+                return fsSpecialFunctions.ErfcExpInt(m_b, m_zRed50, zoi) - m_h;
             }
         }
 
@@ -145,24 +151,19 @@ namespace Equations.Hydrocyclone
                 {
                     fsValue a = lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaG) + fsValue.Sqr(lnSigmaS));
                     fsValue b = lnSigmaG / lnSigmaS;
-                    fsValue zRed50 = (fsValue)((fsValue.Log(m_xG.Value) - fsValue.Log(m_xRed50.Value)) / (Math.Sqrt(2.0) * lnSigmaS));
-                    fsFunction f = new fzoi(a, zRed50, m_i.Value);
-                    double[] bounds = fsErfExpIntBoundsCalculator.getInterv(20, 1e-20, -9.8, 9.8, b.Value, zRed50.Value, f);
-                    if (bounds[0] == 0.0)
-                    {
-                        m_xoi.Value = new fsValue();
-                    }
+                    fsValue zRed50 = (fsValue.Log(m_xG.Value) - fsValue.Log(m_xRed50.Value)) / (Math.Sqrt(2.0) * lnSigmaS);
+                    fsFunction f = new fzoi(2.0 * m_i.Value * fsSpecialFunctions.Erfc(a * zRed50));
+                    double[] bounds = fsErfExpIntBoundsCalculator.getInterv(20, 1e-5, -9.8, 9.8, b.Value, zRed50.Value, f);
+                    int n;
+                    if (bounds[0] == 1.0)
+                        n = 25;
+                    else if (bounds[0] == 0.0)
+                        n = 50;
                     else
-                    {
-                        int n;
-                        if (bounds[0] == 1.0)
-                            n = 25;
-                        else
-                            n = 50;
-                        zoiCalculationFunction function = new zoiCalculationFunction(a, b, zRed50, m_i.Value);
-                        fsValue zoi = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-8));
-                        m_xoi.Value = m_xG.Value * fsValue.Exp((zoi * Math.Sqrt(2.0)) * lnSigmaG);
-                    }
+                        n = 45;
+                    zoiCalculationFunction function = new zoiCalculationFunction(b, zRed50, (2.0 * m_i.Value) * fsSpecialFunctions.Erfc(a * zRed50));
+                    fsValue zoi = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-6));
+                    m_xoi.Value = m_xG.Value * fsValue.Exp((zoi * Math.Sqrt(2.0)) * lnSigmaG);
                 }
             }
         }
@@ -188,7 +189,7 @@ namespace Equations.Hydrocyclone
                     fsValue b = lnSigmaG / lnSigmaS;
                     fsValue z = (fsValue.Log(m_xoi.Value) - lnXG) / (Math.Sqrt(2.0) * lnSigmaG);
                     fsFunction f = new fzRed50(a, m_i.Value);
-                    double neigh = fsErfExpIntBoundsCalculator.getRootNeighbor(20, 1e-20, -9.8, 9.8, b.Value, z.Value, f);
+                    double neigh = fsErfExpIntBoundsCalculator.getRootNeighborSecondArg(20, 1e-5, -9.8, 9.8, b.Value, z.Value, f);
                     if (neigh == 1000000.0)
                     {
                         m_xRed50.Value = new fsValue();
@@ -197,19 +198,16 @@ namespace Equations.Hydrocyclone
                     {
                         fsValue zRed50 = new fsValue(neigh);
                         fsValue two = new fsValue(2.0);
+                        fsValue erfcExpInt;
+                        fsValue val;
                         for (int i = 0; i < 30; i++)
                         {
-                            fsValue erfcExpInt = fsSpecialFunctions.ErfcExpInt(b, zRed50, z);
-                            fsValue val = (0.5 * erfcExpInt) / m_i.Value;
+                            erfcExpInt = fsSpecialFunctions.ErfcExpInt(b, zRed50, z);
+                            val = (0.5 * erfcExpInt) / m_i.Value;
                             if (fsValue.Less(fsValue.Zero, val) && fsValue.Less(val, two))
-                            {
                                 zRed50 = fsSpecialFunctions.InvErfc(val) / a;
-                            }
                             else
-                            {
-                                m_xRed50.Value = m_xG.Value * fsValue.Exp((-zRed50 * Math.Sqrt(2.0)) * lnSigmaS);
-                                return;
-                            }
+                                break;
                         }
                         m_xRed50.Value = m_xG.Value * fsValue.Exp((-zRed50 * Math.Sqrt(2.0)) * lnSigmaS);
                     }

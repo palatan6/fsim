@@ -32,6 +32,7 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter D = AddVariable(fsParameterIdentifier.MachineDiameter);
 
             IEquationParameter xoi = AddVariable(fsParameterIdentifier.OverflowParticleSize);
+            IEquationParameter xui = AddVariable(fsParameterIdentifier.UnderflowParticleSize);
             IEquationParameter i = AddVariable(fsParameterIdentifier.PercentageOfParticles);
 
             IEquationParameter xo50 = AddVariable(fsParameterIdentifier.OverflowMeanParticleSize);
@@ -141,6 +142,7 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsReducedTotalEfficiencyFromCmoEquation(ReducedTotalEfficiency, cmo, C, rhoS, rhoF)); // (x1)
             Equations.Add(new fsXRed50Equation(xRed50, D, Q, numberOfCyclones, rhoS, rhoF, etaf, C, Cu, cv, xG, sigmaG, sigmaS, alpha1, alpha2, alpha3, beta1, beta2, beta3)); // (x2)
             Equations.Add(new fsXoiXred50Equation(xRed50, xoi, sigmaG, sigmaS, xG, i));  // (x3)
+            Equations.Add(new fsXuiXred50RfEquation(xRed50, xui, sigmaG, sigmaS, xG, i, rf));
 
             Equations.Add(new fsXoiXred50Equation(xRed50, xo50, sigmaG, sigmaS, xG, constantHalf));
             

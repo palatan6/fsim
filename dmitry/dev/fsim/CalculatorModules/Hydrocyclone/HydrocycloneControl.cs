@@ -70,7 +70,8 @@ namespace CalculatorModules.Hydrocyclone
 
             fsParametersGroup cxdGroup = AddGroup(
                 fsParameterIdentifier.OverflowSolidsMassFraction, //cmo
-                fsParameterIdentifier.OverflowParticleSize, //x0_i
+                fsParameterIdentifier.OverflowParticleSize, //xoi
+                fsParameterIdentifier.UnderflowParticleSize, //xui
                 fsParameterIdentifier.ReducedCutSize, //x’50
                 fsParameterIdentifier.MachineDiameter); //D
 

@@ -525,6 +525,9 @@ namespace Parameters
         public static fsParameterIdentifier OverflowParticleSize =
             new fsParameterIdentifier("xoi", "Overflow particle size", fsCharacteristic.ParticleSize);
 
+        public static fsParameterIdentifier UnderflowParticleSize =
+            new fsParameterIdentifier("xui", "Underflow particle size", fsCharacteristic.ParticleSize);
+
         public static fsParameterIdentifier OverflowSolidsMassFraction =
             new fsParameterIdentifier("cmo", "Overflow solids mass fraction", fsCharacteristic.Concentration);
 
@@ -660,10 +663,10 @@ namespace Parameters
             new fsParameterIdentifier("fq", "Predeliquoring flow rate", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier OverflowMeanParticleSize =
-            new fsParameterIdentifier("x50,o", "Overflow mean particle size", fsCharacteristic.ParticleSize);
+            new fsParameterIdentifier("xo50", "Overflow mean particle size", fsCharacteristic.ParticleSize);
 
         public static fsParameterIdentifier UnderflowMeanParticleSize =
-            new fsParameterIdentifier("x50,u", "Underflow mean particle size", fsCharacteristic.ParticleSize);
+            new fsParameterIdentifier("xu50", "Underflow mean particle size", fsCharacteristic.ParticleSize);
 
         public static fsParameterIdentifier OverflowSolidsVolumeFraction =
             new fsParameterIdentifier("cvo", "Overflow solids volume fraction", fsCharacteristic.Concentration);
