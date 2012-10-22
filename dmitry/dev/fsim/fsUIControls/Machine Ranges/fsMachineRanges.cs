@@ -108,7 +108,9 @@ namespace CalculatorModules.Machine_Ranges
                                         new fsParameterRange(fsParameterIdentifier.SpecificResidualTime,
                                                              fsUnit.Percent, 0.01, 90),
                                         new fsParameterRange(fsParameterIdentifier.ResidualTime,
-                                                             fsUnit.Minute, 0.1, 600)
+                                                             fsUnit.Minute, 0.1, 600),
+                                        new fsParameterRange(fsParameterIdentifier.ReducedCutSize,
+                                                             fsUnit.Meter, 1.0e-7, 1.0e-3)
                                     };
 
             return defaultRanges.ToDictionary(parameterRange => parameterRange.Identifier);

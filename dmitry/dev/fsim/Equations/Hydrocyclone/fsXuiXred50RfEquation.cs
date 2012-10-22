@@ -75,6 +75,7 @@ namespace Equations.Hydrocyclone
         protected override void InitFormulas()
         {
             base.AddFormula(m_xui, new fsCalculatorEquation.fsFormula(xuiFormula));
+            base.AddFormula(m_xRed50, new fsCalculatorEquation.fsFormula(xRed50Formula));
         }
 
         #region Formulas
@@ -103,23 +104,21 @@ namespace Equations.Hydrocyclone
         private class fzRed50 : fsFunction
         {
             private readonly fsValue m_a;
-            private readonly fsValue m_i;
-            private readonly fsValue m_zui;
-            private readonly fsValue m_rf;
+            private readonly fsValue m_i2;
+            private readonly fsValue m_erf;
+            private readonly fsValue m_rfFrac;
 
-            public fzRed50(fsValue a, fsValue zui, fsValue i, fsValue rf)
+            public fzRed50(fsValue a, fsValue i2, fsValue erf, fsValue rfFrac)
             {
                 m_a = a;
-                m_zui = zui;
-                m_i = i;
-                m_rf = rf;
+                m_i2 = i2;
+                m_erf = erf;
+                m_rfFrac = rfFrac;
             }
 
             public override fsValue Eval(fsValue zRed50)
             {
-                fsValue rfFract = (1 + m_rf) / (1 - m_rf);
-                return (1 + rfFract) * (1 + fsSpecialFunctions.Erf(m_zui)) -
-                       2 * m_i * (rfFract + fsSpecialFunctions.Erf(m_a * zRed50));
+                return m_erf - m_i2 * (m_rfFrac + fsSpecialFunctions.Erf(m_a * zRed50));
             }
         }
 
@@ -144,27 +143,47 @@ namespace Equations.Hydrocyclone
             }
         }
 
+        private class zRed50CalculationFunction : fsFunction
+        {
+            private readonly fsValue m_rfFrac;
+            private readonly fsValue m_i2;
+            private readonly fsValue m_b;
+            private readonly fsValue m_a;
+            private readonly fsValue m_zui;
+            private readonly fsValue m_add;
+
+            public zRed50CalculationFunction(fsValue rfFrac, fsValue i2, fsValue b, fsValue a, fsValue zui, fsValue add)
+            {
+                m_rfFrac = rfFrac;
+                m_i2 = i2;
+                m_b = b;
+                m_a = a;
+                m_zui = zui;
+                m_add = add;
+            }
+
+            public override fsValue Eval(fsValue zRed50)
+            {
+                return m_add + m_rfFrac * fsSpecialFunctions.ErfExpInt(m_b, zRed50, m_zui) -
+                       m_i2 * (1 + m_rfFrac * fsSpecialFunctions.Erf(m_a * zRed50));
+            }
+        }
+
         #endregion
 
         private void xuiFormula()
         {
+            if (m_i.Value == fsValue.Zero)
+            {
+                m_xui.Value = fsValue.Zero;
+                return;
+            }
             fsValue lnSigmaG = fsValue.Log(m_sigmaG.Value);
             if (lnSigmaG == fsValue.Zero)
             {
                 m_xui.Value = m_xG.Value;
                 return;
             }
-            if (m_i.Value == fsValue.Zero)
-                if (lnSigmaG > fsValue.Zero)
-                {
-                    m_xui.Value = fsValue.Zero;
-                    return;
-                }
-                else
-                {
-                    m_xui.Value = new fsValue();
-                    return;
-                }
             fsValue lnSigmaS = fsValue.Log(m_sigmaS.Value);
             if (lnSigmaS == fsValue.Zero)
             {
@@ -189,13 +208,14 @@ namespace Equations.Hydrocyclone
                 fsValue rfFrac = (1 + m_rf.Value) / (1 - m_rf.Value);
                 fsValue erfAz50 = 2 * m_i.Value * (rfFrac + fsSpecialFunctions.Erf(a * zRed50));
                 fsFunction f = new fzui(1 + rfFrac, erfAz50);
-                fsValue left = fsValue.Max(new fsValue(-9.8), fsSpecialFunctions.InvErf(erfAz50 / (1 + rfFrac) - 1));
-                fsValue right = erfAz50 / (rfFrac - 1) - 1;
-                if (right.Value < 1.0)
-                    right = fsValue.Min(new fsValue(9.8), fsSpecialFunctions.InvErf(right));
+                double left = Math.Max(-9.8, (fsSpecialFunctions.InvErf(erfAz50 / (1 + rfFrac) - 1)).Value);
+                double right = (erfAz50 / (rfFrac - 1) - 1).Value;
+                if (right < 1.0)
+                    right = Math.Min(9.8, normaldistr.inverf(right));
                 else
-                    right = new fsValue(9.8);
-                double[] bounds = fsErfExpIntBoundsCalculator.getInterv(20, 1e-6, left.Value, right.Value, b.Value, zRed50.Value, f);
+                    right = 9.8;
+                double[] bounds = fsiRedboundsFunction.i(left, right, m_xG.Value.Value, m_sigmaG.Value.Value);
+                bounds =  fsErfExpIntBoundsCalculator.getIntervThirdArg(20, 1e-6, bounds[0], bounds[1], b.Value, zRed50.Value, f);
                 int n;
                 if (bounds[0] == 1.0)
                     n = 25;
@@ -207,6 +227,54 @@ namespace Equations.Hydrocyclone
                 zui = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-6));
             }
             m_xui.Value = m_xG.Value * fsValue.Exp((zui * Math.Sqrt(2.0)) * lnSigmaG);            
+        }
+
+        private void xRed50Formula()
+        {
+            if (m_rf.Value == fsValue.One)
+            {
+                m_xRed50.Value = new fsValue();
+                return;
+            }
+            if (m_i.Value == fsValue.Zero)
+            {
+                m_xRed50.Value = new fsValue();
+                return;
+            }
+            fsValue lnSigmaS = fsValue.Log(m_sigmaS.Value);
+            if (lnSigmaS == fsValue.Zero)
+            {
+                m_xRed50.Value = m_xG.Value;
+            }
+            else
+            {
+                fsValue lnSigmaG = fsValue.Log(m_sigmaG.Value);
+                if (lnSigmaG == fsValue.Zero)
+                {
+                    m_xRed50.Value = new fsValue();
+                }
+                else
+                {
+                    fsValue lnXG = fsValue.Log(m_xG.Value);
+                    fsValue a = lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaG) + fsValue.Sqr(lnSigmaS));
+                    fsValue b = lnSigmaG / lnSigmaS;
+                    fsValue zui = (fsValue.Log(m_xui.Value) - lnXG) / (Math.Sqrt(2.0) * lnSigmaG);
+                    if (!zui.Defined)
+                    {
+                        m_xRed50.Value = new fsValue();
+                        return;
+                    }
+
+                    fsValue rfFrac = (1 - m_rf.Value) / (1 + m_rf.Value);
+                    fsValue add = 1 + fsSpecialFunctions.Erf(zui);
+                    double[] bounds = fsiRedboundsFunction.Reduced(-9.8, 9.8, m_xG.Value.Value, m_sigmaS.Value.Value);
+                    fzRed50 f = new fzRed50(a, 2 * m_i.Value, (1 + rfFrac) * (1 + fsSpecialFunctions.Erf(zui)), rfFrac); // new
+                    bounds = fsErfExpIntBoundsCalculator.getIntervSecondArg(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f); // new
+                    zRed50CalculationFunction function = new zRed50CalculationFunction(rfFrac, 2 * m_i.Value, b, a, zui, add);
+                    fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), 25, new fsValue(1e-8));
+                    m_xRed50.Value = m_xG.Value * fsValue.Exp((-zRed50 * Math.Sqrt(2.0)) * lnSigmaS);
+                }
+            }
         }
 
        #endregion

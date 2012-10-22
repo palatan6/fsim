@@ -98,17 +98,17 @@ namespace Equations.Hydrocyclone
         private class fzRed50 : fsFunction
         {
             private readonly fsValue m_a;
-            private readonly fsValue m_i;
+            private readonly fsValue m_i2;
 
-            public fzRed50(fsValue a, fsValue i)
+            public fzRed50(fsValue a, fsValue i2)
             {
                 m_a = a;
-                m_i = i;
+                m_i2 = i2;
             }
 
             public override fsValue Eval(fsValue zRed50)
             {
-                return (2.0 * m_i) * fsSpecialFunctions.Erfc(m_a * zRed50);
+                return m_i2 * fsSpecialFunctions.Erfc(m_a * zRed50);
             }
         }
 
@@ -131,10 +131,36 @@ namespace Equations.Hydrocyclone
             }
         }
 
+        private class zRed50CalculationFunction : fsFunction
+        {
+            private readonly fsValue m_b;
+            private readonly fsValue m_zoi;
+            private readonly fsValue m_a;
+            private readonly fsValue m_i2;
+
+            public zRed50CalculationFunction(fsValue b, fsValue zoi, fsValue a, fsValue i2)
+            {
+                m_b = b;
+                m_zoi = zoi;
+                m_a = a;
+                m_i2 = i2;
+            }
+
+            public override fsValue Eval(fsValue zRed50)
+            {
+                return fsSpecialFunctions.ErfcExpInt(m_b, zRed50, m_zoi) - m_i2 * fsSpecialFunctions.Erfc(m_a * zRed50);
+            }
+        }
+
         #endregion
 
         private void xoiFormula()
         {
+            if (m_i.Value == fsValue.Zero)
+            {
+                m_xoi.Value = fsValue.Zero;
+                return;
+            }
             fsValue lnSigmaS = fsValue.Log(m_sigmaS.Value);
             if (lnSigmaS == fsValue.Zero)
             {
@@ -148,12 +174,18 @@ namespace Equations.Hydrocyclone
                     m_xoi.Value = m_xG.Value;
                 }
                 else
-                {
+                { 
                     fsValue a = lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaG) + fsValue.Sqr(lnSigmaS));
                     fsValue b = lnSigmaG / lnSigmaS;
                     fsValue zRed50 = (fsValue.Log(m_xG.Value) - fsValue.Log(m_xRed50.Value)) / (Math.Sqrt(2.0) * lnSigmaS);
-                    fsFunction f = new fzoi(2.0 * m_i.Value * fsSpecialFunctions.Erfc(a * zRed50));
-                    double[] bounds = fsErfExpIntBoundsCalculator.getInterv(20, 1e-5, -9.8, 9.8, b.Value, zRed50.Value, f);
+                    if (!zRed50.Defined)
+                    {
+                        m_xoi.Value = new fsValue();
+                        return;
+                    }
+                    fzoi f = new fzoi(2.0 * m_i.Value * fsSpecialFunctions.Erfc(a * zRed50));
+                    double[] bounds = fsiRedboundsFunction.i(-9.8, 9.8, m_xG.Value.Value, m_sigmaG.Value.Value); 
+                    bounds = fsErfExpIntBoundsCalculator.getIntervThirdArg(20, 1e-5, bounds[0], bounds[1], b.Value, zRed50.Value, f);
                     int n;
                     if (bounds[0] == 1.0)
                         n = 25;
@@ -170,6 +202,11 @@ namespace Equations.Hydrocyclone
 
         private void xRed50Formula()
         {
+            if (m_i.Value == fsValue.Zero)
+            {
+                m_xRed50.Value = new fsValue();
+                return;
+            }
             fsValue lnSigmaS = fsValue.Log(m_sigmaS.Value);
             if (lnSigmaS == fsValue.Zero)
             {
@@ -187,30 +224,18 @@ namespace Equations.Hydrocyclone
                     fsValue lnXG = fsValue.Log(m_xG.Value);
                     fsValue a = lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaG) + fsValue.Sqr(lnSigmaS));
                     fsValue b = lnSigmaG / lnSigmaS;
-                    fsValue z = (fsValue.Log(m_xoi.Value) - lnXG) / (Math.Sqrt(2.0) * lnSigmaG);
-                    fsFunction f = new fzRed50(a, m_i.Value);
-                    double neigh = fsErfExpIntBoundsCalculator.getRootNeighborSecondArg(20, 1e-5, -9.8, 9.8, b.Value, z.Value, f);
-                    if (neigh == 1000000.0)
+                    fsValue zoi = (fsValue.Log(m_xoi.Value) - lnXG) / (Math.Sqrt(2.0) * lnSigmaG);
+                    if (!zoi.Defined)
                     {
                         m_xRed50.Value = new fsValue();
+                        return;
                     }
-                    else
-                    {
-                        fsValue zRed50 = new fsValue(neigh);
-                        fsValue two = new fsValue(2.0);
-                        fsValue erfcExpInt;
-                        fsValue val;
-                        for (int i = 0; i < 30; i++)
-                        {
-                            erfcExpInt = fsSpecialFunctions.ErfcExpInt(b, zRed50, z);
-                            val = (0.5 * erfcExpInt) / m_i.Value;
-                            if (fsValue.Less(fsValue.Zero, val) && fsValue.Less(val, two))
-                                zRed50 = fsSpecialFunctions.InvErfc(val) / a;
-                            else
-                                break;
-                        }
-                        m_xRed50.Value = m_xG.Value * fsValue.Exp((-zRed50 * Math.Sqrt(2.0)) * lnSigmaS);
-                    }
+                    fzRed50 f = new fzRed50(a, 2 * m_i.Value);
+                    double[] bounds = fsiRedboundsFunction.Reduced(-9.8, 9.8, m_xG.Value.Value, m_sigmaS.Value.Value);
+                    bounds = fsErfExpIntBoundsCalculator.getIntervSecondArg(20, 1e-5, bounds[0], bounds[1], b.Value, zoi.Value, f);
+                    zRed50CalculationFunction function = new zRed50CalculationFunction(b, zoi, a, 2 * m_i.Value);
+                    fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), 25, new fsValue(1e-8));
+                    m_xRed50.Value = m_xG.Value * fsValue.Exp((-zRed50 * Math.Sqrt(2.0)) * lnSigmaS);
                 }
             }
         }

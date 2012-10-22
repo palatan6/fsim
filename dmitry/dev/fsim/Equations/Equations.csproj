@@ -70,6 +70,9 @@
     <Compile Include="Cake Washing\fsMwfVcWfEquation.cs" />
     <Compile Include="Cake Washing\fsWfTwEquation.cs" />
     <Compile Include="Cake Washing\fsXstarDnWfEquation.cs" />
+    <Compile Include="Hydrocyclone\fsQnDpDEquation.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Hydrocyclone\fsReducedTotalEfficiencyFromCmoEquation.cs" />
     <Compile Include="Hydrocyclone\fsCOverflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsCUnderflowEquation.cs" />
@@ -79,13 +82,13 @@
     <Compile Include="Hydrocyclone\fsDFromxRed50QnRfEquation.cs" />
     <Compile Include="Hydrocyclone\fsQmFromQCEquation.cs" />
     <Compile Include="Hydrocyclone\fsvDuOverDxRed50Equation.cs" />
-    <Compile Include="Hydrocyclone\fsQnDpDEquation.cs" />
     <Compile Include="Hydrocyclone\fsReducedTotalEfficiencyEquation.cs" />
     <Compile Include="Hydrocyclone\fsReynoldsFromXRed50Equation.cs" />
     <Compile Include="Hydrocyclone\fsTotalEfficiencyEquation.cs" />
     <Compile Include="Hydrocyclone\fsXoiXred50Equation.cs" />
     <Compile Include="Hydrocyclone\fsXRed50Equation.cs" />
     <Compile Include="Hydrocyclone\fsXuiXred50RfEquation.cs" />
+    <Compile Include="Hydrocyclone\fsiRedboundsFunction.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentFromCakeSaturationEquation.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentFromDensitiesAndPorosityEquation.cs" />
@@ -128,6 +131,10 @@
     <ProjectReference Include="..\fsNumericalMethods\fsNumericalMethods.csproj">
       <Project>{F52D1A38-87C6-4071-BFEA-1822512A4C0F}</Project>
       <Name>fsNumericalMethods</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fsUIControls\fsUIControls.csproj">
+      <Project>{D2C13C87-0D9A-416E-8091-58DDDEE2BCEA}</Project>
+      <Name>fsUIControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\Parameters\Parameters.csproj">
       <Project>{67A1D000-12E6-439C-BC89-23C4059BC855}</Project>
