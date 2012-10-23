@@ -143,6 +143,7 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsXRed50Equation(xRed50, D, Q, numberOfCyclones, rhoS, rhoF, etaf, C, Cu, cv, xG, sigmaG, sigmaS, alpha1, alpha2, alpha3, beta1, beta2, beta3)); // (x2)
             Equations.Add(new fsXoiXred50Equation(xRed50, xoi, sigmaG, sigmaS, xG, i));  // (x3)
             Equations.Add(new fsXuiXred50RfEquation(xRed50, xui, sigmaG, sigmaS, xG, i, rf));
+            Equations.Add(new fsXRed50XuiDuOverDQnEquation(DuOverD, Q, numberOfCyclones, xRed50, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3, cv, rhoF, rhoS, etaf, sigmaS, sigmaG, xG, xui, i));
 
             Equations.Add(new fsXoiXred50Equation(xRed50, xo50, sigmaG, sigmaS, xG, constantHalf));
             

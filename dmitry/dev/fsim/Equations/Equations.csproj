@@ -87,6 +87,7 @@
     <Compile Include="Hydrocyclone\fsTotalEfficiencyEquation.cs" />
     <Compile Include="Hydrocyclone\fsXoiXred50Equation.cs" />
     <Compile Include="Hydrocyclone\fsXRed50Equation.cs" />
+    <Compile Include="Hydrocyclone\fsXRed50XuiDuOverDQnEquation.cs" />
     <Compile Include="Hydrocyclone\fsXuiXred50RfEquation.cs" />
     <Compile Include="Hydrocyclone\fsiRedboundsFunction.cs" />
     <Compile Include="Material\Cake Moisture Content Rf Equations\fsMoistureContentEquation.cs" />

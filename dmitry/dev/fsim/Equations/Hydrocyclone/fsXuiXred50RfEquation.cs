@@ -18,27 +18,30 @@ namespace Equations.Hydrocyclone
          * 
          *          1 + erf(zui) + rfFrac * ErfExpInt(b, zRed50, zui) = 2 * i * ( 1 + rfFrac * erf(a * zRed50) )         (*eq*)
          *       
-         * with respect to zui where
+         * with respect to zui or zRed50, where
          * 
+         *          zui = (ln(xui) - ln(xG)) / (2^(1/2) * ln(sigmaG)),             (*ui*)
          *          rfFrac = (1 - rf) / (1 + rf),
          *          a = ln(sigmaS) / ( ln(sigmaS)^2 + ln(sigmaG)^2)^(1/2) ),
          *          b = ln(sigmaG) / ln(sigmaS), 
          *          zRed50 = (ln(xG) - ln(xRed50) ) / ( 2^(1/2) * ln(sigmaS) )    (*Red50*)
          *          
-         * Getting calculated zui we then can calculate xui by the relation:
+         * Getting calculated zui or zRed50 we then can calculate xui or zRed50 by the 
+         * inverse relations to the (*ui*) and (*Red50*):
          * 
-         *          xui = xG * exp(2^(1/2) * zui * ln(sigmaG))                    (*ui*)
+         *          xRed50 = xG * exp(-zRed50 * 2^(1/2) * ln(sigmaS))
+         *          xui = xG * exp(2^(1/2) * zui * ln(sigmaG)),                    
          *          
-         * The equation (*eq*) (under relations (*ui*), (*Red50*)) is equivalent to the equation 
+         * The equation (*eq*) (under the relations (*ui*), (*Red50*)) is equivalent to the equation 
          * 
-         *          Fu(xui) = i       (*xui*)
+         *          Fu(xui, xRed50) = i       (*xui*)
          *  
          * (i in (*xui*) is dimensionless, 0 <= i <= 1) because of the equality
          * 
          *          
-         *                            1 + erf(zui) + rfFrac * ErfcExpInt(b, zRed50, zui)
-         *          Fu(xui) =  0.5 * ----------------------------------------------------
-         *                                  1 + rfFrac * erfc(a * zRed50)
+         *                                    1 + erf(zui) + rfFrac * ErfcExpInt(b, zRed50, zui)
+         *          Fu(xui, xRed50) =  0.5 * ----------------------------------------------------
+         *                                            1 + rfFrac * erfc(a * zRed50)
          */
 
         #region Parameters
@@ -266,10 +269,11 @@ namespace Equations.Hydrocyclone
                     }
 
                     fsValue rfFrac = (1 - m_rf.Value) / (1 + m_rf.Value);
+                    fsValue rfFracInv = 1 / rfFrac;
                     fsValue add = 1 + fsSpecialFunctions.Erf(zui);
                     double[] bounds = fsiRedboundsFunction.Reduced(-9.8, 9.8, m_xG.Value.Value, m_sigmaS.Value.Value);
-                    fzRed50 f = new fzRed50(a, 2 * m_i.Value, (1 + rfFrac) * (1 + fsSpecialFunctions.Erf(zui)), rfFrac); // new
-                    bounds = fsErfExpIntBoundsCalculator.getIntervSecondArg(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f); // new
+                    fzRed50 f = new fzRed50(a, 2 * m_i.Value, (1 + rfFracInv) * (1 + fsSpecialFunctions.Erf(zui)), rfFracInv);
+                    bounds = fsErfExpIntBoundsCalculator.getIntervSecondArg(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f);
                     zRed50CalculationFunction function = new zRed50CalculationFunction(rfFrac, 2 * m_i.Value, b, a, zui, add);
                     fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), 25, new fsValue(1e-8));
                     m_xRed50.Value = m_xG.Value * fsValue.Exp((-zRed50 * Math.Sqrt(2.0)) * lnSigmaS);
