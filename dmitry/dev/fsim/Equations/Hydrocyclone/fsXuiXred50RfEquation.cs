@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Parameters;
 using Value;
 using fsNumericalMethods;
-using AGLibrary;
-using ErfExpIntBoundsCalculator;
-using ErfExpIntCalculator;
 
 namespace Equations.Hydrocyclone
 {
@@ -214,22 +208,26 @@ namespace Equations.Hydrocyclone
                 double left = Math.Max(-9.8, (fsSpecialFunctions.InvErf(erfAz50 / (1 + rfFrac) - 1)).Value);
                 double right = (erfAz50 / (rfFrac - 1) - 1).Value;
                 if (right < 1.0)
-                    right = Math.Min(9.8, normaldistr.inverf(right));
+                    right = Math.Min(9.8, (fsSpecialFunctions.InvErf(new fsValue(right))).Value);
                 else
                     right = 9.8;
                 double[] bounds = fsiRedboundsFunction.i(left, right, m_xG.Value.Value, m_sigmaG.Value.Value);
-                bounds =  fsErfExpIntBoundsCalculator.getIntervThirdArg(20, 1e-6, bounds[0], bounds[1], b.Value, zRed50.Value, f);
+                bounds = fsTryBoundsFunction.Third(20, 1e-5, bounds[0], bounds[1], b.Value, zRed50.Value, f);
+                if (bounds[0] == 0.0)
+                {
+                    m_xui.Value = new fsValue();
+                    return;
+                }
                 int n;
                 if (bounds[0] == 1.0)
                     n = 25;
-                else if (bounds[0] == 0.0)
-                    n = 50;
                 else
-                    n = 45;
+                    n = 35;
+
                 zuiCalculationFunction function = new zuiCalculationFunction(rfFrac, erfAz50, b, zRed50);
                 zui = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-6));
             }
-            m_xui.Value = m_xG.Value * fsValue.Exp((zui * Math.Sqrt(2.0)) * lnSigmaG);            
+            m_xui.Value = m_xG.Value * fsValue.Exp(zui * Math.Sqrt(2.0) * lnSigmaG);            
         }
 
         private void xRed50Formula()
@@ -273,9 +271,20 @@ namespace Equations.Hydrocyclone
                     fsValue add = 1 + fsSpecialFunctions.Erf(zui);
                     double[] bounds = fsiRedboundsFunction.Reduced(-9.8, 9.8, m_xG.Value.Value, m_sigmaS.Value.Value);
                     fzRed50 f = new fzRed50(a, 2 * m_i.Value, (1 + rfFracInv) * (1 + fsSpecialFunctions.Erf(zui)), rfFracInv);
-                    bounds = fsErfExpIntBoundsCalculator.getIntervSecondArg(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f);
+                    bounds = fsTryBoundsFunction.Second(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f);
+                    if (bounds[0] == 0.0)
+                    {
+                        m_xRed50.Value = new fsValue();
+                        return;
+                    }
+                    int n;
+                    if (bounds[0] == 1.0)
+                        n = 25;
+                    else
+                        n = 35;
+
                     zRed50CalculationFunction function = new zRed50CalculationFunction(rfFrac, 2 * m_i.Value, b, a, zui, add);
-                    fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), 25, new fsValue(1e-8));
+                    fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-8));
                     m_xRed50.Value = m_xG.Value * fsValue.Exp((-zRed50 * Math.Sqrt(2.0)) * lnSigmaS);
                 }
             }

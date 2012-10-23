@@ -81,6 +81,7 @@
     <Compile Include="Hydrocyclone\fsEulerReynoldsConnectionEquation.cs" />
     <Compile Include="Hydrocyclone\fsDFromxRed50QnRfEquation.cs" />
     <Compile Include="Hydrocyclone\fsQmFromQCEquation.cs" />
+    <Compile Include="Hydrocyclone\fsTryBoundsFunction.cs" />
     <Compile Include="Hydrocyclone\fsvDuOverDxRed50Equation.cs" />
     <Compile Include="Hydrocyclone\fsReducedTotalEfficiencyEquation.cs" />
     <Compile Include="Hydrocyclone\fsReynoldsFromXRed50Equation.cs" />

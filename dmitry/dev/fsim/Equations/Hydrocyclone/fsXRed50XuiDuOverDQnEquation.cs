@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Parameters;
 using Value;
 using fsNumericalMethods;
-using AGLibrary;
-using ErfExpIntBoundsCalculator;
-using ErfExpIntCalculator;
 
 namespace Equations.Hydrocyclone
 {
@@ -282,10 +276,22 @@ namespace Equations.Hydrocyclone
                     fsValue deg2 = -deg1 / m_gamma3.Value;
 
                     fzRed50 f = new fzRed50(m_xG.Value, a, 2 * m_i.Value, erfui, A1, lnsigmaS2, deg0, deg1, deg2);  
-                    bounds = fsErfExpIntBoundsCalculator.getIntervSecondArg(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f);
+                    //bounds = fsErfExpIntBoundsCalculator.getIntervSecondArg(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f);
+                    bounds = fsTryBoundsFunction.Second(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f);
+                    if (bounds[0] == 0.0)
+                    {
+                        m_xRed50.Value = new fsValue();
+                        return;
+                    }
+                    int n;
+                    if (bounds[0] == 1.0)
+                        n = 25;
+                    else
+                        n = 35;
 
                     zRed50CalculationFunction function = new zRed50CalculationFunction(m_xG.Value, 2 * m_i.Value, b, a, zui, erfui, A1, lnsigmaS2, deg0, deg1, deg2); 
-                    fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), 25, new fsValue(1e-8));
+                    //fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), 25, new fsValue(1e-8));
+                    fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-8));
                     m_xRed50.Value = m_xG.Value * fsValue.Exp(zRed50 * lnsigmaS2);
                 }
             }

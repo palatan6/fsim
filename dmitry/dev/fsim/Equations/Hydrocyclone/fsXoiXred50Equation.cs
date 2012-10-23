@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Parameters;
 using Value;
 using fsNumericalMethods;
-using AGLibrary;
-using ErfExpIntBoundsCalculator;
-using ErfExpIntCalculator;
 
 namespace Equations.Hydrocyclone
 {
@@ -185,14 +179,18 @@ namespace Equations.Hydrocyclone
                     }
                     fzoi f = new fzoi(2.0 * m_i.Value * fsSpecialFunctions.Erfc(a * zRed50));
                     double[] bounds = fsiRedboundsFunction.i(-9.8, 9.8, m_xG.Value.Value, m_sigmaG.Value.Value); 
-                    bounds = fsErfExpIntBoundsCalculator.getIntervThirdArg(20, 1e-5, bounds[0], bounds[1], b.Value, zRed50.Value, f);
+                    bounds = fsTryBoundsFunction.Third(20, 1e-5, bounds[0], bounds[1], b.Value, zRed50.Value, f);
+                    if (bounds[0] == 0.0)
+                    {
+                        m_xoi.Value = new fsValue();
+                        return;
+                    }
                     int n;
                     if (bounds[0] == 1.0)
                         n = 25;
-                    else if (bounds[0] == 0.0)
-                        n = 50;
                     else
-                        n = 45;
+                        n = 35;
+
                     zoiCalculationFunction function = new zoiCalculationFunction(b, zRed50, (2.0 * m_i.Value) * fsSpecialFunctions.Erfc(a * zRed50));
                     fsValue zoi = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-6));
                     m_xoi.Value = m_xG.Value * fsValue.Exp((zoi * Math.Sqrt(2.0)) * lnSigmaG);
@@ -232,9 +230,20 @@ namespace Equations.Hydrocyclone
                     }
                     fzRed50 f = new fzRed50(a, 2 * m_i.Value);
                     double[] bounds = fsiRedboundsFunction.Reduced(-9.8, 9.8, m_xG.Value.Value, m_sigmaS.Value.Value);
-                    bounds = fsErfExpIntBoundsCalculator.getIntervSecondArg(20, 1e-5, bounds[0], bounds[1], b.Value, zoi.Value, f);
+                    bounds = fsTryBoundsFunction.Second(20, 1e-5, bounds[0], bounds[1], b.Value, zoi.Value, f);
+                    if (bounds[0] == 0.0)
+                    {
+                        m_xRed50.Value = new fsValue();
+                        return;
+                    }
+                    int n;
+                    if (bounds[0] == 1.0)
+                        n = 25;
+                    else
+                        n = 35;
+
                     zRed50CalculationFunction function = new zRed50CalculationFunction(b, zoi, a, 2 * m_i.Value);
-                    fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), 25, new fsValue(1e-8));
+                    fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-8));
                     m_xRed50.Value = m_xG.Value * fsValue.Exp((-zRed50 * Math.Sqrt(2.0)) * lnSigmaS);
                 }
             }
