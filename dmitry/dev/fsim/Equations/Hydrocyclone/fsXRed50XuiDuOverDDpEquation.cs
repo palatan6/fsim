@@ -2,11 +2,48 @@
 using Parameters;
 using Value;
 using fsNumericalMethods;
+using ExpLinCalculator;
 
 namespace Equations.Hydrocyclone
 {
     public class fsXRed50XuiDuOverDDpEquation : fsCalculatorEquation
     {
+        /*
+         * We have to solve the transcendental equation (*eq*):
+         * 
+         *          1 + erf(zui) + rfFrac * ErfExpInt(b, zRed50, zui) = 2 * i * ( 1 + rfFrac * erf(a * zRed50) )         (*eq*)
+         *       
+         * with respect to zRed50 where
+         * 
+         *          zui = (ln(xui) - ln(xG)) / (2^(1/2) * ln(sigmaG)),
+         *          a = ln(sigmaS) / ( ln(sigmaS)^2 + ln(sigmaG)^2)^(1/2) ),
+         *          b = ln(sigmaG) / ln(sigmaS),
+         *          rfFrac = (1 - rf) / (1 + rf),       where
+         *          
+         *                        /          -1                                          \
+         *          rf = ExpLinNeg| ----------------------- * A^( 1 / (alpha2 * beta2) ) | ,
+         *                        \  alpha2 * beta2 * gamma3                             /
+         *                                
+         *          xRed50 = xG * exp(-zRed50 * 2^(1/2) * ln(sigmaS))                     (*Red50*)
+         *                                
+         *          A = A1 * xRed50^(2 * beta2),
+         *          
+         *          A1 = ( gamma1 * (DuOverD^gamma2) )^(-1/gamma3) * beta1 * 
+         *               ( (rhoS - rho) * Dp * exp(-alpha3 * cv) / (9 * eta^2 * alpha1) )^beta2 * exp(-beta3 * cv),
+         *               
+         * Getting calculated zRed50 we then can calculate xRed50 by (*Red50*).
+         * The equation (*eq*) (under the relation (*Red50*)) is equivalent to the equation 
+         * 
+         *          Fu(xRed50) = i       (*xRed50*)
+         *  
+         * (i in (*xRed50*) is dimensionless, 0 <= i <= 1) because of the equality
+         * 
+         *          
+         *                                1 + erf(zui) + rfFrac(zRed50) * ErfcExpInt(b, zRed50, zui)
+         *          Fu(xRed50) =  0.5 *   ----------------------------------------------------------
+         *                                         1 + rfFrac(zRed50) * erfc(a * zRed50)
+         */
+
         #region Parameters
 
         private readonly IEquationParameter m_DuOverD;
@@ -108,6 +145,15 @@ namespace Equations.Hydrocyclone
             return fsValue.Exp(-z / deg2);
         }
 
+        private static fsValue getRfFast(fsValue xG, fsValue zRed50, fsValue A1, fsValue lnsigmaS2, fsValue deg0, fsValue deg1, fsValue deg2)
+        {
+            fsValue xRed50 = xG * fsValue.Exp(zRed50 * lnsigmaS2);
+            fsValue A = A1 * fsValue.Pow(xRed50, deg0);
+            fsValue x = deg2 * fsValue.Pow(A, deg1);
+            double z = fsExpLinCalculator.ExpLinNegSpline(x.Value);
+            return fsValue.Exp(-z / deg2);
+        }
+
         // The function for fast zRed50-estimating
         private class fzRed50 : fsFunction
         {
@@ -136,7 +182,7 @@ namespace Equations.Hydrocyclone
 
             public override fsValue Eval(fsValue zRed50)
             {
-                fsValue rf = getRf(m_xG, zRed50, m_A1, m_lnsigmaS2, m_deg0, m_deg1, m_deg2);
+                fsValue rf = getRfFast(m_xG, zRed50, m_A1, m_lnsigmaS2, m_deg0, m_deg1, m_deg2);
                 fsValue rfFrac = (1 + rf) / (1 - rf);
                 return (1 + rfFrac) * m_erf - m_i2 * (rfFrac + fsSpecialFunctions.Erf(m_a * zRed50));
             }

@@ -2,6 +2,7 @@
 using Parameters;
 using Value;
 using fsNumericalMethods;
+using ExpLinCalculator;
 
 namespace Equations.Hydrocyclone
 {
@@ -156,6 +157,15 @@ namespace Equations.Hydrocyclone
             return fsValue.Exp(-z / deg2);
         }
 
+        private static fsValue getRfFast(fsValue xG, fsValue zRed50, fsValue A1, fsValue lnsigmaS2, fsValue deg0, fsValue deg1, fsValue deg2)
+        {
+            fsValue xRed50 = xG * fsValue.Exp(zRed50 * lnsigmaS2);
+            fsValue A = A1 * fsValue.Pow(xRed50, deg0);
+            fsValue x = deg2 * fsValue.Pow(A, deg1);
+            double z = fsExpLinCalculator.ExpLinPosInfinitySpline(x.Value);
+            return fsValue.Exp(-z / deg2);
+        }
+
         // The function for fast zRed50-estimating
         private class fzRed50 : fsFunction
         {
@@ -184,7 +194,7 @@ namespace Equations.Hydrocyclone
 
             public override fsValue Eval(fsValue zRed50)
             {
-                fsValue rf = getRf(m_xG, zRed50, m_A1, m_lnsigmaS2, m_deg0, m_deg1, m_deg2);
+                fsValue rf = getRfFast(m_xG, zRed50, m_A1, m_lnsigmaS2, m_deg0, m_deg1, m_deg2);
                 fsValue rfFrac = (1 + rf) / (1 - rf);
                 return (1 + rfFrac) * m_erf - m_i2 * (rfFrac + fsSpecialFunctions.Erf(m_a * zRed50));
             }

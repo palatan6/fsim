@@ -227,7 +227,7 @@ namespace Equations.Hydrocyclone
                 zuiCalculationFunction function = new zuiCalculationFunction(rfFrac, erfAz50, b, zRed50);
                 zui = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-6));
             }
-            m_xui.Value = m_xG.Value * fsValue.Exp(zui * Math.Sqrt(2.0) * lnSigmaG);            
+            m_xui.Value = m_xG.Value * fsValue.Exp(zui * Math.Sqrt(2.0) * lnSigmaG);
         }
 
         private void xRed50Formula()
