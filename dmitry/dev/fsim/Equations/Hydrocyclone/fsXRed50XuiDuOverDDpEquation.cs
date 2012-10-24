@@ -5,55 +5,12 @@ using fsNumericalMethods;
 
 namespace Equations.Hydrocyclone
 {
-    public class fsXRed50XuiDuOverDQnEquation : fsCalculatorEquation
+    public class fsXRed50XuiDuOverDDpEquation : fsCalculatorEquation
     {
-        /*
-         * We have to solve the transcendental equation (*eq*):
-         * 
-         *          1 + erf(zui) + rfFrac * ErfExpInt(b, zRed50, zui) = 2 * i * ( 1 + rfFrac * erf(a * zRed50) )         (*eq*)
-         *       
-         * with respect to zRed50 where
-         * 
-         *          zui = (ln(xui) - ln(xG)) / (2^(1/2) * ln(sigmaG)),
-         *          a = ln(sigmaS) / ( ln(sigmaS)^2 + ln(sigmaG)^2)^(1/2) ),
-         *          b = ln(sigmaG) / ln(sigmaS),
-         *          rfFrac = (1 - rf) / (1 + rf),       where
-         *          
-         *                                /        3 + beta2                                                \
-         *          rf = ExpLinPosInfinity| ----------------------- * A^( -(3 + beta2) / (alpha2 * beta2) ) | ,
-         *                                \  alpha2 * beta2 * gamma3                                        /
-         *                                
-         *          xRed50 = xG * exp(-zRed50 * 2^(1/2) * ln(sigmaS))                     (*Red50*)
-         *                                
-         *          A = A1 * xRed50^( -2 * beta2 / (3 + beta2) ),
-         *          
-         *          A1 = ( gamma1 * (DuOverD^gamma2) )^(-1/gamma3) * beta1 * 
-         *               ( A2 *
-         *                 ( 1/2 * (pi/12)^2 * (rhoS/rho - 1) * A2^(beta2 + 1) * 
-         *                   1/alpha1 * beta1 * exp(-(alpha3 + beta3) * cv)
-         *                 )^(-1/(3 + beta2))
-         *               )^beta2 * exp(-beta3 * cv),
-         *               
-         *          A2 = rho * Q / (eta * n)
-         *          
-         * Getting calculated zRed50 we then can calculate xRed50 by (*Red50*).
-         * The equation (*eq*) (under the relation (*Red50*)) is equivalent to the equation 
-         * 
-         *          Fu(xRed50) = i       (*xRed50*)
-         *  
-         * (i in (*xRed50*) is dimensionless, 0 <= i <= 1) because of the equality
-         * 
-         *          
-         *                                1 + erf(zui) + rfFrac(zRed50) * ErfcExpInt(b, zRed50, zui)
-         *          Fu(xRed50) =  0.5 *   ----------------------------------------------------------
-         *                                         1 + rfFrac(zRed50) * erfc(a * zRed50)
-         */
-
         #region Parameters
 
         private readonly IEquationParameter m_DuOverD;
-        private readonly IEquationParameter m_Q;
-        private readonly IEquationParameter m_n;
+        private readonly IEquationParameter m_Dp;
         private readonly IEquationParameter m_xRed50;
         private readonly IEquationParameter m_alpha1;
         private readonly IEquationParameter m_alpha2;
@@ -76,10 +33,9 @@ namespace Equations.Hydrocyclone
 
         #endregion
 
-        public fsXRed50XuiDuOverDQnEquation(
+        public fsXRed50XuiDuOverDDpEquation(
             IEquationParameter DuOverD,
-            IEquationParameter Q,
-            IEquationParameter n,
+            IEquationParameter Dp,
             IEquationParameter xRed50,
             IEquationParameter alpha1,
             IEquationParameter alpha2,
@@ -99,11 +55,10 @@ namespace Equations.Hydrocyclone
             IEquationParameter xG,
             IEquationParameter xui,
             IEquationParameter i)
-            : base(new IEquationParameter[] { DuOverD, Q, n, xRed50, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3, cv, rho, rhoS, eta, sigmaS, sigmaG, xG, xui, i })
+            : base(new IEquationParameter[] { DuOverD, Dp, xRed50, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3, cv, rho, rhoS, eta, sigmaS, sigmaG, xG, xui, i })
         {
             m_DuOverD = DuOverD;
-            m_Q = Q;
-            m_n = n;
+            m_Dp = Dp;
             m_xRed50 = xRed50;
             m_alpha1 = alpha1;
             m_alpha2 = alpha2;
@@ -136,15 +91,12 @@ namespace Equations.Hydrocyclone
 
         private static fsValue getA1(fsValue alpha1, fsValue alpha3, fsValue beta1, fsValue beta2, fsValue beta3,
                                      fsValue gamma1, fsValue gamma2, fsValue gamma3, fsValue cv, fsValue DuOverD,
-                                     fsValue Q, fsValue n, fsValue rho, fsValue rhoS, fsValue eta)
+                                     fsValue Dp, fsValue rho, fsValue rhoS, fsValue eta)
         {
-            // 1/2 * (pi/12)^2 ~= 0.342694597238114720040443e-1
-            fsValue a = rho * Q / (eta * n);
-            fsValue b = 0.342694597238114720040443e-1 * (rhoS / rho - 1) * fsValue.Pow(a, beta2 + 1) *
-                        beta1 * fsValue.Exp(-(alpha3 + beta3) * cv) / alpha1;
-            fsValue c = fsValue.Pow(gamma1 * fsValue.Pow(DuOverD, gamma2), -1 / gamma3) *
+            fsValue a = (rhoS - rho) * Dp * fsValue.Exp(-alpha3 * cv)/ (9 * alpha1 * fsValue.Sqr(eta));
+            fsValue b = fsValue.Pow(gamma1 * fsValue.Pow(DuOverD, gamma2), -1 / gamma3) *
                         beta1 * fsValue.Exp(-beta3 * cv);
-            return c * fsValue.Pow(a * fsValue.Pow(b, -1 / (3 + beta2)), beta2); 
+            return b * fsValue.Pow(a, beta2);
         }
 
         private static fsValue getRf(fsValue xG, fsValue zRed50, fsValue A1, fsValue lnsigmaS2, fsValue deg0, fsValue deg1, fsValue deg2)
@@ -152,7 +104,7 @@ namespace Equations.Hydrocyclone
             fsValue xRed50 = xG * fsValue.Exp(zRed50 * lnsigmaS2);
             fsValue A = A1 * fsValue.Pow(xRed50, deg0);
             fsValue x = deg2 * fsValue.Pow(A, deg1);
-            fsValue z = fsSpecialFunctions.ExpLinPosInfinity(x);
+            fsValue z = fsSpecialFunctions.ExpLinNeg(x);
             return fsValue.Exp(-z / deg2);
         }
 
@@ -204,8 +156,8 @@ namespace Equations.Hydrocyclone
             private readonly fsValue m_deg1;
             private readonly fsValue m_deg2;
 
-            public zRed50CalculationFunction(fsValue xG, fsValue i2, fsValue b, fsValue a, fsValue zui, 
-                                             fsValue erfui, fsValue A1, fsValue lnsigmaS2, 
+            public zRed50CalculationFunction(fsValue xG, fsValue i2, fsValue b, fsValue a, fsValue zui,
+                                             fsValue erfui, fsValue A1, fsValue lnsigmaS2,
                                              fsValue deg0, fsValue deg1, fsValue deg2)
             {
                 m_xG = xG;
@@ -265,17 +217,17 @@ namespace Equations.Hydrocyclone
 
                     double[] bounds = fsiRedboundsFunction.Reduced(-9.8, 9.8, m_xG.Value.Value, m_sigmaS.Value.Value);
                     fsValue erfui = 1 + fsSpecialFunctions.Erf(zui);
-                    fsValue A1 = getA1(m_alpha1.Value, m_alpha3.Value, 
-                                       m_beta1.Value, m_beta2.Value, m_beta3.Value, 
-                                       m_gamma1.Value, m_gamma2.Value, m_gamma3.Value, 
-                                       m_cv.Value, m_DuOverD.Value, m_Q.Value, m_n.Value, 
+                    fsValue A1 = getA1(m_alpha1.Value, m_alpha3.Value,
+                                       m_beta1.Value, m_beta2.Value, m_beta3.Value,
+                                       m_gamma1.Value, m_gamma2.Value, m_gamma3.Value,
+                                       m_cv.Value, m_DuOverD.Value, m_Dp.Value,
                                        m_rho.Value, m_rhoS.Value, m_eta.Value);
                     fsValue lnsigmaS2 = -Math.Sqrt(2.0) * lnSigmaS;
-                    fsValue deg0 = -2 * m_beta2.Value / (3 + m_beta2.Value);
-                    fsValue deg1 = -(3 + m_beta2.Value) / (m_alpha2.Value * m_beta2.Value);
+                    fsValue deg0 = 2 * m_beta2.Value;
+                    fsValue deg1 = 1 / (m_alpha2.Value * m_beta2.Value);
                     fsValue deg2 = -deg1 / m_gamma3.Value;
 
-                    fzRed50 f = new fzRed50(m_xG.Value, a, 2 * m_i.Value, erfui, A1, lnsigmaS2, deg0, deg1, deg2);  
+                    fzRed50 f = new fzRed50(m_xG.Value, a, 2 * m_i.Value, erfui, A1, lnsigmaS2, deg0, deg1, deg2);
                     bounds = fsTryBoundsFunction.Second(20, 1e-5, bounds[0], bounds[1], b.Value, zui.Value, f);
                     if (bounds[0] == 0.0)
                     {
@@ -288,12 +240,12 @@ namespace Equations.Hydrocyclone
                     else
                         n = 35;
 
-                    zRed50CalculationFunction function = new zRed50CalculationFunction(m_xG.Value, 2 * m_i.Value, b, a, zui, erfui, A1, lnsigmaS2, deg0, deg1, deg2); 
+                    zRed50CalculationFunction function = new zRed50CalculationFunction(m_xG.Value, 2 * m_i.Value, b, a, zui, erfui, A1, lnsigmaS2, deg0, deg1, deg2);
                     fsValue zRed50 = fsBisectionMethod.FindRoot(function, new fsValue(bounds[1]), new fsValue(bounds[2]), n, new fsValue(1e-8));
                     m_xRed50.Value = m_xG.Value * fsValue.Exp(zRed50 * lnsigmaS2);
                 }
             }
-            
+
         }
 
         #endregion
