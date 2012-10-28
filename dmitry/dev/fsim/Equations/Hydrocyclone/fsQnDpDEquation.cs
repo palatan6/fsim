@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Parameters;
 using Value;
 
@@ -10,23 +7,22 @@ namespace Equations.Hydrocyclone
     public class fsQnDpDEquation : fsCalculatorEquation
     {
         /*
-         *     /                                                                       \^1/(2 + beta2)
-         *     |                       Dp * pi^2 * n^2 * D^4                           |
-         * Q = | --------------------------------------------------------------------- |
-         *     |                  /     4 * rho      \^beta2                           |
-         *     | 8 *rho * beta1 * | ---------------- |        * exp(-beta3 * cv)       |
-         *     \                  \ pi * eta * n * D /                                 /
+         *     /                                                             \^1/(2 + beta2)
+         *     |                       Dp * pi^2 * D^4                       |
+         * Q = | ----------------------------------------------------------- | * n
+         *     |                  /   4 * rho    \^beta2                     |
+         *     | 8 *rho * beta1 * | ------------ |        * exp(-beta3 * cv) |
+         *     \                  \ pi * eta * D /                           /
          *     
-         * 
-         * 
-         *                                          4 * rho                           
-         * n =  -------------------------------------------------------------------------------- 
-         *          /     /  2 * Dp *rho * D^2  \                              \
-         *          |  ln | ------------------- | + beta3 * cv - beta2 * ln(Q) |
-         *          |     \ eta^2 * Q^2 * beta1 /                              |
-         *      exp | -------------------------------------------------------  |  * pi * eta * D
-         *          |                       2 + beta2                          |
-         *          \                                                          /
+         *     
+         *     /                                                             \^1/(2 + beta2)
+         *     |                  /   4 * rho    \^beta2                     |
+         *     | 8 *rho * beta1 * | ------------ |        * exp(-beta3 * cv) |
+         *     |                  \ pi * eta * D /                           |
+         * n = | ----------------------------------------------------------- | * Q
+         *     |                       Dp * pi^2 * D^4                       |
+         *     \                                                             /
+         *  
          */
 
         #region Parameters
@@ -79,16 +75,16 @@ namespace Equations.Hydrocyclone
 
         private void QFormula()
         {
-            fsValue Num = m_Dp.Value * fsValue.Sqr(Math.PI * m_n.Value * m_D.Value * m_D.Value);
-            fsValue Den = 8 * m_rhoF.Value * m_beta1.Value * fsValue.Pow(4 * m_rhoF.Value / (Math.PI * m_etaF.Value * m_n.Value * m_D.Value), m_beta2.Value) * fsValue.Exp(-m_beta3.Value * m_cv.Value);
-            m_Q.Value = fsValue.Pow(Num / Den, 1 / (2 + m_beta2.Value));
+            fsValue Num = m_Dp.Value * fsValue.Sqr(Math.PI * fsValue.Sqr(m_D.Value));
+            fsValue Den = 8 * m_rhoF.Value * m_beta1.Value * fsValue.Pow(4 * m_rhoF.Value / (Math.PI * m_etaF.Value * m_D.Value), m_beta2.Value) * fsValue.Exp(-m_beta3.Value * m_cv.Value);
+            m_Q.Value = fsValue.Pow(Num / Den, 1 / (2 + m_beta2.Value)) * m_n.Value;
         }
 
         private void nFormula()
         {
-            fsValue A = 2 * m_Dp.Value * m_rhoF.Value / m_beta1.Value * fsValue.Sqr(m_D.Value / m_etaF.Value / m_Q.Value);
-            fsValue B = (fsValue.Log(A) + m_beta3.Value * m_cv.Value - m_beta2.Value * fsValue.Log(m_Q.Value)) / (2 + m_beta2.Value);
-            m_n.Value = 4 * m_rhoF.Value / (fsValue.Exp(B) * Math.PI * m_etaF.Value * m_D.Value);
+            fsValue Num = 8 * m_rhoF.Value * m_beta1.Value * fsValue.Pow(4 * m_rhoF.Value / (Math.PI * m_etaF.Value * m_D.Value), m_beta2.Value) * fsValue.Exp(-m_beta3.Value * m_cv.Value);
+            fsValue Den = m_Dp.Value * fsValue.Sqr(Math.PI * fsValue.Sqr(m_D.Value));
+            m_n.Value = fsValue.Pow(Num / Den, 1 / (2 + m_beta2.Value)) * m_Q.Value;
         }
 
         #endregion

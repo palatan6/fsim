@@ -49,7 +49,7 @@ namespace ErfExpIntBoundsCalculator
          * (Taken from Wikipedia)
          * Maximum error 2.5e-5 
          */
-        private static double erf(double x)
+        public static double erf(double x)
         {
             double t;
             double res;
@@ -67,7 +67,7 @@ namespace ErfExpIntBoundsCalculator
                 return -res;
         }
 
-        private static double erfc(double x)
+        public static double erfc(double x)
         {
             return 1.0 - erf(x);
         }

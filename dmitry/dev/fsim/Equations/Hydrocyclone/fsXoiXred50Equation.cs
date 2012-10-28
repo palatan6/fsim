@@ -2,6 +2,7 @@
 using Parameters;
 using Value;
 using fsNumericalMethods;
+using ErfExpIntBoundsCalculator;
 
 namespace Equations.Hydrocyclone
 {
@@ -15,11 +16,13 @@ namespace Equations.Hydrocyclone
          * with respect to zoi or zRed50 where
          * 
          *          a = ln(sigmaS) / ( ln(sigmaS)^2 + ln(sigmaG)^2)^(1/2) ),
-         *          b = ln(sigmaG) / ln(sigmaS), 
-         *          zRed50 = (ln(xG) - ln(xRed50) ) / ( 2^(1/2) * ln(sigmaS) )    (*Red50*)
+         *          b = ln(sigmaG) / ln(sigmaS),
+         *          zoi = ( ln(xoi) - ln(xG) )  / ( 2^(1/2) * ln(sigmaG) ) 
+         *          zRed50 = ( ln(xG) - ln(xRed50) ) / ( 2^(1/2) * ln(sigmaS) )    
          *          
-         * Getting calculated zoi or zRed50 we then can calculate xoi and xRed50 by (*Red50*) and the relation:
+         * Getting calculated zoi or zRed50 we then can calculate xoi or xRed50 by the relations:
          * 
+         *          xRed50 = xG * exp(-zRed50 * 2^(1/2) * ln(sigmaS))             (*Red50*) 
          *          xoi = xG * exp(2^(1/2) * zoi * ln(sigmaG))                    (*oi*)
          *          
          * The equation (*eq*) (under relations (*oi*), (*Red50*)) is equivalent to the equation 
@@ -102,7 +105,7 @@ namespace Equations.Hydrocyclone
 
             public override fsValue Eval(fsValue zRed50)
             {
-                return m_i2 * fsSpecialFunctions.Erfc(m_a * zRed50);
+                return m_i2 * fsErfExpIntBoundsCalculator.erfc((m_a * zRed50).Value);
             }
         }
 

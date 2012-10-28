@@ -23,10 +23,10 @@ namespace fsNumericalMethods
          *                 x = exp(-1) 
          * then (*ExpLin*)  has a unique solution z = 1; if 
          *                 x > exp(-1)
-         * then (*ExpLin*)  has no solution. So for domain (0, exp(-1)] we have two branches of z(x):
-         * the first for which 
+         * then (*ExpLin*)  has no solution. So for the domain (0, exp(-1)] we have two branches of z(x):
+         * the first one for which 
          *                 if x -> 0  then z -> infinity  (see ExpLinPosInfinity below),
-         * and the second for which
+         * and the second one for which
          *                 if x -> 0  then z -> 0          (see ExpLinPosZero below)
          * ---------------------------------------------------------------------------
          * The accuracy of all ExpLinPosInfinity, ExpLinPosZero and ExpLinNeg is 1.0e-16

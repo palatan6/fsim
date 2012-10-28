@@ -2,6 +2,7 @@
 using Parameters;
 using Value;
 using fsNumericalMethods;
+using ErfExpIntBoundsCalculator;
 
 namespace Equations.Hydrocyclone
 {
@@ -33,9 +34,9 @@ namespace Equations.Hydrocyclone
          * (i in (*xui*) is dimensionless, 0 <= i <= 1) because of the equality
          * 
          *          
-         *                                    1 + erf(zui) + rfFrac * ErfcExpInt(b, zRed50, zui)
+         *                                    1 + erf(zui) + rfFrac * ErfExpInt(b, zRed50, zui)
          *          Fu(xui, xRed50) =  0.5 * ----------------------------------------------------
-         *                                            1 + rfFrac * erfc(a * zRed50)
+         *                                            1 + rfFrac * erf(a * zRed50)
          */
 
         #region Parameters
@@ -93,7 +94,7 @@ namespace Equations.Hydrocyclone
 
             public override fsValue Eval(fsValue zui)
             {
-                return m_rfFac * (1 + fsSpecialFunctions.Erf(zui)) - m_h;
+                return m_rfFac * (1 + fsErfExpIntBoundsCalculator.erf(zui.Value)) - m_h;
             }
         }
 
@@ -115,7 +116,7 @@ namespace Equations.Hydrocyclone
 
             public override fsValue Eval(fsValue zRed50)
             {
-                return m_erf - m_i2 * (m_rfFrac + fsSpecialFunctions.Erf(m_a * zRed50));
+                return m_erf - m_i2 * (m_rfFrac + fsErfExpIntBoundsCalculator.erf((m_a * zRed50).Value));
             }
         }
 

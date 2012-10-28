@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Parameters;
 using Value;
 
@@ -14,10 +11,10 @@ namespace Equations.Hydrocyclone
          *  
          *     /   2      xRed50^2 * (rhoS-rhoF) * Q * beta1 * (4 rhoF Q / Pi / etaF / n)^beta2 * exp(-beta3 * cv)  \^(1 / (3 + beta3))
          * D = | ----- * ------------------------------------------------------------------------------------------ |
-         *     \  9Pi                 etaF * n * alpha1 * pow(ln(1 / rf), alpha2) * exp(alpha3 * cv)                /
+         *     \  9Pi                 etaF * n * alpha1 * (ln(1 / rf))^alpha2 * exp(alpha3 * cv)                    /
          * 
          * 
-         * D = pow(C1 * xRed50^2 * (Q / n)^(1 + beta2) / pow(ln(1 / rf), alpha2), P1)
+         * D = ( C1 * xRed50^2 * (Q / n)^(1 + beta2) / (ln(1 / rf))^alpha2) )^P1
          * 
          * where
          *   P1 = 1 / (3 + beta3);

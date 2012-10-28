@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Parameters;
+using Value;
 
 namespace Equations.Hydrocyclone
 {
@@ -47,7 +45,10 @@ namespace Equations.Hydrocyclone
 
         private void rfFormula()
         {
-            m_rf.Value = m_C.Value * m_ReducedTotalEfficiency.Value / (m_Cu.Value + m_C.Value * (m_ReducedTotalEfficiency.Value - 1));
+            if (m_ReducedTotalEfficiency.Value == fsValue.Zero)
+                m_rf.Value = fsValue.Zero;
+            else  
+                m_rf.Value = 1 / (1 +  (m_Cu.Value / m_C.Value - 1) / m_ReducedTotalEfficiency.Value);
         }
 
         #endregion
