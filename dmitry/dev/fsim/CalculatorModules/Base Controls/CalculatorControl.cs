@@ -47,10 +47,10 @@ namespace CalculatorModules
 
         void CalculatorControlLoad(object sender, EventArgs e)
         {
-            InitializeCalculatorContorl();
+            InitializeCalculatorControl();
         }
 
-        protected virtual void InitializeCalculatorContorl()
+        protected virtual void InitializeCalculatorControl()
         {
             if (IsCalculatorControlInitialized)
                 return;
@@ -104,7 +104,7 @@ namespace CalculatorModules
 
         protected virtual void UpdateEquationsFromCalculationOptions()
         {
-            // It should set up equations here. Override this method in derived class
+            // You should set up equations here. Override this method in derived class
         }
 
         protected void SetDefaultValue(fsParameterIdentifier identifier, fsValue value)

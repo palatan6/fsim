@@ -42,7 +42,7 @@ namespace CalculatorModules
             if (isVisible)
             {
                 rightPanel.Visible = true;
-                showHideCommnetsButton.Text = @"<";
+                showHideCommentsButton.Text = @"<";
                 if (controlToResize != null)
                 {
                     splitContainer1.Panel2Collapsed = false;
@@ -68,7 +68,7 @@ namespace CalculatorModules
             else
             {
                 rightPanel.Visible = false;
-                showHideCommnetsButton.Text = @">";
+                showHideCommentsButton.Text = @">";
                 if (controlToResize != null)
                 {
                     if (controlToResize is Form)
@@ -96,7 +96,7 @@ namespace CalculatorModules
             set { showHideDiagramPanel.Visible = value; }
         }
 
-        protected override void InitializeCalculatorContorl()
+        protected override void InitializeCalculatorControl()
         {
             if (IsCalculatorControlInitialized)
                 return;
