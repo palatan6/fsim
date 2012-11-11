@@ -53,36 +53,26 @@
             this.panelRight.Controls.Add(this.splitContainerTwoTables);
             this.panelRight.Controls.Add(this.dataGridView_Result3);
             // 
-            // leftTopPanel
-            // 
-            this.leftTopPanel.Size = new System.Drawing.Size(837, 59);
-            // 
             // calculationOptionsPanel
             // 
             this.calculationOptionsPanel.Controls.Add(this.comboBoxCalculationOption);
             this.calculationOptionsPanel.Controls.Add(this.label1);
             // 
-            // tablesPanel
-            // 
-            this.tablesPanel.Size = new System.Drawing.Size(837, 416);
-            // 
             // comboBoxCalculationOption
             // 
             this.comboBoxCalculationOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCalculationOption.FormattingEnabled = true;
-            this.comboBoxCalculationOption.Location = new System.Drawing.Point(112, 14);
-            this.comboBoxCalculationOption.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxCalculationOption.Location = new System.Drawing.Point(84, 11);
             this.comboBoxCalculationOption.Name = "comboBoxCalculationOption";
-            this.comboBoxCalculationOption.Size = new System.Drawing.Size(193, 24);
+            this.comboBoxCalculationOption.Size = new System.Drawing.Size(146, 21);
             this.comboBoxCalculationOption.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 17);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(16, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 17);
+            this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Calculation:";
             // 
@@ -100,12 +90,13 @@
             this.UnderflowColumn,
             this.OverflowColumn});
             this.dataGridView_Result3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView_Result3.Location = new System.Drawing.Point(0, 255);
+            this.dataGridView_Result3.Location = new System.Drawing.Point(0, 221);
+            this.dataGridView_Result3.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView_Result3.Name = "dataGridView_Result3";
             this.dataGridView_Result3.ReadOnly = true;
             this.dataGridView_Result3.RowHeadersVisible = false;
             this.dataGridView_Result3.RowTemplate.Height = 24;
-            this.dataGridView_Result3.Size = new System.Drawing.Size(472, 161);
+            this.dataGridView_Result3.Size = new System.Drawing.Size(156, 131);
             this.dataGridView_Result3.TabIndex = 5;
             // 
             // ParameterColumn3
@@ -152,6 +143,7 @@
             // 
             this.splitContainerTwoTables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerTwoTables.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerTwoTables.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainerTwoTables.Name = "splitContainerTwoTables";
             // 
             // splitContainerTwoTables.Panel1
@@ -161,8 +153,9 @@
             // splitContainerTwoTables.Panel2
             // 
             this.splitContainerTwoTables.Panel2.Controls.Add(this.fsParametersWithValuesTable2);
-            this.splitContainerTwoTables.Size = new System.Drawing.Size(472, 255);
-            this.splitContainerTwoTables.SplitterDistance = 236;
+            this.splitContainerTwoTables.Size = new System.Drawing.Size(156, 221);
+            this.splitContainerTwoTables.SplitterDistance = 78;
+            this.splitContainerTwoTables.SplitterWidth = 3;
             this.splitContainerTwoTables.TabIndex = 6;
             // 
             // fsParametersWithValuesTable1
@@ -170,22 +163,23 @@
             this.fsParametersWithValuesTable1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fsParametersWithValuesTable1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.fsParametersWithValuesTable1.Location = new System.Drawing.Point(0, 0);
+            this.fsParametersWithValuesTable1.Margin = new System.Windows.Forms.Padding(2);
             this.fsParametersWithValuesTable1.Name = "fsParametersWithValuesTable1";
-            this.fsParametersWithValuesTable1.Size = new System.Drawing.Size(236, 255);
+            this.fsParametersWithValuesTable1.Size = new System.Drawing.Size(78, 221);
             this.fsParametersWithValuesTable1.TabIndex = 4;
             // 
             // fsParametersWithValuesTable2
             // 
-            this.fsParametersWithValuesTable2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fsParametersWithValuesTable2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.fsParametersWithValuesTable2.Location = new System.Drawing.Point(0, 0);
+            this.fsParametersWithValuesTable2.Margin = new System.Windows.Forms.Padding(2);
             this.fsParametersWithValuesTable2.Name = "fsParametersWithValuesTable2";
-            this.fsParametersWithValuesTable2.Size = new System.Drawing.Size(232, 255);
+            this.fsParametersWithValuesTable2.Size = new System.Drawing.Size(75, 221);
             this.fsParametersWithValuesTable2.TabIndex = 5;
             // 
-            // HydrocycloneControl
+            // fsHydrocycloneControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "fsHydrocycloneControl";
             this.panelRight.ResumeLayout(false);

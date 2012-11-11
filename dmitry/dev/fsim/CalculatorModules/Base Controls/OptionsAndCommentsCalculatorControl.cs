@@ -96,12 +96,15 @@ namespace CalculatorModules
             set { showHideDiagramPanel.Visible = value; }
         }
 
+        protected internal override void StopGridsEdit()
+        {
+            base.StopGridsEdit();
+        }
+
         protected override void InitializeCalculatorControl()
         {
             if (IsCalculatorControlInitialized)
                 return;
-
-            IsCalculatorControlInitialized = true;
 
             InitializeCalculators();
             InitializeGroups();
@@ -114,6 +117,8 @@ namespace CalculatorModules
             SetDefaultDiagramFromCalculationOption();
             RecalculateAndRedraw();
             ConnectUIWithDataUpdating(GetUIControlsToConnectWithDataUpdating());
+
+            IsCalculatorControlInitialized = true;
         }
 
         protected override void CalculationOptionChanged(object sender, EventArgs e)

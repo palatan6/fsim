@@ -132,7 +132,7 @@ namespace Value
                 return new fsValue((double) obj);
             }
 
-            throw new Exception("Can't convert object to fmValue");
+            throw new Exception("Can't convert object to fsValue");
         }
 
         public bool Equals(fsValue obj)

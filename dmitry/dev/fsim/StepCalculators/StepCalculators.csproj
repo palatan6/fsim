@@ -82,6 +82,10 @@
       <Project>{67A1D000-12E6-439C-BC89-23C4059BC855}</Project>
       <Name>Parameters</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Units\Units.csproj">
+      <Project>{2687A39A-2905-4632-A57E-5F98C3142423}</Project>
+      <Name>Units</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UpdateHandler\UpdateHandler.csproj">
       <Project>{4AE3622D-D14E-46A6-AD01-0B88B9BC22C8}</Project>
       <Name>UpdateHandler</Name>

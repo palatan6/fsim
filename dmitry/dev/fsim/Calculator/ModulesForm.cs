@@ -163,7 +163,9 @@ namespace Calculator
             AddGroupToTree("Hydrocyclone", node.Nodes, new[]
                                                {
                                                    new KeyValuePair<string, fsCalculatorControl>(
-                                                       "Hydrocyclone", new fsHydrocycloneControl())
+                                                       "Hydrocyclone", new fsHydrocycloneControl()),
+                                                   new KeyValuePair<string, fsCalculatorControl>(
+                                                       "New Hydrocyclone", new fsHydrocycloneNewControl())
                                                });
         }
 

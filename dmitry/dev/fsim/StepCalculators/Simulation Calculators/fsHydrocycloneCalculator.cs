@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Parameters;
 using Value;
+using Units;
 using Equations;
 using Equations.Hydrocyclone;
 
@@ -11,6 +12,11 @@ namespace StepCalculators.Simulation_Calculators
 {
     public class fsHydrocycloneCalculator : fsCalculator
     {
+        // Introducing the clone of the parameter NumberOfCyclClones is the easiest way to deal with
+        // the copy of NumberOfCyclClones (as only calculated) in  other fsParametersWithValuesTable.
+        public static fsParameterIdentifier NumberOfCyclClone =
+            new fsParameterIdentifier("n", "Number of Cyclones", fsCharacteristic.NoUnits);
+
         public fsHydrocycloneCalculator()
         {  
             #region Parameters Initialization
@@ -91,12 +97,17 @@ namespace StepCalculators.Simulation_Calculators
             
             #region Help Parameters and Constants
 
+            var constantZero = new fsCalculatorConstant(new fsParameterIdentifier("0")) { Value = fsValue.Zero };
             var constantHalf = new fsCalculatorConstant(new fsParameterIdentifier("0.5")) { Value = new fsValue(0.5) };
             var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) { Value = fsValue.One };
             var constantTwo = new fsCalculatorConstant(new fsParameterIdentifier("2")) { Value = new fsValue(2) };
+            var constantPi = new fsCalculatorConstant(new fsParameterIdentifier("Pi")) { Value = new fsValue(Math.PI) };
             var constantFour = new fsCalculatorConstant(new fsParameterIdentifier("4")) { Value = new fsValue(4) };
             var constantEighteen = new fsCalculatorConstant(new fsParameterIdentifier("18")) { Value = new fsValue(18) };
-            var constantPi = new fsCalculatorConstant(new fsParameterIdentifier("Pi")) { Value = new fsValue(Math.PI) };
+
+
+            IEquationParameter numberOfCyclClone = AddVariable(NumberOfCyclClone);
+            Equations.Add(new fsSumEquation(numberOfCyclones, constantZero, numberOfCyclClone));
 
             IEquationParameter rhoSMinusRhoF = AddVariable(new fsParameterIdentifier("rho_s - rho_f"));
             Equations.Add(new fsSumEquation(rhoS, rhoF, rhoSMinusRhoF));
