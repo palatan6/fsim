@@ -1,6 +1,8 @@
-﻿namespace CalculatorModules.User_Controls
+﻿using CalculatorModules.User_Controls;
+
+namespace CalculatorModules.Hydrocyclone.Feeds
 {
-    partial class fsTableAndChart
+    partial class FeedCurvesControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -140,7 +142,7 @@
             this.yAxisConfigure.Name = "yAxisConfigure";
             this.yAxisConfigure.Size = new System.Drawing.Size(97, 23);
             this.yAxisConfigure.TabIndex = 10;
-            this.yAxisConfigure.Text = "Configure Y Axes";
+            this.yAxisConfigure.Text = "Configure Y Axis";
             this.yAxisConfigure.UseVisualStyleBackColor = true;
             this.yAxisConfigure.Click += new System.EventHandler(this.YAxisConfigureClick);
             // 
@@ -311,13 +313,13 @@
             this.fsDiagramWithTable1.Size = new System.Drawing.Size(304, 457);
             this.fsDiagramWithTable1.TabIndex = 1;
             // 
-            // fsTableAndChart
+            // FeedCurvesControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.fsDiagramWithTable1);
             this.Controls.Add(this.panel1);
-            this.Name = "fsTableAndChart";
+            this.Name = "FeedCurvesControl";
             this.Size = new System.Drawing.Size(455, 457);
             this.panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);

@@ -638,6 +638,9 @@ namespace Parameters
         public static fsParameterIdentifier OverflowParticleSize =
             new fsParameterIdentifier("xio", "Overflow Percentage Particle Size", fsCharacteristic.ParticleSize); // previously xoi
 
+        public static fsParameterIdentifier PercentageParticleSize =
+            new fsParameterIdentifier("xi", "Percentage Particle Size", fsCharacteristic.ParticleSize);
+
         public static fsParameterIdentifier UnderflowParticleSize =
             new fsParameterIdentifier("xiu", "Underflow Percentage Particle Size", fsCharacteristic.ParticleSize); // previously xui
 

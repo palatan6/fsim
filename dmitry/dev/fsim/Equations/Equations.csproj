@@ -86,6 +86,7 @@
     <Compile Include="Hydrocyclone\fsReducedTotalEfficiencyEquation.cs" />
     <Compile Include="Hydrocyclone\fsReynoldsFromXRed50Equation.cs" />
     <Compile Include="Hydrocyclone\fsTotalEfficiencyEquation.cs" />
+    <Compile Include="Hydrocyclone\fsXiEquation.cs" />
     <Compile Include="Hydrocyclone\fsXoiXred50Equation.cs" />
     <Compile Include="Hydrocyclone\fsXRed50Equation.cs" />
     <Compile Include="Hydrocyclone\fsXRed50XuiCuCEquation.cs" />

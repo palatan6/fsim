@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -10,11 +11,14 @@ using Value;
 using fmDataGrid;
 using fsUIControls;
 using Units;
+using CalculatorModules.Hydrocyclone.Feeds;
 
 namespace CalculatorModules.Hydrocyclone
 {
     public partial class fsHydrocycloneNewControl : fsOptionsAndCommentsCalculatorControl
     {
+        private FormFeedCurves feedCurvesForm;
+
         #region Data for suit managing Adaptation & Machine Geometry group
 
         private static fsParameterIdentifier[] adaptationParameters = new[]
@@ -47,19 +51,21 @@ namespace CalculatorModules.Hydrocyclone
                                                                           new string[]{ "Q = ", "Qu = ", "Qo = " },
                                                                           new string[]{ "Qm = ", "Qmu = ", "Qmo = " },
                                                                           new string[]{ "Qms = ", "Qmsu = ", "Qmso = " },
+                                                                          new string[]{ "", "", "" }, 
                                                                           new string[]{ "x50 = ", "x50u = ", "x50o = " },
                                                                           new string[]{ "cm = ", "cmu = ", "cmo = " },
                                                                           new string[]{ "cv = ", "cvu = ", "cvo = " },
                                                                           new string[]{ "C = ", "Cu = ", "Co = " }
                                                                       };
 
-        private static string[] namesUOFlows = new string[] { "Q", "Qm", "Qms", "x50", "cm", "cv", "C" };
+        private static string[] namesUOFlows = new string[] { "Q", "Qm", "Qms", "", "x50", "cm", "cv", "C" };
 
         private static string[] tooltipsUOFlows0 = new string[] 
                                                               { 
                                                                   "Volume Flow Rate triple (Q, Qu, Qo)",
                                                                   "Mass Flow Rate triple (Qm, Qmu, Qmo)",
                                                                   "Solids Mass Flow Rate triple (Qms, Qmsu, Qmso)",
+                                                                  "",
                                                                   "Median Particle Size triple (x50, x50u, x50o)",
                                                                   "Suspension Solids Mass Fraction triple (cm, cmu, cmo)",
                                                                   "Suspension Solids Volume Fraction triple (cv, cvu, cvo)",
@@ -99,6 +105,24 @@ namespace CalculatorModules.Hydrocyclone
             }
         }
 
+        #region Show Feed Curves Functionality
+
+        private Form modulesForm;
+
+        private void ProcessParentFormClosing(object sender, FormClosingEventArgs e)
+        {
+            feedCurvesForm.Visible = false;
+        }
+
+        private void buttonShowFeeds_click(object sender, EventArgs e)
+        {
+            this.buttonShowFeeds.Enabled = false;
+            feedCurvesForm.Visible = true;
+            feedCurvesForm.BringToFront();
+        }
+
+        #endregion
+
         private void FillUnderOverFlowsTable()
         {
             fsSimulationModuleParameter Q = Values[fsParameterIdentifier.FeedVolumeFlowRate];
@@ -110,6 +134,9 @@ namespace CalculatorModules.Hydrocyclone
             fsSimulationModuleParameter Qms = Values[fsParameterIdentifier.Qms];
             fsSimulationModuleParameter Qmso = Values[fsParameterIdentifier.OverflowSolidsMassFlowRate];
             fsSimulationModuleParameter Qmsu = Values[fsParameterIdentifier.UnderflowSolidsMassFlowRate];
+            fsSimulationModuleParameter xi = Values[fsParameterIdentifier.PercentageParticleSize];
+            fsSimulationModuleParameter xio = Values[fsParameterIdentifier.OverflowParticleSize];
+            fsSimulationModuleParameter xiu = Values[fsParameterIdentifier.UnderflowParticleSize];
             fsSimulationModuleParameter x50 = Values[fsParameterIdentifier.xg];
             fsSimulationModuleParameter xo50 = Values[fsParameterIdentifier.OverflowMeanParticleSize];
             fsSimulationModuleParameter xu50 = Values[fsParameterIdentifier.UnderflowMeanParticleSize];
@@ -123,28 +150,47 @@ namespace CalculatorModules.Hydrocyclone
             fsSimulationModuleParameter Co = Values[fsParameterIdentifier.OverflowSolidsConcentration];
             fsSimulationModuleParameter Cu = Values[fsParameterIdentifier.UnderflowSolidsConcentration];
 
+            fsSimulationModuleParameter i = Values[fsParameterIdentifier.PercentageOfParticles];
+
             fsSimulationModuleParameter[][] paramGroups = new fsSimulationModuleParameter[][]
                                                               {
                                                                   new fsSimulationModuleParameter[]{ Q, Qu, Qo },
                                                                   new fsSimulationModuleParameter[]{ Qm, Qmu, Qmo },
                                                                   new fsSimulationModuleParameter[]{ Qms, Qmsu, Qmso },
+                                                                  new fsSimulationModuleParameter[]{ xi, xiu, xio},
                                                                   new fsSimulationModuleParameter[]{ x50, xu50, xo50 },
                                                                   new fsSimulationModuleParameter[]{ cm, cmu, cmo },
                                                                   new fsSimulationModuleParameter[]{ cv, cvu, cvo },
                                                                   new fsSimulationModuleParameter[]{ C, Cu, Co }
                                                               };          
-            for (int i = 0; i < paramGroups.Length; i++)
+            for (int k = 0; k < paramGroups.Length; k++)
             {
-                dataGridViewUOFlows.Rows[i].Cells[1].Value = paramGroups[i][0].Unit.Name;
-                dataGridViewUOFlows.Rows[i].Cells[2].Value = paramGroups[i][0].GetValueInUnits();
-                dataGridViewUOFlows.Rows[i].Cells[3].Value = paramGroups[i][1].GetValueInUnits();
-                dataGridViewUOFlows.Rows[i].Cells[4].Value = paramGroups[i][2].GetValueInUnits();
+                dataGridViewUOFlows.Rows[k].Cells[1].Value = paramGroups[k][0].Unit.Name;
+                dataGridViewUOFlows.Rows[k].Cells[2].Value = paramGroups[k][0].GetValueInUnits();
+                dataGridViewUOFlows.Rows[k].Cells[3].Value = paramGroups[k][1].GetValueInUnits();
+                dataGridViewUOFlows.Rows[k].Cells[4].Value = paramGroups[k][2].GetValueInUnits();
                 for (int j = 0; j < 3; j++)
                 {
-                    dataGridViewUOFlows.Rows[i].Cells[j + 2].ToolTipText = tooltipsAddsUOFlows[i][j] + 
-                                                     dataGridViewUOFlows.Rows[i].Cells[j + 2].Value.ToString();
+                    dataGridViewUOFlows.Rows[k].Cells[j + 2].ToolTipText = tooltipsAddsUOFlows[k][j] + 
+                                                     dataGridViewUOFlows.Rows[k].Cells[j + 2].Value.ToString();
                 }
             }
+            string iStr = i.GetValueInUnits().ToString();
+            dataGridViewUOFlows.Rows[3].Cells[0].Value = "x" + iStr;
+            iStr = " where i = " + iStr + i.Unit.Name;
+            dataGridViewUOFlows.Rows[3].Cells[0].ToolTipText = "Percentage Particle Size triple (xi, xiu, xio)" + iStr;
+            dataGridViewUOFlows.Rows[3].Cells[2].ToolTipText = "xi = " + xi.GetValueInUnits().ToString() + iStr;
+            dataGridViewUOFlows.Rows[3].Cells[3].ToolTipText = "xiu = " + xiu.GetValueInUnits().ToString() + iStr;
+            dataGridViewUOFlows.Rows[3].Cells[4].ToolTipText = "xio = " + xio.GetValueInUnits().ToString() + iStr;
+        }
+
+        public fsHydrocycloneNewControl(Form mF)
+        {
+            InitializeComponent();
+            this.dataGridViewAdapt.CellValueChangedByUser += ProcessThisValueChangedByUser;
+            feedCurvesForm = new FormFeedCurves(this);
+            modulesForm = mF;
+            modulesForm.FormClosing += ProcessParentFormClosing;
         }
 
         public override void RecalculateAndRedraw()
@@ -186,7 +232,7 @@ namespace CalculatorModules.Hydrocyclone
                 {
                     foreach (DataGridViewCell cell in dataGridViewAdapt.Rows[i].Cells)
                     {
-                        cell.Style.BackColor = Color.FromArgb(255, 255, 230);
+                        cell.Style.BackColor = Color.FromArgb(255, 230, 255);
                         if (cell.ColumnIndex > 0)
                             cell.Style.ForeColor = Color.Blue;
                     }
@@ -211,7 +257,7 @@ namespace CalculatorModules.Hydrocyclone
                 // Defining colors
                 foreach (DataGridViewCell cell in dataGridViewMachGeom.Rows[0].Cells)
                 {
-                    cell.Style.BackColor = Color.FromArgb(255, 230, 255);
+                    cell.Style.BackColor = Color.FromArgb(230, 255, 255);
                     cell.Style.ForeColor = Color.Blue;
                 }
                 // Defining tooltips
@@ -237,22 +283,38 @@ namespace CalculatorModules.Hydrocyclone
                 // Defining colors
                 for (int i = 0; i < namesUOFlows.Length; i++)
                 {
-                    foreach (DataGridViewCell cell in dataGridViewUOFlows.Rows[i].Cells)
+                    if (i <= 2)
                     {
-                        cell.Style.BackColor = Color.FromArgb(255, 255, 230);
-                        cell.Style.ForeColor = Color.Black;
-                    } 
+                        foreach (DataGridViewCell cell in dataGridViewUOFlows.Rows[i].Cells)
+                        {
+                            cell.Style.BackColor = Color.FromArgb(255, 230, 230);
+                            cell.Style.ForeColor = Color.Black;
+                        }
+                    }
+                    else 
+                    {
+                        if (i <= 4)
+                        {
+                            foreach (DataGridViewCell cell in dataGridViewUOFlows.Rows[i].Cells)
+                            {
+                                cell.Style.BackColor = Color.FromArgb(230, 255, 230);
+                                cell.Style.ForeColor = Color.Black;
+                            }
+                        }
+                        else
+                        {
+                            foreach (DataGridViewCell cell in dataGridViewUOFlows.Rows[i].Cells)
+                            {
+                                cell.Style.BackColor = Color.FromArgb(230, 230, 255);
+                                cell.Style.ForeColor = Color.Black;
+                            }
+                        }
+                    }
                 }
                 // Populating cells
                 FillUnderOverFlowsTable();
                 //---------------------------------------------------------------------------\\
             }
-        }
-        
-        public fsHydrocycloneNewControl()
-        {
-            InitializeComponent();           
-            this.dataGridViewAdapt.CellValueChangedByUser += ProcessThisValueChangedByUser;
         }
 
         #region Calculation Option
@@ -280,7 +342,8 @@ namespace CalculatorModules.Hydrocyclone
             var colors = new[]
                              {
                                  Color.FromArgb(255, 255, 230),
-                                 Color.FromArgb(255, 230, 255)
+                                 Color.FromArgb(255, 230, 255),
+                                 Color.FromArgb(230, 255, 255)
                              };
 
             fsParametersGroup etaGroup = AddGroup(fsParameterIdentifier.MotherLiquidViscosity); //eta
@@ -368,6 +431,7 @@ namespace CalculatorModules.Hydrocyclone
                 fsParameterIdentifier.UnderflowMassFlowRate, // Qmu
                 fsParameterIdentifier.OverflowSolidsMassFlowRate, // Qmso
                 fsParameterIdentifier.UnderflowSolidsMassFlowRate, // Qmsu
+                fsParameterIdentifier.PercentageParticleSize, // xi
                 fsParameterIdentifier.OverflowMeanParticleSize, // xo50
                 fsParameterIdentifier.UnderflowMeanParticleSize, // xu50
                 fsParameterIdentifier.OverflowSolidsVolumeFraction, // cvo 
@@ -446,7 +510,7 @@ namespace CalculatorModules.Hydrocyclone
             SetGroupInput(onlyCalculatedMaterialParametersGroup, false);
 
             // Loading Machine  only calculated Parameters
-            AddGroupToUI(fsParametersWithValuesTable2, onlyCalculatedMachineParametersGroup, colors[0]);
+            AddGroupToUI(fsParametersWithValuesTable2, onlyCalculatedMachineParametersGroup, colors[2]);
             SetGroupInput(onlyCalculatedMachineParametersGroup, false);
 
             // Loading underflow/overflow  only calculated Parameters

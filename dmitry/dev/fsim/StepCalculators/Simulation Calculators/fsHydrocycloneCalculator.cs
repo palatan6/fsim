@@ -13,7 +13,7 @@ namespace StepCalculators.Simulation_Calculators
     public class fsHydrocycloneCalculator : fsCalculator
     {
         // Introducing the clone of the parameter NumberOfCyclClones is the easiest way to deal with
-        // the copy of NumberOfCyclClones (as only calculated) in  other fsParametersWithValuesTable.
+        // a copy (as only calculated) of NumberOfCyclones in  other fsParametersWithValuesTable.
         public static fsParameterIdentifier NumberOfCyclClone =
             new fsParameterIdentifier("n", "Number of Cyclones", fsCharacteristic.NoUnits);
 
@@ -37,6 +37,7 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter xRed50 = AddVariable(fsParameterIdentifier.ReducedCutSize);
             IEquationParameter D = AddVariable(fsParameterIdentifier.MachineDiameter);
 
+            IEquationParameter xi = AddVariable(fsParameterIdentifier.PercentageParticleSize);
             IEquationParameter xoi = AddVariable(fsParameterIdentifier.OverflowParticleSize);
             IEquationParameter xui = AddVariable(fsParameterIdentifier.UnderflowParticleSize);
             IEquationParameter i = AddVariable(fsParameterIdentifier.PercentageOfParticles);
@@ -161,6 +162,7 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsXRed50XuiDuOverDDpEquation(DuOverD, Dp, xRed50, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3, cv, rhoF, rhoS, etaf, sigmaS, sigmaG, xG, xui, i)); // (38)
             Equations.Add(new fsXRed50XuiCuCEquation(Cu, C, xRed50, sigmaS, sigmaG, xG, xui, i));  // (39)
 
+            Equations.Add(new fsXiEquation(xi, sigmaG, xG, i));
             Equations.Add(new fsXoiXred50Equation(xRed50, xo50, sigmaG, sigmaS, xG, constantHalf)); // (35)
             Equations.Add(new fsXuiXred50RfEquation(xRed50, xu50, sigmaG, sigmaS, xG, constantHalf, rf));  // (36)
             Equations.Add(new fsXRed50XuiDuOverDQnEquation(DuOverD, Q, numberOfCyclones, xRed50, alpha1, alpha2, alpha3, beta1, beta2, beta3, gamma1, gamma2, gamma3, cv, rhoF, rhoS, etaf, sigmaS, sigmaG, xG, xu50, constantHalf)); // (37)

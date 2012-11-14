@@ -24,7 +24,7 @@ namespace Units
 
         #region Units Listing
 
-        // unicode: \u207B(uppercae minus) \u2009(tiny space) 
+        // unicode: \u207B(uppercase minus) \u2009(tiny space) 
         //          \u2070(uppercase 0) \u00B9(uppercase 1) \u00B2(uppercase 2) \u00B3(uppercase 3)
         public static fsUnit NoUnit = new fsUnit("-", 1);
         public static fsUnit MilliMeter = new fsUnit("mm", 1e-3);

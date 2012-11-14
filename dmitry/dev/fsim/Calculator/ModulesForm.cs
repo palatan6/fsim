@@ -165,7 +165,7 @@ namespace Calculator
                                                    new KeyValuePair<string, fsCalculatorControl>(
                                                        "Hydrocyclone", new fsHydrocycloneControl()),
                                                    new KeyValuePair<string, fsCalculatorControl>(
-                                                       "New Hydrocyclone", new fsHydrocycloneNewControl())
+                                                       "New Hydrocyclone", new fsHydrocycloneNewControl(this))
                                                });
         }
 

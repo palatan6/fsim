@@ -6,7 +6,7 @@ using ZedGraph;
 
 namespace fmZedGraph
 {
-    public class HighlighPointsEventArgs : EventArgs
+    public class HighlightPointsEventArgs : EventArgs
     {
         private double x;
         private bool isHighlight;
@@ -19,7 +19,7 @@ namespace fmZedGraph
             get { return isHighlight; }
             //set { isHighlight = value; }
         }
-        public HighlighPointsEventArgs(double x, bool isHighlight)
+        public HighlightPointsEventArgs(double x, bool isHighlight)
         {
             this.x = x;
             this.isHighlight = isHighlight;
@@ -245,7 +245,7 @@ namespace fmZedGraph
                 RemoveHighLightedPoints();
                 if (HighLightedPointsChanged != null)
                 {
-                    HighLightedPointsChanged(this, new HighlighPointsEventArgs(currentX, false));
+                    HighLightedPointsChanged(this, new HighlightPointsEventArgs(currentX, false));
                 }
                 Refresh();
             }
@@ -262,7 +262,7 @@ namespace fmZedGraph
 
             if (HighLightedPointsChanged != null)
             {
-                HighLightedPointsChanged(this, new HighlighPointsEventArgs(currentX, true));
+                HighLightedPointsChanged(this, new HighlightPointsEventArgs(currentX, true));
             }
         }
 

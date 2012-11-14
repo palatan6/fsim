@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace fmZedGraph
 {
-    public delegate void HighlightPointsEventHandler(object sender, HighlighPointsEventArgs e);
+    public delegate void HighlightPointsEventHandler(object sender, HighlightPointsEventArgs e);
     public partial class fmZedGraphControl : ZedGraphControl
     {
         private RectangleF rect;

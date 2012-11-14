@@ -476,7 +476,7 @@
             this.dataGridViewUOFlows.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewUOFlows.RowHeadersVisible = false;
             this.dataGridViewUOFlows.RowTemplate.Height = 18;
-            this.dataGridViewUOFlows.Size = new System.Drawing.Size(146, 153);
+            this.dataGridViewUOFlows.Size = new System.Drawing.Size(146, 165);
             this.dataGridViewUOFlows.TabIndex = 1;
             // 
             // ParameterColumn
@@ -547,10 +547,11 @@
             // 
             this.buttonShowFeeds.Location = new System.Drawing.Point(320, 11);
             this.buttonShowFeeds.Name = "buttonShowFeeds";
-            this.buttonShowFeeds.Size = new System.Drawing.Size(93, 22);
+            this.buttonShowFeeds.Size = new System.Drawing.Size(115, 22);
             this.buttonShowFeeds.TabIndex = 2;
-            this.buttonShowFeeds.Text = "Show Feeds";
+            this.buttonShowFeeds.Text = "Show Feed Curves";
             this.buttonShowFeeds.UseVisualStyleBackColor = true;
+            this.buttonShowFeeds.Click += new System.EventHandler(this.buttonShowFeeds_click);
             // 
             // fsHydrocycloneNewControl
             // 
@@ -615,7 +616,7 @@
         private fsUIControls.fsParametersWithValuesTable fsParametersWithValuesTableAdaptation;
         private fsUIControls.fsParametersWithValuesTable fsParametersWithValuesTableMachineGeometry;
         private fsUIControls.fsParametersWithValuesTable fsParametersWithValuesTableOverUnderFlows;
-        private System.Windows.Forms.Button buttonShowFeeds;
+        public System.Windows.Forms.Button buttonShowFeeds;
         private System.Windows.Forms.SplitContainer splitContainerHorizontRight;
         private System.Windows.Forms.SplitContainer splitContainerHorizontLeft;
     }

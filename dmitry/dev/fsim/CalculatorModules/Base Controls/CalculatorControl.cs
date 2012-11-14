@@ -377,7 +377,7 @@ namespace CalculatorModules
 
         protected internal virtual void StopGridsEdit()
         {
-            throw new Exception("You must implement StopGridsEdit in derivative class.");
+            //throw new Exception("You must implement StopGridsEdit in derivative class."); // пока что
         }
 
         #endregion
