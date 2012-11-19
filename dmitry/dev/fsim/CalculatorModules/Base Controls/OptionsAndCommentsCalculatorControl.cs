@@ -176,7 +176,7 @@ namespace CalculatorModules
 
         }
 
-        private class EqualityComparer : IEqualityComparer<ICollection<Enum>>
+        protected class EqualityComparer : IEqualityComparer<ICollection<Enum>>
         {
 
             public bool Equals(ICollection<Enum> x, ICollection<Enum> y)

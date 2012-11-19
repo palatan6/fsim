@@ -235,6 +235,19 @@
     <Compile Include="Hydrocyclone\FormFeedCurves.Designer.cs">
       <DependentUpon>FormFeedCurves.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hydrocyclone\fsFeedCurvesSelectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Hydrocyclone\fsFeedCurvesSelectionControl.Designer.cs">
+      <DependentUpon>fsFeedCurvesSelectionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Hydrocyclone\fsFeedCurvesSelectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Hydrocyclone\fsFeedCurvesSelectionDialog.Designer.cs">
+      <DependentUpon>fsFeedCurvesSelectionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Hydrocyclone\fsFeedFunctionsAssembly.cs" />
     <Compile Include="Hydrocyclone\HydrocycloneControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -380,6 +393,10 @@
       <DependentUpon>FormFeedCurves.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Hydrocyclone\fsFeedCurvesSelectionControl.resx">
+      <DependentUpon>fsFeedCurvesSelectionControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Hydrocyclone\HydrocycloneControl.resx">
       <DependentUpon>HydrocycloneControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -430,6 +447,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Equations\Equations.csproj">
+      <Project>{98183315-59DF-4FFC-98EA-71E8BE950DE7}</Project>
+      <Name>Equations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\fmDataGrid\fmDataGrid.csproj">
       <Project>{30A5CD2D-C64C-402B-A957-3885E498A97C}</Project>
       <Name>fmDataGrid</Name>
@@ -437,6 +458,10 @@
     <ProjectReference Include="..\fmZedControl\fmZedGraph.csproj">
       <Project>{6AA10204-B802-462B-AC8B-D012081866BA}</Project>
       <Name>fmZedGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fsNumericalMethods\fsNumericalMethods.csproj">
+      <Project>{F52D1A38-87C6-4071-BFEA-1822512A4C0F}</Project>
+      <Name>fsNumericalMethods</Name>
     </ProjectReference>
     <ProjectReference Include="..\Parameters\Parameters.csproj">
       <Project>{67A1D000-12E6-439C-BC89-23C4059BC855}</Project>

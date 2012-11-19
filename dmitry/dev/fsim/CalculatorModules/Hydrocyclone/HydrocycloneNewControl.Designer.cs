@@ -545,6 +545,7 @@
             // 
             // buttonShowFeeds
             // 
+            this.buttonShowFeeds.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buttonShowFeeds.Location = new System.Drawing.Point(320, 11);
             this.buttonShowFeeds.Name = "buttonShowFeeds";
             this.buttonShowFeeds.Size = new System.Drawing.Size(115, 22);

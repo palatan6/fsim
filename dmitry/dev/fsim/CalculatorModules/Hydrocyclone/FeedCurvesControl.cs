@@ -64,6 +64,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         {
             m_iterationParameter = iterationParameter;
             m_xAxisComboBox.Text = m_iterationParameter.Name;
+
             m_yAxisParameters.Clear();
             foreach (fsParameterIdentifier p in yAxisParameters)
             {
@@ -422,13 +423,13 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             fsDiagramWithTable1.ClearYAxis();
             foreach (fsDiagramWithTable.fsNamedArray curve in m_yCurves)
             {
-                fsDiagramWithTable1.AddYAxis(CalculteWithLinearization(curve, xArray, niceXArray));
+                fsDiagramWithTable1.AddYAxis(CalculateWithLinearization(curve, xArray, niceXArray));
             }
 
             fsDiagramWithTable1.ClearY2Axis();
             foreach (fsDiagramWithTable.fsNamedArray curve in m_y2Curves)
             {
-                fsDiagramWithTable1.AddY2Axis(CalculteWithLinearization(curve, xArray, niceXArray));
+                fsDiagramWithTable1.AddY2Axis(CalculateWithLinearization(curve, xArray, niceXArray));
             }
 
             fsDiagramWithTable1.Redraw();
@@ -487,7 +488,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             }
         }
 
-        private static fsDiagramWithTable.fsNamedArray CalculteWithLinearization(
+        private static fsDiagramWithTable.fsNamedArray CalculateWithLinearization(
             fsDiagramWithTable.fsNamedArray yArray,
             fsDiagramWithTable.fsNamedArray xArray,
             fsDiagramWithTable.fsNamedArray niceXArray)
@@ -605,7 +606,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void YAxisConfigureClick(object sender, EventArgs e)
         {
-            var selectionForm = new fsTablesAndChartsParametersSelectionDialog();
+            var selectionForm = new fsFeedCurvesSelectionDialog();
             selectionForm.AssignYAxisParameters(GetSelectionParametersWithCheking(m_yAxisList));
             selectionForm.AssignY2AxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
             selectionForm.ShowDialog();
@@ -621,7 +622,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void Y2AxisConfigureClick(object sender, EventArgs e)
         {
-            var selectionForm = new fsTablesAndChartsParametersSelectionDialog();
+            var selectionForm = new fsFeedCurvesSelectionDialog();
             selectionForm.AssignYAxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
             selectionForm.ShowDialog();
             if (selectionForm.DialogResult == DialogResult.OK)

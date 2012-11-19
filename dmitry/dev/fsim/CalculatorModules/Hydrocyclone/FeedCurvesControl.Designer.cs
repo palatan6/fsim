@@ -142,7 +142,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.yAxisConfigure.Name = "yAxisConfigure";
             this.yAxisConfigure.Size = new System.Drawing.Size(97, 23);
             this.yAxisConfigure.TabIndex = 10;
-            this.yAxisConfigure.Text = "Configure Y Axis";
+            this.yAxisConfigure.Text = "Configure Y Axes";
             this.yAxisConfigure.UseVisualStyleBackColor = true;
             this.yAxisConfigure.Click += new System.EventHandler(this.YAxisConfigureClick);
             // 
@@ -346,7 +346,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private fsDiagramWithTable fsDiagramWithTable1;
+       // private fsDiagramWithTable fsDiagramWithTable1;
+        public fsDiagramWithTable fsDiagramWithTable1;
         private System.Windows.Forms.SplitContainer yAxisSplitContainer;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.SplitContainer splitContainer2;

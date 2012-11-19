@@ -54,6 +54,6 @@
 
         #endregion
 
-        private FeedCurvesControl feedCurvesControl1;
+        public FeedCurvesControl feedCurvesControl1;
     }
 }
