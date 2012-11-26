@@ -288,6 +288,13 @@ namespace Units
             }
         );
 
+        public static fsCharacteristic FeedDerivative = new fsCharacteristic(
+            "Feed Derivative",
+            new[] {
+                fsUnit.PerMeter
+            }
+        );
+
         public static fsCharacteristic ParticleSize = new fsCharacteristic(
             "Particle size",
             new[] {

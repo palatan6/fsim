@@ -32,8 +32,8 @@
             this.okButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.y1SelectionControl = new CalculatorModules.Hydrocyclone.Feeds.fsFeedCurvesSelectionControl();
-            this.y2SelectionControl = new CalculatorModules.Hydrocyclone.Feeds.fsFeedCurvesSelectionControl();
+            this.y1SelectionControl = new fsFeedCurvesSelectionControl();
+            this.y2SelectionControl = new fsFeedCurvesSelectionControl();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();

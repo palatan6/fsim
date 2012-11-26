@@ -48,7 +48,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private void button1_Click(object sender, EventArgs e)
         {
             SetY2Visible(splitContainer1.Panel2Collapsed);
-
+            
         }
 
         private void fsFeedCurvesSelectionDialog_Load(object sender, EventArgs e)

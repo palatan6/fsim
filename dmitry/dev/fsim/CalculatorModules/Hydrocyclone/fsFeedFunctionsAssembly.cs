@@ -7,6 +7,9 @@ using Value;
 using fsNumericalMethods;
 using StepCalculators;
 using CalculatorModules;
+using ParametersIdentifiers;
+using ParametersIdentifiers.Ranges;
+using CalculatorModules.Machine_Ranges;
 
 namespace CalculatorModules.Hydrocyclone.Feeds
 {
@@ -15,107 +18,138 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         #region Parameter Identifiers
 
         public static fsParameterIdentifier x_id = new fsParameterIdentifier("x", fsCharacteristic.ParticleSize);
-        public static fsParameterIdentifier xLog_id = new fsParameterIdentifier("xLog", fsCharacteristic.ParticleSize);
 
         public static fsParameterIdentifier F_id = new fsParameterIdentifier("F", fsCharacteristic.Concentration);
         public static fsParameterIdentifier Fu_id = new fsParameterIdentifier("Fu", fsCharacteristic.Concentration);
         public static fsParameterIdentifier Fo_id = new fsParameterIdentifier("Fo", fsCharacteristic.Concentration);
 
-        public static fsParameterIdentifier f_id = new fsParameterIdentifier("f", fsCharacteristic.Concentration);
-        public static fsParameterIdentifier fu_id = new fsParameterIdentifier("fu", fsCharacteristic.Concentration);
-        public static fsParameterIdentifier fo_id = new fsParameterIdentifier("fo", fsCharacteristic.Concentration);
+        public static fsParameterIdentifier f_id = new fsParameterIdentifier("f", fsCharacteristic.FeedDerivative);
+        public static fsParameterIdentifier fu_id = new fsParameterIdentifier("fu", fsCharacteristic.FeedDerivative);
+        public static fsParameterIdentifier fo_id = new fsParameterIdentifier("fo", fsCharacteristic.FeedDerivative);
 
         public static fsParameterIdentifier G_id = new fsParameterIdentifier("G", fsCharacteristic.Concentration);
         public static fsParameterIdentifier GRed_id = new fsParameterIdentifier("GRed", fsCharacteristic.Concentration);
 
+        private static fsParameterIdentifier[] parameterList = new fsParameterIdentifier[] 
+                                                               {
+                                                                   x_id, 
+                                                                   F_id, Fo_id, Fu_id,
+                                                                   f_id, fo_id, fu_id,
+                                                                   G_id, GRed_id
+                                                               };  
+
 
         #endregion
 
-        #region Feed Functions as static ones
+        // TODO: определить глобальное "непоявление" кривых в случае плохих sigma_s и пр.
+        //if (!lnSigmaG2.Defined || lnSigmaG2 == fsValue.Zero)
+        //    return new fsValue();
+        //if (!lnXG.Defined)
+        //    return new fsValue();
 
-        public static fsValue F_func(fsValue xPar, fsValue lnSigmaG2, fsValue lnXG)
-        {
-            // TODO: определить глобальное "непоявление" кривых в случае плохих sigma_s и пр.
-            //if (!lnSigmaG2.Defined || lnSigmaG2 == fsValue.Zero)
-            //    return new fsValue();
-            //if (!lnXG.Defined)
-            //    return new fsValue();
-            return 0.5 * (1 + fsSpecialFunctions.Erf((xPar - lnXG) / lnSigmaG2));
+        #region Feed Functions as static ones
+             
+        public static fsValue F_func(fsValue x, fsValue lnSigmaG2, fsValue lnXG)
+        {           
+            return 0.5 * (1 + fsSpecialFunctions.Erf((fsValue.Log(x) - lnXG) / lnSigmaG2));
         }
 
-        public static fsValue Fo_func(fsValue xPar, fsValue alpha, fsValue beta, fsValue zRed50, fsValue lnSigmaG2, fsValue lnXG)
+        public static fsValue Fo_func(fsValue x, fsValue alpha, fsValue beta, fsValue zRed50, fsValue lnSigmaG2, fsValue lnXG)
         {
-            return 0.5 * fsSpecialFunctions.ErfcExpInt(beta, zRed50, (xPar - lnXG) / lnSigmaG2) /
+            return 0.5 * fsSpecialFunctions.ErfcExpInt(beta, zRed50, (fsValue.Log(x) - lnXG) / lnSigmaG2) /
                          fsSpecialFunctions.Erfc(alpha * zRed50);
         }
 
-        public static fsValue Fu_func(fsValue xPar, fsValue ET, fsValue alpha, fsValue beta, fsValue zRed50, fsValue lnSigmaG2, fsValue lnXG)
+        public static fsValue Fu_func(fsValue x, fsValue ET, fsValue alpha, fsValue beta, fsValue zRed50, fsValue lnSigmaG2, fsValue lnXG)
         {
-            return 1 / ET * (F_func(xPar, lnSigmaG2, lnXG) - (1 - ET) * Fo_func(xPar, alpha, beta, zRed50, lnSigmaG2, lnXG));
+            return 1 / ET * (F_func(x, lnSigmaG2, lnXG) - (1 - ET) * Fo_func(x, alpha, beta, zRed50, lnSigmaG2, lnXG));
         }
 
-        public static fsValue GRed_func(fsValue xPar, fsValue lnSigmaS2, fsValue lnXred50)
+        public static fsValue GRed_func(fsValue x, fsValue lnSigmaS2, fsValue lnXred50)
         {
-            return 0.5 * (1 + fsSpecialFunctions.Erf((xPar - lnXred50) / lnSigmaS2));
+            return 0.5 * (1 + fsSpecialFunctions.Erf((fsValue.Log(x) - lnXred50) / lnSigmaS2));
         }
 
-        public static fsValue G_func(fsValue xPar, fsValue lnSigmaS2, fsValue lnXred50, fsValue rf)
+        public static fsValue G_func(fsValue x, fsValue lnSigmaS2, fsValue lnXred50, fsValue rf)
         {
-            return (1 - rf) * GRed_func(xPar, lnSigmaS2, lnXred50) + rf;
+            return (1 - rf) * GRed_func(x, lnSigmaS2, lnXred50) + rf;
         }
 
-        public static fsValue f_func(fsValue xPar, fsValue lnSigmaG2, fsValue lnXG, fsValue lnSigmaG2PiSqrt)
+        public static fsValue f_func(fsValue x, fsValue lnSigmaG2, fsValue lnXG, fsValue lnSigmaG2PiSqrt)
         {
-            return lnSigmaG2PiSqrt * fsValue.Exp(-fsValue.Sqr((xPar - lnXG) / lnSigmaG2) - xPar);
+            return lnSigmaG2PiSqrt / x * fsValue.Exp(-fsValue.Sqr((fsValue.Log(x) - lnXG) / lnSigmaG2));
         }
 
-        public static fsValue fo_func(fsValue xPar, fsValue lnSigmaG2, fsValue lnXG, fsValue lnSigmaG2PiSqrt,
+        public static fsValue fo_func(fsValue x, fsValue lnSigmaG2, fsValue lnXG, fsValue lnSigmaG2PiSqrt,
                            fsValue lnSigmaS2, fsValue lnXred50, fsValue rf, fsValue ET)
         {
-            return 1 / (1 - ET) * (1 - G_func(xPar, lnSigmaS2, lnXred50, rf)) *
-                   f_func(xPar, lnSigmaG2, lnXG, lnSigmaG2PiSqrt);
+            return 1 / (1 - ET) * (1 - G_func(x, lnSigmaS2, lnXred50, rf)) *
+                   f_func(x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt);
         }
 
-        public static fsValue fu_func(fsValue xPar, fsValue lnSigmaG2, fsValue lnXG, fsValue lnSigmaG2PiSqrt,
+        public static fsValue fu_func(fsValue x, fsValue lnSigmaG2, fsValue lnXG, fsValue lnSigmaG2PiSqrt,
                            fsValue lnSigmaS2, fsValue lnXred50, fsValue rf, fsValue ET)
         {
-            return 1 / ET * G_func(xPar, lnSigmaS2, lnXred50, rf) *
-                   f_func(xPar, lnSigmaG2, lnXG, lnSigmaG2PiSqrt);
+            return 1 / ET * G_func(x, lnSigmaS2, lnXred50, rf) *
+                   f_func(x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt);
         }
 
         #endregion
 
         #region Groups
 
-        public static List<fsParametersGroup> Groups;
+        public static List<fsParametersGroup> Groups = new List<fsParametersGroup>();
 
-        public static Dictionary<fsParameterIdentifier, fsParametersGroup> ParameterToGroup;
+        public static Dictionary<fsParameterIdentifier, fsParametersGroup> ParameterToGroup = new Dictionary<fsParameterIdentifier, fsParametersGroup>();
 
         public static void getGroups()
         {
-            fsParameterIdentifier[] parameters = new fsParameterIdentifier[] 
-                                                 {
-                                                     xLog_id, 
-                                                     F_id, Fo_id, Fu_id,
-                                                     f_id, fo_id, fu_id,
-                                                     G_id, G_id,
-                                                     GRed_id, GRed_id
-                                                 };
-            List<fsParametersGroup> Groups = new List<fsParametersGroup>();
             fsParametersGroup group;
-            foreach (var parameter in parameters)
-	        {
-                group = new fsParametersGroup(true);
-        		group.Parameters.Add(parameter);
-                ParameterToGroup[parameter] = group;
-                group.Representator = parameter;
-                Groups.Add(group);
-	        }
             group = new fsParametersGroup(false);
             group.Parameters.Add(x_id);
-            ParameterToGroup[x_id] = group;
+            ParameterToGroup.Add(x_id, group);
             group.Representator = x_id;
+            group.SetIsInputFlag(true);
             Groups.Add(group);
+            for (int i = 1; i < parameterList.Length; i++)
+            {
+                group = new fsParametersGroup(true);
+                group.Parameters.Add(parameterList[i]);
+                ParameterToGroup.Add(parameterList[i], group);
+                group.Representator = parameterList[i];
+                Groups.Add(group); 
+            }           
+        }
+
+        #endregion
+
+        #region Values
+
+        public static Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> Values = new  Dictionary<fsParameterIdentifier, fsSimulationModuleParameter>();
+
+        public static void getValues()
+        {
+            fsRange machr = fsMachineRanges.DefaultMachineRanges.Ranges[fsParameterIdentifier.ReducedCutSize].Range;
+            fsValue from = machr.From;
+            fsValue to = machr.To;
+            Values.Add(x_id, new fsSimulationModuleParameter(x_id, new fsValue(), new fsRange(from, to)));
+            //Values.Add(xLog_id, new fsSimulationModuleParameter(xLog_id, new fsValue(), new fsRange(fsValue.Log(from), fsValue.Log(to))));
+            //for (int i = 2; i < parameterList.Length; i++)
+            for (int i = 1; i < parameterList.Length; i++)
+            {
+                Values.Add(parameterList[i], new fsSimulationModuleParameter(parameterList[i], new fsValue())); 
+            }
+        }
+
+        #endregion
+
+        #region Calculators
+
+        public static List<fsCalculator> Calculators =  new List<fsCalculator>();
+
+        public static void getCalculators(fsHydrocycloneNewControl hcControl) 
+        {
+            Calculators.Add(new FeedCurvesCalculator(hcControl));
         }
 
         #endregion
@@ -123,7 +157,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
     #region Equations
 
-    public class BigFLogEquation : fsCalculatorEquation
+    public class BigFEquation : fsCalculatorEquation
     {
         #region Parameters
 
@@ -134,7 +168,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        public BigFLogEquation(
+        public BigFEquation(
            IEquationParameter F,
            IEquationParameter x,
            IEquationParameter lnSigmaG2,
@@ -158,7 +192,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
     }
 
-    public class BigFoLogEquation : fsCalculatorEquation
+    public class BigFoEquation : fsCalculatorEquation
     {
         #region Parameters
 
@@ -172,7 +206,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        public BigFoLogEquation(
+        public BigFoEquation(
            IEquationParameter Fo,
            IEquationParameter x,
            IEquationParameter alpha,
@@ -198,12 +232,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void BigFoFormula()
         {
-            m_Fo.Value = fsFeedFunctionsData.Fo_func(m_x.Value, m_alpha.Value, m_beta.Value, 
+            m_Fo.Value = fsFeedFunctionsData.Fo_func(m_x.Value, m_alpha.Value, m_beta.Value,
                                                      m_zRed50.Value, m_lnSigmaG2.Value, m_lnXG.Value);
         }
     }
 
-    public class BigFuLogEquation : fsCalculatorEquation
+    public class BigFuEquation : fsCalculatorEquation
     {
         #region Parameters
 
@@ -218,7 +252,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        public BigFuLogEquation(
+        public BigFuEquation(
            IEquationParameter Fu,
            IEquationParameter x,
            IEquationParameter ET,
@@ -250,7 +284,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
     }
 
-    public class SmallFLogEquation : fsCalculatorEquation
+    public class SmallFEquation : fsCalculatorEquation
     {
         #region Parameters
 
@@ -262,7 +296,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        public SmallFLogEquation(
+        public SmallFEquation(
            IEquationParameter f,
            IEquationParameter x,
            IEquationParameter lnSigmaG2,
@@ -284,12 +318,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void SmallFFormula()
         {
-            m_f.Value = fsFeedFunctionsData.f_func(m_x.Value, m_lnSigmaG2.Value, 
+            m_f.Value = fsFeedFunctionsData.f_func(m_x.Value, m_lnSigmaG2.Value,
                                                    m_lnXG.Value, m_lnSigmaG2PiSqrt.Value);
         }
     }
 
-    public class SmallFoLogEquation : fsCalculatorEquation
+    public class SmallFoEquation : fsCalculatorEquation
     {
         #region Parameters
 
@@ -305,7 +339,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        public SmallFoLogEquation(
+        public SmallFoEquation(
            IEquationParameter fo,
            IEquationParameter x,
            IEquationParameter lnSigmaG2,
@@ -335,13 +369,13 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void SmallFoFormula()
         {
-            m_fo.Value = fsFeedFunctionsData.fo_func(m_x.Value, m_lnSigmaG2.Value, m_lnXG.Value, 
-                                                     m_lnSigmaG2PiSqrt.Value, m_lnSigmaS2.Value, 
+            m_fo.Value = fsFeedFunctionsData.fo_func(m_x.Value, m_lnSigmaG2.Value, m_lnXG.Value,
+                                                     m_lnSigmaG2PiSqrt.Value, m_lnSigmaS2.Value,
                                                      m_lnXred50.Value, m_rf.Value, m_ET.Value);
         }
     }
 
-    public class SmallFuLogEquation : fsCalculatorEquation
+    public class SmallFuEquation : fsCalculatorEquation
     {
         #region Parameters
 
@@ -357,7 +391,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        public SmallFuLogEquation(
+        public SmallFuEquation(
            IEquationParameter fu,
            IEquationParameter x,
            IEquationParameter lnSigmaG2,
@@ -387,13 +421,13 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void SmallFuFormula()
         {
-            m_fu.Value = fsFeedFunctionsData.fu_func(m_x.Value, m_lnSigmaG2.Value, m_lnXG.Value, 
-                                                     m_lnSigmaG2PiSqrt.Value, m_lnSigmaS2.Value, 
+            m_fu.Value = fsFeedFunctionsData.fu_func(m_x.Value, m_lnSigmaG2.Value, m_lnXG.Value,
+                                                     m_lnSigmaG2PiSqrt.Value, m_lnSigmaS2.Value,
                                                      m_lnXred50.Value, m_rf.Value, m_ET.Value);
         }
     }
 
-    public class GLogEquation : fsCalculatorEquation
+    public class GEquation : fsCalculatorEquation
     {
         #region Parameters
 
@@ -405,7 +439,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        public GLogEquation(
+        public GEquation(
            IEquationParameter G,
            IEquationParameter x,
            IEquationParameter lnSigmaS2,
@@ -431,7 +465,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
     }
 
-    public class GRedLogEquation : fsCalculatorEquation
+    public class GRedEquation : fsCalculatorEquation
     {
         #region Parameters
 
@@ -443,7 +477,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        public GRedLogEquation(
+        public GRedEquation(
            IEquationParameter GRed,
            IEquationParameter x,
            IEquationParameter lnSigmaS2,
@@ -467,179 +501,76 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
     }
 
-    #region Help Equations
+    //#region Help Equations
 
-    public class LogEquation : fsCalculatorEquation
-    {
-        #region Parameters
+    //public class LogEquation : fsCalculatorEquation
+    //{
+    //    #region Parameters
 
-        private readonly IEquationParameter m_x;
-        private readonly IEquationParameter m_lnX;
+    //    private readonly IEquationParameter m_x;
+    //    private readonly IEquationParameter m_lnX;
 
-        #endregion
+    //    #endregion
 
-        public LogEquation(
-           IEquationParameter x,
-           IEquationParameter lnX)
-            : base(x, lnX)
-        {
-            m_x = x;
-            m_lnX = lnX;
-        }
+    //    public LogEquation(
+    //       IEquationParameter x,
+    //       IEquationParameter lnX)
+    //        : base(x, lnX)
+    //    {
+    //        m_x = x;
+    //        m_lnX = lnX;
+    //    }
 
-        protected override void InitFormulas()
-        {
-            AddFormula(m_lnX, LogFormula);
-        }
+    //    protected override void InitFormulas()
+    //    {
+    //        AddFormula(m_lnX, LogFormula);
+    //    }
 
-        private void LogFormula()
-        {
-            m_lnX.Value = fsValue.Log(m_x.Value);
-        }
-    }
+    //    private void LogFormula()
+    //    {
+    //        m_lnX.Value = fsValue.Log(m_x.Value);
+    //    }
+    //}
 
-    public class NormEquation : fsCalculatorEquation
-    {
-        #region Parameters
+    //public class NormEquation : fsCalculatorEquation
+    //{
+    //    #region Parameters
 
-        private readonly IEquationParameter m_norm;
-        private readonly IEquationParameter m_x;
-        private readonly IEquationParameter m_y;
+    //    private readonly IEquationParameter m_norm;
+    //    private readonly IEquationParameter m_x;
+    //    private readonly IEquationParameter m_y;
 
-        #endregion
+    //    #endregion
 
-        public NormEquation(
-           IEquationParameter norm,
-           IEquationParameter x,
-           IEquationParameter y)
-            : base(norm, x, y)
-        {
-            m_norm = norm;
-            m_x = x;
-            m_y = y;
-        }
+    //    public NormEquation(
+    //       IEquationParameter norm,
+    //       IEquationParameter x,
+    //       IEquationParameter y)
+    //        : base(norm, x, y)
+    //    {
+    //        m_norm = norm;
+    //        m_x = x;
+    //        m_y = y;
+    //    }
 
-        protected override void InitFormulas()
-        {
-            AddFormula(m_norm, NormFormula);
-        }
+    //    protected override void InitFormulas()
+    //    {
+    //        AddFormula(m_norm, NormFormula);
+    //    }
 
-        private void NormFormula()
-        {
-            m_norm.Value = fsValue.Sqrt(fsValue.Sqr(m_x.Value) + fsValue.Sqr(m_y.Value));
-        }
-    }
+    //    private void NormFormula()
+    //    {
+    //        m_norm.Value = fsValue.Sqrt(fsValue.Sqr(m_x.Value) + fsValue.Sqr(m_y.Value));
+    //    }
+    //}
+
+    //#endregion
 
     #endregion
 
-    #endregion         
-    
-    #region Calculators
-
-    public class LinearCalculator : fsCalculator
+    public class FeedCurvesCalculator : fsCalculator
     {
-        public LinearCalculator()
-        {
-            #region Parameters Initialization
-
-            IEquationParameter x = AddVariable(fsFeedFunctionsData.x_id);
-            IEquationParameter xLog = AddVariable(fsFeedFunctionsData.xLog_id);
-
-            IEquationParameter F = AddVariable(fsFeedFunctionsData.F_id);
-            IEquationParameter Fo = AddVariable(fsFeedFunctionsData.Fo_id);
-            IEquationParameter Fu = AddVariable(fsFeedFunctionsData.Fu_id);
-
-            IEquationParameter f = AddVariable(fsFeedFunctionsData.f_id);
-            IEquationParameter fo = AddVariable(fsFeedFunctionsData.fo_id);
-            IEquationParameter fu = AddVariable(fsFeedFunctionsData.fu_id);
-
-            IEquationParameter G = AddVariable(fsFeedFunctionsData.G_id);
-            IEquationParameter GRed = AddVariable(fsFeedFunctionsData.GRed_id);
-
-            #region Help Parameters
-
-
-            var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) { Value = fsValue.One };
-            var constantTwoSqrt = new fsCalculatorConstant(new fsParameterIdentifier("2^(1/2)")) { Value = new fsValue(Math.Sqrt(2)) };
-            var constantPiSqrt = new fsCalculatorConstant(new fsParameterIdentifier("pi^(1/2)")) { Value = new fsValue(Math.Sqrt(Math.PI)) };
-
-            // lnXG
-            IEquationParameter xG = AddConstant(fsParameterIdentifier.xg);
-            IEquationParameter lnXG = AddConstant(new fsParameterIdentifier("lnXG"));
-            Equations.Add(new LogEquation(xG, lnXG));
-
-            // lnSigmaG2
-            IEquationParameter sigmaG = AddConstant(fsParameterIdentifier.sigma_g);
-            IEquationParameter lnSigmaG = AddConstant(new fsParameterIdentifier("lnSigmaG"));
-            Equations.Add(new LogEquation(sigmaG, lnSigmaG));
-            IEquationParameter lnSigmaG2 = AddConstant(new fsParameterIdentifier("lnSigmaG2"));
-            Equations.Add(new fsProductEquation(lnSigmaG2, lnSigmaG, constantTwoSqrt));
-
-            // lnSigmaG2PiSqrt
-            IEquationParameter lnSigmaG2PiSqrt = AddConstant(new fsParameterIdentifier("lnSigmaG2PiSqrt"));
-            Equations.Add(new fsProductsEquation(
-                new[] { lnSigmaG2PiSqrt, constantPiSqrt, lnSigmaG2 },
-                new[] { constantOne }));
-
-            // lnSigmaS2
-            IEquationParameter sigmaS = AddConstant(fsParameterIdentifier.sigma_s);
-            IEquationParameter lnSigmaS = AddConstant(new fsParameterIdentifier("lnSigmaS"));
-            Equations.Add(new LogEquation(sigmaS, lnSigmaS));
-            IEquationParameter lnSigmaS2 = AddConstant(new fsParameterIdentifier("lnSigmaS2"));
-            Equations.Add(new fsProductEquation(lnSigmaS2, lnSigmaS, constantTwoSqrt));
-
-            //lnXred50
-            IEquationParameter xRed50 = AddConstant(fsParameterIdentifier.ReducedCutSize);
-            IEquationParameter lnXred50 = AddConstant(new fsParameterIdentifier("lnXred50"));
-            Equations.Add(new LogEquation(xRed50, lnXred50));
-
-            IEquationParameter rf = AddConstant(fsParameterIdentifier.rf);
-
-            IEquationParameter ET = AddConstant(fsParameterIdentifier.TotalEfficiency);
-
-            //zRed50
-            IEquationParameter lnXGminusLnXred50 = AddConstant(new fsParameterIdentifier("lnXG - lnXred50"));
-            Equations.Add(new fsSumEquation(lnXG, lnXGminusLnXred50, lnXred50));
-            IEquationParameter zRed50 = AddConstant(new fsParameterIdentifier("zRed50"));
-            Equations.Add(new fsProductEquation(lnXGminusLnXred50, zRed50, lnSigmaS2));
-
-            //alpha
-            IEquationParameter normOfLns = AddConstant(new fsParameterIdentifier("normOfLns"));
-            Equations.Add(new NormEquation(normOfLns, lnSigmaG, lnSigmaS));
-            IEquationParameter alpha = AddConstant(new fsParameterIdentifier("alpha"));
-            Equations.Add(new fsProductEquation(lnSigmaS, alpha, normOfLns));
-
-            //beta
-            IEquationParameter beta = AddConstant(new fsParameterIdentifier("beta"));
-            Equations.Add(new fsProductEquation(lnSigmaG, beta, lnSigmaS));
-
-
-            #endregion
-
-            #endregion
-
-            #region Equations Initialization
-
-            Equations.Add(new LogEquation(x, xLog));
-
-            Equations.Add(new BigFLogEquation(F, xLog, lnSigmaG2, lnXG));
-            Equations.Add(new BigFoLogEquation(Fo, xLog, alpha, beta, zRed50, lnSigmaG2, lnXG));
-            Equations.Add(new BigFuLogEquation(Fu, xLog, ET, alpha, beta, zRed50, lnSigmaG2, lnXG));
-
-            Equations.Add(new SmallFLogEquation(f, xLog, lnSigmaG2, lnXG, lnSigmaG2PiSqrt));
-            Equations.Add(new SmallFoLogEquation(fo, xLog, lnSigmaG2, lnXG, lnSigmaG2PiSqrt, lnSigmaS2, lnXred50, rf, ET));
-            Equations.Add(new SmallFuLogEquation(fu, xLog, lnSigmaG2, lnXG, lnSigmaG2PiSqrt, lnSigmaS2, lnXred50, rf, ET));
-
-            Equations.Add(new GLogEquation(G, xLog, lnSigmaS2, lnXred50, rf));
-            Equations.Add(new GRedLogEquation(GRed, xLog, lnSigmaS2, lnXred50));
-
-            #endregion
-        }
-    }
-
-    public class LogarithmCalculator : fsCalculator
-    {
-        public LogarithmCalculator()
+        public FeedCurvesCalculator(fsHydrocycloneNewControl hcControl)
         {
             #region Parameters Initialization
 
@@ -658,84 +589,59 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
             #region Help Parameters
 
-
-            var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) { Value = fsValue.One };
-            var constantTwoSqrt = new fsCalculatorConstant(new fsParameterIdentifier("2^(1/2)")) { Value = new fsValue(Math.Sqrt(2)) };
-            var constantPiSqrt = new fsCalculatorConstant(new fsParameterIdentifier("pi^(1/2)")) { Value = new fsValue(Math.Sqrt(Math.PI)) };
-
-            // lnXG
-            IEquationParameter xG = AddConstant(fsParameterIdentifier.xg);
-            IEquationParameter lnXG = AddConstant(new fsParameterIdentifier("lnXG"));
-            Equations.Add(new LogEquation(xG, lnXG));
+            var lnXG = new fsCalculatorConstant(new fsParameterIdentifier("lnXG")) 
+                           { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.xg]) };
 
             // lnSigmaG2
-            IEquationParameter sigmaG = AddConstant(fsParameterIdentifier.sigma_g);
-            IEquationParameter lnSigmaG = AddConstant(new fsParameterIdentifier("lnSigmaG"));
-            Equations.Add(new LogEquation(sigmaG, lnSigmaG));
-            IEquationParameter lnSigmaG2 = AddConstant(new fsParameterIdentifier("lnSigmaG2"));
-            Equations.Add(new fsProductEquation(lnSigmaG2, lnSigmaG, constantTwoSqrt));
+            fsValue lnSigmaG = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_g]);
+            var lnSigmaG2 = new fsCalculatorConstant(new fsParameterIdentifier("lnSigmaG2")) 
+                                { Value =  lnSigmaG * Math.Sqrt(2) };
 
-            // lnSigmaG2PiSqrt
-            IEquationParameter lnSigmaG2PiSqrt = AddConstant(new fsParameterIdentifier("lnSigmaG2PiSqrt"));
-            Equations.Add(new fsProductsEquation(
-                new[] { lnSigmaG2PiSqrt, constantPiSqrt, lnSigmaG2 },
-                new[] { constantOne }));
+            var lnSigmaG2PiSqrt = new fsCalculatorConstant(new fsParameterIdentifier("lnSigmaG2PiSqrt")) 
+                                      { Value =  1 / (Math.Sqrt(Math.PI) * lnSigmaG2.Value)};
 
             // lnSigmaS2
-            IEquationParameter sigmaS = AddConstant(fsParameterIdentifier.sigma_s);
-            IEquationParameter lnSigmaS = AddConstant(new fsParameterIdentifier("lnSigmaS"));
-            Equations.Add(new LogEquation(sigmaS, lnSigmaS));
-            IEquationParameter lnSigmaS2 = AddConstant(new fsParameterIdentifier("lnSigmaS2"));
-            Equations.Add(new fsProductEquation(lnSigmaS2, lnSigmaS, constantTwoSqrt));
+            fsValue lnSigmaS = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_s]);
+            var lnSigmaS2 = new fsCalculatorConstant(new fsParameterIdentifier("lnSigmaS2")) 
+                                { Value = lnSigmaS * Math.Sqrt(2) };   
 
-            //lnXred50
-            IEquationParameter xRed50 = AddConstant(fsParameterIdentifier.ReducedCutSize);
-            IEquationParameter lnXred50 = AddConstant(new fsParameterIdentifier("lnXred50"));
-            Equations.Add(new LogEquation(xRed50, lnXred50));
+            var lnXred50 = new fsCalculatorConstant(new fsParameterIdentifier("lnXred50")) 
+                               { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.ReducedCutSize]) };
+            
+            var rf = new fsCalculatorConstant(new fsParameterIdentifier("rf")) 
+                         { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.rf]) };
 
-            IEquationParameter rf = AddConstant(fsParameterIdentifier.rf);
+            var ET = new fsCalculatorConstant(new fsParameterIdentifier("ET")) 
+                         { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.TotalEfficiency]) };
+   
+            var zRed50 = new fsCalculatorConstant(new fsParameterIdentifier("zRed50")) 
+                             { Value =  (lnXG.Value - lnXred50.Value) / lnSigmaS2.Value };
+            
+            var alpha = new fsCalculatorConstant(new fsParameterIdentifier("alpha")) 
+                            { Value =  lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaS) + fsValue.Sqr(lnSigmaG)) };
 
-            IEquationParameter ET = AddConstant(fsParameterIdentifier.TotalEfficiency);
-
-            //zRed50
-            IEquationParameter lnXGminusLnXred50 = AddConstant(new fsParameterIdentifier("lnXG - lnXred50"));
-            Equations.Add(new fsSumEquation(lnXG, lnXGminusLnXred50, lnXred50));
-            IEquationParameter zRed50 = AddConstant(new fsParameterIdentifier("zRed50"));
-            Equations.Add(new fsProductEquation(lnXGminusLnXred50, zRed50, lnSigmaS2));
-
-            //alpha
-            IEquationParameter normOfLns = AddConstant(new fsParameterIdentifier("normOfLns"));
-            Equations.Add(new NormEquation(normOfLns, lnSigmaG, lnSigmaS));
-            IEquationParameter alpha = AddConstant(new fsParameterIdentifier("alpha"));
-            Equations.Add(new fsProductEquation(lnSigmaS, alpha, normOfLns));
-
-            //beta
-            IEquationParameter beta = AddConstant(new fsParameterIdentifier("beta"));
-            Equations.Add(new fsProductEquation(lnSigmaG, beta, lnSigmaS));
-
+            var beta = new fsCalculatorConstant(new fsParameterIdentifier("beta")) 
+                           { Value = lnSigmaG / lnSigmaS };
 
             #endregion
-
 
             #endregion
 
             #region Equations Initialization
 
-            Equations.Add(new BigFLogEquation(F, x, lnSigmaG2, lnXG));
-            Equations.Add(new BigFoLogEquation(Fo, x, alpha, beta, zRed50, lnSigmaG2, lnXG));
-            Equations.Add(new BigFuLogEquation(Fu, x, ET, alpha, beta, zRed50, lnSigmaG2, lnXG));
+            Equations.Add(new BigFEquation(F, x, lnSigmaG2, lnXG));
+            Equations.Add(new BigFoEquation(Fo, x, alpha, beta, zRed50, lnSigmaG2, lnXG));
+            Equations.Add(new BigFuEquation(Fu, x, ET, alpha, beta, zRed50, lnSigmaG2, lnXG));
 
-            Equations.Add(new SmallFLogEquation(f, x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt));
-            Equations.Add(new SmallFoLogEquation(fo, x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt, lnSigmaS2, lnXred50, rf, ET));
-            Equations.Add(new SmallFuLogEquation(fu, x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt, lnSigmaS2, lnXred50, rf, ET));
+            Equations.Add(new SmallFEquation(f, x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt));
+            Equations.Add(new SmallFoEquation(fo, x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt, lnSigmaS2, lnXred50, rf, ET));
+            Equations.Add(new SmallFuEquation(fu, x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt, lnSigmaS2, lnXred50, rf, ET));
 
-            Equations.Add(new GLogEquation(G, x, lnSigmaS2, lnXred50, rf));
-            Equations.Add(new GRedLogEquation(GRed, x, lnSigmaS2, lnXred50));
+            Equations.Add(new GEquation(G, x, lnSigmaS2, lnXred50, rf));
+            Equations.Add(new GRedEquation(GRed, x, lnSigmaS2, lnXred50));
 
             #endregion
         }
     }
-
-    #endregion
  
 }

@@ -67,27 +67,24 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             }
 
             internalItemToParameter = new Dictionary<ListViewItem, fsYAxisParameterWithChecking>();
-            //materialVariablesListView.Items.Clear();
-            //otherVariablesListView.Items.Clear();
-            // -----------Внесено теперь ------------
-            feedFunctionsListView.Items.Clear();
-            // ---------------------------------------
+            materialVariablesListView.Items.Clear();
+            otherVariablesListView.Items.Clear();
 
             AddParametersToLists(fsYAxisParameter.fsYParameterKind.InputParameter, internalParameters, internalItemToParameter);
             AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter, internalParameters, internalItemToParameter);
             AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter, internalParameters, internalItemToParameter);
 
-            //CheckShowConstantsCheckBoxIfNeeded(internalParameters);
+            CheckShowConstantsCheckBoxIfNeeded(internalParameters);
         }
 
-        //private void CheckShowConstantsCheckBoxIfNeeded(IEnumerable<fsYAxisParameterWithChecking> internalParameters)
-        //{
-        //    if (internalParameters.Any(parameterWithChecking => parameterWithChecking.IsChecked
-        //            && parameterWithChecking.Kind != fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter))
-        //    {
-        //        ShowConstantsCheckBox.Checked = true;
-        //    }
-        //}
+        private void CheckShowConstantsCheckBoxIfNeeded(IEnumerable<fsYAxisParameterWithChecking> internalParameters)
+        {
+            if (internalParameters.Any(parameterWithChecking => parameterWithChecking.IsChecked
+                    && parameterWithChecking.Kind != fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter))
+            {
+                ShowConstantsCheckBox.Checked = true;
+            }
+        }
 
         internal List<fsParameterIdentifier> GetCheckedYAxisParameters()
         {
@@ -103,13 +100,10 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         {
             var lists = new[]
                             {
-                                //materialVariablesListView,
-                                //materialConstantsListView,
-                                //otherVariablesListView,
-                                // ------- Внесено теперь --------
-                                feedFunctionsListView
-                                // ------------------------------
-                                //otherConstantsListView
+                                materialVariablesListView,
+                                materialConstantsListView,
+                                otherVariablesListView,
+                                otherConstantsListView
                             };
             foreach (ListView listView in lists)
             {
@@ -169,23 +163,20 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                         ForeColor = m_kindToColor[selectionParameter.Kind]
                     };
                     ListView listView;
-                    //if (materialParameters.Contains(selectionParameter.Identifier))
-                    //{
-                    //    listView = selectionParameter.Kind ==
-                    //               fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter
-                    //                   ? materialVariablesListView
-                    //                   : materialConstantsListView;
-                    //}
-                    //else
-                    //{
-                    //    listView = selectionParameter.Kind ==
-                    //               fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter
-                    //                   ? otherVariablesListView
-                    //                   : otherConstantsListView;
-                    //}
-                    // ---- Внесено теперь ----------
-                    listView = feedFunctionsListView;
-                    // ------------------------------
+                    if (materialParameters.Contains(selectionParameter.Identifier))
+                    {
+                        listView = selectionParameter.Kind ==
+                                   fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter
+                                       ? materialVariablesListView
+                                       : materialConstantsListView;
+                    }
+                    else
+                    {
+                        listView = selectionParameter.Kind ==
+                                   fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter
+                                       ? otherVariablesListView
+                                       : otherConstantsListView;
+                    }
 
                     listView.Items.Add(newItem);
                     itemToYParameter[newItem] = selectionParameter;
@@ -203,21 +194,21 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             }
         }
 
-        //private void CheckBox1CheckedChanged(object sender, System.EventArgs e)
-        //{
-        //    ShowHideConstantParameters();
-        //}
+        private void CheckBox1CheckedChanged(object sender, System.EventArgs e)
+        {
+            ShowHideConstantParameters();
+        }
 
-        //private void ShowHideConstantParameters()
-        //{
-        //    MachineSettingsSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
-        //    MaterialParametersSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
-        //}
+        private void ShowHideConstantParameters()
+        {
+            MachineSettingsSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
+            MaterialParametersSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
+        }
 
-        //private void FeedCurvesSelectionControlLoad(object sender, System.EventArgs e)
-        //{
-        //    ShowHideConstantParameters();
-        //}
+        private void TablesAndChartsParametersSelectionControlLoad(object sender, System.EventArgs e)
+        {
+            ShowHideConstantParameters();
+        }
 
     }
 }

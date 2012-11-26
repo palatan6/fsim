@@ -116,6 +116,25 @@ namespace CalculatorModules.Hydrocyclone
             feedCurvesForm.Visible = false;
         }
 
+        private static fsParameterIdentifier[] parIdentForFeeds = new[] { 
+                                                                            fsParameterIdentifier.xg, 
+                                                                            fsParameterIdentifier.sigma_g, 
+                                                                            fsParameterIdentifier.sigma_s, 
+                                                                            fsParameterIdentifier.ReducedCutSize,
+                                                                            fsParameterIdentifier.TotalEfficiency,
+                                                                            fsParameterIdentifier.rf
+                                                                        };
+
+        public Dictionary<fsParameterIdentifier, fsValue> ValuesForFeeds = new Dictionary<fsParameterIdentifier, fsValue>();
+        
+        private void getValuesForFeeds()
+        {
+            foreach (var parameter in parIdentForFeeds)
+            {
+                ValuesForFeeds.Add(parameter, Values[parameter].Value);
+            }
+        }
+
         private void buttonShowFeeds_click(object sender, EventArgs e)
         {
             this.buttonShowFeeds.Enabled = false;
@@ -123,52 +142,66 @@ namespace CalculatorModules.Hydrocyclone
             feedCurvesForm.BringToFront();
             if (feedCurvesForm.WindowState.Equals(FormWindowState.Minimized))
                 feedCurvesForm.WindowState = FormWindowState.Normal;
+            // -------- Пока так ---------------
+            getValuesForFeeds();
+            fsFeedFunctionsData.getValues();
+            fsFeedFunctionsData.getGroups();
+            fsFeedFunctionsData.getCalculators(this);
+            feedCurvesForm.feedCurvesControl1.AssignCalculatorData(fsFeedFunctionsData.Values,
+                                                                   fsFeedFunctionsData.Groups,
+                                                                   fsFeedFunctionsData.ParameterToGroup,
+                                                                   fsFeedFunctionsData.Calculators);
+            feedCurvesForm.feedCurvesControl1.SetDiagram(fsFeedFunctionsData.x_id, 
+                                                         new[] {fsFeedFunctionsData.Fo_id}, 
+                                                         new[] {fsFeedFunctionsData.Fu_id});
+            feedCurvesForm.feedCurvesControl1.RefreshAndRecalculateAll();
+            // ---------------------------------
         }
 
-        protected Dictionary<ICollection<Enum>, DiagramConfiguration> m_feedsDiagrams = new Dictionary<ICollection<Enum>, DiagramConfiguration>(new EqualityComparer());
+        //protected Dictionary<ICollection<Enum>, DiagramConfiguration> m_feedsDiagrams = new Dictionary<ICollection<Enum>, DiagramConfiguration>(new EqualityComparer());
 
-        public enum fsFeedCurvesOption
-        {
-            [Description("Linear")]
-            Linear,
-            [Description("Logarithmic")]
-            Logarithmic
-        }
+        //public enum fsFeedCurvesOption
+        //{
+        //    [Description("Linear")]
+        //    Linear,
+        //    [Description("Logarithmic")]
+        //    Logarithmic
+        //}
 
-        protected void InitializeFeedsDiagrams()
-        {
-            fsRange machr = fsMachineRanges.DefaultMachineRanges.Ranges[fsParameterIdentifier.ReducedCutSize].Range;
+        //protected void InitializeFeedsDiagrams()
+        //{
+        //    fsRange machr = fsMachineRanges.DefaultMachineRanges.Ranges[fsParameterIdentifier.ReducedCutSize].Range;
 
-            m_feedsDiagrams.Add(
-                new Enum[] { fsFeedCurvesOption.Linear },
-                new DiagramConfiguration(
-                    fsFeedFunctionsData.xLog_id,
-                    new DiagramConfiguration.DiagramRange(machr.From.Value, machr.To.Value),
-                    new[] { fsFeedFunctionsData.Fo_id },
-                    new[] { fsFeedFunctionsData.Fu_id }));
+        //    m_feedsDiagrams.Add(
+        //        new Enum[] { fsFeedCurvesOption.Linear },
+        //        new DiagramConfiguration(
+        //            fsFeedFunctionsData.xLog_id,
+        //            new DiagramConfiguration.DiagramRange(Math.Log(machr.From.Value), Math.Log(machr.To.Value)),
+        //            new[] { fsFeedFunctionsData.Fo_id },
+        //            new[] { fsFeedFunctionsData.Fu_id }));
 
-            m_feedsDiagrams.Add(
-                new Enum[] { fsFeedCurvesOption.Logarithmic },
-                new DiagramConfiguration(
-                    fsFeedFunctionsData.x_id,
-                    new DiagramConfiguration.DiagramRange(machr.From.Value, machr.To.Value),
-                    new[] { fsFeedFunctionsData.Fo_id },
-                    new[] { fsFeedFunctionsData.Fu_id }));
-        }
+        //    m_feedsDiagrams.Add(
+        //        new Enum[] { fsFeedCurvesOption.Logarithmic },
+        //        new DiagramConfiguration(
+        //            fsFeedFunctionsData.x_id,
+        //            new DiagramConfiguration.DiagramRange(machr.From.Value, machr.To.Value),
+        //            new[] { fsFeedFunctionsData.Fo_id },
+        //            new[] { fsFeedFunctionsData.Fu_id }));
+        //}
 
-        private void SetFeedsDiagramFeedsOption()
-        {
-            if (m_feedsDiagrams.ContainsKey(CalculationOptions.Values))
-            {
-                DiagramConfiguration diagram = m_defaultDiagrams[CalculationOptions.Values];
-                feedCurvesForm.feedCurvesControl1.SetDiagram(diagram.xAxisParameter, diagram.yAxisParameters, diagram.y2AxisParameters);
-                if (diagram.range != null)
-                {
-                    Values[diagram.xAxisParameter].Range.From = new fsValue(diagram.range.From);
-                    Values[diagram.xAxisParameter].Range.To = new fsValue(diagram.range.To);
-                }
-            }
-        }
+        //private void SetFeedsDiagramFeedsOption()
+        //{
+        //    if (m_feedsDiagrams.ContainsKey(CalculationOptions.Values))
+        //    {
+        //        DiagramConfiguration diagram = m_defaultDiagrams[CalculationOptions.Values];
+        //        feedCurvesForm.feedCurvesControl1.SetDiagram(diagram.xAxisParameter, diagram.yAxisParameters, diagram.y2AxisParameters);
+        //        if (diagram.range != null)
+        //        {
+        //            Values[diagram.xAxisParameter].Range.From = new fsValue(diagram.range.From);
+        //            Values[diagram.xAxisParameter].Range.To = new fsValue(diagram.range.To);
+        //        }
+        //    }
+        //}
 
         #endregion
 

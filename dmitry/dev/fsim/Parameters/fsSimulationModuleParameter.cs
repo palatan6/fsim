@@ -39,6 +39,13 @@ namespace ParametersIdentifiers
             Range = new fsRange(new fsValue(0), new fsValue(100));
         }
 
+        public fsSimulationModuleParameter(fsParameterIdentifier identifier, fsValue value, fsRange range)
+            : base(identifier, value)
+        {
+            Unit = identifier.MeasurementCharacteristic.CurrentUnit;
+            Range = range;
+        }
+
         #endregion
 
         public fsValue GetValueInUnits()

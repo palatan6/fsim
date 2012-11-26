@@ -45,6 +45,7 @@ namespace Units
         public static fsUnit MeterPerSecond = new fsUnit("m/s", 1.0);
         public static fsUnit MeterPerMinute = new fsUnit("m/min", 1.0 / 60);
         public static fsUnit PerSecond = new fsUnit("1/s", 1);
+        public static fsUnit PerMeter = new fsUnit("1/m", 1);
         public static fsUnit PerMinute = new fsUnit("1/min", 1.0 / 60);
         public static fsUnit Percent = new fsUnit("%", 1e-2);
         public static fsUnit GrammeOverKilogram = new fsUnit("g/kg", 1e-3);
