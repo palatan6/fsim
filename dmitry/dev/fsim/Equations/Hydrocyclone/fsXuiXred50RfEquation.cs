@@ -203,6 +203,11 @@ namespace Equations.Hydrocyclone
                 fsValue a = lnSigmaS / fsValue.Sqrt(fsValue.Sqr(lnSigmaG) + fsValue.Sqr(lnSigmaS));
                 fsValue b = lnSigmaG / lnSigmaS;
                 fsValue zRed50 = (fsValue.Log(m_xG.Value) - fsValue.Log(m_xRed50.Value)) / (Math.Sqrt(2.0) * lnSigmaS);
+                if (!zRed50.Defined)
+                {
+                    m_xui.Value = new fsValue();
+                    return;
+                }
                 fsValue rfFrac = (1 + m_rf.Value) / (1 - m_rf.Value);
                 fsValue erfAz50 = 2 * m_i.Value * (rfFrac + fsSpecialFunctions.Erf(a * zRed50));
                 fsFunction f = new fzui(1 + rfFrac, erfAz50);

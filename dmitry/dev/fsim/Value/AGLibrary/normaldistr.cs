@@ -75,7 +75,7 @@ namespace AGLibrary
             {
                 /*
                  * The commented author's code gives, for example, the accuracy .2862276975845121e-8
-                 * for x = 0.49 instead of announced by the authors 1.0e-16. We correct this 
+                 * for x = 0.49 instead of announced by the author 1.0e-16. We correct this 
                  * situation using row expansion for erf(). Our code gives an accuracy < .2759017e-17
                  * for |x| < 0.5 (fixed by Tyshkevich Dmitry) 
                  */

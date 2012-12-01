@@ -28,7 +28,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         public static fsParameterIdentifier fo_id = new fsParameterIdentifier("fo", fsCharacteristic.FeedDerivative);
 
         public static fsParameterIdentifier G_id = new fsParameterIdentifier("G", fsCharacteristic.Concentration);
-        public static fsParameterIdentifier GRed_id = new fsParameterIdentifier("GRed", fsCharacteristic.Concentration);
+        public static fsParameterIdentifier GRed_id = new fsParameterIdentifier("G'", fsCharacteristic.Concentration);
 
         private static fsParameterIdentifier[] parameterList = new fsParameterIdentifier[] 
                                                                {
@@ -40,12 +40,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
 
         #endregion
-
-        // TODO: определить глобальное "непоявление" кривых в случае плохих sigma_s и пр.
-        //if (!lnSigmaG2.Defined || lnSigmaG2 == fsValue.Zero)
-        //    return new fsValue();
-        //if (!lnXG.Defined)
-        //    return new fsValue();
 
         #region Feed Functions as static ones
              
@@ -60,9 +54,11 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                          fsSpecialFunctions.Erfc(alpha * zRed50);
         }
 
-        public static fsValue Fu_func(fsValue x, fsValue ET, fsValue alpha, fsValue beta, fsValue zRed50, fsValue lnSigmaG2, fsValue lnXG)
+        public static fsValue Fu_func(fsValue x, fsValue rfFrac, fsValue alpha, fsValue beta, fsValue zRed50, fsValue lnSigmaG2, fsValue lnXG)
         {
-            return 1 / ET * (F_func(x, lnSigmaG2, lnXG) - (1 - ET) * Fo_func(x, alpha, beta, zRed50, lnSigmaG2, lnXG));
+            fsValue z = (fsValue.Log(x) - lnXG) / lnSigmaG2;
+            return 0.5 * (1 + fsSpecialFunctions.Erf(z) + rfFrac * fsSpecialFunctions.ErfExpInt(beta, zRed50, z)) /
+                   (1 + rfFrac * fsSpecialFunctions.Erf(alpha * zRed50));
         }
 
         public static fsValue GRed_func(fsValue x, fsValue lnSigmaS2, fsValue lnXred50)
@@ -133,11 +129,9 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             fsValue from = machr.From;
             fsValue to = machr.To;
             Values.Add(x_id, new fsSimulationModuleParameter(x_id, new fsValue(), new fsRange(from, to)));
-            //Values.Add(xLog_id, new fsSimulationModuleParameter(xLog_id, new fsValue(), new fsRange(fsValue.Log(from), fsValue.Log(to))));
-            //for (int i = 2; i < parameterList.Length; i++)
             for (int i = 1; i < parameterList.Length; i++)
             {
-                Values.Add(parameterList[i], new fsSimulationModuleParameter(parameterList[i], new fsValue())); 
+                Values.Add(parameterList[i], new fsSimulationModuleParameter(parameterList[i], new fsValue()));
             }
         }
 
@@ -243,7 +237,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private readonly IEquationParameter m_Fu;
         private readonly IEquationParameter m_x;
-        private readonly IEquationParameter m_ET;
+        private readonly IEquationParameter m_rfFrac;
         private readonly IEquationParameter m_alpha;
         private readonly IEquationParameter m_beta;
         private readonly IEquationParameter m_zRed50;
@@ -255,17 +249,17 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         public BigFuEquation(
            IEquationParameter Fu,
            IEquationParameter x,
-           IEquationParameter ET,
+           IEquationParameter rfFrac,
            IEquationParameter alpha,
            IEquationParameter beta,
            IEquationParameter zRed50,
            IEquationParameter lnSigmaG2,
            IEquationParameter lnXG)
-            : base(Fu, x, ET, alpha, beta, zRed50, lnSigmaG2, lnXG)
+            : base(Fu, x, rfFrac, alpha, beta, zRed50, lnSigmaG2, lnXG)
         {
             m_Fu = Fu;
             m_x = x;
-            m_ET = ET;
+            m_rfFrac = rfFrac;
             m_alpha = alpha;
             m_beta = beta;
             m_zRed50 = zRed50;
@@ -280,7 +274,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void BigFuFormula()
         {
-            m_Fu.Value = fsFeedFunctionsData.Fu_func(m_x.Value, m_ET.Value, m_alpha.Value, m_beta.Value, m_zRed50.Value, m_lnSigmaG2.Value, m_lnXG.Value);
+            m_Fu.Value = fsFeedFunctionsData.Fu_func(m_x.Value, m_rfFrac.Value, m_alpha.Value, m_beta.Value, m_zRed50.Value, m_lnSigmaG2.Value, m_lnXG.Value);
         }
     }
 
@@ -501,71 +495,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
     }
 
-    //#region Help Equations
-
-    //public class LogEquation : fsCalculatorEquation
-    //{
-    //    #region Parameters
-
-    //    private readonly IEquationParameter m_x;
-    //    private readonly IEquationParameter m_lnX;
-
-    //    #endregion
-
-    //    public LogEquation(
-    //       IEquationParameter x,
-    //       IEquationParameter lnX)
-    //        : base(x, lnX)
-    //    {
-    //        m_x = x;
-    //        m_lnX = lnX;
-    //    }
-
-    //    protected override void InitFormulas()
-    //    {
-    //        AddFormula(m_lnX, LogFormula);
-    //    }
-
-    //    private void LogFormula()
-    //    {
-    //        m_lnX.Value = fsValue.Log(m_x.Value);
-    //    }
-    //}
-
-    //public class NormEquation : fsCalculatorEquation
-    //{
-    //    #region Parameters
-
-    //    private readonly IEquationParameter m_norm;
-    //    private readonly IEquationParameter m_x;
-    //    private readonly IEquationParameter m_y;
-
-    //    #endregion
-
-    //    public NormEquation(
-    //       IEquationParameter norm,
-    //       IEquationParameter x,
-    //       IEquationParameter y)
-    //        : base(norm, x, y)
-    //    {
-    //        m_norm = norm;
-    //        m_x = x;
-    //        m_y = y;
-    //    }
-
-    //    protected override void InitFormulas()
-    //    {
-    //        AddFormula(m_norm, NormFormula);
-    //    }
-
-    //    private void NormFormula()
-    //    {
-    //        m_norm.Value = fsValue.Sqrt(fsValue.Sqr(m_x.Value) + fsValue.Sqr(m_y.Value));
-    //    }
-    //}
-
-    //#endregion
-
     #endregion
 
     public class FeedCurvesCalculator : fsCalculator
@@ -590,29 +519,32 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             #region Help Parameters
 
             var lnXG = new fsCalculatorConstant(new fsParameterIdentifier("lnXG")) 
-                           { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.xg]) };
+                           { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.xg].Value) };
 
             // lnSigmaG2
-            fsValue lnSigmaG = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_g]);
+            fsValue lnSigmaG = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_g].Value);
             var lnSigmaG2 = new fsCalculatorConstant(new fsParameterIdentifier("lnSigmaG2")) 
                                 { Value =  lnSigmaG * Math.Sqrt(2) };
+            
 
             var lnSigmaG2PiSqrt = new fsCalculatorConstant(new fsParameterIdentifier("lnSigmaG2PiSqrt")) 
                                       { Value =  1 / (Math.Sqrt(Math.PI) * lnSigmaG2.Value)};
 
             // lnSigmaS2
-            fsValue lnSigmaS = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_s]);
+            fsValue lnSigmaS = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_s].Value);
             var lnSigmaS2 = new fsCalculatorConstant(new fsParameterIdentifier("lnSigmaS2")) 
                                 { Value = lnSigmaS * Math.Sqrt(2) };   
 
             var lnXred50 = new fsCalculatorConstant(new fsParameterIdentifier("lnXred50")) 
-                               { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.ReducedCutSize]) };
+                               { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.ReducedCutSize].Value) };
             
             var rf = new fsCalculatorConstant(new fsParameterIdentifier("rf")) 
-                         { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.rf]) };
+                         { Value = hcControl.ValuesForFeeds[fsParameterIdentifier.rf].Value };
+            
+            var rfFrac = new fsCalculatorConstant(new fsParameterIdentifier("rf")) { Value = (1 - rf.Value) / (1 + rf.Value) };
 
             var ET = new fsCalculatorConstant(new fsParameterIdentifier("ET")) 
-                         { Value = fsValue.Log(hcControl.ValuesForFeeds[fsParameterIdentifier.TotalEfficiency]) };
+                         { Value = hcControl.ValuesForFeeds[fsParameterIdentifier.TotalEfficiency].Value };
    
             var zRed50 = new fsCalculatorConstant(new fsParameterIdentifier("zRed50")) 
                              { Value =  (lnXG.Value - lnXred50.Value) / lnSigmaS2.Value };
@@ -631,7 +563,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
             Equations.Add(new BigFEquation(F, x, lnSigmaG2, lnXG));
             Equations.Add(new BigFoEquation(Fo, x, alpha, beta, zRed50, lnSigmaG2, lnXG));
-            Equations.Add(new BigFuEquation(Fu, x, ET, alpha, beta, zRed50, lnSigmaG2, lnXG));
+            Equations.Add(new BigFuEquation(Fu, x, rfFrac, alpha, beta, zRed50, lnSigmaG2, lnXG));
 
             Equations.Add(new SmallFEquation(f, x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt));
             Equations.Add(new SmallFoEquation(fo, x, lnSigmaG2, lnXG, lnSigmaG2PiSqrt, lnSigmaS2, lnXred50, rf, ET));

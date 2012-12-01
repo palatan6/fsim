@@ -33,13 +33,13 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private Dictionary<ListViewItem, fsYAxisParameterWithChecking> m_itemToYParameter =
             new Dictionary<ListViewItem, fsYAxisParameterWithChecking>();
 
-        private readonly Dictionary<fsYAxisParameter.fsYParameterKind, Color> m_kindToColor =
-                new Dictionary<fsYAxisParameter.fsYParameterKind, Color>
-            {
-                {fsYAxisParameter.fsYParameterKind.InputParameter, Color.Blue},
-                {fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter, Color.Gray},
-                {fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter, Color.Black}
-            };
+        //private readonly Dictionary<fsYAxisParameter.fsYParameterKind, Color> m_kindToColor =
+        //        new Dictionary<fsYAxisParameter.fsYParameterKind, Color>
+        //    {
+        //        {fsYAxisParameter.fsYParameterKind.InputParameter, Color.Blue},
+        //        {fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter, Color.Gray},
+        //        {fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter, Color.Black}
+        //    };
 
         #endregion
 
@@ -67,24 +67,24 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             }
 
             internalItemToParameter = new Dictionary<ListViewItem, fsYAxisParameterWithChecking>();
-            materialVariablesListView.Items.Clear();
+            //materialVariablesListView.Items.Clear();
             otherVariablesListView.Items.Clear();
 
-            AddParametersToLists(fsYAxisParameter.fsYParameterKind.InputParameter, internalParameters, internalItemToParameter);
-            AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter, internalParameters, internalItemToParameter);
+            //AddParametersToLists(fsYAxisParameter.fsYParameterKind.InputParameter, internalParameters, internalItemToParameter);
+            //AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter, internalParameters, internalItemToParameter);
             AddParametersToLists(fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter, internalParameters, internalItemToParameter);
 
-            CheckShowConstantsCheckBoxIfNeeded(internalParameters);
+            //CheckShowConstantsCheckBoxIfNeeded(internalParameters);
         }
 
-        private void CheckShowConstantsCheckBoxIfNeeded(IEnumerable<fsYAxisParameterWithChecking> internalParameters)
-        {
-            if (internalParameters.Any(parameterWithChecking => parameterWithChecking.IsChecked
-                    && parameterWithChecking.Kind != fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter))
-            {
-                ShowConstantsCheckBox.Checked = true;
-            }
-        }
+        //private void CheckShowConstantsCheckBoxIfNeeded(IEnumerable<fsYAxisParameterWithChecking> internalParameters)
+        //{
+        //    if (internalParameters.Any(parameterWithChecking => parameterWithChecking.IsChecked
+        //            && parameterWithChecking.Kind != fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter))
+        //    {
+        //        ShowConstantsCheckBox.Checked = true;
+        //    }
+        //}
 
         internal List<fsParameterIdentifier> GetCheckedYAxisParameters()
         {
@@ -98,20 +98,26 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         internal void ApplyChecks(Dictionary<ListViewItem, fsYAxisParameterWithChecking> itemToParameter)
         {
-            var lists = new[]
-                            {
-                                materialVariablesListView,
-                                materialConstantsListView,
-                                otherVariablesListView,
-                                otherConstantsListView
-                            };
-            foreach (ListView listView in lists)
+            //var lists = new[]
+            //                {
+            //                    materialVariablesListView,
+            //                    materialConstantsListView,
+            //                    otherVariablesListView,
+            //                    otherConstantsListView
+            //                };
+            //foreach (ListView listView in lists)
+            //{
+            //    foreach (ListViewItem item in listView.Items)
+            //    {
+            //        itemToParameter[item].IsChecked = item.Checked;
+            //    }
+            //}
+            // ----- new -----
+            foreach (ListViewItem item in otherVariablesListView.Items)
             {
-                foreach (ListViewItem item in listView.Items)
-                {
-                    itemToParameter[item].IsChecked = item.Checked;
-                }
+                itemToParameter[item].IsChecked = item.Checked;
             }
+            // ---------------
         }
 
         private void AddParametersToLists(
@@ -119,39 +125,39 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             IEnumerable<fsYAxisParameterWithChecking> yAxisParameters,
             Dictionary<ListViewItem, fsYAxisParameterWithChecking> itemToYParameter)
         {
-            var materialParameters = new[]
-                                             {
-                                                 fsParameterIdentifier.MotherLiquidDensity,
-                                                 fsParameterIdentifier.MotherLiquidDensity,
-                                                 fsParameterIdentifier.LiquidDensity,
-                                                 fsParameterIdentifier.SolidsDensity,
-                                                 fsParameterIdentifier.SuspensionDensity,
-                                                 fsParameterIdentifier.SuspensionSolidsVolumeFraction,
-                                                 fsParameterIdentifier.SuspensionSolidsMassFraction,
-                                                 fsParameterIdentifier.SuspensionSolidsConcentration,
-                                                 fsParameterIdentifier.CakePorosity0,
-                                                 fsParameterIdentifier.CakePorosity,
-                                                 fsParameterIdentifier.Kappa0,
-                                                 fsParameterIdentifier.Kappa,
-                                                 fsParameterIdentifier.Ne,
-                                                 fsParameterIdentifier.CakePermeability0,
-                                                 fsParameterIdentifier.CakePermeability,
-                                                 fsParameterIdentifier.CakeResistance0,
-                                                 fsParameterIdentifier.CakeResistance,
-                                                 fsParameterIdentifier.CakeResistanceAlpha0,
-                                                 fsParameterIdentifier.CakeResistanceAlpha,
-                                                 fsParameterIdentifier.CakeCompressibility,
-                                                 fsParameterIdentifier.FilterMediumResistanceHce0,
-                                                 fsParameterIdentifier.DryCakeDensity0,
-                                                 fsParameterIdentifier.DryCakeDensity,
-                                                 fsParameterIdentifier.CakeWetDensity0,
-                                                 fsParameterIdentifier.CakeWetDensity,
-                                                 fsParameterIdentifier.CakeWetMassSolidsFractionRs0,
-                                                 fsParameterIdentifier.CakeWetMassSolidsFractionRs,
-                                                 fsParameterIdentifier.CakeMoistureContentRf0,
-                                                 fsParameterIdentifier.CakeMoistureContentRf,
+            //var materialParameters = new[]
+            //                                 {
+            //                                     fsParameterIdentifier.MotherLiquidDensity,
+            //                                     fsParameterIdentifier.MotherLiquidDensity,
+            //                                     fsParameterIdentifier.LiquidDensity,
+            //                                     fsParameterIdentifier.SolidsDensity,
+            //                                     fsParameterIdentifier.SuspensionDensity,
+            //                                     fsParameterIdentifier.SuspensionSolidsVolumeFraction,
+            //                                     fsParameterIdentifier.SuspensionSolidsMassFraction,
+            //                                     fsParameterIdentifier.SuspensionSolidsConcentration,
+            //                                     fsParameterIdentifier.CakePorosity0,
+            //                                     fsParameterIdentifier.CakePorosity,
+            //                                     fsParameterIdentifier.Kappa0,
+            //                                     fsParameterIdentifier.Kappa,
+            //                                     fsParameterIdentifier.Ne,
+            //                                     fsParameterIdentifier.CakePermeability0,
+            //                                     fsParameterIdentifier.CakePermeability,
+            //                                     fsParameterIdentifier.CakeResistance0,
+            //                                     fsParameterIdentifier.CakeResistance,
+            //                                     fsParameterIdentifier.CakeResistanceAlpha0,
+            //                                     fsParameterIdentifier.CakeResistanceAlpha,
+            //                                     fsParameterIdentifier.CakeCompressibility,
+            //                                     fsParameterIdentifier.FilterMediumResistanceHce0,
+            //                                     fsParameterIdentifier.DryCakeDensity0,
+            //                                     fsParameterIdentifier.DryCakeDensity,
+            //                                     fsParameterIdentifier.CakeWetDensity0,
+            //                                     fsParameterIdentifier.CakeWetDensity,
+            //                                     fsParameterIdentifier.CakeWetMassSolidsFractionRs0,
+            //                                     fsParameterIdentifier.CakeWetMassSolidsFractionRs,
+            //                                     fsParameterIdentifier.CakeMoistureContentRf0,
+            //                                     fsParameterIdentifier.CakeMoistureContentRf,
 
-                                             };
+            //                                 };
 
             foreach (fsYAxisParameterWithChecking selectionParameter in yAxisParameters)
             {
@@ -160,25 +166,29 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                     var newItem = new ListViewItem(selectionParameter.Identifier.Name)
                     {
                         Checked = selectionParameter.IsChecked,
-                        ForeColor = m_kindToColor[selectionParameter.Kind]
+                        //ForeColor = m_kindToColor[selectionParameter.Kind]
+                        ForeColor = Color.Black
                     };
-                    ListView listView;
-                    if (materialParameters.Contains(selectionParameter.Identifier))
-                    {
-                        listView = selectionParameter.Kind ==
-                                   fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter
-                                       ? materialVariablesListView
-                                       : materialConstantsListView;
-                    }
-                    else
-                    {
-                        listView = selectionParameter.Kind ==
-                                   fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter
-                                       ? otherVariablesListView
-                                       : otherConstantsListView;
-                    }
+                    //ListView listView;
+                    //if (materialParameters.Contains(selectionParameter.Identifier))
+                    //{
+                    //    listView = selectionParameter.Kind ==
+                    //               fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter
+                    //                   ? materialVariablesListView
+                    //                   : materialConstantsListView;
+                    //}
+                    //else
+                    //{
+                    //    listView = selectionParameter.Kind ==
+                    //               fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter
+                    //                   ? otherVariablesListView
+                    //                   : otherConstantsListView;
+                    //}
 
-                    listView.Items.Add(newItem);
+                    //listView.Items.Add(newItem);
+                    // --------- new -------------
+                    otherVariablesListView.Items.Add(newItem);
+                    // ---------------------------
                     itemToYParameter[newItem] = selectionParameter;
                 }
             }
@@ -194,21 +204,21 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             }
         }
 
-        private void CheckBox1CheckedChanged(object sender, System.EventArgs e)
-        {
-            ShowHideConstantParameters();
-        }
+        //private void CheckBox1CheckedChanged(object sender, System.EventArgs e)
+        //{
+        //    ShowHideConstantParameters();
+        //}
 
-        private void ShowHideConstantParameters()
-        {
-            MachineSettingsSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
-            MaterialParametersSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
-        }
+        //private void ShowHideConstantParameters()
+        //{
+        //    MachineSettingsSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
+        //    MaterialParametersSplitContainer.Panel2Collapsed = !ShowConstantsCheckBox.Checked;
+        //}
 
-        private void TablesAndChartsParametersSelectionControlLoad(object sender, System.EventArgs e)
-        {
-            ShowHideConstantParameters();
-        }
+        //private void TablesAndChartsParametersSelectionControlLoad(object sender, System.EventArgs e)
+        //{
+        //    ShowHideConstantParameters();
+        //}
 
     }
 }

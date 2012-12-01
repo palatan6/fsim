@@ -47,8 +47,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.detalizationBox = new fmDataGrid.fmNumericalTextBox();
             this.rangeTo = new fmDataGrid.fmNumericalTextBox();
             this.rangeFrom = new fmDataGrid.fmNumericalTextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.iterationList = new System.Windows.Forms.ComboBox();
+            //this.label1 = new System.Windows.Forms.Label();
+            //this.iterationList = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.fsDiagramWithTable1 = new CalculatorModules.User_Controls.fsDiagramWithTable();
@@ -134,7 +134,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.m_xAxisComboBox.Name = "m_xAxisComboBox";
             this.m_xAxisComboBox.Size = new System.Drawing.Size(97, 21);
             this.m_xAxisComboBox.TabIndex = 11;
-            this.m_xAxisComboBox.SelectedIndexChanged += new System.EventHandler(this.XAxisComboBoxSelectedIndexChanged);
+            //this.m_xAxisComboBox.SelectedIndexChanged += new System.EventHandler(this.XAxisComboBoxSelectedIndexChanged);
             // 
             // yAxisConfigure
             // 
@@ -219,15 +219,16 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(39, 13);
             this.label6.TabIndex = 2;
-            this.label6.Text = "Inputs:";
+            //this.label6.Text = "Inputs:";
+            this.label6.Text = "Influencing parameters";
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.detalizationBox);
             this.panel2.Controls.Add(this.rangeTo);
             this.panel2.Controls.Add(this.rangeFrom);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.iterationList);
+            //this.panel2.Controls.Add(this.label1);
+            //this.panel2.Controls.Add(this.iterationList);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -265,27 +266,27 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.rangeFrom.Size = new System.Drawing.Size(44, 20);
             this.rangeFrom.TabIndex = 8;
             this.rangeFrom.TextChanged += new System.EventHandler(this.RangeFromTextChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Iterate";
-            // 
-            // iterationList
-            // 
-            this.iterationList.DropDownHeight = 5000;
-            this.iterationList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.iterationList.FormattingEnabled = true;
-            this.iterationList.IntegralHeight = false;
-            this.iterationList.Location = new System.Drawing.Point(48, 7);
-            this.iterationList.Name = "iterationList";
-            this.iterationList.Size = new System.Drawing.Size(97, 21);
-            this.iterationList.TabIndex = 0;
-            this.iterationList.SelectedIndexChanged += new System.EventHandler(this.IterationListSelectedIndexChanged);
+            //// 
+            //// label1
+            //// 
+            //this.label1.AutoSize = true;
+            //this.label1.Location = new System.Drawing.Point(3, 10);
+            //this.label1.Name = "label1";
+            //this.label1.Size = new System.Drawing.Size(37, 13);
+            //this.label1.TabIndex = 1;
+            //this.label1.Text = "Iterate";
+            //// 
+            //// iterationList
+            //// 
+            //this.iterationList.DropDownHeight = 5000;
+            //this.iterationList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            //this.iterationList.FormattingEnabled = true;
+            //this.iterationList.IntegralHeight = false;
+            //this.iterationList.Location = new System.Drawing.Point(48, 7);
+            //this.iterationList.Name = "iterationList";
+            //this.iterationList.Size = new System.Drawing.Size(97, 21);
+            //this.iterationList.TabIndex = 0;
+            //this.iterationList.SelectedIndexChanged += new System.EventHandler(this.IterationListSelectedIndexChanged);
             // 
             // label3
             // 
@@ -342,11 +343,11 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ComboBox iterationList;
+        //private System.Windows.Forms.ComboBox iterationList;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-       // private fsDiagramWithTable fsDiagramWithTable1;
+        //private System.Windows.Forms.Label label1;
+        //private fsDiagramWithTable fsDiagramWithTable1;
         public fsDiagramWithTable fsDiagramWithTable1;
         private System.Windows.Forms.SplitContainer yAxisSplitContainer;
         private System.Windows.Forms.Panel panel2;

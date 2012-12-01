@@ -125,14 +125,37 @@ namespace CalculatorModules.Hydrocyclone
                                                                             fsParameterIdentifier.rf
                                                                         };
 
-        public Dictionary<fsParameterIdentifier, fsValue> ValuesForFeeds = new Dictionary<fsParameterIdentifier, fsValue>();
+        public Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> ValuesForFeeds = new Dictionary<fsParameterIdentifier, fsSimulationModuleParameter>();
         
-        private void getValuesForFeeds()
+        private void getValuesForFeeds(bool isToAddValues)
         {
-            foreach (var parameter in parIdentForFeeds)
+            if (isToAddValues)
             {
-                ValuesForFeeds.Add(parameter, Values[parameter].Value);
+                foreach (var parameter in parIdentForFeeds)
+                {
+                    ValuesForFeeds.Add(parameter, Values[parameter]);
+                }
             }
+            else
+            {
+                foreach (var parameter in parIdentForFeeds)
+                {
+                    ValuesForFeeds[parameter] = Values[parameter];
+                }
+            }
+        }
+
+        private bool isButtonShowFeedsOnceClicked = false;
+
+        private void RefreshAndRecalculateFeedCurves()
+        {
+            getValuesForFeeds(!isButtonShowFeedsOnceClicked);
+            fsFeedFunctionsData.getCalculators(this);
+            feedCurvesForm.feedCurvesControl1.AssignCalculatorData(fsFeedFunctionsData.Values,
+                                                                   fsFeedFunctionsData.Groups,
+                                                                   fsFeedFunctionsData.ParameterToGroup,
+                                                                   fsFeedFunctionsData.Calculators);
+            feedCurvesForm.feedCurvesControl1.RefreshAndRecalculateAll(); 
         }
 
         private void buttonShowFeeds_click(object sender, EventArgs e)
@@ -142,20 +165,17 @@ namespace CalculatorModules.Hydrocyclone
             feedCurvesForm.BringToFront();
             if (feedCurvesForm.WindowState.Equals(FormWindowState.Minimized))
                 feedCurvesForm.WindowState = FormWindowState.Normal;
-            // -------- Пока так ---------------
-            getValuesForFeeds();
-            fsFeedFunctionsData.getValues();
-            fsFeedFunctionsData.getGroups();
-            fsFeedFunctionsData.getCalculators(this);
-            feedCurvesForm.feedCurvesControl1.AssignCalculatorData(fsFeedFunctionsData.Values,
-                                                                   fsFeedFunctionsData.Groups,
-                                                                   fsFeedFunctionsData.ParameterToGroup,
-                                                                   fsFeedFunctionsData.Calculators);
-            feedCurvesForm.feedCurvesControl1.SetDiagram(fsFeedFunctionsData.x_id, 
-                                                         new[] {fsFeedFunctionsData.Fo_id}, 
-                                                         new[] {fsFeedFunctionsData.Fu_id});
-            feedCurvesForm.feedCurvesControl1.RefreshAndRecalculateAll();
-            // ---------------------------------
+            if (!isButtonShowFeedsOnceClicked)
+            {
+                isButtonShowFeedsOnceClicked = true;
+                feedCurvesForm.feedCurvesControl1.SetHcControl(this);
+                fsFeedFunctionsData.getGroups();
+                fsFeedFunctionsData.getValues();
+                feedCurvesForm.feedCurvesControl1.SetDiagram(fsFeedFunctionsData.x_id, 
+                                                             new[] {fsFeedFunctionsData.Fo_id}, 
+                                                             new[] {fsFeedFunctionsData.fo_id});
+            }
+            RefreshAndRecalculateFeedCurves();
         }
 
         //protected Dictionary<ICollection<Enum>, DiagramConfiguration> m_feedsDiagrams = new Dictionary<ICollection<Enum>, DiagramConfiguration>(new EqualityComparer());
@@ -279,7 +299,9 @@ namespace CalculatorModules.Hydrocyclone
         {
             base.RecalculateAndRedraw();
             if (IsCalculatorControlInitialized)
-                FillUnderOverFlowsTable();            
+                FillUnderOverFlowsTable();
+            if (isButtonShowFeedsOnceClicked)
+                RefreshAndRecalculateFeedCurves();            
         }
 
         protected internal override void StopGridsEdit()
