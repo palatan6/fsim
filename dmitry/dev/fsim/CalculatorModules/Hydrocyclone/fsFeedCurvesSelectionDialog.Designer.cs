@@ -32,8 +32,8 @@
             this.okButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.y1SelectionControl = new fsFeedCurvesSelectionControl();
-            this.y2SelectionControl = new fsFeedCurvesSelectionControl();
+            this.y1SelectionControl = new CalculatorModules.Hydrocyclone.Feeds.fsFeedCurvesSelectionControl();
+            this.y2SelectionControl = new CalculatorModules.Hydrocyclone.Feeds.fsFeedCurvesSelectionControl();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -46,7 +46,7 @@
             // cancelButton
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cancelButton.Location = new System.Drawing.Point(789, 5);
+            this.cancelButton.Location = new System.Drawing.Point(436, 5);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 1;
@@ -57,7 +57,7 @@
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.Location = new System.Drawing.Point(708, 5);
+            this.okButton.Location = new System.Drawing.Point(355, 5);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -70,9 +70,9 @@
             this.panel1.Controls.Add(this.cancelButton);
             this.panel1.Controls.Add(this.okButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 427);
+            this.panel1.Location = new System.Drawing.Point(0, 247);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(867, 31);
+            this.panel1.Size = new System.Drawing.Size(514, 31);
             this.panel1.TabIndex = 4;
             // 
             // splitContainer1
@@ -88,8 +88,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.y2SelectionControl);
-            this.splitContainer1.Size = new System.Drawing.Size(867, 386);
-            this.splitContainer1.SplitterDistance = 430;
+            this.splitContainer1.Size = new System.Drawing.Size(514, 206);
+            this.splitContainer1.SplitterDistance = 254;
             this.splitContainer1.TabIndex = 5;
             // 
             // y1SelectionControl
@@ -97,7 +97,7 @@
             this.y1SelectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.y1SelectionControl.Location = new System.Drawing.Point(0, 0);
             this.y1SelectionControl.Name = "y1SelectionControl";
-            this.y1SelectionControl.Size = new System.Drawing.Size(430, 386);
+            this.y1SelectionControl.Size = new System.Drawing.Size(254, 206);
             this.y1SelectionControl.TabIndex = 3;
             this.y1SelectionControl.Text = "Y Axis";
             // 
@@ -106,7 +106,7 @@
             this.y2SelectionControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.y2SelectionControl.Location = new System.Drawing.Point(0, 0);
             this.y2SelectionControl.Name = "y2SelectionControl";
-            this.y2SelectionControl.Size = new System.Drawing.Size(433, 386);
+            this.y2SelectionControl.Size = new System.Drawing.Size(256, 206);
             this.y2SelectionControl.TabIndex = 0;
             this.y2SelectionControl.Text = "Y2 Axis";
             // 
@@ -116,7 +116,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(867, 41);
+            this.panel2.Size = new System.Drawing.Size(514, 41);
             this.panel2.TabIndex = 6;
             // 
             // button1
@@ -124,7 +124,7 @@
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.button1.Location = new System.Drawing.Point(780, 12);
+            this.button1.Location = new System.Drawing.Point(427, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -136,7 +136,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(867, 458);
+            this.ClientSize = new System.Drawing.Size(514, 278);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);

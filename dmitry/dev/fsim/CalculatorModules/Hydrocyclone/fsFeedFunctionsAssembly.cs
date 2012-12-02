@@ -92,6 +92,9 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
+        private static bool isGroupsOnceLoaded = false;
+        private static bool isValuesOnceLoaded = false;
+        
         #region Groups
 
         public static List<fsParametersGroup> Groups = new List<fsParametersGroup>();
@@ -100,6 +103,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         public static void getGroups()
         {
+            if (isGroupsOnceLoaded)
+                return;
             fsParametersGroup group;
             group = new fsParametersGroup(false);
             group.Parameters.Add(x_id);
@@ -114,7 +119,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 ParameterToGroup.Add(parameterList[i], group);
                 group.Representator = parameterList[i];
                 Groups.Add(group); 
-            }           
+            }
+            isGroupsOnceLoaded = true;
         }
 
         #endregion
@@ -125,6 +131,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         public static void getValues()
         {
+            if (isValuesOnceLoaded)
+                return;
             fsRange machr = fsMachineRanges.DefaultMachineRanges.Ranges[fsParameterIdentifier.ReducedCutSize].Range;
             fsValue from = machr.From;
             fsValue to = machr.To;
@@ -133,6 +141,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             {
                 Values.Add(parameterList[i], new fsSimulationModuleParameter(parameterList[i], new fsValue()));
             }
+            isValuesOnceLoaded = true;
         }
 
         #endregion
@@ -143,6 +152,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         public static void getCalculators(fsHydrocycloneNewControl hcControl) 
         {
+            Calculators.Clear();
             Calculators.Add(new FeedCurvesCalculator(hcControl));
         }
 

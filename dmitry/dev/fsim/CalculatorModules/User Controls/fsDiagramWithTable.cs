@@ -23,6 +23,23 @@ namespace CalculatorModules.User_Controls
             m_xAxis = xAxis;
         }
 
+        // ----- new ------
+        public void SetXAxis()
+        {
+            var xAxis = new fsNamedArray
+            {
+                Name = "",
+                Array = new fsValue[] { }
+            };
+            m_xAxis = xAxis;
+        }
+      
+        public void ClearXAxis()
+        {
+            m_xAxis.Array = new fsValue[] { };
+        }
+        // ----------------
+
         public void ClearYAxis()
         {
             m_yAxis.Clear();
@@ -49,8 +66,26 @@ namespace CalculatorModules.User_Controls
             RefreshTable();
         }
 
+        // ----- new ------
+        public void ClearAllAndRedraw()
+        {
+            ClearXAxis();
+            ClearYAxis();
+            ClearY2Axis();
+            Redraw();
+        }
+        // ----------------
+
         private void RefreshTable()
         {
+            // ---- new -------
+            if (m_xAxis.Array.Length == 0)
+            {
+                table.Rows.Clear();
+                return;
+            }                
+            // ----------------
+
             int selectedRowIndex = 0;
             int selectedColIndex = 0;
             if (table.CurrentCell != null)

@@ -10,6 +10,7 @@ using ParametersIdentifiers;
 using ParametersIdentifiers.Ranges;
 using StepCalculators;
 using Value;
+using ZedGraph;
 
 namespace CalculatorModules.Hydrocyclone.Feeds
 {
@@ -32,7 +33,19 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private readonly List<fsParameterIdentifier> m_yAxisParameters = new List<fsParameterIdentifier>();
         private readonly List<fsParameterIdentifier> m_y2AxisParameters = new List<fsParameterIdentifier>();
 
-        private fsHydrocycloneNewControl hcControl; // new
+        private fsHydrocycloneNewControl hcControl;
+
+        private AxisType xAxisType = AxisType.Linear;
+
+        private bool isXAxisComboBoxFirstChanged;
+
+        private bool isXgZero;
+        private bool isSigmaGZero;
+        private bool isSigmaSZero;
+        private bool isXRedZero;
+        private bool isThereZeroInfluencingParameter;
+
+        private bool isXAxisSet = false;
 
         #endregion
 
@@ -42,17 +55,18 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         {
             InitializeComponent();
 
+            isXAxisComboBoxFirstChanged = true;
+            m_xAxisComboBox.SelectedIndex = 0;
+
             m_values = new Dictionary<fsParameterIdentifier, fsSimulationModuleParameter>();
         }
 
         #endregion
 
-        // ------ new --------
         public void SetHcControl(fsHydrocycloneNewControl hcc)
         {
             hcControl = hcc;
         }
-        // -------------------
         
         public void AssignCalculatorData(
             Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> values,
@@ -93,6 +107,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         public void RefreshAndRecalculateAll()
         {
+            CheckZeroInfluencingParameters();
             RefreshInputAndReadIterationParameter();
             CalculateData();
             RefreshOutputAndReadXyParameters();
@@ -101,7 +116,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void RefreshOutputAndReadXyParameters()
         {
-            //RefreshXAxisList(m_xAxisComboBox);
             RefreshYAxisList(m_yAxisParameters, m_yAxisList);
             RefreshYAxisList(m_y2AxisParameters, m_y2AxisList);
         }
@@ -112,16 +126,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             {
                 m_inputRefreshing = true;
 
-                //RefreshIterationList();
-
-                //m_iterationParameter = m_values.Keys.FirstOrDefault(parameter => parameter.Name == iterationList.Text);
-
                 RefreshRangesBoxes();
 
-                if (detalizationBox.Text == "")
-                {
-                    detalizationBox.Text = @"50";
-                }
+                //if (detalizationBox.Text == "")
+                //{
+                //    detalizationBox.Text = @"50";
+                //}
 
                 RefreshInputsBox();
 
@@ -131,122 +141,100 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void RefreshRangesBoxes()
         {
-            //if (m_iterationParameter == null)
-            //    return;
-
             fsRange range = m_values[m_iterationParameter].Range;
             double factor = m_values[m_iterationParameter].Unit.Coefficient;
             rangeFrom.Text = (range.From / factor).ToString();
             rangeTo.Text = (range.To / factor).ToString();
         }
 
-        #region RefreshInputs
-
         private void RefreshInputsBox()
         {
-            //var materialInputData = new List<string>();
-            //var machiningSettingsInputData = new List<string>();
-            //foreach (fsParametersGroup group in m_groups)
-            //{
-            //    if (group.Parameters.Contains(m_iterationParameter))
-            //        continue;
-
-            //    if (group.GetIsInputFlag())
-            //    {
-            //        fsParameterIdentifier parameter = group.Representator;
-            //        string line = parameter.Name
-            //            + "\t" + m_values[parameter].Unit.Name
-            //            + "\t" + m_values[parameter].GetValueInUnits();
-            //        if (group.Kind == fsParametersGroup.fsParametersGroupKind.MaterialParameters)
-            //        {
-            //            materialInputData.Add(line);
-            //        }
-            //        else
-            //        {
-            //            machiningSettingsInputData.Add(line);
-            //        }
-            //    }
-            //}
-
-            //var lines = new List<string>();
-            //lines.AddRange(materialInputData);
-            //lines.Add("------------------------------------");
-            //lines.AddRange(machiningSettingsInputData);
-
-            //inputsTextBox.ForeColor = Color.Blue;
-            //inputsTextBox.Lines = lines.ToArray();
-            // -------- new --------
             string line;
             var lines = new List<string>();
             foreach (var item in hcControl.ValuesForFeeds)
             {
-                line = item.Key.Name  + "\t" + item.Value.Unit.Name + "\t" + item.Value.GetValueInUnits();
+                line = item.Key.Name + "\t" + item.Value.Unit.Name + "\t" + item.Value.GetValueInUnits();
                 lines.Add(line);
             }
             inputsTextBox.Lines = lines.ToArray();
-            // ---------------------
         }
-
-        
-        //private void RefreshIterationList()
-        //{
-        //    iterationList.Items.Clear();
-        //    foreach (fsParametersGroup group in m_groups)
-        //    {
-        //        if (group.GetIsInputFlag())
-        //        {
-        //            foreach (fsParameterIdentifier parameter in group.Parameters)
-        //            {
-        //                iterationList.Items.Add(parameter.Name);
-        //            }
-        //        }
-        //    }
-
-        //    if (iterationList.Items.Count == 0)
-        //        return;
-
-        //    if (m_iterationParameter != null && iterationList.Items.Contains(m_iterationParameter.Name))
-        //    {
-        //        iterationList.SelectedIndex = iterationList.Items.IndexOf(m_iterationParameter.Name);
-        //    }
-        //    else
-        //    {
-        //        iterationList.SelectedItem = iterationList.Items[0];
-        //    }
-        //}
-
-        #endregion
 
         #region Calculations
 
+        // ------ new --------
+        private void CheckZeroInfluencingParameters()
+        { 
+            isXgZero = false;
+            isSigmaGZero = false;
+            isSigmaSZero = false;
+            isXRedZero = false;
+            if (hcControl.ValuesForFeeds[fsParameterIdentifier.xg].Value.Value == 0)
+                isXgZero = true;
+            if (hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_g].Value.Value == 0)
+                isSigmaGZero = true;
+            if (hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_s].Value.Value == 0)
+                isSigmaGZero = true;
+            if (hcControl.ValuesForFeeds[fsParameterIdentifier.ReducedCutSize].Value.Value == 0)
+                isXRedZero = true;
+            isThereZeroInfluencingParameter = isXgZero || isSigmaGZero || isSigmaSZero || isXRedZero;
+        }
+        // -------------------
+
         private void CalculateData()
         {
-            //if (m_inputRefreshing || m_iterationParameter == null)
-            //    return;
-
-            if (m_inputRefreshing) // new
+            if (m_inputRefreshing)
                 return;
 
-            var detalization = (int)fsValue.StringToValue(detalizationBox.Text).Value;
+            m_data = new Dictionary<fsParameterIdentifier, List<fsSimulationModuleParameter>>();
+         
+            // ----- new ------
+            if (isThereZeroInfluencingParameter)
+                return;
+            // ----------------
+
+            var detalization = (int)fsValue.StringToValue(detalizationBox.Text).Value;            
+
             if (detalization < 2)
             {
                 detalization = 2;
             }
             double factor = m_values[m_iterationParameter].Unit.Coefficient;
             fsValue from = fsValue.StringToValue(rangeFrom.Text) * factor;
-            fsValue to = fsValue.StringToValue(rangeTo.Text) * factor;
+            fsValue to = fsValue.StringToValue(rangeTo.Text) * factor; 
 
-            m_data = new Dictionary<fsParameterIdentifier, List<fsSimulationModuleParameter>>();
+            // ------ new --------
+            if (!(from.Defined && to.Defined))
+                return;
+            if (from > to)
+            {
+                fsValue to2 = to;
+                to = from;
+                from = to2;
+            }
+            if (from == to)
+                to += 0.01 * factor;
+            if (from.Value <= 0.01 * factor)
+            {
+                from.Value = 0.01 * factor;
+                if (to.Value <= 0.02 * factor)
+                    to.Value = 0.02 * factor;                    
+            }
+            // -------------------
+           
+            fsValue coef = (xAxisType == AxisType.Linear) ? (to - from) / (double)detalization : fsValue.Pow(to / from, 1 / (double)detalization);
             for (int i = 0; i <= detalization; ++i)
             {
-                Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> currentValues =
+                Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> currentValues = 
                     m_values.ToDictionary(pair => pair.Key, pair => new fsSimulationModuleParameter(pair.Value));
 
                 fsParametersGroup xInitialgroup = m_parameterToGroup[m_iterationParameter];
                 var xNewGroup = new fsParametersGroup(xInitialgroup) { Representator = m_iterationParameter };
                 SubstituteGroup(m_parameterToGroup, xInitialgroup, xNewGroup);
 
-                currentValues[m_iterationParameter].Value = from + (to - from) * i / detalization;
+                if (xAxisType == AxisType.Linear)
+                    currentValues[m_iterationParameter].Value  = from + coef * i;
+                else
+                    currentValues[m_iterationParameter].Value  = from * fsValue.Pow(coef, i);
                 fsCalculationProcessor.ProcessCalculatorParameters(currentValues, m_parameterToGroup, m_calculators);
 
                 SubstituteGroup(m_parameterToGroup, xNewGroup, xInitialgroup);
@@ -304,27 +292,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         #endregion
 
         #region Refresh Output
-
-        //private void RefreshXAxisList(ComboBox xAxisComboBox)
-        //{
-        //    if (m_inputRefreshing)
-        //        return;
-
-        //    string oldText = xAxisComboBox.Text;
-        //    xAxisComboBox.Items.Clear();
-        //    IEnumerable<fsYAxisParameter> classifyiedParameters = GetSelectionParameters(m_values.Keys);
-        //    foreach (fsYAxisParameter classifyiedParameter in classifyiedParameters)
-        //    {
-        //        if (classifyiedParameter.Kind == fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter)
-        //        {
-        //            xAxisComboBox.Items.Add(classifyiedParameter.Identifier.Name);
-        //        }
-        //    }
-        //    if (m_iterationParameter != null)
-        //    {
-        //        xAxisComboBox.Text = xAxisComboBox.Items.Contains(oldText) ? oldText : m_iterationParameter.Name;
-        //    }
-        //}
 
         private void RefreshYAxisList(IEnumerable<fsParameterIdentifier> parameters, ListView yAxisListView)
         {
@@ -397,51 +364,31 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             }
         }
 
-        //private static bool IsConstantList(List<fsSimulationModuleParameter> list)
-        //{
-        //    if (list.Count <= 1)
-        //    {
-        //        return true;
-        //    }
-        //    fsValue minValue = list[0].GetValueInUnits();
-        //    fsValue maxValue = list[0].GetValueInUnits();
-        //    for (int i = 1; i < list.Count; ++i)
-        //    {
-        //        fsValue currentValue = list[i].GetValueInUnits();
-        //        if (!minValue.Defined
-        //            || currentValue.Defined && minValue.Value > currentValue.Value)
-        //        {
-        //            minValue = currentValue;
-        //        }
-        //        if (!maxValue.Defined
-        //            || currentValue.Defined && maxValue.Value < currentValue.Value)
-        //        {
-        //            maxValue = currentValue;
-        //        }
-        //    }
-        //    fsValue delta = maxValue - minValue;
-        //    fsValue deviation = delta / fsValue.Max(fsValue.Abs(minValue), fsValue.Abs(maxValue));
-        //    return deviation <= new fsValue(1e-9);
-        //}
-
         private void RefreshDiagramAndTable()
         {
+            //if (m_data.Count == 0)
+            //    return;
+            // ------ new ------
             if (m_data.Count == 0)
+            {
+                if (!isXAxisSet)
+                {
+                    fsDiagramWithTable1.SetXAxis();
+                    isXAxisSet = true;
+                }                   
+                fsDiagramWithTable1.ClearAllAndRedraw();
                 return;
+            }
+            // -----------------
 
             fsParameterIdentifier xParameter = m_iterationParameter;
-            //foreach (fsParameterIdentifier parameterIdentifier in m_values.Keys)
-            //{
-            //    if (parameterIdentifier.Name == m_xAxisComboBox.Text)
-            //    {
-            //        xParameter = parameterIdentifier;
-            //        break;
-            //    }
-            //}
             fsDiagramWithTable.fsNamedArray xArray = GetArray(xParameter);
-            fsDiagramWithTable.fsNamedArray niceXArray = MakeIncreasingNiceNodes(xArray);
+            fsDiagramWithTable.fsNamedArray niceXArray = (xAxisType == AxisType.Linear) ? MakeIncreasingNiceNodes(xArray) : xArray;
 
             fsDiagramWithTable1.SetXAxis(niceXArray);
+            // ------ new ------
+            isXAxisSet = true;
+            // -----------------
 
             fsDiagramWithTable1.ClearYAxis();
             foreach (fsDiagramWithTable.fsNamedArray curve in m_yCurves)
@@ -460,23 +407,27 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private static fsDiagramWithTable.fsNamedArray MakeIncreasingNiceNodes(fsDiagramWithTable.fsNamedArray xArray)
         {
-            double[] x = xArray.GetDoublesArray();
-            if (x[0] > x[x.Length - 1])
-            {
-                x = x.Reverse().ToArray();
-            }
-            double low = x[0];
-            double high = x[x.Length - 1];
-            if (high == low)
-            {
-                var result = new fsDiagramWithTable.fsNamedArray
-                {
-                    Name = xArray.Name,
-                    Array = new fsValue[xArray.Array.Length]
-                };
-                xArray.Array.CopyTo(result.Array, 0);
-                return result;
-            }
+            //double[] x = xArray.GetDoublesArray();
+            //if (x[0] > x[x.Length - 1])
+            //{
+            //    x = x.Reverse().ToArray();
+            //}
+            //double low = x[0];
+            //double high = x[x.Length - 1];
+            //if (high == low)
+            //{
+            //    var result = new fsDiagramWithTable.fsNamedArray
+            //    {
+            //        Name = xArray.Name,
+            //        Array = new fsValue[xArray.Array.Length]
+            //    };
+            //    xArray.Array.CopyTo(result.Array, 0);
+            //    return result;
+            //}
+            // ------ new ------
+            double low = xArray.Array[0].Value;
+            double high = xArray.Array[xArray.Array.Length - 1].Value;
+            // -----------------
             double eps = (high - low) * 1e-9;
             var steps = new[]
                             {
@@ -491,7 +442,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 {
                     double step = steps[i] * Math.Pow(10.0, deg);
                     var nodesAmount = (int)(Math.Ceiling(high / step) - Math.Floor(low / step));
-                    if (nodesAmount >= x.Length)
+                    //if (nodesAmount >= x.Length)
+                    if (nodesAmount >= xArray.Array.Length)
                     {
                         var nodes = new List<fsValue> { new fsValue(low) };
                         for (int j = 0; ; ++j)
@@ -574,40 +526,33 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #region UI Event
 
-        //private void IterationListSelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    fsParameterIdentifier newIterationParameter = m_values.Keys.FirstOrDefault(parameter => parameter.Name == iterationList.Text);
-        //    if (m_iterationParameter != newIterationParameter)
-        //    {
-        //        m_iterationParameter = newIterationParameter;
-        //        RefreshRangesBoxes();
-        //        RefreshInputsBox();
-        //        CalculateData();
-        //        RefreshOutputAndReadXyParameters();
-        //        m_xAxisComboBox.Text = m_iterationParameter.Name;  // set the same x axis parameter as iteration parameter
-        //        // we should assign text after RefreshOutputAndReadXYParameters
-        //        // because it may happen that before RefreshOutputAndReadXYParameters there are no
-        //        // element with necessary value and assigning may fail
-        //        RedrawTableAndChart();
-        //    }
-        //}
+        private void XAxisComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isXAxisComboBoxFirstChanged)
+            {
+                isXAxisComboBoxFirstChanged = false;
+                return;
+            }
+
+            if (this.m_xAxisComboBox.SelectedIndex == 0)
+                xAxisType = AxisType.Linear;
+            else
+                xAxisType = AxisType.Log;
+            fsDiagramWithTable1.fmZedGraphControl1.GraphPane.XAxis.Type = xAxisType;
+            CalculateData();
+            RedrawTableAndChart();
+        }
 
         private void YAxisListItemChecked(object sender, ItemCheckedEventArgs e)
         {
             RedrawTableAndChart();
         }
 
-        //private void XAxisComboBoxSelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    RedrawTableAndChart();
-        //}
-
         private void RangeFromTextChanged(object sender, EventArgs e)
         {
             m_values[m_iterationParameter].Range.From = fsValue.StringToValue(rangeFrom.Text) *
                                                     m_values[m_iterationParameter].Unit.Coefficient;
             CalculateData();
-            RefreshOutputAndReadXyParameters();
             RedrawTableAndChart();
         }
 
@@ -616,14 +561,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             m_values[m_iterationParameter].Range.To = fsValue.StringToValue(rangeTo.Text) *
                                                   m_values[m_iterationParameter].Unit.Coefficient;
             CalculateData();
-            RefreshOutputAndReadXyParameters();
             RedrawTableAndChart();
         }
 
         private void DetalizationBoxTextChanged(object sender, EventArgs e)
         {
             CalculateData();
-            RefreshOutputAndReadXyParameters();
             RedrawTableAndChart();
         }
 
@@ -676,41 +619,14 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private IEnumerable<fsYAxisParameter> GetSelectionParameters(IEnumerable<fsParameterIdentifier> parameters)
         {
             var selectionParameters = new List<fsYAxisParameter>();
-            // ------ new --------
             fsYAxisParameter.fsYParameterKind kind;
-            // -------------------
             foreach (fsParameterIdentifier parameter in parameters)
             {
-                //// if group isn't assigned to current parameter then do nothing here
-                //if (!m_parameterToGroup.ContainsKey(parameter))
-                //    continue;
-
-                //fsParametersGroup group = m_parameterToGroup[parameter];
-                //fsYAxisParameter.fsYParameterKind kind;
-                //fsParametersGroup iterationParameterGroup = m_iterationParameter == null
-                //                                                ? null
-                //                                                : m_parameterToGroup[m_iterationParameter];
-                //if (group == iterationParameterGroup)
-                //{
-                //    kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
-                //}
-                //else if (group.GetIsInputFlag() && parameter == group.Representator)
-                //{
-                //    kind = fsYAxisParameter.fsYParameterKind.InputParameter;
-                //}
-                //else
-                //{
-                //    kind = IsConstantList(m_data[parameter])
-                //        ? fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter
-                //        : fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
-                //}
-                // ----- new ---------
                 if (parameter != m_iterationParameter)
                 {
                     kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
                     selectionParameters.Add(new fsYAxisParameter(parameter, kind));
                 }
-                // -------------------
             }
             return selectionParameters;
         }

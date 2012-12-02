@@ -109,7 +109,7 @@ namespace CalculatorModules.User_Controls
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private fmZedGraphControl fmZedGraphControl1;
+        public fmZedGraphControl fmZedGraphControl1;
         private fmDataGrid.fmDataGrid table;
     }
 }
