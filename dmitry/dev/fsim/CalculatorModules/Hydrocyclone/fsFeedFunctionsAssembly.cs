@@ -91,13 +91,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
 
         #endregion
-
-        private static bool isGroupsOnceLoaded = false;
-        private static bool isValuesOnceLoaded = false;
         
         #region Groups
 
-        public static List<fsParametersGroup> Groups = new List<fsParametersGroup>();
+        public static List<fsParametersGroup> Groups = new List<fsParametersGroup>(); 
+        
+        private static bool isGroupsOnceLoaded = false;
 
         public static Dictionary<fsParameterIdentifier, fsParametersGroup> ParameterToGroup = new Dictionary<fsParameterIdentifier, fsParametersGroup>();
 
@@ -128,6 +127,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         #region Values
 
         public static Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> Values = new  Dictionary<fsParameterIdentifier, fsSimulationModuleParameter>();
+
+        private static bool isValuesOnceLoaded = false;
 
         public static void getValues()
         {

@@ -45,6 +45,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private bool isXRedZero;
         private bool isThereZeroInfluencingParameter;
 
+        private bool isCurvesNamesSet = false;
+
         private bool isXAxisSet = false;
 
         #endregion
@@ -62,6 +64,21 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
 
         #endregion
+
+        private void SetCurvesNames()
+        {
+            foreach (var parameter in m_yAxisParameters)
+            {
+                var array = new fsDiagramWithTable.fsNamedArray { Name = parameter.Name + " [" + fsFeedFunctionsData.Values[parameter].Unit.Name + "]", Array = new fsValue[] { } }; 
+                fsDiagramWithTable1.AddYAxis(array);                
+            }
+            foreach (var parameter in m_y2AxisParameters)
+            {
+                var array = new fsDiagramWithTable.fsNamedArray { Name = parameter.Name + " [" + fsFeedFunctionsData.Values[parameter].Unit.Name + "]", Array = new fsValue[] { } };
+                fsDiagramWithTable1.AddY2Axis(array);                
+            }
+            isCurvesNamesSet = true;
+        }
 
         public void SetHcControl(fsHydrocycloneNewControl hcc)
         {
@@ -86,7 +103,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             fsParameterIdentifier[] y2AxisParameters)
         {
             m_iterationParameter = iterationParameter;
-            //m_xAxisComboBox.Text = m_iterationParameter.Name;
 
             m_yAxisParameters.Clear();
             foreach (fsParameterIdentifier p in yAxisParameters)
@@ -149,14 +165,31 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void RefreshInputsBox()
         {
+            inputsTextBox.ResetText();
             string line;
-            var lines = new List<string>();
             foreach (var item in hcControl.ValuesForFeeds)
             {
                 line = item.Key.Name + "\t" + item.Value.Unit.Name + "\t" + item.Value.GetValueInUnits();
-                lines.Add(line);
+                inputsTextBox.AppendText(line + "\r\n");
+                bool condition = isXgZero && item.Key.Equals(fsParameterIdentifier.xg) ||
+                                 isSigmaGZero && item.Key.Equals(fsParameterIdentifier.sigma_g) ||
+                                 isSigmaSZero && item.Key.Equals(fsParameterIdentifier.sigma_s) ||
+                                 isXRedZero && item.Key.Equals(fsParameterIdentifier.ReducedCutSize) ||
+                                 !item.Value.Value.Defined;
+                if (condition)
+                {
+                    int i = 0;
+                    while (i <= inputsTextBox.Text.Length - line.Length)
+                    {
+                        i = inputsTextBox.Text.IndexOf(line, i);
+                        if (i < 0) break;
+                        inputsTextBox.SelectionStart = i;
+                        inputsTextBox.SelectionLength = line.Length;
+                        inputsTextBox.SelectionColor = Color.Red;
+                        i += line.Length;
+                    } 
+                } 
             }
-            inputsTextBox.Lines = lines.ToArray();
         }
 
         #region Calculations
@@ -173,7 +206,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             if (hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_g].Value.Value == 0)
                 isSigmaGZero = true;
             if (hcControl.ValuesForFeeds[fsParameterIdentifier.sigma_s].Value.Value == 0)
-                isSigmaGZero = true;
+                isSigmaSZero = true;
             if (hcControl.ValuesForFeeds[fsParameterIdentifier.ReducedCutSize].Value.Value == 0)
                 isXRedZero = true;
             isThereZeroInfluencingParameter = isXgZero || isSigmaGZero || isSigmaSZero || isXRedZero;
@@ -298,8 +331,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             if (m_inputRefreshing)
                 return;
 
-            var inputList = new List<KeyValuePair<string, bool>>();
-            var constResultsList = new List<KeyValuePair<string, bool>>();
             var variableResultsList = new List<KeyValuePair<string, bool>>();
 
             foreach (fsYAxisParameter selectionParameter in GetSelectionParameters(parameters))
@@ -308,18 +339,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 bool isChecked = IsContains(yAxisListView.CheckedItems, parameterName)
                                  || !IsContains(yAxisListView.Items, parameterName);
                 var pair = new KeyValuePair<string, bool>(parameterName, isChecked);
-                if (selectionParameter.Kind == fsYAxisParameter.fsYParameterKind.InputParameter)
-                {
-                    inputList.Add(pair);
-                }
-                if (selectionParameter.Kind == fsYAxisParameter.fsYParameterKind.CalculatedConstantParameter)
-                {
-                    constResultsList.Add(pair);
-                }
-                if (selectionParameter.Kind == fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter)
-                {
-                    variableResultsList.Add(pair);
-                }
+                variableResultsList.Add(pair);
             }
 
             var newList = new List<ListViewItem>();
@@ -327,14 +347,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 variableResultsList.Select(
                     keyValuePair =>
                     new ListViewItem(keyValuePair.Key) { Checked = keyValuePair.Value, ForeColor = Color.Black }));
-            newList.AddRange(
-                constResultsList.Select(
-                    keyValuePair =>
-                    new ListViewItem(keyValuePair.Key) { Checked = keyValuePair.Value, ForeColor = Color.LightGray }));
-            newList.AddRange(
-                inputList.Select(
-                    keyValuePair =>
-                    new ListViewItem(keyValuePair.Key) { Checked = keyValuePair.Value, ForeColor = Color.Blue }));
             if (yAxisListView.Items.Count != newList.Count)
             {
                 ListViewItem[] array = newList.ToArray();
@@ -373,10 +385,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             {
                 if (!isXAxisSet)
                 {
-                    fsDiagramWithTable1.SetXAxis();
+                    fsDiagramWithTable1.SetXAxis(m_iterationParameter.Name + " [" + fsFeedFunctionsData.Values[m_iterationParameter].Unit.Name + "]");
                     isXAxisSet = true;
-                }                   
-                fsDiagramWithTable1.ClearAllAndRedraw();
+                }
+                if (!isCurvesNamesSet)
+                    SetCurvesNames();                   
+                fsDiagramWithTable1.CleanAllAndRedraw();
                 return;
             }
             // -----------------

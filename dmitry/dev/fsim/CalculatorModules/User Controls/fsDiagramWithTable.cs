@@ -24,19 +24,14 @@ namespace CalculatorModules.User_Controls
         }
 
         // ----- new ------
-        public void SetXAxis()
+        public void SetXAxis(string name)
         {
             var xAxis = new fsNamedArray
             {
-                Name = "",
+                Name = name,
                 Array = new fsValue[] { }
             };
             m_xAxis = xAxis;
-        }
-      
-        public void ClearXAxis()
-        {
-            m_xAxis.Array = new fsValue[] { };
         }
         // ----------------
 
@@ -67,33 +62,22 @@ namespace CalculatorModules.User_Controls
         }
 
         // ----- new ------
-        public void ClearAllAndRedraw()
+        public void CleanAllAndRedraw()
         {
-            ClearXAxis();
-            ClearYAxis();
-            ClearY2Axis();
+            m_xAxis.Array = new fsValue[] { };
+            foreach (var curve in m_yAxis)
+            {
+                curve.Array = new fsValue[] { };
+            }
+            foreach (var curve in m_y2Axis)
+            {
+                curve.Array = new fsValue[] { };
+            }
             Redraw();
         }
-        // ----------------
 
-        private void RefreshTable()
+        private void WriteArraysToTable()
         {
-            // ---- new -------
-            if (m_xAxis.Array.Length == 0)
-            {
-                table.Rows.Clear();
-                return;
-            }                
-            // ----------------
-
-            int selectedRowIndex = 0;
-            int selectedColIndex = 0;
-            if (table.CurrentCell != null)
-            {
-                selectedRowIndex = table.CurrentCell.RowIndex;
-                selectedColIndex = table.CurrentCell.ColumnIndex;
-            }
-
             table.ColumnCount = 1;
             table.RowCount = m_xAxis.Array.Length;
             WriteArrayToLastColumnInTable(m_xAxis);
@@ -105,6 +89,41 @@ namespace CalculatorModules.User_Controls
             {
                 AddArrayToTable(curve);
             }
+        }
+        // ----------------
+
+        private void RefreshTable()
+        {
+            // ---- new -------
+            if (m_xAxis.Array.Length == 0)
+            {
+                table.Rows.Clear();
+                WriteArraysToTable();
+                return;
+            }
+            // ----------------
+            int selectedRowIndex = 0;
+            int selectedColIndex = 0;
+            if (table.CurrentCell != null)
+            {
+                selectedRowIndex = table.CurrentCell.RowIndex;
+                selectedColIndex = table.CurrentCell.ColumnIndex;
+            }
+
+            //table.ColumnCount = 1;
+            //table.RowCount = m_xAxis.Array.Length;
+            //WriteArrayToLastColumnInTable(m_xAxis);
+            //foreach (fsNamedArray curve in m_yAxis)
+            //{
+            //    AddArrayToTable(curve);
+            //}
+            //foreach (fsNamedArray curve in m_y2Axis)
+            //{
+            //    AddArrayToTable(curve);
+            //}
+            // ---- new -------
+            WriteArraysToTable();
+            // ----------------
 
             if (selectedRowIndex >= table.RowCount)
             {
