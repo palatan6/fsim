@@ -210,7 +210,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.inputsTextBox.Multiline = true;
             this.inputsTextBox.Name = "inputsTextBox";
             this.inputsTextBox.ReadOnly = true;
-            //this.inputsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.inputsTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.inputsTextBox.Size = new System.Drawing.Size(151, 206);
             this.inputsTextBox.TabIndex = 1;
@@ -330,8 +329,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private System.Windows.Forms.SplitContainer yAxisSplitContainer;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        //private System.Windows.Forms.TextBox inputsTextBox;
-        private System.Windows.Forms.RichTextBox inputsTextBox;
+        private System.Windows.Forms.RichTextBox inputsTextBox; 
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ListView m_y2AxisList;
         private System.Windows.Forms.ListView m_yAxisList;

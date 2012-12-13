@@ -31,7 +31,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private List<fsYAxisParameterWithChecking> m_yAxisParameters;
 
         private Dictionary<ListViewItem, fsYAxisParameterWithChecking> m_itemToYParameter =
-            new Dictionary<ListViewItem, fsYAxisParameterWithChecking>();
+            new Dictionary<ListViewItem, fsYAxisParameterWithChecking>();        
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         {
             foreach (ListViewItem item in otherVariablesListView.Items)
             {
-                itemToParameter[item].IsChecked = item.Checked;
+                itemToParameter[item].IsChecked = item.Checked;                
             }
         }
 

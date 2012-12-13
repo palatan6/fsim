@@ -115,6 +115,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             {
                 m_y2AxisParameters.Add(p);
             }
+
+            // ----- new ------ for drag-and-drop in fsFeedCurvesSelectionDialog
+            SetYAxisParameters();
+            SetY2AxisParameters();
+            SetNameToParameter();
+            // ----------------
         }
 
         #region Reprocessing
@@ -584,11 +590,87 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             RedrawTableAndChart();
         }
 
+        // -------- new --------- for drag-and-drop
+        public List<fsYAxisParameterWithChecking> yAxisParameters = new List<fsYAxisParameterWithChecking>();
+
+        private void SetYAxisParameters()
+        {
+            var array = new fsParameterIdentifier[]
+                            {
+                                fsFeedFunctionsData.F_id,
+                                fsFeedFunctionsData.Fo_id,
+                                fsFeedFunctionsData.Fu_id,
+                                fsFeedFunctionsData.G_id,
+                                fsFeedFunctionsData.GRed_id
+                            };
+            var kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
+            foreach (var item in array)
+            {
+                yAxisParameters.Add(
+                    new fsYAxisParameterWithChecking(item, kind, m_yAxisParameters.Contains(item))
+                    );
+            }
+        }
+
+        public List<fsYAxisParameterWithChecking> y2AxisParameters = new List<fsYAxisParameterWithChecking>();
+
+        private void SetY2AxisParameters()
+        {
+            var array = new fsParameterIdentifier[]
+                            {
+                                fsFeedFunctionsData.f_id,
+                                fsFeedFunctionsData.fo_id,
+                                fsFeedFunctionsData.fu_id
+                            };
+            var kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
+            foreach (var item in array)
+            {
+                y2AxisParameters.Add(
+                    new fsYAxisParameterWithChecking(item, kind, m_y2AxisParameters.Contains(item))
+                    );
+            }
+        }
+
+        public Dictionary<String, fsYAxisParameterWithChecking> nameToParameter;
+
+        private void SetNameToParameter()
+        {
+            var list = new List<fsYAxisParameterWithChecking>();
+            list.AddRange(yAxisParameters);
+            list.AddRange(y2AxisParameters);
+            nameToParameter = list.ToDictionary(parameter => parameter.Identifier.Name);
+        }
+
+        private void RefreshAllYAxesParametersChecking(fsFeedCurvesSelectionDialog dialog)
+        {
+            foreach (ListViewItem item in dialog.y1SelectionControl.otherVariablesListView.Items)
+            {
+                nameToParameter[item.Text].IsChecked = item.Checked;
+            }
+            foreach (ListViewItem item in dialog.y2SelectionControl.otherVariablesListView.Items)
+            {
+                nameToParameter[item.Text].IsChecked = item.Checked;
+            }
+            foreach (var parameter in nameToParameter.Values)
+            {
+                if (yAxisParameters.Contains(parameter))
+                    yAxisParameters[yAxisParameters.IndexOf(parameter)].IsChecked = parameter.IsChecked;
+                else
+                    y2AxisParameters[y2AxisParameters.IndexOf(parameter)].IsChecked = parameter.IsChecked;
+            }
+        }
+        // ------------------------------------------
+
         private void YAxisConfigureClick(object sender, EventArgs e)
         {
-            var selectionForm = new fsFeedCurvesSelectionDialog();
-            selectionForm.AssignYAxisParameters(GetSelectionParametersWithCheking(m_yAxisList));
-            selectionForm.AssignY2AxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
+            //var selectionForm = new fsFeedCurvesSelectionDialog();
+            //selectionForm.AssignYAxisParameters(GetSelectionParametersWithCheking(m_yAxisList));
+            //selectionForm.AssignY2AxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
+            // ------ new ---------
+            var selectionForm = new fsFeedCurvesSelectionDialog(this);
+            selectionForm.AssignYAxisParameters(yAxisParameters);
+            selectionForm.AssignY2AxisParameters(y2AxisParameters);
+            // --------------------
             selectionForm.ShowDialog();
             if (selectionForm.DialogResult == DialogResult.OK)
             {
@@ -596,39 +678,48 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 m_yAxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
                 m_y2AxisParameters.Clear();
                 m_y2AxisParameters.AddRange(selectionForm.GetCheckedY2AxisParameters());
+                // ------- new ---------
+                RefreshAllYAxesParametersChecking(selectionForm);
+                // ---------------------
                 RefreshAndRecalculateAll();
             }
         }
 
-        private void Y2AxisConfigureClick(object sender, EventArgs e)
-        {
-            var selectionForm = new fsFeedCurvesSelectionDialog();
-            selectionForm.AssignYAxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
-            selectionForm.ShowDialog();
-            if (selectionForm.DialogResult == DialogResult.OK)
-            {
-                m_y2AxisParameters.Clear();
-                m_y2AxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
-                RefreshAndRecalculateAll();
-            }
-        }
+        //private void Y2AxisConfigureClick(object sender, EventArgs e)
+        //{
+        //    var selectionForm = new fsFeedCurvesSelectionDialog();
+        //    selectionForm.AssignYAxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
+        //    selectionForm.ShowDialog();
+        //    if (selectionForm.DialogResult == DialogResult.OK)
+        //    {
+        //        m_y2AxisParameters.Clear();
+        //        m_y2AxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
+        //        RefreshAndRecalculateAll();
+        //    }
+        //}
 
         #region Selection Parameters Help
 
-        private List<fsYAxisParameterWithChecking> GetSelectionParametersWithCheking(ListView yAxisList)
-        {
-            var selectionParameters =
-                   new List<fsYAxisParameterWithChecking>();
-            foreach (fsYAxisParameter yParameter in GetSelectionParameters(m_values.Keys))
-            {
-                selectionParameters.Add(
-                    new fsYAxisParameterWithChecking(
-                        yParameter.Identifier,
-                        yParameter.Kind,
-                        IsContains(yAxisList.Items, yParameter.Identifier.Name)));
-            }
-            return selectionParameters;
-        }
+        ////private List<fsYAxisParameterWithChecking> GetSelectionParametersWithCheking(ListView yAxisList)
+        //// ------ new -----
+        //private List<fsYAxisParameterWithChecking> GetSelectionParametersWithCheking(IEnumerable<fsParameterIdentifier> parameters, ListView yAxisList)
+        //// ----------------
+        //{
+        //    var selectionParameters =
+        //           new List<fsYAxisParameterWithChecking>();
+        //    //foreach (fsYAxisParameter yParameter in GetSelectionParameters(m_values.Keys))
+        //    // ------- new --------
+        //    foreach (fsYAxisParameter yParameter in GetSelectionParameters(parameters))
+        //    // --------------------
+        //    {
+        //        selectionParameters.Add(
+        //            new fsYAxisParameterWithChecking(
+        //                yParameter.Identifier,
+        //                yParameter.Kind,
+        //                IsContains(yAxisList.Items, yParameter.Identifier.Name)));
+        //    }
+        //    return selectionParameters;
+        //}
 
         private IEnumerable<fsYAxisParameter> GetSelectionParameters(IEnumerable<fsParameterIdentifier> parameters)
         {

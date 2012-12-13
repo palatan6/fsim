@@ -32,8 +32,8 @@
             this.panelFeedFunctions = new System.Windows.Forms.Panel();
             this.otherVariablesListView = new System.Windows.Forms.ListView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panelFeedFunctions.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -61,6 +61,7 @@
             // 
             // otherVariablesListView
             // 
+            this.otherVariablesListView.AllowDrop = true;
             this.otherVariablesListView.CheckBoxes = true;
             this.otherVariablesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.otherVariablesListView.Location = new System.Drawing.Point(0, 0);
@@ -80,6 +81,15 @@
             this.panel1.Size = new System.Drawing.Size(244, 32);
             this.panel1.TabIndex = 1;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(18, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(80, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Feed Functions";
+            // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -90,15 +100,6 @@
             this.button1.Text = "Deselect All";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Feed Functions";
             // 
             // fsFeedCurvesSelectionControl
             // 
@@ -118,7 +119,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView otherVariablesListView;
+        public System.Windows.Forms.ListView otherVariablesListView;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panelFeedFunctions;
