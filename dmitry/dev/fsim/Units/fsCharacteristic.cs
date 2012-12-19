@@ -114,6 +114,14 @@ namespace Units
             }
         );
 
+        public static fsCharacteristic Power = new fsCharacteristic(
+            "Power",
+            new[] {
+                fsUnit.KiloWatt,
+                fsUnit.Watt
+            }
+        );
+
         public static fsCharacteristic Frequency = new fsCharacteristic(
             "Frequency",
             new[] {

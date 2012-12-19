@@ -178,51 +178,6 @@ namespace CalculatorModules.Hydrocyclone
             RefreshAndRecalculateFeedCurves();
         }
 
-        //protected Dictionary<ICollection<Enum>, DiagramConfiguration> m_feedsDiagrams = new Dictionary<ICollection<Enum>, DiagramConfiguration>(new EqualityComparer());
-
-        //public enum fsFeedCurvesOption
-        //{
-        //    [Description("Linear")]
-        //    Linear,
-        //    [Description("Logarithmic")]
-        //    Logarithmic
-        //}
-
-        //protected void InitializeFeedsDiagrams()
-        //{
-        //    fsRange machr = fsMachineRanges.DefaultMachineRanges.Ranges[fsParameterIdentifier.ReducedCutSize].Range;
-
-        //    m_feedsDiagrams.Add(
-        //        new Enum[] { fsFeedCurvesOption.Linear },
-        //        new DiagramConfiguration(
-        //            fsFeedFunctionsData.xLog_id,
-        //            new DiagramConfiguration.DiagramRange(Math.Log(machr.From.Value), Math.Log(machr.To.Value)),
-        //            new[] { fsFeedFunctionsData.Fo_id },
-        //            new[] { fsFeedFunctionsData.Fu_id }));
-
-        //    m_feedsDiagrams.Add(
-        //        new Enum[] { fsFeedCurvesOption.Logarithmic },
-        //        new DiagramConfiguration(
-        //            fsFeedFunctionsData.x_id,
-        //            new DiagramConfiguration.DiagramRange(machr.From.Value, machr.To.Value),
-        //            new[] { fsFeedFunctionsData.Fo_id },
-        //            new[] { fsFeedFunctionsData.Fu_id }));
-        //}
-
-        //private void SetFeedsDiagramFeedsOption()
-        //{
-        //    if (m_feedsDiagrams.ContainsKey(CalculationOptions.Values))
-        //    {
-        //        DiagramConfiguration diagram = m_defaultDiagrams[CalculationOptions.Values];
-        //        feedCurvesForm.feedCurvesControl1.SetDiagram(diagram.xAxisParameter, diagram.yAxisParameters, diagram.y2AxisParameters);
-        //        if (diagram.range != null)
-        //        {
-        //            Values[diagram.xAxisParameter].Range.From = new fsValue(diagram.range.From);
-        //            Values[diagram.xAxisParameter].Range.To = new fsValue(diagram.range.To);
-        //        }
-        //    }
-        //}
-
         #endregion
 
         private void FillUnderOverFlowsTable()
@@ -298,8 +253,9 @@ namespace CalculatorModules.Hydrocyclone
         public override void RecalculateAndRedraw()
         {
             base.RecalculateAndRedraw();
+            DisplaySmartXiuo();
             if (IsCalculatorControlInitialized)
-                FillUnderOverFlowsTable();
+                FillUnderOverFlowsTable(); 
             if (isButtonShowFeedsOnceClicked)
                 RefreshAndRecalculateFeedCurves();            
         }
@@ -441,6 +397,25 @@ namespace CalculatorModules.Hydrocyclone
             Calculators.Add(new fsHydrocycloneCalculator());
         }
 
+        #region Smart displaying xiu, xio, e.g. x90u, x90o while i = 90%
+
+        private int rowIndexXio;
+
+        private int rowIndexXiu; // We set these fields in InitializeGroups()
+
+        private void DisplaySmartXiuo()
+        {
+            fsSimulationModuleParameter i = Values[fsParameterIdentifier.PercentageOfParticles];
+            string iStr = i.GetValueInUnits().ToString();
+            fsParametersWithValuesTableMachine.Rows[rowIndexXio].Cells[0].Value = "x" + iStr + "o";
+            fsParametersWithValuesTableMachine.Rows[rowIndexXiu].Cells[0].Value = "x" + iStr + "u";
+            iStr = " where i = " + iStr + i.Unit.Name;
+            fsParametersWithValuesTableMachine.Rows[rowIndexXio].Cells[0].ToolTipText = "Overflow Particle Size xio" + iStr;
+            fsParametersWithValuesTableMachine.Rows[rowIndexXiu].Cells[0].ToolTipText = "Underflow Particle Size xiu" + iStr;
+        }
+
+        #endregion
+        
         protected override void InitializeGroups()
         {
             var colors = new[]
@@ -517,11 +492,13 @@ namespace CalculatorModules.Hydrocyclone
                 fsParameterIdentifier.EulerNumber,  // Eu
                 fsParameterIdentifier.ReynoldsNumber, // Re
                 fsParameterIdentifier.AverageVelocity, // v
+                fsParameterIdentifier.PumpPower, // P
                 fsParameterIdentifier.TotalEfficiency, // ET
                 fsParameterIdentifier.ReducedTotalEfficiency); //E'T
 
             fsParametersGroup onlyCalculatedMachineParametersGroup = AddGroup(
-                fsHydrocycloneCalculator.NumberOfCyclClone, // n (precisely, clone of fsParameterIdentifier.NumberOfCyclones)
+                fsHydrocycloneCalculator.NumberOfCyclClone, // n (precisely, a clone of fsParameterIdentifier.NumberOfCyclones)
+                fsHydrocycloneCalculator.DClone, // D (precisely, a clone of fsParameterIdentifier.MachineDiameter)
                 fsParameterIdentifier.CycloneLength,  // L
                 fsParameterIdentifier.LengthOfCylindricalPart,  // l
                 fsParameterIdentifier.InletDiameter,  // Di
@@ -620,6 +597,25 @@ namespace CalculatorModules.Hydrocyclone
             // Loading underflow/overflow  only calculated Parameters
             AddGroupToUI(fsParametersWithValuesTableOverUnderFlows, onlyCalculatedUnderOverFlowsParametersGroup, colors[0]);
             SetGroupInput(onlyCalculatedUnderOverFlowsParametersGroup, false);
+
+            // Getting indices for the smart displaying xio, xiu
+            bool isrowIndexXioGot = false;
+            bool isrowIndexXiuGot = false;
+            foreach (DataGridViewRow row in fsParametersWithValuesTableMachine.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == fsParameterIdentifier.OverflowParticleSize.Name)
+                { 
+                    rowIndexXio = row.Index;
+                    isrowIndexXioGot = true;
+                }
+                if (row.Cells[0].Value.ToString() == fsParameterIdentifier.UnderflowParticleSize.Name)
+                { 
+                    rowIndexXiu = row.Index;
+                    isrowIndexXiuGot = true;
+                }
+                if (isrowIndexXiuGot && isrowIndexXioGot)
+                    break;
+            }
         }
 
         protected void AdaptationCellValueChangedByUser(object sender, DataGridViewCellEventArgs e)
@@ -694,6 +690,28 @@ namespace CalculatorModules.Hydrocyclone
             Values[fsParameterIdentifier.smallLOverD].Value = new fsValue(3);
             Values[fsParameterIdentifier.DiOverD].Value = new fsValue(0.2);
             Values[fsParameterIdentifier.DoOverD].Value = new fsValue(0.3);
+        }
+
+        protected override void InitializeDefaultDiagrams()
+        {
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCalculationOption.Dp },
+                new DiagramConfiguration(fsParameterIdentifier.MachineDiameter,
+                    new DiagramConfiguration.DiagramRange(1, 10),
+                    new[] { fsParameterIdentifier.ReducedCutSize },
+                    new[] { fsParameterIdentifier.PressureDifference }));
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCalculationOption.Q },
+                new DiagramConfiguration(fsParameterIdentifier.MachineDiameter,
+                    new DiagramConfiguration.DiagramRange(1, 10),
+                    new[] { fsParameterIdentifier.ReducedCutSize },
+                    new[] { fsParameterIdentifier.FeedVolumeFlowRate }));
+            m_defaultDiagrams.Add(
+                new Enum[] { fsCalculationOption.n },
+                new DiagramConfiguration(fsParameterIdentifier.MachineDiameter,
+                    new DiagramConfiguration.DiagramRange(1, 10),
+                    new[] { fsParameterIdentifier.ReducedCutSize },
+                    new[] { fsParameterIdentifier.NumberOfCyclones }));
         }
 
         #region Routine Methods

@@ -153,7 +153,7 @@
             // 
             this.splitContainerHorizontLeft.Panel2.Controls.Add(this.groupBoxMachAdapt);
             this.splitContainerHorizontLeft.Size = new System.Drawing.Size(63, 352);
-            this.splitContainerHorizontLeft.SplitterDistance = 186;
+            this.splitContainerHorizontLeft.SplitterDistance = 120; // было 186
             this.splitContainerHorizontLeft.TabIndex = 0;
             // 
             // fsParametersWithValuesTableMaterial
@@ -380,7 +380,7 @@
             this.splitContainerHorizontRight.Panel2.Controls.Add(this.fsParametersWithValuesTableOverUnderFlows);
             this.splitContainerHorizontRight.Panel2.Controls.Add(this.dataGridViewUOFlows);
             this.splitContainerHorizontRight.Size = new System.Drawing.Size(146, 352);
-            this.splitContainerHorizontRight.SplitterDistance = 190;
+            this.splitContainerHorizontRight.SplitterDistance = 90;
             this.splitContainerHorizontRight.TabIndex = 0;
             // 
             // splitContainerTwoTables

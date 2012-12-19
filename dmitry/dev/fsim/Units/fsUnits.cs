@@ -91,6 +91,8 @@ namespace Units
         public static fsUnit Micrometer = new fsUnit("um", 1e-6);
         public static fsUnit SquaredMeterPerPascalPerSecond = new fsUnit("m"+ "\u00B2" + "/(Pa s)", 1); // previously "m2/(Pa s)"
         public static fsUnit SquaredSantiMeterPerBarPerMinute = new fsUnit("cm"+ "\u00B2" + "/(bar min)", 1e-10 / 6); // previously "cm2/(bar min)"
+        public static fsUnit Watt = new fsUnit("w", 1);
+        public static fsUnit KiloWatt = new fsUnit("kw", 1.0e3);
 
         #endregion
 

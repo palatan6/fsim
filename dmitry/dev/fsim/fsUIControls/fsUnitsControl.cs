@@ -35,7 +35,8 @@ namespace fsUIControls
                            fsCharacteristic.Density,
                            fsCharacteristic.SurfaceTension,
                            fsCharacteristic.CakeWashOutContent,
-                           fsCharacteristic.Frequency
+                           fsCharacteristic.Frequency,
+                           fsCharacteristic.Power
                        };
         }
 

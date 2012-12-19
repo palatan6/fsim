@@ -113,14 +113,27 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         // Moves the insertion mark as the item is dragged.
         private void ListView_DragOver(object sender, DragEventArgs e)
         {
-            if (((ListView)sender).Equals(other(sourceListView)))
-            {
+            //if (((ListView)sender).Equals(other(sourceListView)))
+            //{
+                if (((ListView)sender).Items.Count == 0)
+                {
+                    ((ListView)sender).InsertionMark.Index = 0;
+                    ((ListView)sender).InsertionMark.AppearsAfterItem = false;
+                    return;
+                }
+
                 // Retrieve the client coordinates of the mouse pointer.
                 Point targetPoint =
                     ((ListView)sender).PointToClient(new Point(e.X, e.Y));
 
                 // Retrieve the index of the item closest to the mouse pointer.
-                targetIndex = ((ListView)sender).InsertionMark.NearestIndex(new Point(0, targetPoint.Y));
+                //targetIndex = ((ListView)sender).InsertionMark.NearestIndex(new Point(0, targetPoint.Y));
+                // ------- new ------
+                if (((ListView)sender).Equals(other(sourceListView)))
+                    targetIndex = ((ListView)sender).InsertionMark.NearestIndex(new Point(0, targetPoint.Y));
+                else
+                    targetIndex = ((ListView)sender).InsertionMark.NearestIndex(targetPoint);
+                // -------------------
 
                 // Confirm that the mouse pointer is not over the dragged item.
                 if (targetIndex > -1)
@@ -139,7 +152,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 // over the dragged item, the targetIndex value is -1 and
                 // the insertion mark disappears.
                 ((ListView)sender).InsertionMark.Index = targetIndex; 
-            }
+            //}
         }
 
         // Removes the insertion mark when the mouse leaves the control.
@@ -152,25 +165,26 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private void ListView_DragDrop(object sender, DragEventArgs e)
         {
             ListView targetListView = other(sourceListView);
+            targetIndex = ((ListView)sender).InsertionMark.Index;
+
+            // If the insertion mark is not visible, exit the method.
+            if (targetIndex == -1)
+                return;
+
+            // If the insertion mark is to the bottom of the item with
+            // the corresponding index, increment the target index.
+            if (((ListView)sender).InsertionMark.AppearsAfterItem)
+                targetIndex++;
+
+            // Retrieve the dragged item.
+            ListViewItem draggedItem =
+                (ListViewItem)e.Data.GetData(typeof(ListViewItem));
+            String draggedItemName = draggedItem.Text;
+
+            ListView listToDrop;
             if (((ListView)sender).Equals(targetListView))
             {
-                // Retrieve the index of the insertion mark;
-                //int targetIndex = targetListView.InsertionMark.Index;
-                targetIndex = targetListView.InsertionMark.Index;
-
-                // If the insertion mark is not visible, exit the method.
-                if (targetIndex == -1)
-                    return;
-
-                // If the insertion mark is to the bottom of the item with
-                // the corresponding index, increment the target index.
-                if (targetListView.InsertionMark.AppearsAfterItem)
-                    targetIndex++;
-
-                // Retrieve the dragged item.
-                ListViewItem draggedItem =
-                    (ListViewItem)e.Data.GetData(typeof(ListViewItem));
-                String draggedItemName = draggedItem.Text;
+                listToDrop = targetListView;
 
                 fsYAxisParameterWithChecking draggedYAxisParameter = feedsControl.nameToParameter[draggedItem.Text];
                 draggedYAxisParameter.IsChecked = draggedItem.Checked;
@@ -184,25 +198,26 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                     feedsControl.y2AxisParameters.Remove(draggedYAxisParameter);
                     feedsControl.yAxisParameters.Add(draggedYAxisParameter);
                 }
-                AssignYAxisParameters(feedsControl.yAxisParameters);
-                AssignY2AxisParameters(feedsControl.y2AxisParameters);
-                // We have not to additionally insert (into targetListView) and remove
-                // (from sourceListView) draggedItem as this is already done in AssignYAxisParameters,
-                // AssignY2AxisParameters. But we have to place draggedItem at InsertionMark index.
-                // This is done under appropriate defining ListViewIndexComparer.
-
-                // Getting draggedItem index in rearranged otherVariablesListView.Items (here targetListView.Items)
-                foreach (ListViewItem item in targetListView.Items)
-                {
-                    if (item.Text == draggedItemName)
-                    {
-                        draggedItemIndex = item.Index;
-                        break;
-                    }
-                }
-                // Setting an appropriate comparer
-                targetListView.ListViewItemSorter = new ListViewIndexComparer(targetIndex, draggedItemIndex);
             }
+            else
+            {
+                listToDrop = sourceListView;
+            }
+
+            AssignYAxisParameters(feedsControl.yAxisParameters);
+            AssignY2AxisParameters(feedsControl.y2AxisParameters);
+
+            // Getting draggedItem index in rearranged otherVariablesListView.Items (here targetListView.Items)
+            foreach (ListViewItem item in listToDrop.Items)
+            {
+                if (item.Text == draggedItemName)
+                {
+                    draggedItemIndex = item.Index;
+                    break;
+                }
+            }
+
+            listToDrop.ListViewItemSorter = new ListViewIndexComparer(targetIndex, draggedItemIndex);
         }
 
         // Sorts ListViewItem in the way to place draggedItem at InsertionMark index

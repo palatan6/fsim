@@ -12,10 +12,13 @@ namespace StepCalculators.Simulation_Calculators
 {
     public class fsHydrocycloneCalculator : fsCalculator
     {
-        // Introducing the clone of the parameter NumberOfCyclClones is the easiest way to deal with
-        // a copy (as only calculated) of NumberOfCyclones in  other fsParametersWithValuesTable.
+        // Introducing the clones of the parameters NumberOfCyclClones, D is the easiest way to deal with
+        // a copy (as only calculated) of NumberOfCyclones, D in other fsParametersWithValuesTable.
         public static fsParameterIdentifier NumberOfCyclClone =
             new fsParameterIdentifier("n", "Number of Cyclones", fsCharacteristic.NoUnits);
+
+        public static fsParameterIdentifier DClone =
+            new fsParameterIdentifier("D", "Machine Diameter", fsCharacteristic.MachineGeometryLength);
 
         public fsHydrocycloneCalculator()
         {  
@@ -95,6 +98,8 @@ namespace StepCalculators.Simulation_Calculators
             IEquationParameter cmu = AddVariable(fsParameterIdentifier.UnderflowSolidsMassFraction);
             IEquationParameter cvo = AddVariable(fsParameterIdentifier.OverflowSolidsVolumeFraction);
             IEquationParameter cvu = AddVariable(fsParameterIdentifier.UnderflowSolidsVolumeFraction);
+
+            IEquationParameter P = AddVariable(fsParameterIdentifier.PumpPower);
             
             #region Help Parameters and Constants
 
@@ -109,6 +114,9 @@ namespace StepCalculators.Simulation_Calculators
 
             IEquationParameter numberOfCyclClone = AddVariable(NumberOfCyclClone);
             Equations.Add(new fsSumEquation(numberOfCyclones, constantZero, numberOfCyclClone));
+
+            IEquationParameter dClone = AddVariable(DClone);
+            Equations.Add(new fsSumEquation(dClone, constantZero, D));
 
             IEquationParameter rhoSMinusRhoF = AddVariable(new fsParameterIdentifier("rho_s - rho_f"));
             Equations.Add(new fsSumEquation(rhoS, rhoF, rhoSMinusRhoF));
@@ -185,6 +193,8 @@ namespace StepCalculators.Simulation_Calculators
             Equations.Add(new fsMassConcentrationEquation(cmo, rhoF, rhoS, rhoSusOverflow)); // (15)
             Equations.Add(new fsVolumeConcentrationEquation(cvu, rhoF, rhoS, rhoSusUnderflow)); // (18)
             Equations.Add(new fsVolumeConcentrationEquation(cvo, rhoF, rhoS, rhoSusOverflow)); // (17)
+
+            Equations.Add(new fsProductEquation(P, Dp, Q)); // Pump Power Equation P = Dp * Q
 
             #endregion
         }

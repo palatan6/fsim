@@ -136,8 +136,6 @@ namespace Parameters
 
         #endregion
 
-
-
         #region Liquid Viscosities (eta, etaw)
 
         public static fsParameterIdentifier MotherLiquidViscosity =
@@ -175,7 +173,7 @@ namespace Parameters
             new fsParameterIdentifier("\u03C1" + "sus", "Suspension Density", fsCharacteristic.Density); // previously rho_sus
 
         public static fsParameterIdentifier WashLiquidDensity =
-            new fsParameterIdentifier("rho_w", "Wash Liquid Density", fsCharacteristic.Density);
+            new fsParameterIdentifier("\u03C1" + "w", "Wash Liquid Density", fsCharacteristic.Density); // previously rho_w
 
         #endregion;
 
@@ -312,31 +310,31 @@ namespace Parameters
         #region Hydrocyclone (alphas, betas, gammas)
 
         public static fsParameterIdentifier Alpha1 =
-            new fsParameterIdentifier("alpha1", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("\u03B1" + "1", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier Alpha2 =
-            new fsParameterIdentifier("alpha2", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("\u03B1" + "2", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier Alpha3 =
-            new fsParameterIdentifier("alpha3", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("\u03B1" + "3", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier Beta1 =
-            new fsParameterIdentifier("beta1", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("\u03B2" + "1", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier Beta2 =
-            new fsParameterIdentifier("beta2", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("\u03B2" + "2", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier Beta3 =
-            new fsParameterIdentifier("beta3", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("\u03B2" + "3", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier Gamma1 =
-            new fsParameterIdentifier("gamma1", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("\u03B3" + "1", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier Gamma2 =
-            new fsParameterIdentifier("gamma2", fsCharacteristic.NoUnits);
+            new fsParameterIdentifier("\u03B3" + "2", fsCharacteristic.NoUnits);
 
         public static fsParameterIdentifier Gamma3 =
-            new fsParameterIdentifier("gamma3", fsCharacteristic.NoUnits); 
+            new fsParameterIdentifier("\u03B3" + "3", fsCharacteristic.NoUnits); 
 
         #endregion
 
@@ -353,6 +351,9 @@ namespace Parameters
         #endregion
 
         #region Machine Functionality Parameters
+
+        public static fsParameterIdentifier PumpPower = 
+            new fsParameterIdentifier("P", "Pump Power", fsCharacteristic.Power);
 
         public static fsParameterIdentifier PressureDifference =
             new fsParameterIdentifier("\u0394" + "p", "Pressure Difference", fsCharacteristic.Pressure); // (Delta p) previously Dp
