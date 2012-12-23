@@ -229,31 +229,31 @@
       <DependentUpon>DensityConcentrationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="fsMisc.cs" />
-    <Compile Include="Hydrocyclone\FeedCurvesControl.cs">
+    <Compile Include="Hydrocyclone\Feed Curves\FeedCurvesControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Hydrocyclone\FeedCurvesControl.Designer.cs">
+    <Compile Include="Hydrocyclone\Feed Curves\FeedCurvesControl.Designer.cs">
       <DependentUpon>FeedCurvesControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Hydrocyclone\FormFeedCurves.cs">
+    <Compile Include="Hydrocyclone\Feed Curves\FormFeedCurves.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Hydrocyclone\FormFeedCurves.Designer.cs">
+    <Compile Include="Hydrocyclone\Feed Curves\FormFeedCurves.Designer.cs">
       <DependentUpon>FormFeedCurves.cs</DependentUpon>
     </Compile>
-    <Compile Include="Hydrocyclone\fsFeedCurvesSelectionControl.cs">
+    <Compile Include="Hydrocyclone\Feed Curves\fsFeedCurvesSelectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Hydrocyclone\fsFeedCurvesSelectionControl.Designer.cs">
+    <Compile Include="Hydrocyclone\Feed Curves\fsFeedCurvesSelectionControl.Designer.cs">
       <DependentUpon>fsFeedCurvesSelectionControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Hydrocyclone\fsFeedCurvesSelectionDialog.cs">
+    <Compile Include="Hydrocyclone\Feed Curves\fsFeedCurvesSelectionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Hydrocyclone\fsFeedCurvesSelectionDialog.Designer.cs">
+    <Compile Include="Hydrocyclone\Feed Curves\fsFeedCurvesSelectionDialog.Designer.cs">
       <DependentUpon>fsFeedCurvesSelectionDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Hydrocyclone\fsFeedFunctionsAssembly.cs" />
+    <Compile Include="Hydrocyclone\Feed Curves\fsFeedFunctionsAssembly.cs" />
     <Compile Include="Hydrocyclone\HydrocycloneNewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -376,21 +376,17 @@
       <DependentUpon>DensityConcentrationControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Hydrocyclone\FeedCurvesControl.resx">
+    <EmbeddedResource Include="Hydrocyclone\Feed Curves\FeedCurvesControl.resx">
       <DependentUpon>FeedCurvesControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Hydrocyclone\FormFeedCurves.resx">
+    <EmbeddedResource Include="Hydrocyclone\Feed Curves\FormFeedCurves.resx">
       <DependentUpon>FormFeedCurves.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Hydrocyclone\fsFeedCurvesSelectionControl.resx">
+    <EmbeddedResource Include="Hydrocyclone\Feed Curves\fsFeedCurvesSelectionControl.resx">
       <DependentUpon>fsFeedCurvesSelectionControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Hydrocyclone\fsFeedCurvesSelectionDialog.resx">
+    <EmbeddedResource Include="Hydrocyclone\Feed Curves\fsFeedCurvesSelectionDialog.resx">
       <DependentUpon>fsFeedCurvesSelectionDialog.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Hydrocyclone\HydrocycloneNewControl.resx">
       <DependentUpon>HydrocycloneNewControl.cs</DependentUpon>
