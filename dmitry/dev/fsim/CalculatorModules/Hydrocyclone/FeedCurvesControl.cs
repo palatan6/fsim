@@ -45,9 +45,9 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private bool isXRedZero;
         private bool isThereZeroInfluencingParameter;
 
-        private bool isCurvesNamesSet = false;
+        //private bool isXAxisSet = false;
 
-        private bool isXAxisSet = false;
+        private bool isEmptyPlot = true;
 
         #endregion
 
@@ -65,20 +65,19 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #endregion
 
-        private void SetCurvesNames()
-        {
-            foreach (var parameter in m_yAxisParameters)
-            {
-                var array = new fsDiagramWithTable.fsNamedArray { Name = parameter.Name + " [" + fsFeedFunctionsData.Values[parameter].Unit.Name + "]", Array = new fsValue[] { } }; 
-                fsDiagramWithTable1.AddYAxis(array);                
-            }
-            foreach (var parameter in m_y2AxisParameters)
-            {
-                var array = new fsDiagramWithTable.fsNamedArray { Name = parameter.Name + " [" + fsFeedFunctionsData.Values[parameter].Unit.Name + "]", Array = new fsValue[] { } };
-                fsDiagramWithTable1.AddY2Axis(array);                
-            }
-            isCurvesNamesSet = true;
-        }
+        //private void SetCurvesNames()
+        //{
+        //    foreach (var parameter in m_yAxisParameters)
+        //    {
+        //        var array = new fsDiagramWithTable.fsNamedArray { Name = parameter.Name + " [" + fsFeedFunctionsData.Values[parameter].Unit.Name + "]", Array = new fsValue[] { } }; 
+        //        fsDiagramWithTable1.AddYAxis(array);                
+        //    }
+        //    foreach (var parameter in m_y2AxisParameters)
+        //    {
+        //        var array = new fsDiagramWithTable.fsNamedArray { Name = parameter.Name + " [" + fsFeedFunctionsData.Values[parameter].Unit.Name + "]", Array = new fsValue[] { } };
+        //        fsDiagramWithTable1.AddY2Axis(array);                
+        //    }
+        //}
 
         public void SetHcControl(fsHydrocycloneNewControl hcc)
         {
@@ -116,7 +115,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 m_y2AxisParameters.Add(p);
             }
 
-            // ----- new ------ for drag-and-drop in fsFeedCurvesSelectionDialog
+            // ---------------- for drag-and-drop in fsFeedCurvesSelectionDialog
             SetYAxisParameters();
             SetY2AxisParameters();
             SetNameToParameter();
@@ -132,11 +131,11 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             CheckZeroInfluencingParameters();
             RefreshInputAndReadIterationParameter();
             CalculateData();
-            RefreshOutputAndReadXyParameters();
+            RefreshOutputAndReadYParameters();
             RedrawTableAndChart();
         }
 
-        private void RefreshOutputAndReadXyParameters()
+        private void RefreshOutputAndReadYParameters()
         {
             RefreshYAxisList(m_yAxisParameters, m_yAxisList);
             RefreshYAxisList(m_y2AxisParameters, m_y2AxisList);
@@ -228,7 +227,11 @@ namespace CalculatorModules.Hydrocyclone.Feeds
          
             // ----- new ------
             if (isThereZeroInfluencingParameter)
+            {
+                isEmptyPlot = true;
                 return;
+            }
+            isEmptyPlot = false;
             // ----------------
 
             var detalization = (int)fsValue.StringToValue(detalizationBox.Text).Value;            
@@ -310,11 +313,27 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 return;
 
             curves.Clear();
-            curves.AddRange(from pair in m_data
-                            select pair.Key
-                                into parameter
+            if (!isEmptyPlot)
+            {
+                curves.AddRange(from pair in m_data
+                                select pair.Key
+                                    into parameter
+                                    where IsContains(yAxisListView.CheckedItems, parameter.Name)
+                                    select GetArray(parameter));
+            }
+            else
+            {
+                List<fsParameterIdentifier> list = new List<fsParameterIdentifier>();
+                list.AddRange(m_yAxisParameters);
+                list.AddRange(m_y2AxisParameters);
+                curves.AddRange(from parameter in list
                                 where IsContains(yAxisListView.CheckedItems, parameter.Name)
-                                select GetArray(parameter));
+                                select new fsDiagramWithTable.fsNamedArray
+                                {
+                                    Name = parameter.Name,
+                                    Array = new fsValue[] { }
+                                });
+            }
         }
 
         private fsDiagramWithTable.fsNamedArray GetArray(fsParameterIdentifier yParameter)
@@ -384,42 +403,36 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private void RefreshDiagramAndTable()
         {
-            //if (m_data.Count == 0)
-            //    return;
-            // ------ new ------
-            if (m_data.Count == 0)
+            fsDiagramWithTable.fsNamedArray xArray = new fsDiagramWithTable.fsNamedArray();
+            fsDiagramWithTable.fsNamedArray niceXArray = new fsDiagramWithTable.fsNamedArray();
+            if (!isEmptyPlot)
             {
-                if (!isXAxisSet)
-                {
-                    fsDiagramWithTable1.SetXAxis(m_iterationParameter.Name + " [" + fsFeedFunctionsData.Values[m_iterationParameter].Unit.Name + "]");
-                    isXAxisSet = true;
-                }
-                if (!isCurvesNamesSet)
-                    SetCurvesNames();                   
-                fsDiagramWithTable1.CleanAllAndRedraw();
-                return;
+                xArray = GetArray(m_iterationParameter);
+                niceXArray = (xAxisType == AxisType.Linear) ? MakeIncreasingNiceNodes(xArray) : xArray;
+
+                fsDiagramWithTable1.SetXAxis(niceXArray);
             }
-            // -----------------
-
-            fsParameterIdentifier xParameter = m_iterationParameter;
-            fsDiagramWithTable.fsNamedArray xArray = GetArray(xParameter);
-            fsDiagramWithTable.fsNamedArray niceXArray = (xAxisType == AxisType.Linear) ? MakeIncreasingNiceNodes(xArray) : xArray;
-
-            fsDiagramWithTable1.SetXAxis(niceXArray);
-            // ------ new ------
-            isXAxisSet = true;
-            // -----------------
+            else
+            {
+                fsDiagramWithTable1.SetXAxis(m_iterationParameter.Name + " [" + fsFeedFunctionsData.Values[m_iterationParameter].Unit.Name + "]");
+            }
 
             fsDiagramWithTable1.ClearYAxis();
             foreach (fsDiagramWithTable.fsNamedArray curve in m_yCurves)
             {
-                fsDiagramWithTable1.AddYAxis(CalculateWithLinearization(curve, xArray, niceXArray));
+                if (isEmptyPlot)
+                    fsDiagramWithTable1.AddYAxis(curve);
+                else
+                    fsDiagramWithTable1.AddYAxis(CalculateWithLinearization(curve, xArray, niceXArray));
             }
 
             fsDiagramWithTable1.ClearY2Axis();
             foreach (fsDiagramWithTable.fsNamedArray curve in m_y2Curves)
             {
-                fsDiagramWithTable1.AddY2Axis(CalculateWithLinearization(curve, xArray, niceXArray));
+                if (isEmptyPlot)
+                    fsDiagramWithTable1.AddY2Axis(curve);
+                else
+                    fsDiagramWithTable1.AddY2Axis(CalculateWithLinearization(curve, xArray, niceXArray));
             }
 
             fsDiagramWithTable1.Redraw();
@@ -591,7 +604,8 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
 
         // -------- new --------- for drag-and-drop
-        public List<fsYAxisParameterWithChecking> yAxisParameters = new List<fsYAxisParameterWithChecking>();
+        //public List<fsYAxisParameterWithChecking> yAxisParameters = new List<fsYAxisParameterWithChecking>();
+        public fsYAxisParameterWithChecking[] yAxisParameters;
 
         private void SetYAxisParameters()
         {
@@ -604,15 +618,21 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                                 fsFeedFunctionsData.GRed_id
                             };
             var kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
-            foreach (var item in array)
-            {
-                yAxisParameters.Add(
-                    new fsYAxisParameterWithChecking(item, kind, m_yAxisParameters.Contains(item))
-                    );
-            }
+            //foreach (var item in array)
+            //{
+            //    yAxisParameters.Add(
+            //        new fsYAxisParameterWithChecking(item, kind, m_yAxisParameters.Contains(item))
+            //        );
+            //}
+            yAxisParameters = new fsYAxisParameterWithChecking[array.Length];
+            for (int i = 0; i < array.Length; i++)
+			{
+                yAxisParameters[i] = new fsYAxisParameterWithChecking(array[i], kind, m_yAxisParameters.Contains(array[i]));
+			}
         }
 
-        public List<fsYAxisParameterWithChecking> y2AxisParameters = new List<fsYAxisParameterWithChecking>();
+        //public List<fsYAxisParameterWithChecking> y2AxisParameters = new List<fsYAxisParameterWithChecking>();
+        public fsYAxisParameterWithChecking[] y2AxisParameters;
 
         private void SetY2AxisParameters()
         {
@@ -623,11 +643,16 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                                 fsFeedFunctionsData.fu_id
                             };
             var kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
-            foreach (var item in array)
+            //foreach (var item in array)
+            //{
+            //    y2AxisParameters.Add(
+            //        new fsYAxisParameterWithChecking(item, kind, m_y2AxisParameters.Contains(item))
+            //        );
+            //}
+            y2AxisParameters = new fsYAxisParameterWithChecking[array.Length];
+            for (int i = 0; i < array.Length; i++)
             {
-                y2AxisParameters.Add(
-                    new fsYAxisParameterWithChecking(item, kind, m_y2AxisParameters.Contains(item))
-                    );
+                y2AxisParameters[i] = new fsYAxisParameterWithChecking(array[i], kind, m_y2AxisParameters.Contains(array[i]));
             }
         }
 
@@ -641,24 +666,44 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             nameToParameter = list.ToDictionary(parameter => parameter.Identifier.Name);
         }
 
-        private void RefreshAllYAxesParametersChecking(fsFeedCurvesSelectionDialog dialog)
+        //private void RefreshAllYAxesParametersChecking(fsFeedCurvesSelectionDialog dialog)
+        //{
+        //    foreach (ListViewItem item in dialog.y1SelectionControl.otherVariablesListView.Items)
+        //    {
+        //        nameToParameter[item.Text].IsChecked = item.Checked;
+        //    }
+        //    foreach (ListViewItem item in dialog.y2SelectionControl.otherVariablesListView.Items)
+        //    {
+        //        nameToParameter[item.Text].IsChecked = item.Checked;
+        //    }
+        //    //foreach (var parameter in nameToParameter.Values)
+        //    //{
+        //    //    if (yAxisParameters.Contains(parameter))
+        //    //        yAxisParameters[yAxisParameters.IndexOf(parameter)].IsChecked = parameter.IsChecked;
+        //    //    else
+        //    //        y2AxisParameters[y2AxisParameters.IndexOf(parameter)].IsChecked = parameter.IsChecked;
+        //    //}
+        //    foreach (var parameter in yAxisParameters)
+        //    {
+        //        parameter.IsChecked = nameToParameter[parameter.Identifier.Name].IsChecked;
+        //    }
+        //    foreach (var parameter in y2AxisParameters)
+        //    {
+        //        parameter.IsChecked = nameToParameter[parameter.Identifier.Name].IsChecked;
+        //    }
+        //}
+
+        public void SetSelectedParameters(fsFeedCurvesSelectionDialog selectionForm)
         {
-            foreach (ListViewItem item in dialog.y1SelectionControl.otherVariablesListView.Items)
-            {
-                nameToParameter[item.Text].IsChecked = item.Checked;
-            }
-            foreach (ListViewItem item in dialog.y2SelectionControl.otherVariablesListView.Items)
-            {
-                nameToParameter[item.Text].IsChecked = item.Checked;
-            }
-            foreach (var parameter in nameToParameter.Values)
-            {
-                if (yAxisParameters.Contains(parameter))
-                    yAxisParameters[yAxisParameters.IndexOf(parameter)].IsChecked = parameter.IsChecked;
-                else
-                    y2AxisParameters[y2AxisParameters.IndexOf(parameter)].IsChecked = parameter.IsChecked;
-            }
+            m_yAxisParameters.Clear();
+            m_yAxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
+            m_y2AxisParameters.Clear();
+            m_y2AxisParameters.AddRange(selectionForm.GetCheckedY2AxisParameters());
+            RefreshOutputAndReadYParameters();
+            RedrawTableAndChart();
         }
+
+
         // ------------------------------------------
 
         private void YAxisConfigureClick(object sender, EventArgs e)
@@ -668,21 +713,25 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             //selectionForm.AssignY2AxisParameters(GetSelectionParametersWithCheking(m_y2AxisList));
             // ------ new ---------
             var selectionForm = new fsFeedCurvesSelectionDialog(this);
-            selectionForm.AssignYAxisParameters(yAxisParameters);
-            selectionForm.AssignY2AxisParameters(y2AxisParameters);
+            selectionForm.AssignYAxisParametersByOrder(yAxisParameters);
+            selectionForm.AssignY2AxisParametersByOrder(y2AxisParameters);
+            selectionForm.MinimizeBox = false;
+            selectionForm.MaximizeBox = false;
+            selectionForm.Location = new Point(this.ParentForm.Location.X + this.ParentForm.Width, this.ParentForm.Location.Y); 
+            selectionForm.StartPosition = FormStartPosition.Manual;
             // --------------------
             selectionForm.ShowDialog();
-            if (selectionForm.DialogResult == DialogResult.OK)
-            {
-                m_yAxisParameters.Clear();
-                m_yAxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
-                m_y2AxisParameters.Clear();
-                m_y2AxisParameters.AddRange(selectionForm.GetCheckedY2AxisParameters());
-                // ------- new ---------
-                RefreshAllYAxesParametersChecking(selectionForm);
-                // ---------------------
-                RefreshAndRecalculateAll();
-            }
+            //if (selectionForm.DialogResult == DialogResult.OK)
+            //{
+            //    m_yAxisParameters.Clear();
+            //    m_yAxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
+            //    m_y2AxisParameters.Clear();
+            //    m_y2AxisParameters.AddRange(selectionForm.GetCheckedY2AxisParameters());
+            //    // ------- new ---------
+            //    RefreshAllYAxesParametersChecking(selectionForm);
+            //    // ---------------------
+            //RefreshAndRecalculateAll();
+            //}
         }
 
         //private void Y2AxisConfigureClick(object sender, EventArgs e)

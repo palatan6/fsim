@@ -9,27 +9,15 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 {
     public partial class fsFeedCurvesSelectionDialog : Form
     {
-        //public fsFeedCurvesSelectionDialog()
-        // -------- new -------- 
         // Regarding fc: we need an access to  yAxisParameters, y2AxisParameters and
         // nameToParameter in FeedCurvesControl 
         public fsFeedCurvesSelectionDialog(FeedCurvesControl fc)
-        // ---------------------
         {
             InitializeComponent();
-            feedsControl = fc; // --- new
-        }
-
-        private void CancelButtonClick(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
-        private void OkButtonClick(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-            Close();
+            feedsControl = fc;
+            // for drag-and-drop: we need an access to feedsControl in fsFeedCurvesSelectionControl
+            y1SelectionControl.feedsControl = fc;
+            y2SelectionControl.feedsControl = fc;
         }
 
         internal List<fsParameterIdentifier> GetCheckedYAxisParameters()
@@ -42,15 +30,29 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             return y2SelectionControl.GetCheckedYAxisParameters();
         }
 
-        internal void AssignYAxisParameters(List<fsYAxisParameterWithChecking> list)
+        private void ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            y1SelectionControl.AssignYAxisParameters(list);
+            if (isItemCheckedReactionAllowed)
+            {
+                if (((ListView)sender).Equals(y1SelectionControl.otherVariablesListView))
+                {
+                    if (ResetFromItemCollection(ref feedsControl.yAxisParameters, y1SelectionControl.otherVariablesListView.Items))
+                    {
+                        AssignYAxisWithoutListView(feedsControl.yAxisParameters);
+                        feedsControl.SetSelectedParameters(this);
+                    }
+                }
+                else
+                {
+                    if (ResetFromItemCollection(ref feedsControl.y2AxisParameters, y2SelectionControl.otherVariablesListView.Items))
+                    {
+                        AssignY2AxisWithoutListView(feedsControl.y2AxisParameters);
+                        feedsControl.SetSelectedParameters(this);
+                    }
+                } 
+            } 
         }
 
-        internal void AssignY2AxisParameters(List<fsYAxisParameterWithChecking> list)
-        {
-            y2SelectionControl.AssignYAxisParameters(list);
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -81,13 +83,48 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
 
         //----------- new -------------- drag-and-drop functionality
+        internal void AssignYAxisParametersByOrder(fsYAxisParameterWithChecking[] list)
+        {
+            y1SelectionControl.AssignYAxisParametersByOrder(list);
+        }
+
+        internal void AssignY2AxisParametersByOrder(fsYAxisParameterWithChecking[] list)
+        {
+            y2SelectionControl.AssignYAxisParametersByOrder(list);
+        }
+
+        internal void AssignYAxisWithoutListView(fsYAxisParameterWithChecking[] list)
+        {
+            y1SelectionControl.AssignYAxisWithoutListView(list);
+        }
+
+        internal void AssignY2AxisWithoutListView(fsYAxisParameterWithChecking[] list)
+        {
+            y2SelectionControl.AssignYAxisWithoutListView(list);
+        }
+
         private FeedCurvesControl feedsControl;
 
         private ListView sourceListView;
 
-        private int targetIndex = -1;
+        private bool isItemCheckedReactionAllowed = true;
 
-        private int draggedItemIndex = -1;
+        private bool ResetFromItemCollection(ref fsYAxisParameterWithChecking[] array, ListView.ListViewItemCollection collection)
+        {
+            array = new fsYAxisParameterWithChecking[collection.Count];
+            foreach (ListViewItem item in collection)
+            {
+                fsYAxisParameterWithChecking parameter = feedsControl.nameToParameter[item.Text];
+                parameter.IsChecked = item.Checked;
+                array[item.Index] = new fsYAxisParameterWithChecking(parameter);
+            }
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == null)
+                    return false;
+            }
+            return true;
+        }
 
         private ListView other(ListView lv)
         {
@@ -113,46 +150,41 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         // Moves the insertion mark as the item is dragged.
         private void ListView_DragOver(object sender, DragEventArgs e)
         {
-            //if (((ListView)sender).Equals(other(sourceListView)))
-            //{
-                if (((ListView)sender).Items.Count == 0)
-                {
-                    ((ListView)sender).InsertionMark.Index = 0;
-                    ((ListView)sender).InsertionMark.AppearsAfterItem = false;
-                    return;
-                }
+            if (((ListView)sender).Items.Count == 0)
+            {
+                ((ListView)sender).InsertionMark.Index = 0;
+                ((ListView)sender).InsertionMark.AppearsAfterItem = false;
+                return;
+            }
 
-                // Retrieve the client coordinates of the mouse pointer.
-                Point targetPoint =
-                    ((ListView)sender).PointToClient(new Point(e.X, e.Y));
+            // Retrieve the client coordinates of the mouse pointer.
+            Point targetPoint =
+                ((ListView)sender).PointToClient(new Point(e.X, e.Y));
 
-                // Retrieve the index of the item closest to the mouse pointer.
-                //targetIndex = ((ListView)sender).InsertionMark.NearestIndex(new Point(0, targetPoint.Y));
-                // ------- new ------
-                if (((ListView)sender).Equals(other(sourceListView)))
-                    targetIndex = ((ListView)sender).InsertionMark.NearestIndex(new Point(0, targetPoint.Y));
+            // Retrieve the index of the item closest to the mouse pointer.
+            int targetIndex;
+            if (((ListView)sender).Equals(other(sourceListView)))
+                targetIndex = ((ListView)sender).InsertionMark.NearestIndex(new Point(0, targetPoint.Y));
+            else
+                targetIndex = ((ListView)sender).InsertionMark.NearestIndex(targetPoint);
+
+            // Confirm that the mouse pointer is not over the dragged item.
+            if (targetIndex > -1)
+            {
+                // Determine whether the mouse pointer is to the top or
+                // the bottom of the midpoint of the closest item and set
+                // the InsertionMark.AppearsAfterItem property accordingly.
+                Rectangle itemBounds = ((ListView)sender).GetItemRect(targetIndex);
+                if (targetPoint.Y > itemBounds.Bottom + (itemBounds.Height / 2))
+                    ((ListView)sender).InsertionMark.AppearsAfterItem = true;
                 else
-                    targetIndex = ((ListView)sender).InsertionMark.NearestIndex(targetPoint);
-                // -------------------
+                    ((ListView)sender).InsertionMark.AppearsAfterItem = false;
+            }
 
-                // Confirm that the mouse pointer is not over the dragged item.
-                if (targetIndex > -1)
-                {
-                    // Determine whether the mouse pointer is to the top or
-                    // the bottom of the midpoint of the closest item and set
-                    // the InsertionMark.AppearsAfterItem property accordingly.
-                    Rectangle itemBounds = ((ListView)sender).GetItemRect(targetIndex);
-                    if (targetPoint.Y > itemBounds.Bottom + (itemBounds.Height / 2))
-                        ((ListView)sender).InsertionMark.AppearsAfterItem = true;
-                    else
-                        ((ListView)sender).InsertionMark.AppearsAfterItem = false;
-                }
-
-                // Set the location of the insertion mark. If the mouse is
-                // over the dragged item, the targetIndex value is -1 and
-                // the insertion mark disappears.
-                ((ListView)sender).InsertionMark.Index = targetIndex; 
-            //}
+            // Set the location of the insertion mark. If the mouse is
+            // over the dragged item, the targetIndex value is -1 and
+            // the insertion mark disappears.
+            ((ListView)sender).InsertionMark.Index = targetIndex;
         }
 
         // Removes the insertion mark when the mouse leaves the control.
@@ -164,8 +196,10 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         // Moves the item to the location of the insertion mark.
         private void ListView_DragDrop(object sender, DragEventArgs e)
         {
+            isItemCheckedReactionAllowed = false;
+
             ListView targetListView = other(sourceListView);
-            targetIndex = ((ListView)sender).InsertionMark.Index;
+            int targetIndex = ((ListView)sender).InsertionMark.Index;
 
             // If the insertion mark is not visible, exit the method.
             if (targetIndex == -1)
@@ -181,95 +215,58 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 (ListViewItem)e.Data.GetData(typeof(ListViewItem));
             String draggedItemName = draggedItem.Text;
 
-            ListView listToDrop;
+            fsYAxisParameterWithChecking draggedYAxisParameter = feedsControl.nameToParameter[draggedItem.Text];
+            draggedYAxisParameter.IsChecked = draggedItem.Checked;
+
             if (((ListView)sender).Equals(targetListView))
             {
-                listToDrop = targetListView;
+                // Insert a copy of the dragged item at the target index.
+                // A copy must be inserted before the original item is removed
+                // to preserve item index values. 
+                targetListView.Items.Insert(targetIndex, (ListViewItem)draggedItem.Clone());
 
-                fsYAxisParameterWithChecking draggedYAxisParameter = feedsControl.nameToParameter[draggedItem.Text];
-                draggedYAxisParameter.IsChecked = draggedItem.Checked;
-                if (sourceListView.Equals(y1SelectionControl.otherVariablesListView))
-                {
-                    feedsControl.yAxisParameters.Remove(draggedYAxisParameter);
-                    feedsControl.y2AxisParameters.Add(draggedYAxisParameter);
-                }
-                else
-                {
-                    feedsControl.y2AxisParameters.Remove(draggedYAxisParameter);
-                    feedsControl.yAxisParameters.Add(draggedYAxisParameter);
-                }
+                // Remove the original copy of the dragged item.
+                sourceListView.Items.Remove(draggedItem);
+
+                if (ResetFromItemCollection(ref feedsControl.yAxisParameters, y1SelectionControl.otherVariablesListView.Items))
+                    AssignYAxisParametersByOrder(feedsControl.yAxisParameters);
+
+                if (ResetFromItemCollection(ref feedsControl.y2AxisParameters, y2SelectionControl.otherVariablesListView.Items))
+                    AssignY2AxisParametersByOrder(feedsControl.y2AxisParameters);
             }
             else
             {
-                listToDrop = sourceListView;
-            }
+                // Insert a copy of the dragged item at the target index.
+                // A copy must be inserted before the original item is removed
+                // to preserve item index values. 
+                sourceListView.Items.Insert(targetIndex, (ListViewItem)draggedItem.Clone());
 
-            AssignYAxisParameters(feedsControl.yAxisParameters);
-            AssignY2AxisParameters(feedsControl.y2AxisParameters);
+                // Remove the original copy of the dragged item.
+                sourceListView.Items.Remove(draggedItem);
 
-            // Getting draggedItem index in rearranged otherVariablesListView.Items (here targetListView.Items)
-            foreach (ListViewItem item in listToDrop.Items)
-            {
-                if (item.Text == draggedItemName)
+                if (sourceListView.Equals(y1SelectionControl.otherVariablesListView))
                 {
-                    draggedItemIndex = item.Index;
-                    break;
+                    if (ResetFromItemCollection(ref feedsControl.yAxisParameters, y1SelectionControl.otherVariablesListView.Items))
+                        AssignYAxisParametersByOrder(feedsControl.yAxisParameters);
                 }
-            }
+                else
+                {
+                    if (ResetFromItemCollection(ref feedsControl.y2AxisParameters, y2SelectionControl.otherVariablesListView.Items))
+                        AssignY2AxisParametersByOrder(feedsControl.y2AxisParameters);
+                }
+            }            
 
-            listToDrop.ListViewItemSorter = new ListViewIndexComparer(targetIndex, draggedItemIndex);
+            feedsControl.SetSelectedParameters(this);
+
+            isItemCheckedReactionAllowed = true;
         }
 
         // Sorts ListViewItem in the way to place draggedItem at InsertionMark index
         private class ListViewIndexComparer : System.Collections.IComparer
         {
-            private int targetIndex;
-            private int draggedItemIndex;
-            private int min;
-            private int max;
-
-            public ListViewIndexComparer(int targetInd, int draggedInd)
-            {
-                targetIndex = targetInd;
-                draggedItemIndex = draggedInd; 
-                min = Math.Min(targetIndex, draggedItemIndex);
-                max = Math.Max(targetIndex, draggedItemIndex);
-            }
-
             public int Compare(object x, object y)
             {
-                int indX = ((ListViewItem)x).Index;
-                int indY = ((ListViewItem)y).Index;
-                if (targetIndex == draggedItemIndex)
-                {
-                    return indX - indY;
-                }
-                else
-                {                    
-                    bool indCondition = indX >= min && indX <= max && indY >= min && indY <= max;
-                    if (!indCondition)
-                        // In intervals outside targetIndex .. draggedItemIndex the order is usual
-                        return indX - indY;
-                    else
-                        // Inside targetIndex .. draggedItemIndex the order is an order of clockwise
-                        // or counterclockwise cyclic permutation
-                        if (targetIndex < draggedItemIndex)
-                            if (indX == max)
-                                return -1;
-                            else
-                                if (indY == max)
-                                    return 1;
-                                else
-                                    return indX - indY;
-                        else
-                            if (indX == min)
-                                return 1;
-                            else
-                                if (indY == min)
-                                    return -1;
-                                else
-                                    return indX - indY;
-                }
+                return ((ListViewItem)x).Index - ((ListViewItem)y).Index;
             }
         }
         //------------------------------

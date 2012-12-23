@@ -62,19 +62,19 @@ namespace CalculatorModules.User_Controls
         }
 
         // ----- new ------
-        public void CleanAllAndRedraw()
-        {
-            m_xAxis.Array = new fsValue[] { };
-            foreach (var curve in m_yAxis)
-            {
-                curve.Array = new fsValue[] { };
-            }
-            foreach (var curve in m_y2Axis)
-            {
-                curve.Array = new fsValue[] { };
-            }
-            Redraw();
-        }
+        //public void CleanAllAndRedraw()
+        //{
+        //    m_xAxis.Array = new fsValue[] { };
+        //    foreach (var curve in m_yAxis)
+        //    {
+        //        curve.Array = new fsValue[] { };
+        //    }
+        //    foreach (var curve in m_y2Axis)
+        //    {
+        //        curve.Array = new fsValue[] { };
+        //    }
+        //    Redraw();
+        //}
 
         private void WriteArraysToTable()
         {

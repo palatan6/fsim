@@ -18,9 +18,7 @@ using ParametersIdentifiers.Ranges;
 namespace CalculatorModules.Hydrocyclone
 {
     public partial class fsHydrocycloneNewControl : fsOptionsAndCommentsCalculatorControl
-    {
-        private FormFeedCurves feedCurvesForm;
-
+    {        
         #region Data for suit managing Adaptation & Machine Geometry group
 
         private static fsParameterIdentifier[] adaptationParameters = new[]
@@ -108,6 +106,8 @@ namespace CalculatorModules.Hydrocyclone
         }
 
         #region Feed Curves Functionality
+
+        private FormFeedCurves feedCurvesForm;
 
         private Form modulesForm;
 
@@ -377,7 +377,7 @@ namespace CalculatorModules.Hydrocyclone
             }
         }
 
-        #region Calculation Option
+        #region Calculation Options
 
         public enum fsCalculationOption
         {
