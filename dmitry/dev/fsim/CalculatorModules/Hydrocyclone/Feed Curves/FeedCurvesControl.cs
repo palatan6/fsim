@@ -20,6 +20,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private readonly List<fsDiagramWithTable.fsNamedArray> m_y2Curves = new List<fsDiagramWithTable.fsNamedArray>();
         private readonly List<fsDiagramWithTable.fsNamedArray> m_yCurves = new List<fsDiagramWithTable.fsNamedArray>();
+
         private List<fsCalculator> m_calculators;
 
         private Dictionary<fsParameterIdentifier, List<fsSimulationModuleParameter>> m_data =
@@ -33,6 +34,9 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private readonly List<fsParameterIdentifier> m_yAxisParameters = new List<fsParameterIdentifier>();
         private readonly List<fsParameterIdentifier> m_y2AxisParameters = new List<fsParameterIdentifier>();
 
+        private Dictionary<string, int> m_nameToYAxisListViewIndex = new Dictionary<string, int>();
+        private Dictionary<string, int> m_nameToY2AxisListViewIndex = new Dictionary<string, int>();
+
         private fsHydrocycloneNewControl hcControl;
 
         private AxisType xAxisType = AxisType.Linear;
@@ -44,8 +48,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         private bool isSigmaSZero;
         private bool isXRedZero;
         private bool isThereZeroInfluencingParameter;
-
-        //private bool isXAxisSet = false;
 
         private bool isEmptyPlot = true;
 
@@ -64,20 +66,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
 
         #endregion
-
-        //private void SetCurvesNames()
-        //{
-        //    foreach (var parameter in m_yAxisParameters)
-        //    {
-        //        var array = new fsDiagramWithTable.fsNamedArray { Name = parameter.Name + " [" + fsFeedFunctionsData.Values[parameter].Unit.Name + "]", Array = new fsValue[] { } }; 
-        //        fsDiagramWithTable1.AddYAxis(array);                
-        //    }
-        //    foreach (var parameter in m_y2AxisParameters)
-        //    {
-        //        var array = new fsDiagramWithTable.fsNamedArray { Name = parameter.Name + " [" + fsFeedFunctionsData.Values[parameter].Unit.Name + "]", Array = new fsValue[] { } };
-        //        fsDiagramWithTable1.AddY2Axis(array);                
-        //    }
-        //}
 
         public void SetHcControl(fsHydrocycloneNewControl hcc)
         {
@@ -131,14 +119,18 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             CheckZeroInfluencingParameters();
             RefreshInputAndReadIterationParameter();
             CalculateData();
-            RefreshOutputAndReadYParameters();
+            RefreshOutputAndReadYParameters(fsYAxisKind.Y1andY2);
             RedrawTableAndChart();
         }
 
-        private void RefreshOutputAndReadYParameters()
+        private void RefreshOutputAndReadYParameters(fsYAxisKind yAxisKind)
         {
-            RefreshYAxisList(m_yAxisParameters, m_yAxisList);
-            RefreshYAxisList(m_y2AxisParameters, m_y2AxisList);
+            if (yAxisKind == fsYAxisKind.Y1 || yAxisKind == fsYAxisKind.Y1andY2)
+                //RefreshYAxisList(m_yAxisParameters, m_yAxisList);
+                RefreshYAxisList(m_yAxisParameters, m_yAxisList, ref m_nameToYAxisListViewIndex);
+            if (yAxisKind == fsYAxisKind.Y2 || yAxisKind == fsYAxisKind.Y1andY2)
+                //RefreshYAxisList(m_y2AxisParameters, m_y2AxisList);
+                RefreshYAxisList(m_y2AxisParameters, m_y2AxisList, ref m_nameToY2AxisListViewIndex);
         }
 
         private void RefreshInputAndReadIterationParameter()
@@ -323,7 +315,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             }
             else
             {
-                List<fsParameterIdentifier> list = new List<fsParameterIdentifier>();
+                List<fsParameterIdentifier> list = new List<fsParameterIdentifier>(); 
                 list.AddRange(m_yAxisParameters);
                 list.AddRange(m_y2AxisParameters);
                 curves.AddRange(from parameter in list
@@ -351,54 +343,145 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         #region Refresh Output
 
-        private void RefreshYAxisList(IEnumerable<fsParameterIdentifier> parameters, ListView yAxisListView)
+        public void RemoveYAxisListViewItem(fsParameterIdentifier parameter)
+        {
+            string name = parameter.Name;
+            int index = m_nameToYAxisListViewIndex[name];
+            m_nameToYAxisListViewIndex.Remove(name);
+            m_yAxisList.Items.RemoveAt(index);
+        }
+
+        public void RemoveY2AxisListViewItem(fsParameterIdentifier parameter)
+        {
+            string name = parameter.Name;
+            int index = m_nameToY2AxisListViewIndex[name];
+            m_nameToY2AxisListViewIndex.Remove(name);
+            m_y2AxisList.Items.RemoveAt(index);
+        }
+
+        public void InsertYAxisListViewItem(fsParameterIdentifier parameter)
+        {
+            int index = m_nameToYAxisListViewIndex[parameter.Name];
+            InsertYAxisListViewItem(parameter, index, m_yAxisList, ref m_nameToYAxisListViewIndex);
+        }
+
+        public void InsertY2AxisListViewItem(fsParameterIdentifier parameter)
+        {
+            int index = m_nameToY2AxisListViewIndex[parameter.Name];
+            InsertYAxisListViewItem(parameter, index, m_y2AxisList, ref m_nameToY2AxisListViewIndex);
+        }
+
+        private void InsertYAxisListViewItem(fsParameterIdentifier parameter, int index, ListView yAxisListView, ref Dictionary<string, int> nameToIndex)
+        {
+            ListViewItem item = new ListViewItem();
+            item.Checked = true;
+            string name = parameter.Name;
+            item.Text = name;
+            nameToIndex.Add(name, index);
+            yAxisListView.Items.Add(item); 
+        }
+
+        //private void RefreshYAxisList(IEnumerable<fsParameterIdentifier> parameters, ListView yAxisListView)
+        private void RefreshYAxisList(List<fsParameterIdentifier> parameters, ListView yAxisListView, ref Dictionary<string, int> nameToIndex)
         {
             if (m_inputRefreshing)
                 return;
 
-            var variableResultsList = new List<KeyValuePair<string, bool>>();
-
-            foreach (fsYAxisParameter selectionParameter in GetSelectionParameters(parameters))
+            nameToIndex.Clear();
+            yAxisListView.Items.Clear();
+            for (int i = 0; i < parameters.Count; i++)
             {
-                string parameterName = selectionParameter.Identifier.Name;
-                bool isChecked = IsContains(yAxisListView.CheckedItems, parameterName)
-                                 || !IsContains(yAxisListView.Items, parameterName);
-                var pair = new KeyValuePair<string, bool>(parameterName, isChecked);
-                variableResultsList.Add(pair);
+                InsertYAxisListViewItem(parameters[i], i, yAxisListView, ref nameToIndex);
             }
 
-            var newList = new List<ListViewItem>();
-            newList.AddRange(
-                variableResultsList.Select(
-                    keyValuePair =>
-                    new ListViewItem(keyValuePair.Key) { Checked = keyValuePair.Value, ForeColor = Color.Black }));
-            if (yAxisListView.Items.Count != newList.Count)
-            {
-                ListViewItem[] array = newList.ToArray();
-                yAxisListView.Items.Clear();
-                yAxisListView.Items.AddRange(array);
-            }
-            else
-            {
-                bool different = false;
-                if (
-                    newList.Where(
-                        (t, i) =>
-                        t.Text != yAxisListView.Items[i].Text || t.Checked != yAxisListView.Items[i].Checked ||
-                        t.ForeColor != yAxisListView.Items[i].ForeColor).Any())
-                {
-                    different = true;
-                }
-                if (different)
-                {
-                    for (int i = 0; i < newList.Count; ++i)
-                    {
-                        yAxisListView.Items[i].Text = newList[i].Text;
-                        yAxisListView.Items[i].Checked = newList[i].Checked;
-                        yAxisListView.Items[i].ForeColor = newList[i].ForeColor;
-                    }
-                }
-            }
+            ////DateTime now0 = DateTime.Now; // time test
+
+            //var variableResultsList = new List<KeyValuePair<string, bool>>();
+
+            //foreach (fsYAxisParameter selectionParameter in GetSelectionParameters(parameters))
+            //{
+            //    string parameterName = selectionParameter.Identifier.Name;
+            //    bool isChecked = IsContains(yAxisListView.CheckedItems, parameterName)
+            //                     || !IsContains(yAxisListView.Items, parameterName);
+            //    var pair = new KeyValuePair<string, bool>(parameterName, isChecked);
+            //    variableResultsList.Add(pair);
+            //}
+
+            ////DateTime now1 = DateTime.Now; // time test
+            ////TimeSpan time1 = now1 - now0; // time test
+
+            //var newList = new List<ListViewItem>();
+            //newList.AddRange(
+            //    variableResultsList.Select(
+            //        keyValuePair =>
+            //        new ListViewItem(keyValuePair.Key) { Checked = keyValuePair.Value, ForeColor = Color.Black }));
+
+            ////TimeSpan time3_1 = new TimeSpan(); // time test
+            ////TimeSpan time3_2 = new TimeSpan(); // time test
+            ////TimeSpan time3_3 = new TimeSpan(); // time test
+            ////TimeSpan time4 = new TimeSpan(); // time test
+            ////TimeSpan time5 = new TimeSpan(); // time test
+
+            ////DateTime now2 = DateTime.Now; // time test
+            ////TimeSpan time2 = now2 - now1; // time test
+
+            //if (yAxisListView.Items.Count != newList.Count)
+            //{
+            //    ListViewItem[] array = newList.ToArray();
+            //    //DateTime now3_1 = DateTime.Now; // time test
+            //    //time3_1 = now3_1 - now2; // time test
+            //    yAxisListView.Items.Clear();
+            //    //DateTime now3_2 = DateTime.Now; // time test
+            //    //time3_1 = now3_2 - now3_1; // time test
+            //    yAxisListView.Items.AddRange(array); // очень долго выполняется
+            //    ////for (int i = 0; i < array.Length; i++)
+            //    ////{
+            //    ////    //array[i].ForeColor = Color.White; // ??:-)
+            //    ////    yAxisListView.Items.Add(array[i]);
+            //    ////} // также очень долго выполняется
+            //    ////for (int i = 0; i < array.Length; i++)
+            //    ////{
+            //    ////    yAxisListView.Items.Insert(i, array[i]);
+            //    ////} // еще дольше чем Add
+            //    //DateTime now3_3 = DateTime.Now; // time test
+            //    //time3_3 = now3_3 - now3_2; // time test
+            //}
+            //else
+            //{
+            //    bool different = false;
+            //    if (
+            //        newList.Where(
+            //            (t, i) =>
+            //            t.Text != yAxisListView.Items[i].Text || t.Checked != yAxisListView.Items[i].Checked ||
+            //            t.ForeColor != yAxisListView.Items[i].ForeColor).Any())
+            //    {
+            //        different = true;
+            //    }
+            //    //DateTime now3 = DateTime.Now; // time test
+            //    //time4 = now3 - now2; // time test
+            //    if (different)
+            //    {
+            //        for (int i = 0; i < newList.Count; ++i)
+            //        {
+            //            yAxisListView.Items[i].Text = newList[i].Text;
+            //            yAxisListView.Items[i].Checked = newList[i].Checked;
+            //            yAxisListView.Items[i].ForeColor = newList[i].ForeColor;
+            //        }
+            //    }
+            //    //DateTime now4 = DateTime.Now; // time test
+            //    //time5 = now4 - now3; // time test
+            //}
+            ////// --- time test ------------
+            ////MessageBox.Show("Now in RefreshYAxisList(...):" + "\n" +
+            ////                "Getting variableResultsList -  " + time1.ToString() + "\n" +
+            ////                "Getting newList -  " + time2.ToString() + "\n" +
+            ////                "Getting yAxisListView (if branch); creating empty newList -  " + time3_1.ToString() + "\n" +
+            ////                "Getting yAxisListView (if branch); Items.Clear -  " + time3_2.ToString() + "\n" +
+            ////                "Getting yAxisListView (if branch); Items.AddRange -  " + time3_3.ToString() + "\n" +                            
+            ////                "Getting different (else branch) -  " + time4.ToString() + "\n" +                            
+            ////                "Getting yAxisListView (else branch, different = true) -  " + time5.ToString()
+            ////    );
+            ////// --------------------------
         }
 
         private void RefreshDiagramAndTable()
@@ -604,7 +687,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         }
 
         // -------- new --------- for drag-and-drop
-        //public List<fsYAxisParameterWithChecking> yAxisParameters = new List<fsYAxisParameterWithChecking>();
         public fsYAxisParameterWithChecking[] yAxisParameters;
 
         private void SetYAxisParameters()
@@ -618,12 +700,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                                 fsFeedFunctionsData.GRed_id
                             };
             var kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
-            //foreach (var item in array)
-            //{
-            //    yAxisParameters.Add(
-            //        new fsYAxisParameterWithChecking(item, kind, m_yAxisParameters.Contains(item))
-            //        );
-            //}
             yAxisParameters = new fsYAxisParameterWithChecking[array.Length];
             for (int i = 0; i < array.Length; i++)
 			{
@@ -631,7 +707,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 			}
         }
 
-        //public List<fsYAxisParameterWithChecking> y2AxisParameters = new List<fsYAxisParameterWithChecking>();
         public fsYAxisParameterWithChecking[] y2AxisParameters;
 
         private void SetY2AxisParameters()
@@ -643,12 +718,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                                 fsFeedFunctionsData.fu_id
                             };
             var kind = fsYAxisParameter.fsYParameterKind.CalculatedVariableParameter;
-            //foreach (var item in array)
-            //{
-            //    y2AxisParameters.Add(
-            //        new fsYAxisParameterWithChecking(item, kind, m_y2AxisParameters.Contains(item))
-            //        );
-            //}
             y2AxisParameters = new fsYAxisParameterWithChecking[array.Length];
             for (int i = 0; i < array.Length; i++)
             {
@@ -666,41 +735,50 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             nameToParameter = list.ToDictionary(parameter => parameter.Identifier.Name);
         }
 
-        //private void RefreshAllYAxesParametersChecking(fsFeedCurvesSelectionDialog dialog)
-        //{
-        //    foreach (ListViewItem item in dialog.y1SelectionControl.otherVariablesListView.Items)
-        //    {
-        //        nameToParameter[item.Text].IsChecked = item.Checked;
-        //    }
-        //    foreach (ListViewItem item in dialog.y2SelectionControl.otherVariablesListView.Items)
-        //    {
-        //        nameToParameter[item.Text].IsChecked = item.Checked;
-        //    }
-        //    //foreach (var parameter in nameToParameter.Values)
-        //    //{
-        //    //    if (yAxisParameters.Contains(parameter))
-        //    //        yAxisParameters[yAxisParameters.IndexOf(parameter)].IsChecked = parameter.IsChecked;
-        //    //    else
-        //    //        y2AxisParameters[y2AxisParameters.IndexOf(parameter)].IsChecked = parameter.IsChecked;
-        //    //}
-        //    foreach (var parameter in yAxisParameters)
-        //    {
-        //        parameter.IsChecked = nameToParameter[parameter.Identifier.Name].IsChecked;
-        //    }
-        //    foreach (var parameter in y2AxisParameters)
-        //    {
-        //        parameter.IsChecked = nameToParameter[parameter.Identifier.Name].IsChecked;
-        //    }
-        //}
+        public enum fsYAxisKind
+        { 
+            Y1,
+            Y2,
+            Y1andY2
+        }
 
-        public void SetSelectedParameters(fsFeedCurvesSelectionDialog selectionForm)
+        public void SetSelectedParameters(fsFeedCurvesSelectionDialog selectionForm, fsYAxisKind yAxisKind)
         {
-            m_yAxisParameters.Clear();
-            m_yAxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
-            m_y2AxisParameters.Clear();
-            m_y2AxisParameters.AddRange(selectionForm.GetCheckedY2AxisParameters());
-            RefreshOutputAndReadYParameters();
+            //DateTime now0 = DateTime.Now; // time test
+            if (yAxisKind == fsYAxisKind.Y1 || yAxisKind == fsYAxisKind.Y1andY2)
+            {
+                m_yAxisParameters.Clear();
+                m_yAxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters()); 
+            }
+            if (yAxisKind == fsYAxisKind.Y2 || yAxisKind == fsYAxisKind.Y1andY2)
+            {
+                m_y2AxisParameters.Clear();
+                m_y2AxisParameters.AddRange(selectionForm.GetCheckedY2AxisParameters()); 
+            }
+            //DateTime now1 = DateTime.Now; // time test
+            //TimeSpan time1 = now1 - now0; // time test
+            RefreshOutputAndReadYParameters(yAxisKind);
+            //DateTime now2 = DateTime.Now; // time test
+            //TimeSpan time2 = now2 - now1; // time test
             RedrawTableAndChart();
+            //DateTime now3 = DateTime.Now; // time test
+            //TimeSpan time3 = now3 - now2; // time test
+            //// --- time test ------------
+            //string axis_info;
+            //if (yAxisKind == fsYAxisKind.Y1andY2)
+            //    axis_info = "Y1 and Y2";
+            //else
+            //    if (yAxisKind == fsYAxisKind.Y1)
+            //        axis_info = "Y1";
+            //    else
+            //        axis_info = "Y2";
+            //MessageBox.Show( "Now in SetSelectedParameters():" +
+            //                "m_y and m_y2 AxisParameters" + 
+            //                " (" + axis_info + ") -  " + time1.ToString() + "\n" +
+            //                "RefreshOutputAndReadYParameters -  " + time2.ToString() + "\n" +
+            //                "RedrawTableAndChart -  " + time3.ToString()
+            //    ); 
+            //// --------------------------
         }
 
 
@@ -727,10 +805,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             //    m_yAxisParameters.AddRange(selectionForm.GetCheckedYAxisParameters());
             //    m_y2AxisParameters.Clear();
             //    m_y2AxisParameters.AddRange(selectionForm.GetCheckedY2AxisParameters());
-            //    // ------- new ---------
-            //    RefreshAllYAxesParametersChecking(selectionForm);
-            //    // ---------------------
-            //RefreshAndRecalculateAll();
+            //    RefreshAndRecalculateAll();
             //}
         }
 

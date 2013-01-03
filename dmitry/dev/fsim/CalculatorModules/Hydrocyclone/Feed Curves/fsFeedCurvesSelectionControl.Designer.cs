@@ -70,6 +70,7 @@
             this.otherVariablesListView.TabIndex = 0;
             this.otherVariablesListView.UseCompatibleStateImageBehavior = false;
             this.otherVariablesListView.View = System.Windows.Forms.View.List;
+            this.otherVariablesListView.MultiSelect = false;
             // 
             // panel1
             // 

@@ -35,12 +35,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.splitContainer1 = new SplitContainer();
             this.y1SelectionControl = new CalculatorModules.Hydrocyclone.Feeds.fsFeedCurvesSelectionControl();
             this.y2SelectionControl = new CalculatorModules.Hydrocyclone.Feeds.fsFeedCurvesSelectionControl();
-            this.panel2 = new Panel();
-            this.button1 = new Button();
+            //this.panel2 = new Panel();
+            //this.button1 = new Button();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            //this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -68,7 +68,9 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.y1SelectionControl.Size = new Size(194, 206);
             this.y1SelectionControl.TabIndex = 3;
             this.y1SelectionControl.Text = "Y Axis";
+            this.y1SelectionControl.otherVariablesListView.HoverSelection = true;
             this.y1SelectionControl.otherVariablesListView.ItemChecked += new ItemCheckedEventHandler(this.ListView_ItemChecked);
+            this.y1SelectionControl.otherVariablesListView.ItemMouseHover += new ListViewItemMouseHoverEventHandler(this.ListView_ItemMouseHover);
             // 
             // y2SelectionControl
             // 
@@ -78,29 +80,31 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.y2SelectionControl.Size = new Size(194, 206);
             this.y2SelectionControl.TabIndex = 0;
             this.y2SelectionControl.Text = "Y2 Axis";
+            this.y2SelectionControl.otherVariablesListView.HoverSelection = true;
             this.y2SelectionControl.otherVariablesListView.ItemChecked += new ItemCheckedEventHandler(this.ListView_ItemChecked);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Dock = DockStyle.Top;
-            this.panel2.Location = new Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new Size(514, 41);
-            this.panel2.TabIndex = 6;
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Bottom)
-                        | AnchorStyles.Right)));
-            this.button1.ForeColor = SystemColors.WindowText;
-            this.button1.Location = new Point(427, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Y1 / Y2";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new EventHandler(this.button1_Click);
+            this.y2SelectionControl.otherVariablesListView.ItemMouseHover += new ListViewItemMouseHoverEventHandler(this.ListView_ItemMouseHover);
+            //// 
+            //// panel2
+            //// 
+            //this.panel2.Controls.Add(this.button1);
+            //this.panel2.Dock = DockStyle.Top;
+            //this.panel2.Location = new Point(0, 0);
+            //this.panel2.Name = "panel2";
+            //this.panel2.Size = new Size(514, 41);
+            //this.panel2.TabIndex = 6;
+            //// 
+            //// button1
+            //// 
+            //this.button1.Anchor = ((AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Bottom)
+            //            | AnchorStyles.Right)));
+            //this.button1.ForeColor = SystemColors.WindowText;
+            //this.button1.Location = new Point(427, 12);
+            //this.button1.Name = "button1";
+            //this.button1.Size = new Size(75, 23);
+            //this.button1.TabIndex = 0;
+            //this.button1.Text = "Y1 / Y2";
+            //this.button1.UseVisualStyleBackColor = true;
+            //this.button1.Click += new EventHandler(this.button1_Click);
             // 
             // fsFeedCurvesSelectionDialog
             // 
@@ -108,14 +112,14 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(388, 240); // 388 / 240 ~= 1.617 - almost golden section :-)
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.panel2);
+            //this.Controls.Add(this.panel2);
             this.Name = "fsFeedCurvesSelectionDialog";
             this.Text = "fsFeedCurvesSelectionDialog";
-            this.Load += new EventHandler(this.fsFeedCurvesSelectionDialog_Load);
+            //this.Load += new EventHandler(this.fsFeedCurvesSelectionDialog_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
+            //this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
             //------- new -----------
@@ -143,7 +147,7 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         public fsFeedCurvesSelectionControl y1SelectionControl;
         public fsFeedCurvesSelectionControl y2SelectionControl;
         private SplitContainer splitContainer1;
-        private Panel panel2;
-        private Button button1;
+        //private Panel panel2;
+        //private Button button1;
     }
 }

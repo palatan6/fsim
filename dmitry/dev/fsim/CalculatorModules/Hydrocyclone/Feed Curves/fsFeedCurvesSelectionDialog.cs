@@ -30,57 +30,59 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             return y2SelectionControl.GetCheckedYAxisParameters();
         }
 
+        private void ListView_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+        {
+            e.Item.Focused = true;
+            e.Item.Selected = true;
+        }
+
         private void ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            if (isItemCheckedReactionAllowed)
+            //if (e.Item.Focused)
+            if (e.Item.Selected || e.Item.Focused)
             {
                 if (((ListView)sender).Equals(y1SelectionControl.otherVariablesListView))
                 {
-                    if (ResetFromItemCollection(ref feedsControl.yAxisParameters, y1SelectionControl.otherVariablesListView.Items))
-                    {
-                        AssignYAxisWithoutListView(feedsControl.yAxisParameters);
-                        feedsControl.SetSelectedParameters(this);
-                    }
+                    feedsControl.yAxisParameters = ResetFromItemCollection(y1SelectionControl.otherVariablesListView.Items);
+                    AssignYAxisWithoutListView(feedsControl.yAxisParameters);
+                    feedsControl.SetSelectedParameters(this, FeedCurvesControl.fsYAxisKind.Y1);
                 }
                 else
                 {
-                    if (ResetFromItemCollection(ref feedsControl.y2AxisParameters, y2SelectionControl.otherVariablesListView.Items))
-                    {
-                        AssignY2AxisWithoutListView(feedsControl.y2AxisParameters);
-                        feedsControl.SetSelectedParameters(this);
-                    }
-                } 
-            } 
+                    feedsControl.y2AxisParameters = ResetFromItemCollection(y2SelectionControl.otherVariablesListView.Items);
+                    AssignY2AxisWithoutListView(feedsControl.y2AxisParameters);
+                    feedsControl.SetSelectedParameters(this, FeedCurvesControl.fsYAxisKind.Y2);
+                }
+            }
         }
 
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SetY2Visible(splitContainer1.Panel2Collapsed);
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    SetY2Visible(splitContainer1.Panel2Collapsed);
             
-        }
+        //}
 
-        private void fsFeedCurvesSelectionDialog_Load(object sender, EventArgs e)
-        {
-            SetY2Visible(y2SelectionControl.GetCheckedYAxisParameters().Count != 0);
-        }
+        //private void fsFeedCurvesSelectionDialog_Load(object sender, EventArgs e)
+        //{
+        //    SetY2Visible(y2SelectionControl.GetCheckedYAxisParameters().Count != 0);
+        //}
 
-        private void SetY2Visible(bool isVisible)
-        {
-            if (isVisible == !splitContainer1.Panel2Collapsed)
-                return;
+        //private void SetY2Visible(bool isVisible)
+        //{
+        //    if (isVisible == !splitContainer1.Panel2Collapsed)
+        //        return;
 
-            if (isVisible)
-            {
-                splitContainer1.Panel2Collapsed = false;
-                Width = Width * 2;
-            }
-            else
-            {
-                splitContainer1.Panel2Collapsed = true;
-                Width = Width / 2;
-            }
-        }
+        //    if (isVisible)
+        //    {
+        //        splitContainer1.Panel2Collapsed = false;
+        //        Width = Width * 2;
+        //    }
+        //    else
+        //    {
+        //        splitContainer1.Panel2Collapsed = true;
+        //        Width = Width / 2;
+        //    }
+        //}
 
         //----------- new -------------- drag-and-drop functionality
         internal void AssignYAxisParametersByOrder(fsYAxisParameterWithChecking[] list)
@@ -107,23 +109,16 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
         private ListView sourceListView;
 
-        private bool isItemCheckedReactionAllowed = true;
-
-        private bool ResetFromItemCollection(ref fsYAxisParameterWithChecking[] array, ListView.ListViewItemCollection collection)
+        private fsYAxisParameterWithChecking[] ResetFromItemCollection(ListView.ListViewItemCollection collection)
         {
-            array = new fsYAxisParameterWithChecking[collection.Count];
+            var array = new fsYAxisParameterWithChecking[collection.Count];
             foreach (ListViewItem item in collection)
             {
                 fsYAxisParameterWithChecking parameter = feedsControl.nameToParameter[item.Text];
                 parameter.IsChecked = item.Checked;
                 array[item.Index] = new fsYAxisParameterWithChecking(parameter);
             }
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i] == null)
-                    return false;
-            }
-            return true;
+            return array;
         }
 
         private ListView other(ListView lv)
@@ -196,8 +191,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
         // Moves the item to the location of the insertion mark.
         private void ListView_DragDrop(object sender, DragEventArgs e)
         {
-            isItemCheckedReactionAllowed = false;
-
             ListView targetListView = other(sourceListView);
             int targetIndex = ((ListView)sender).InsertionMark.Index;
 
@@ -228,11 +221,13 @@ namespace CalculatorModules.Hydrocyclone.Feeds
                 // Remove the original copy of the dragged item.
                 sourceListView.Items.Remove(draggedItem);
 
-                if (ResetFromItemCollection(ref feedsControl.yAxisParameters, y1SelectionControl.otherVariablesListView.Items))
-                    AssignYAxisParametersByOrder(feedsControl.yAxisParameters);
+                feedsControl.yAxisParameters = ResetFromItemCollection(y1SelectionControl.otherVariablesListView.Items);
+                AssignYAxisParametersByOrder(feedsControl.yAxisParameters);
 
-                if (ResetFromItemCollection(ref feedsControl.y2AxisParameters, y2SelectionControl.otherVariablesListView.Items))
-                    AssignY2AxisParametersByOrder(feedsControl.y2AxisParameters);
+                feedsControl.y2AxisParameters = ResetFromItemCollection(y2SelectionControl.otherVariablesListView.Items);
+                AssignY2AxisParametersByOrder(feedsControl.y2AxisParameters);
+
+                feedsControl.SetSelectedParameters(this, FeedCurvesControl.fsYAxisKind.Y1andY2);
             }
             else
             {
@@ -246,19 +241,17 @@ namespace CalculatorModules.Hydrocyclone.Feeds
 
                 if (sourceListView.Equals(y1SelectionControl.otherVariablesListView))
                 {
-                    if (ResetFromItemCollection(ref feedsControl.yAxisParameters, y1SelectionControl.otherVariablesListView.Items))
-                        AssignYAxisParametersByOrder(feedsControl.yAxisParameters);
+                    feedsControl.yAxisParameters = ResetFromItemCollection(y1SelectionControl.otherVariablesListView.Items);
+                    AssignYAxisParametersByOrder(feedsControl.yAxisParameters);
+                    feedsControl.SetSelectedParameters(this, FeedCurvesControl.fsYAxisKind.Y1);
                 }
                 else
                 {
-                    if (ResetFromItemCollection(ref feedsControl.y2AxisParameters, y2SelectionControl.otherVariablesListView.Items))
-                        AssignY2AxisParametersByOrder(feedsControl.y2AxisParameters);
+                    feedsControl.y2AxisParameters = ResetFromItemCollection(y2SelectionControl.otherVariablesListView.Items);
+                    AssignY2AxisParametersByOrder(feedsControl.y2AxisParameters);
+                    feedsControl.SetSelectedParameters(this, FeedCurvesControl.fsYAxisKind.Y2);
                 }
-            }            
-
-            feedsControl.SetSelectedParameters(this);
-
-            isItemCheckedReactionAllowed = true;
+            }
         }
 
         // Sorts ListViewItem in the way to place draggedItem at InsertionMark index

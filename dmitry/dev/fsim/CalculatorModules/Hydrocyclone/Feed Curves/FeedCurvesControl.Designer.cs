@@ -41,7 +41,6 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.m_y2AxisList = new System.Windows.Forms.ListView();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            //this.inputsTextBox = new System.Windows.Forms.TextBox();
             this.inputsTextBox = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -207,12 +206,12 @@ namespace CalculatorModules.Hydrocyclone.Feeds
             this.inputsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inputsTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.inputsTextBox.Location = new System.Drawing.Point(0, 13);
-            this.inputsTextBox.Multiline = true;
             this.inputsTextBox.Name = "inputsTextBox";
             this.inputsTextBox.ReadOnly = true;
             this.inputsTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.inputsTextBox.Size = new System.Drawing.Size(151, 206);
             this.inputsTextBox.TabIndex = 1;
+            this.inputsTextBox.Text = "";
             // 
             // label6
             // 
