@@ -3,15 +3,27 @@ using System.Collections.Generic;
 
 namespace ListViewWithChecking
 {
-    public delegate void OnAddAction(fsListViewWithChecking list, int index, object item, bool checkValue);
+    public delegate void OnAddAction(
+        fsListViewWithChecking list,
+        KeyValuePair<string, fsCheckItemInfo> namedState);
 
-    public delegate void OnRemoveAction(fsListViewWithChecking list, int index, object item, bool checkValue);
+    public delegate void OnMultipleAddAction(
+        fsListViewWithChecking list,
+        List<KeyValuePair<string, fsCheckItemInfo>> namedStates);
 
-    public delegate void OnCheckAction(fsListViewWithChecking list, int index, bool checkValue);
+    public delegate void OnRechargeAction(
+        fsListViewWithChecking list,
+        List<KeyValuePair<string, fsCheckItemInfo>> removeStates,
+        List<KeyValuePair<string, fsCheckItemInfo[]>> commonStates,
+        List<KeyValuePair<string, fsCheckItemInfo>> addStates);
 
-    public delegate void OnMultipleCheckAction(fsListViewWithChecking list, Dictionary<int, bool> indicesAndChecks);
+    public delegate void OnRemoveAction(fsListViewWithChecking list, KeyValuePair<string, fsCheckItemInfo> namedState);
 
-    public delegate void OnDragDropAction(fsListViewWithChecking sourceList, fsListViewWithChecking targetList,
-                                          int sourceIndex, int targetIndex,
-                                          object item, bool checkValue);
+    public delegate void OnCheckAction(fsListViewWithChecking list, fsCheckItemInfo state);
+
+    public delegate void OnMultipleCheckAction(fsListViewWithChecking list, List<fsCheckItemInfo> states);
+
+    public delegate void OnDragDropAction(fsListViewWithChecking sourceList,
+                                          fsListViewWithChecking targetList,
+                                          fsDragDropItemInfo dragDropState);
 }

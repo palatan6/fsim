@@ -7,15 +7,31 @@ using System.Windows.Forms;
 namespace ListViewWithChecking
 {
     /// <summary>
-    /// Class implementing simple and fast operations (adding, removing, checking) on ListViews with checking
-    /// having differents ListViewitem's names.
+    /// This class implements simple and fast operations (adding, removing, checking)
+    /// on {ListViews with checking} having different ListViewitem's names.
     /// Implements drag-and-drop functionality, smart items checking, and suit assigning actions to 
     /// adding, removing, checking, and dragging items between different instances of fsListViewWithChecking
     /// (with the use of fsListViewWithCheckingSupervisor class)
     /// </summary>
     public partial class fsListViewWithChecking : UserControl
     {
+        private bool isfsListViewWithChecking(object someObject)
+        {
+            if (someObject is ListView)
+            {
+                if (((ListView)someObject).Parent is fsListViewWithChecking)
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+
         private List<string> m_names;
+
+        private List<bool> m_checks;
+
+        private int m_count;
 
         public virtual object this[int index]
         {
@@ -25,17 +41,7 @@ namespace ListViewWithChecking
                     throw new Exception("An attempt to get a fsListViewWithChecking item at an inappropriate index");
                 return m_names[index];
             }
-            set 
-            {
-                if (index < 0 || m_count <= index)
-                    throw new Exception("An attempt to get a fsListViewWithChecking item at an inappropriate index");
-                m_names[index] = (string)value;
-            }
         }
-
-        private List<bool> m_checks;
-
-        private int m_count;
 
         public int Count { get { return m_count; } }
 
@@ -60,7 +66,23 @@ namespace ListViewWithChecking
             if (m_count > 0)
                 m_listView.Items.RemoveAt(0);
             else
-                throw new Exception("Attempt to remove an item from the empty m_listView");
+                throw new Exception("An attempt to remove an item from the empty m_listView");
+        }
+
+        private void RemoveItemRange(int count)
+        {
+            try
+            {
+                if (count > 0)
+                    for (int i = 0; i < count; i++)
+                    {
+                        RemoveItem();
+                    }
+            }
+            catch (Exception)
+            {
+                throw new Exception("An attempt to remove an exceeding number of items from m_listView");
+            }
         }
 
         #endregion
@@ -75,7 +97,7 @@ namespace ListViewWithChecking
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw new Exception("Attempt to insert the name at an inappropriate index");
+                throw new Exception("An attempt to insert the name at an inappropriate index");
             }
         }
 
@@ -97,7 +119,7 @@ namespace ListViewWithChecking
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw new Exception("Attempt to remove the name at an inappropriate index");
+                throw new Exception("An attempt to remove the name at an inappropriate index");
             }
         }
 
@@ -133,7 +155,7 @@ namespace ListViewWithChecking
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw new Exception("Attempt to remove the check at an inappropriate index");
+                throw new Exception("An attempt to remove the check at an inappropriate index");
             }
         }
 
@@ -155,17 +177,17 @@ namespace ListViewWithChecking
         /// <summary>
         /// Assigns checks to a created fsListViewWithChecking instance.
         /// </summary>
-        /// <returns>A dictionary of pairs ("index", new check value at "index") where a check value was changed at "index". </returns>
-        private Dictionary<int, bool> AssignChecks()
+        /// <returns>A list of states ("index", new check value at "index", etc.) where a check value was changed at "index". </returns>
+        private List<fsCheckItemInfo> AssignChecks()
         {
-            var result = new Dictionary<int, bool>();
+            var result = new List<fsCheckItemInfo>();
             for (int i = 0; i < m_count; i++)
             {
                 bool checkValue = m_listView.Items[i].Checked;
                 if (checkValue != m_checks[i])
                 {
                     m_listView.Items[i].Checked = m_checks[i];
-                    result.Add(i, m_checks[i]);
+                    result.Add(new fsCheckItemInfo(i, m_checks[i]));
                 }
             }
             return result;
@@ -184,6 +206,52 @@ namespace ListViewWithChecking
 
         #region Constructor
 
+        #region Constructor events
+
+        /// <summary>
+        /// An event which is raised when a number of items is added to a fsListViewWithChecking instance
+        /// </summary>
+        public event EventHandler<EventArgs> MultipleAddListViewItemsEvent;
+
+        /// <summary>
+        /// Publishing MultipleAddListViewItemsEvent
+        /// </summary>
+        /// <param name="e">An event argument which is to be converted to an appropriate type of a class which inherits EventArgs </param>
+        protected virtual void OnMultipleAddListViewItemsEvent(EventArgs e)
+        {
+            // Make a temporary copy of the event to avoid possibility of
+            // a race condition if the last subscriber unsubscribes
+            // immediately after the null check and before the event is raised.
+            EventHandler<EventArgs> handler = MultipleAddListViewItemsEvent;
+
+            // Event will be null if there are no subscribers
+            if (handler != null)
+                handler(this, (fsListViewWithCheckingEventArgs)e);
+        }
+
+        /// <summary>
+        /// An event which is raised when a number of items is added to a fsListViewWithChecking instance
+        /// </summary>
+        public event EventHandler<EventArgs> RechargeListViewEvent;
+
+        /// <summary>
+        /// Publishing RechargeListViewEvent
+        /// </summary>
+        /// <param name="e">An event argument which is to be converted to an appropriate type of a class which inherits EventArgs </param>
+        protected virtual void OnRechargeListViewEvent(EventArgs e)
+        {
+            // Make a temporary copy of the event to avoid possibility of
+            // a race condition if the last subscriber unsubscribes
+            // immediately after the null check and before the event is raised.
+            EventHandler<EventArgs> handler = RechargeListViewEvent;
+
+            // Event will be null if there are no subscribers
+            if (handler != null)
+                handler(this, (fsListViewWithCheckingEventArgs)e);
+        }
+
+        #endregion
+
         /// <summary> 
         /// Creating an empty fsListViewWithChecking instance
         /// </summary>
@@ -193,81 +261,237 @@ namespace ListViewWithChecking
             m_names = new List<string>();
             m_checks = new List<bool>();
             m_count = 0;
-            IsAdding = false;
-            IsRemoving = false;
-            isMultipleChecking = false;
+            IsSpecificCheckDoing = false;
             AllowedDrag = false;
             AllowedDrop = false;
         }
 
         /// <summary> 
-        /// Adding items with names and checks to a fsListViewWithChecking instance.
-        /// Items names are ordered by the natural order of "names". An item with the name "names[i]"
-        /// has the checking "checks[i]". If the count of an either "names" or  "checks" is more than the
+        /// Performs adding specific items and their check values to a fsListViewWithChecking instance.
+        /// Items are ordered by the natural order of "items". An item "item[i]"
+        /// has the check value "checks[i]". If the count of either "items" or  "checks" is more than the
         /// count of another collection than the first one is truncated to be of an equal size.
-        /// If any two names in "names" coincide an exception rises.
+        /// If any two item names in "items" coincide an exception rises.
+        /// If there are common strings in existing and added collections of names an exception rises.
         /// </summary>
-        /// <param name="names">Collection of names for ListViewItems</param>
-        /// <param name="checks">Collection of checks for ListViewItems</param>
-        public void AddToListViewWithChecking(IEnumerable<string> names, IEnumerable<bool> checks)
+        /// <param name="items">Collection of specific items for ListViewItems</param>
+        /// <param name="checks">Collection of check values for ListViewItems</param>
+        /// <param name="isOnLoad">The flag that shows whether adding is performing while initial 
+        /// fsListViewWithChecking instance is being filled</param>
+        public virtual void AddToListViewWithChecking(IEnumerable<object> items, IEnumerable<bool> checks, bool isOnLoad)
         {
-            IsAdding = true;
-            int namesCount = names.Count();
-            for (int i = 0; i < namesCount - 1; i++)
+            IsSpecificCheckDoing = true;
+
+            int itemsCount = items.Count();
+            for (int i = 0; i < itemsCount - 1; i++)
             {
-                string elementAt_i = names.ElementAt(i);
-                for (int j = i + 1; j < namesCount; j++)
+                string elementAt_i = (string)items.ElementAt(i);
+                for (int j = i + 1; j < itemsCount; j++)
                 {
-                    if (elementAt_i.Equals(names.ElementAt(j)))
-                        throw new Exception("The names of a fsListViewWithChecking must differ");
+                    if (elementAt_i.Equals((string)items.ElementAt(j)))
+                        throw new Exception("There are coinciding strings in added names");
                 }
             }
+            if (m_names.Intersect((IEnumerable<string>)items).Count() > 0)
+                throw new Exception("There are common strings in existing and added names");
+
             int checksCount = checks.Count();
-            int count = Math.Min(namesCount, checksCount);
+            int count = Math.Min(itemsCount, checksCount);
             AddItemRange(count);
             m_count += count;
-            if (namesCount == checksCount)
+            if (itemsCount == checksCount)
             {
-                AddNameRange(names);
+                AddNameRange((IEnumerable<string>)items);
                 AddCheckRange(checks);
             }
             else
             {
-                if (checksCount < namesCount)
+                if (checksCount < itemsCount)
                 {
                     for (int i = 0; i < checksCount; i++)
                     {
-                        AddName(names.ElementAt(i));
+                        AddName((string)items.ElementAt(i));
                     }
                     AddCheckRange(checks);
                 }
                 else
                 {
-                    AddNameRange(names);
-                    for (int i = 0; i < namesCount; i++)
+                    AddNameRange((IEnumerable<string>)items);
+                    for (int i = 0; i < itemsCount; i++)
                     {
                         AddCheck(checks.ElementAt(i));
                     }
                 }
             }
             Assign();
-            IsAdding = false;
+
+            IsSpecificCheckDoing = false;
+
+            if (!isOnLoad)
+            {
+                var resultAdd = new List<KeyValuePair<string, fsCheckItemInfo>>();
+                for (int i = 0; i < items.Count(); i++)
+                {
+                    resultAdd.Add(new KeyValuePair<string, fsCheckItemInfo>
+                                      ((string)items.ElementAt(i),
+                                       new fsCheckItemInfo(m_count + i, checks.ElementAt(i))
+                                      )
+                                 );
+                }
+                OnMultipleAddListViewItemsEvent(new fsListViewWithCheckingEventArgs(resultAdd));
+            }
         }
 
-        /// <summary> 
-        /// Adding items with names to a fsListViewWithChecking instance.
-        /// Items names are ordered by the natural order of "names". All the added items are checked.
+        /// <summary>
+        /// Creates an array of bool values "value" with the length equaled to the length of "names".
         /// </summary>
-        /// <param name="names">Collection of names for ListViewItems</param>
-        public void AddToListViewWithChecking(IEnumerable<string> names)
+        /// <param name="names">A collection of strings</param>
+        /// <returns>An array of true values</returns>
+        private bool[] ChecksFromNames(IEnumerable<string> names, bool value)
         {
             int namesCount = names.Count();
             var checks = new bool[namesCount];
             for (int i = 0; i < namesCount; i++)
             {
-                checks[i] = true;
+                checks[i] = value;
             }
-            AddToListViewWithChecking(names, checks);
+            return checks;
+        }
+
+        /// <summary> 
+        /// Performs adding specific items to a fsListViewWithChecking instance.
+        /// Items are ordered by the natural order of "items". All the added items have
+        /// check value "value".
+        /// </summary>
+        /// <param name="items">A collection of specific items for ListViewItems</param>
+        /// <param name="value">true or false</param>
+        /// <param name="isOnLoad">The flag that shows whether adding is performing while initial 
+        /// fsListViewWithChecking instance is being filled</param>
+        public virtual void AddToListViewWithChecking(IEnumerable<object> items, bool value, bool isOnLoad)
+        {
+            AddToListViewWithChecking(items, ChecksFromNames((IEnumerable<string>)items, value), isOnLoad);
+        }
+
+        /// <summary>
+        /// Performs recharging of a fsListViewWithChecking instance. New specific items with their new
+        /// check values are loaded. By this an appropriate amount of ListViewItems are either added or removed
+        /// (what defined by the difference between the old and new amounts of items). An item "item[i]" will
+        /// have the check value "checks[i]". If the count of either "items" or  "checks" is more than the
+        /// count of another collection than the first one is truncated to be of an equal size.
+        /// If any two item names in "items" coincide an exception rises.
+        /// </summary>
+        /// <param name="items">Items to be recharged</param>
+        /// <param name="checks">Check values of items to be recharged</param>
+        public virtual void RechargeListViewWithChecking(IEnumerable<object> items, IEnumerable<bool> checks)
+        {
+            IsSpecificCheckDoing = true;
+
+            int itemsCount = items.Count();
+            for (int i = 0; i < itemsCount - 1; i++)
+            {
+                string elementAt_i = (string)items.ElementAt(i);
+                for (int j = i + 1; j < itemsCount; j++)
+                {
+                    if (elementAt_i.Equals(items.ElementAt(j)))
+                        throw new Exception("There are coinciding strings in recharged names");
+                }
+            }
+
+            int previousCount = m_count;
+            List<string> previousNames = m_names;
+            List<bool> previousChecks = m_checks;
+
+            int checksCount = checks.Count();
+            int currentCount = Math.Min(itemsCount, checksCount);
+
+            if (itemsCount == checksCount)
+            {
+                m_names = ((IEnumerable<string>)items).ToList();
+                m_checks = checks.ToList();
+            }
+            else
+                if (itemsCount < checksCount)
+                {
+                    m_names = ((IEnumerable<string>)items).ToList();
+                    m_checks = checks.Take(itemsCount).ToList();
+                }
+                else
+                {
+                    m_names = ((IEnumerable<string>)items).Take(checksCount).ToList();
+                    m_checks = checks.ToList();
+                }
+
+            if (previousCount < currentCount)
+                AddItemRange(currentCount - previousCount);
+            else
+                if (previousCount > currentCount)
+                    RemoveItemRange(previousCount - currentCount);
+            m_count = currentCount;
+            Assign();
+
+            IsSpecificCheckDoing = false;
+
+            // We form the list of items (with their previous and current states) having common names in previous and current charge.
+            var resultCommon = new List<KeyValuePair<string, fsCheckItemInfo[]>>();
+            IEnumerable<string> intersection = previousNames.Intersect(m_names);
+            foreach (var name in intersection)
+            {
+                int previousIndex = previousNames.IndexOf(name);
+                bool previousCheck = previousChecks[previousIndex];
+                int currentIndex = m_names.IndexOf(name);
+                bool currentCheck = m_checks[currentIndex];
+                resultCommon.Add(new KeyValuePair<string, fsCheckItemInfo[]>
+                                     (name,
+                                      new fsCheckItemInfo[]
+                                          {  
+                                              new fsCheckItemInfo(previousIndex, previousCheck),
+                                              new fsCheckItemInfo(currentIndex, currentCheck)
+                                          }
+                                     )
+                                );
+            }
+
+            // We form the list of old items with their states that are to be removed by recharging operation
+            var resultRemove = new List<KeyValuePair<string, fsCheckItemInfo>>();
+            IEnumerable<string> previousExceptCurrent = previousNames.Except(m_names);
+            foreach (var name in previousExceptCurrent)
+            {
+                int previousIndex = previousNames.IndexOf(name);
+                bool previousCheck = previousChecks[previousIndex];
+                resultRemove.Add(new KeyValuePair<string, fsCheckItemInfo>
+                                     (name,
+                                      new fsCheckItemInfo(previousIndex, previousCheck)
+                                     )
+                                );
+            }
+
+            // We form the list of new items with their states that are to be added by recharging operation
+            var resultAdd = new List<KeyValuePair<string, fsCheckItemInfo>>();
+            IEnumerable<string> currentExceptPrevious = m_names.Except(previousNames);
+            foreach (var name in currentExceptPrevious)
+            {
+                int currentIndex = m_names.IndexOf(name);
+                bool currentCheck = m_checks[currentIndex];
+                resultAdd.Add(new KeyValuePair<string, fsCheckItemInfo>
+                                  (name,
+                                   new fsCheckItemInfo(currentIndex, currentCheck)
+                                  )
+                             );
+            }
+
+            OnRechargeListViewEvent(new fsListViewWithCheckingEventArgs(resultRemove, resultCommon, resultAdd));
+        }
+
+        /// <summary>
+        /// Performs recharging of a fsListViewWithChecking instance. 
+        /// Items are ordered by the natural order of "items". All the added items have
+        /// check value "value".
+        /// </summary>
+        /// <param name="items">Items to be recharged</param>
+        /// <param name="value">true or false</param>
+        public virtual void RechargeListViewWithChecking(IEnumerable<object> items, bool value)
+        {
+            RechargeListViewWithChecking(items, ChecksFromNames((IEnumerable<string>)items, value));
         }
 
         #endregion
@@ -277,7 +501,7 @@ namespace ListViewWithChecking
         #region Events for constructing items
 
         /// <summary>
-        /// An event which raises when an item is added to a fsListViewWithChecking instance
+        /// An event which is raised when an item is added to a fsListViewWithChecking instance
         /// </summary>
         public event EventHandler<EventArgs> AddListViewItemEvent;
 
@@ -298,7 +522,7 @@ namespace ListViewWithChecking
         }
 
         /// <summary>
-        /// An event which raises when an item is removed from a fsListViewWithChecking instance
+        /// An event which is raised when an item is removed from a fsListViewWithChecking instance
         /// </summary>
         public event EventHandler<EventArgs> RemoveListViewItemEvent;
 
@@ -323,14 +547,10 @@ namespace ListViewWithChecking
         #region Constructing items
 
         /// <summary> 
-        /// This flag displays if the process of adding items is on.
+        /// This flag displays whether the process of specific checking ListViewItems operations
+        /// is on during which the firing of the event ListViewItem_Checked is to be suppressed.
         /// </summary>
-        public bool IsAdding { get; private set; }
-
-        /// <summary> 
-        /// This flag displays if the process of removing items is on.
-        /// </summary>
-        public bool IsRemoving { get; private set; }
+        public bool IsSpecificCheckDoing { get; private set; }
 
         /// <summary>
         /// True if a fsListViewWithChecking instance contains an item with the name "name"; otherwise, false.
@@ -354,14 +574,14 @@ namespace ListViewWithChecking
             {
                 throw new Exception("The name of an item to be inserted already exists");
             }
-            IsAdding = true;
+            IsSpecificCheckDoing = true;
             try
             {
                 InsertName(index, (string)item);
             }
             catch (Exception)
             {
-                IsAdding = false;
+                IsSpecificCheckDoing = false;
                 throw new Exception("An attempt to insert an item at an inapproptiate index");
             }
             InsertCheck(index, isChecked);
@@ -369,7 +589,7 @@ namespace ListViewWithChecking
             m_count++;
             Assign();
             OnAddListViewItemEvent(new fsListViewWithCheckingEventArgs((string)item, index, isChecked));
-            IsAdding = false;
+            IsSpecificCheckDoing = false;
         }
 
         /// <summary> 
@@ -383,13 +603,13 @@ namespace ListViewWithChecking
             {
                 throw new Exception("The name of an item to be added already exists");
             }
-            IsAdding = true;
+            IsSpecificCheckDoing = true;
             m_listView.Items.Add((string)item);
             m_listView.Items[m_count++].Checked = isChecked;
             AddName((string)item);
             AddCheck(isChecked);
             OnAddListViewItemEvent(new fsListViewWithCheckingEventArgs((string)item, m_count - 1, isChecked));
-            IsAdding = false;
+            IsSpecificCheckDoing = false;
         }
 
         /// <summary> 
@@ -399,24 +619,26 @@ namespace ListViewWithChecking
         /// <param name="index">Index to remove at</param>
         public virtual void RemoveAt(int index)
         {
-            IsRemoving = true;
-            string name = m_names[index];
-            bool isChecked = m_checks[index];
+            IsSpecificCheckDoing = true;
+            string item;
+            bool checkValue;
             try
             {
+                item = m_names[index];
+                checkValue = m_checks[index];
                 RemoveNameAt(index);
             }
             catch (Exception)
             {
-                IsRemoving = false;
+                IsSpecificCheckDoing = false;
                 throw new Exception("An attempt to remove the item at an inapproptiate index");
             }
             RemoveItem();
             RemoveCheckAt(index);
             m_count--;
             Assign();
-            OnRemoveListViewItemEvent(new fsListViewWithCheckingEventArgs(name, index, isChecked));
-            IsRemoving = false;
+            OnRemoveListViewItemEvent(new fsListViewWithCheckingEventArgs(item, index, checkValue));
+            IsSpecificCheckDoing = false;
         }
 
         /// <summary> 
@@ -464,15 +686,10 @@ namespace ListViewWithChecking
 
         #region Checking items
 
-        /// <summary>
-        /// This flag displays whether the process of multiple checking items is on.
-        /// </summary>
-        public bool isMultipleChecking { get; private set; }
-
         #region {Checking items} events
 
         /// <summary>
-        /// An event which raises when an item of a fsListViewWithChecking instance is checked
+        /// An event which is raised when an item of a fsListViewWithChecking instance is checked
         /// </summary>
         public event EventHandler<EventArgs> CheckListViewItemEvent;
 
@@ -493,7 +710,7 @@ namespace ListViewWithChecking
         }
 
         /// <summary>
-        /// An event which raises when a number of items of a fsListViewWithChecking instance is checked
+        /// An event which is raised when a number of items of a fsListViewWithChecking instance is checked
         /// </summary>
         public event EventHandler<EventArgs> MultipleCheckListViewItemsEvent;
 
@@ -519,7 +736,7 @@ namespace ListViewWithChecking
             {
                 Point targetPoint = new Point(e.X, e.Y); // Mouse pointer coordinates in (ListView)sender)
                 int InsertionMarkIndex = ((ListView)sender).InsertionMark.NearestIndex(targetPoint);
-                // If mouse reaches the area of an item; the first one is determined 
+                // If the mouse pointer reaches the area of an item; this area is determined 
                 // by a possibility to insert Insertion Mark 
                 if (InsertionMarkIndex > -1)
                 {
@@ -529,7 +746,7 @@ namespace ListViewWithChecking
                         itemBounds.Top <= targetPoint.Y && targetPoint.Y <= itemBounds.Bottom)
                     {
                         // We force (ListView)sender to be focused for immediate selection of an item
-                        // in whose rectangle lies mouse pointer.  
+                        // in whose rectangle the mouse pointer lies .  
                         ((ListView)sender).Focus();
                         ((ListView)sender).Items[InsertionMarkIndex].Selected = true;
                     }
@@ -597,9 +814,9 @@ namespace ListViewWithChecking
 
         private void MakeChecking()
         {
-            isMultipleChecking = true;
+            IsSpecificCheckDoing = true;
             OnMultipleCheckListViewItemsEvent(new fsListViewWithCheckingEventArgs(AssignChecks()));
-            isMultipleChecking = false;
+            IsSpecificCheckDoing = false;
         }
 
         /// <summary> 
@@ -680,10 +897,10 @@ namespace ListViewWithChecking
 
         #region Drag-and-drop functionality
 
-        #region {Setting as source ListView} event
+        #region {Setting as the source ListView} event
 
         /// <summary>
-        /// An event which raises when an item has been started to be dragged on a fsListViewWithChecking instance;
+        /// An event which is raised when an item has been started to be dragged on a fsListViewWithChecking instance;
         /// setting that instance as the source ListView
         /// </summary>
         public event EventHandler<EventArgs> SetAsSourceListViewEvent;
@@ -706,10 +923,10 @@ namespace ListViewWithChecking
 
         #endregion
 
-        #region {Setting as target ListView} event
+        #region {Setting as the target ListView} event
 
         /// <summary>
-        /// An event which raises when an item has been dropped on a fsListViewWithChecking instance;
+        /// An event which is raised when an item has been dropped on a fsListViewWithChecking instance;
         /// setting that instance as the target ListView
         /// </summary>
         public event EventHandler<EventArgs> SetAsTargetListViewEvent;
@@ -728,6 +945,42 @@ namespace ListViewWithChecking
             // Event will be null if there are no subscribers
             if (handler != null)
                 handler(this, (fsListViewWithCheckingEventArgs)e);
+        }
+
+        #endregion
+
+        #region GiveFeedback action
+
+        /// The functionality in this region is created to provide impossibility
+        /// to drop dragged item from a fsListViewWithChecking instance 
+        /// on a control that is not a fsListViewWithChecking instance 
+
+        // See http://stackoverflow.com/questions/586479/is-there-a-quick-way-to-get-the-control-thats-under-the-mouse
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr WindowFromPoint(Point pnt);
+
+        private Control previousControl = null;
+
+        private bool isPreviousAllowDrop = false;
+
+        private void ListView_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            IntPtr hWnd = WindowFromPoint(MousePosition);
+            if (hWnd != IntPtr.Zero)
+            {
+                Control control = Control.FromHandle(hWnd);
+                if (!control.Equals(previousControl))
+                {
+                    if (previousControl != null)
+                    {
+                        previousControl.AllowDrop = isPreviousAllowDrop;
+                    }
+                    previousControl = control;
+                    isPreviousAllowDrop = control.AllowDrop;
+                    if (!isfsListViewWithChecking(control))
+                        control.AllowDrop = false;
+                }
+            }
         }
 
         #endregion
@@ -769,27 +1022,12 @@ namespace ListViewWithChecking
         /// </summary>
         public bool AllowedDrop { get; set; }
 
-        private bool isfsListViewWithChecking(object someObject)
-        {
-            if (someObject is ListView)
-            {
-                if (((ListView)someObject).Parent is fsListViewWithChecking)
-                    return true;
-                else
-                    return false;
-            }
-            return false;
-        }
-
         // Sets the target drop effect.
         private void ListView_DragEnter(object sender, DragEventArgs e)
         {
-            if (isfsListViewWithChecking(sender))
-            {
-                OnSetAsTargetListViewEvent(new fsListViewWithCheckingEventArgs());
-                if (AllowedDrop)
-                    e.Effect = e.AllowedEffect;
-            }
+            OnSetAsTargetListViewEvent(new fsListViewWithCheckingEventArgs());
+            if (AllowedDrop)
+                e.Effect = e.AllowedEffect;
         }
 
         #endregion

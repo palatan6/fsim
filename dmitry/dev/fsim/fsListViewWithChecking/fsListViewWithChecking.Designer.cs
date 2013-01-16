@@ -51,6 +51,7 @@
             this.m_listView.DragLeave += new System.EventHandler(this.ListView_DragLeave);
             this.m_listView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ListView_ItemDrag);
             this.m_listView.DragOver += new System.Windows.Forms.DragEventHandler(this.ListView_DragOver);
+            this.m_listView.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.ListView_GiveFeedback);
             // 
             // fsListViewWithChecking
             // 

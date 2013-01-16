@@ -48,6 +48,16 @@ namespace ListViewWithChecking
         public OnAddAction AddAction { get; set; }
 
         /// <summary>
+        /// An action to be done when a number of items is added to a fsListViewWithChecking instance.
+        /// </summary>
+        public OnMultipleAddAction MultipleAddAction { get; set; }
+
+        /// <summary>
+        /// An action to be done when recharging a fsListViewWithChecking instance.
+        /// </summary>
+        public OnRechargeAction RechargeAction { get; set; }
+
+        /// <summary>
         /// An action to be done when an item is removed from a fsListViewWithChecking instance.
         /// </summary>
         public OnRemoveAction RemoveAction { get; set; }
@@ -76,6 +86,8 @@ namespace ListViewWithChecking
             list.CheckListViewItemEvent += HandleCheckListViewItemEvent;
             list.MultipleCheckListViewItemsEvent += HandleMultipleCheckListViewItemsEvent;
             list.AddListViewItemEvent += HandleAddListViewItemEvent;
+            list.MultipleAddListViewItemsEvent += HandleMultipleAddListViewItemsEvent;
+            list.RechargeListViewEvent += HandleRechargeListViewEvent;
             list.RemoveListViewItemEvent += HandleRemoveListViewItemEvent;
         }
 
@@ -180,7 +192,7 @@ namespace ListViewWithChecking
                     sourceListView.RemoveAt(sourceIndex);
                     targetListView.Insert(targetIndex, sourceItem, sourceCheckValue);
                 }
-                DragDropAction(sourceListView, targetListView, sourceIndex, targetIndex, sourceItem, sourceCheckValue);
+                DragDropAction(sourceListView, targetListView, new fsDragDropItemInfo(sourceIndex, targetIndex, sourceCheckValue, sourceItem));
                 isDropping = false;
                 // To prevent inappropriate behavior of drag-and-drop functionality
                 // that can be caused by dragging from a control that is not a fsListViewWithChecking instance 
@@ -195,11 +207,10 @@ namespace ListViewWithChecking
         /// <param name="e">An event argument which is to be converted to an appropriate type of a class which inherits EventArgs</param>
         protected virtual void HandleCheckListViewItemEvent(object sender, EventArgs e)
         {
-            if (!(isDropping || ((fsListViewWithChecking)sender).IsAdding ||
-                ((fsListViewWithChecking)sender).IsRemoving ||
-                ((fsListViewWithChecking)sender).isMultipleChecking))
+            if (!(isDropping || ((fsListViewWithChecking)sender).IsSpecificCheckDoing))
             {
-                CheckAction((fsListViewWithChecking)sender, ((fsListViewWithCheckingEventArgs)e).Index, ((fsListViewWithCheckingEventArgs)e).Checked);
+                var state = new fsCheckItemInfo(((fsListViewWithCheckingEventArgs)e).Index, ((fsListViewWithCheckingEventArgs)e).Checked);
+                CheckAction((fsListViewWithChecking)sender, state);
             }
         }
 
@@ -210,7 +221,7 @@ namespace ListViewWithChecking
         /// <param name="e">An event argument which is to be converted to an appropriate type of a class which inherits EventArgs</param>
         protected virtual void HandleMultipleCheckListViewItemsEvent(object sender, EventArgs e)
         {
-            MultipleCheckAction((fsListViewWithChecking)sender, ((fsListViewWithCheckingEventArgs)e).IndicesAndChecks);
+            MultipleCheckAction((fsListViewWithChecking)sender, ((fsListViewWithCheckingEventArgs)e).CheckStates);
         }
 
         /// <summary>
@@ -222,9 +233,44 @@ namespace ListViewWithChecking
         {
             if (!isDropping)
             {
-                AddAction((fsListViewWithChecking)sender, ((fsListViewWithCheckingEventArgs)e).Index,
-                          ((fsListViewWithCheckingEventArgs)e).Item, ((fsListViewWithCheckingEventArgs)e).Checked);
+                AddAction((fsListViewWithChecking)sender,
+                           new KeyValuePair<string, fsCheckItemInfo>
+                               ((string)((fsListViewWithCheckingEventArgs)e).Item,
+                                 new fsCheckItemInfo
+                                     (((fsListViewWithCheckingEventArgs)e).Index,
+                                      ((fsListViewWithCheckingEventArgs)e).Checked
+                                     )
+                               )
+                         );
             }
+        }
+
+        /// <summary>
+        /// Subscribing to MultipleAddListViewItemsEvent
+        /// </summary>
+        /// <param name="sender">ListView with checking in which an item is added</param>
+        /// <param name="e">An event argument which is to be converted to an appropriate type of a class which inherits EventArgs</param>
+        protected virtual void HandleMultipleAddListViewItemsEvent(object sender, EventArgs e)
+        {
+            MultipleAddAction(
+                (fsListViewWithChecking)sender,
+                ((fsListViewWithCheckingEventArgs)e).AddStates);
+
+        }
+
+        /// <summary>
+        /// Subscribing to RechargeListViewEvent
+        /// </summary>
+        /// <param name="sender">ListView with checking in which an item is added</param>
+        /// <param name="e">An event argument which is to be converted to an appropriate type of a class which inherits EventArgs</param>
+        protected virtual void HandleRechargeListViewEvent(object sender, EventArgs e)
+        {
+            RechargeAction(
+                (fsListViewWithChecking)sender,
+                ((fsListViewWithCheckingEventArgs)e).RechargeRemoveStates,
+                ((fsListViewWithCheckingEventArgs)e).RechargeCommonStates,
+                ((fsListViewWithCheckingEventArgs)e).AddStates);
+
         }
 
         /// <summary>
@@ -236,8 +282,15 @@ namespace ListViewWithChecking
         {
             if (!isDropping)
             {
-                RemoveAction((fsListViewWithChecking)sender, ((fsListViewWithCheckingEventArgs)e).Index,
-                             ((fsListViewWithCheckingEventArgs)e).Item, ((fsListViewWithCheckingEventArgs)e).Checked);
+                RemoveAction((fsListViewWithChecking)sender,
+                              new KeyValuePair<string, fsCheckItemInfo>
+                                  ((string)((fsListViewWithCheckingEventArgs)e).Item,
+                                   new fsCheckItemInfo
+                                       (((fsListViewWithCheckingEventArgs)e).Index,
+                                        ((fsListViewWithCheckingEventArgs)e).Checked
+                                       )
+                                  )
+                            );
             }
         }
     }

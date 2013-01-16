@@ -54,6 +54,7 @@
       <DependentUpon>fsListViewWithChecking.cs</DependentUpon>
     </Compile>
     <Compile Include="fsListViewWithCheckingEventArgs.cs" />
+    <Compile Include="fsListViewWithCheckingItemInfo.cs" />
     <Compile Include="fsListViewWithCheckingSupervisor.cs" />
     <Compile Include="fsSupervisorActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
