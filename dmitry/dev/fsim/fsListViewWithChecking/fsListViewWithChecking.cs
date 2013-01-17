@@ -33,16 +33,19 @@ namespace ListViewWithChecking
 
         private int m_count;
 
-        public virtual object this[int index]
-        {
-            get
-            {
-                if (index < 0 || m_count <= index)
-                    throw new Exception("An attempt to get a fsListViewWithChecking item at an inappropriate index");
-                return m_names[index];
-            }
-        }
+        /// <summary>
+        /// The list of names of a fsListViewWithChecking instance items.
+        /// </summary>
+        public List<string> ItemsNames { get { return m_names; } }
 
+        /// <summary>
+        /// The list of check values of a fsListViewWithChecking instance items.
+        /// </summary>
+        public List<bool> ItemsChecks { get { return m_checks; } }
+
+        /// <summary>
+        /// The count of items of a fsListViewWithChecking instance.
+        /// </summary>
         public int Count { get { return m_count; } }
 
         #region Private doing with ListViewItems in m_listView
@@ -130,7 +133,7 @@ namespace ListViewWithChecking
 
         #endregion
 
-        #region Private doing with checks in m_checks
+        #region Private doing with check values in m_checks
 
         private void InsertCheck(int index, bool check)
         {
@@ -641,18 +644,29 @@ namespace ListViewWithChecking
             IsSpecificCheckDoing = false;
         }
 
-        /// <summary> 
-        /// Removes an item "item" from a fsListViewWithChecking instance;
-        /// true if item is successfully removed; otherwise, false.
+        /// <summary>
+        /// Removes an item with the name "name" from a fsListViewWithChecking instance.
         /// </summary>
-        /// <param name="item">Item to remove </param>
-        public virtual bool Remove(object item)
+        /// <param name="name">The name of an item</param>
+        /// <returns>True, if an item was successfully removed; otherwise, false</returns>
+        public bool RemoveByName(string name)
         {
-            int index = m_names.IndexOf((string)item);
+            int index = m_names.IndexOf(name);
             if (index == -1)
                 return false;
             RemoveAt(index);
             return true;
+        }
+
+
+        /// <summary> 
+        /// Removes an item "item" from a fsListViewWithChecking instance.
+        /// </summary>
+        /// <param name="item">Item to remove </param>
+        /// <returns>True, if an item was successfully removed; otherwise, false</returns>
+        public virtual bool Remove(object item)
+        {
+            return RemoveByName((string)item);
         }
 
         /// <summary> 
