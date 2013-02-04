@@ -13,10 +13,6 @@ namespace StepCalculators
             fsCalculatorConstant eps0 = AddConstant(fsParameterIdentifier.CakePorosity0);
             fsCalculatorConstant eps = AddConstant(fsParameterIdentifier.CakePorosity);
 
-            fsCalculatorConstant hc = AddConstant(fsParameterIdentifier.CakeHeight);
-            fsCalculatorConstant eta = AddConstant(fsParameterIdentifier.MotherLiquidViscosity);
-            fsCalculatorConstant hce0 = AddConstant(fsParameterIdentifier.FilterMediumResistanceHce0);
-                        
             fsCalculatorVariable nc = AddVariable(fsParameterIdentifier.CakeCompressibility);
             fsCalculatorVariable pressure = AddVariable(fsParameterIdentifier.PressureDifference);
 

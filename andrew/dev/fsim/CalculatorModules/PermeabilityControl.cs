@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
+using StepCalculators.Material_Calculators;
 using Value;
 
 namespace CalculatorModules
@@ -25,6 +28,7 @@ namespace CalculatorModules
 
         protected override void InitializeCalculators()
         {
+            Calculators.Add(new fsPorosityFromPressureDifferencePorosity0Calculator());
             Calculators.Add(new fsPermeabilityCalculator());
         }
 
@@ -32,6 +36,9 @@ namespace CalculatorModules
         {
             fsParametersGroup solidsGroup = AddGroup(
                 fsParameterIdentifier.SolidsDensity);
+            fsParametersGroup neEps0Group = AddGroup(
+                fsParameterIdentifier.CakePorosity0,
+                fsParameterIdentifier.Ne);
             fsParametersGroup porosityGroup = AddGroup(
                 fsParameterIdentifier.CakePorosity);
             fsParametersGroup pc0Rc0A0Group = AddGroup(
@@ -48,11 +55,18 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakeResistanceAlpha);
 
             AddGroupToUI(dataGrid, solidsGroup, Color.FromArgb(230, 230, 255));
-            AddGroupToUI(dataGrid, porosityGroup, Color.FromArgb(255, 255, 230));
+            AddGroupToUI(dataGrid, neEps0Group, Color.FromArgb(230, 255, 230));
+            AddGroupToUI(dataGrid, porosityGroup, Color.FromArgb(255, 230, 230));
             AddGroupToUI(dataGrid, pc0Rc0A0Group, Color.FromArgb(230, 230, 255));
             AddGroupToUI(dataGrid, ncGroup, Color.FromArgb(255, 255, 230));
             AddGroupToUI(dataGrid, pressureGroup, Color.FromArgb(230, 230, 255));
             AddGroupToUI(dataGrid, pcRcAGroup, Color.FromArgb(255, 230, 230));
+
+            // Hide fake parameters eps0 and ne by default.
+            var parametersToShowAndHide = ParameterToGroup.Keys.ToDictionary(p => p, p => true);
+            parametersToShowAndHide[fsParameterIdentifier.Ne] = false;
+            parametersToShowAndHide[fsParameterIdentifier.CakePorosity0] = false;
+            ShowAndHideParameters(parametersToShowAndHide);
         }
 
         protected override void InitializeCalculationOptionsUIControls()
@@ -70,6 +84,7 @@ namespace CalculatorModules
         protected override void InitializeParametersValues()
         {
             SetDefaultValue(fsParameterIdentifier.SolidsDensity, new fsValue(2300));
+            SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0));
             SetDefaultValue(fsParameterIdentifier.CakePorosity, new fsValue(0.55));
             SetDefaultValue(fsParameterIdentifier.CakePermeability0, new fsValue(2e-13));
             SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0.3));
