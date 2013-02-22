@@ -39,7 +39,8 @@ namespace StepCalculators
             IEquationParameter Rm = AddVariable(fsParameterIdentifier.FilterMediumResistanceRm);
             IEquationParameter Mf = AddVariable(fsParameterIdentifier.FiltrateMass);
             IEquationParameter mc = AddVariable(fsParameterIdentifier.CakeMass);
-            IEquationParameter ms = AddVariable(fsParameterIdentifier.SolidsMass);
+            IEquationParameter Ms = AddVariable(fsParameterIdentifier.SolidsMass);
+            IEquationParameter ms = AddVariable(fsParameterIdentifier.SpecificSolidsMass);
             IEquationParameter qmf = AddVariable(fsParameterIdentifier.qmf);
             IEquationParameter vsus = AddVariable(fsParameterIdentifier.SuspensionVolume);
             IEquationParameter vf = AddVariable(fsParameterIdentifier.FiltrateVolume);
@@ -106,7 +107,7 @@ namespace StepCalculators
                 new[] { Mf, kappa },
                 new[] { rho, area, hc }));
             Equations.Add(new fsProductsEquation(
-                new[] { ms },
+                new[] { Ms },
                 new[] { area, hc, solidsDensity, oneMinusEps }));
             Equations.Add(new fsProductsEquation(
                 new[] { vf, kappa },
@@ -115,6 +116,7 @@ namespace StepCalculators
             Equations.Add(new fsProductsEquation(
                 new[] { vs },
                 new[] { area, hc, oneMinusEps }));
+            Equations.Add(new fsProductEquation(Ms, ms, area));
 
             Equations.Add(new fsProductsEquation(
                 new[] { hc, qf },

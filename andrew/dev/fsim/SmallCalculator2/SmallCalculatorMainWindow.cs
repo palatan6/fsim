@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using CalculatorModules;
 using CalculatorModules.Base_Controls;
+using CalculatorModules.Cake_Fromation;
 
 namespace SmallCalculator2
 {
@@ -56,7 +57,9 @@ namespace SmallCalculator2
             AddGroupToTree("Cake Formation", new[]
                                                  {
                                                      new KeyValuePair<string, fsCalculatorControl>(
-                                                         "Calculations Cake Formation", new fsLaboratoryFiltrationTime())
+                                                         "Calculations Cake Formation", new fsLaboratoryFiltrationTime()),
+                                                     new KeyValuePair<string,fsCalculatorControl>(
+                                                         "Cake Formation Analysis", new CakeFormationAnalysisControl())
                                                  });
             AddGroupToTree("Cake Deliquoring", new[]
                                                    {

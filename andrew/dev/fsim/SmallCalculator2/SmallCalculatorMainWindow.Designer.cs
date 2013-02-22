@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fsSmallCalculatorMainWindow));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new fsUIControls.fsTreeView();
             this.modulePanel = new System.Windows.Forms.Panel();
@@ -129,6 +130,7 @@
             this.ClientSize = new System.Drawing.Size(697, 519);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "fsSmallCalculatorMainWindow";
             this.Text = "Filtration Calculator";

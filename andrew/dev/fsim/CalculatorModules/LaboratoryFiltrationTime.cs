@@ -40,6 +40,7 @@ namespace CalculatorModules
                 fsParameterIdentifier.CakePorosity,
                 fsParameterIdentifier.DryCakeDensity,
                 fsParameterIdentifier.Kappa,
+                fsParameterIdentifier.CakeSolidsContentCmc,
                 fsParameterIdentifier.CakeMoistureContentRf);
             fsParametersGroup viscosityGroup = AddGroup(
                 fsParameterIdentifier.MotherLiquidViscosity);
@@ -65,6 +66,7 @@ namespace CalculatorModules
                 fsParameterIdentifier.FiltrateMass,
                 fsParameterIdentifier.CakeMass,
                 fsParameterIdentifier.SolidsMass,
+                fsParameterIdentifier.SpecificSolidsMass,
                 fsParameterIdentifier.qmf,
                 fsParameterIdentifier.SuspensionVolume,
                 fsParameterIdentifier.FiltrateVolume,

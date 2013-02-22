@@ -48,6 +48,7 @@ namespace CalculatorModules.Cake_Fromation
                 fsParameterIdentifier.SuspensionMass,
                 fsParameterIdentifier.SuspensionVolume,
                 fsParameterIdentifier.SolidsMass,
+                fsParameterIdentifier.SpecificSolidsMass,
                 fsParameterIdentifier.SolidsVolume,
                 fsParameterIdentifier.CakeMass,
                 fsParameterIdentifier.Qms,
@@ -59,6 +60,7 @@ namespace CalculatorModules.Cake_Fromation
                 fsParameterIdentifier.DryCakeDensity0,
                 fsParameterIdentifier.Kappa,
                 fsParameterIdentifier.Kappa0,
+                fsParameterIdentifier.CakeSolidsContentCmc,
                 fsParameterIdentifier.CakeMoistureContentRf,
                 fsParameterIdentifier.CakeMoistureContentRf0);
             fsParametersGroup cakeFormationAndCharacterGroup = AddGroup(
@@ -193,6 +195,7 @@ namespace CalculatorModules.Cake_Fromation
             ParameterToCell[fsParameterIdentifier.SuspensionMass].OwningRow.Visible = isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.SuspensionVolume].OwningRow.Visible = isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.SolidsMass].OwningRow.Visible = isBatchFilterOption;
+            ParameterToCell[fsParameterIdentifier.SpecificSolidsMass].OwningRow.Visible = isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.SolidsVolume].OwningRow.Visible = isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.CakeMass].OwningRow.Visible = isBatchFilterOption;
             ParameterToCell[fsParameterIdentifier.FiltrateMass].OwningRow.Visible = isBatchFilterOption;
@@ -243,6 +246,26 @@ namespace CalculatorModules.Cake_Fromation
         protected override void UpdateGroupsInputInfoFromCalculationOptions()
         {
             // this control hasn't calculation options
+        }
+
+        private void simulationBox_DropDown(object sender, System.EventArgs e)
+        {
+            //ComboBox's DropDown menu fitting
+            ComboBox senderComboBox = (ComboBox)sender;
+            int width = senderComboBox.DropDownWidth;
+            Graphics g = senderComboBox.CreateGraphics();
+            Font font = senderComboBox.Font;
+
+            int newWidth;
+            foreach (string s in ((ComboBox)sender).Items)
+            {
+                newWidth = (int)g.MeasureString(s, font).Width;
+                if (width < newWidth)
+                {
+                    width = newWidth;
+                }
+            }
+            senderComboBox.DropDownWidth = width;
         }
     }
 }

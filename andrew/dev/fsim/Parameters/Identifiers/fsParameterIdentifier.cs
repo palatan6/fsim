@@ -135,6 +135,9 @@ namespace Parameters
         public static fsParameterIdentifier CakeMass =
             new fsParameterIdentifier("Mc", "Cake Mass", fsCharacteristic.Mass);
 
+        public static fsParameterIdentifier SpecificSolidsMass =
+            new fsParameterIdentifier("ms", "Specific solids mass", fsCharacteristic.SpecificMass);
+
         public static fsParameterIdentifier SolidsVolume =
             new fsParameterIdentifier("Vs", "Solids Volume", fsCharacteristic.Volume);
 
@@ -476,6 +479,9 @@ namespace Parameters
 
         public static fsParameterIdentifier CakeMoistureContentRf =
             new fsParameterIdentifier("Rf", "Cake Moisture Content", fsCharacteristic.Concentration);
+
+        public static fsParameterIdentifier CakeSolidsContentCmc =
+            new fsParameterIdentifier("Cmc", "Cake Solids Content", fsCharacteristic.Concentration);
 
         public static fsParameterIdentifier CakeWetMassSolidsFractionRs0 =
             new fsParameterIdentifier("Rs0", "Cake wet mass solids fraction 0", fsCharacteristic.Concentration);

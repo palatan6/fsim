@@ -46,12 +46,17 @@ namespace StepCalculators
             fsCalculatorVariable cakeWetDensity = AddVariable(fsParameterIdentifier.CakeWetDensity);
             fsCalculatorVariable cakeMoistureContentRf = AddVariable(fsParameterIdentifier.CakeMoistureContentRf);
             fsCalculatorVariable cakeWetMassSolidsFractionRs = AddVariable(fsParameterIdentifier.CakeWetMassSolidsFractionRs);
+            IEquationParameter Cmc = AddVariable(fsParameterIdentifier.CakeSolidsContentCmc);
+
+            var constantOne = new fsCalculatorConstant(new fsParameterIdentifier("1")) { Value = fsValue.One };
 
             #endregion
 
             #region Equations Initialization
 
             var one = new fsCalculatorConstant(new fsParameterIdentifier("one")) { Value = fsValue.One };
+
+            Equations.Add(new fsSumEquation(constantOne, Cmc, cakeMoistureContentRf));
             
             AddEquation(new fsEpsKappaCvEquation(porosity0, kappa0, volumeConcentration));
             AddEquation(new fsCakeDrySolidsDensityEquation(cakeDrySolidsDensity0, porosity0, solidsDensity));
