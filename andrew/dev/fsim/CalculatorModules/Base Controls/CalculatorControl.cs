@@ -241,7 +241,7 @@ namespace CalculatorModules
             return group;
         }
 
-        protected void AddGroupsToUI(fsParametersWithValuesTable dataGrid, fsParametersGroup[] formationGroups,fsParametersGroup[] deliqGroups,fsParametersGroup[] gasGroups)
+        protected void AddGroupsToUI(fsParametersWithValuesTable dataGrid, fsParametersGroup[] formationGroups,fsParametersGroup[] deliqGroups)
         {
             if (formationGroups == null)
                 return;
@@ -266,13 +266,6 @@ namespace CalculatorModules
                 AddGroupToUI(dataGrid, deliqGroups[i], colors[j % colors.Length]);
                 SetGroupInput(deliqGroups[i], true);
                 ++j;
-            }
-
-            //for (int i = 0; i < gasGroups.Length; ++i)
-            {
-                //AddGroupToUI(dataGrid, gasGroups[i], colors[i % colors.Length]);
-               // SetGroupInput(gasGroups[i], true);
-                //++j;
             }
         }
 
