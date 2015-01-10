@@ -248,7 +248,7 @@ namespace CalculatorModules.Cake_Fromation
             // this control hasn't calculation options
         }
 
-        private void simulationBox_DropDown(object sender, System.EventArgs e)
+        private void simulationBox_DropDown(object sender, EventArgs e)
         {
             //ComboBox's DropDown menu fitting
             ComboBox senderComboBox = (ComboBox)sender;

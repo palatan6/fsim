@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Parameters;
-using Units;
 using Value;
 
 namespace CalculatorModules
@@ -14,6 +13,11 @@ namespace CalculatorModules
         {
             InitializeComponent();
             splitContainer1.Panel2Collapsed = true;
+        }
+
+        protected internal override void StopGridsEdit()
+        {
+            //dataGrid.EndEdit();
         }
 
         #region Showing/Hiding Diagram

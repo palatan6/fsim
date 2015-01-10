@@ -111,7 +111,7 @@ namespace StepCalculators
                        
             AddEquation(new fsEpsFromMsAndHcEquation(eps, solidsMass, area, solidsDensity, hc));
             AddEquation(new fsEpsFromMsAndQfEquation(eps, cv, solidsMass, area, solidsDensity, formationTime, qf));
-            AddEquation(new fsEpsFromMsAndMfEquation(eps, cv, solidsMass, formationTime, solidsDensity, mf));
+            AddEquation(new fsEpsFromMsAndMfEquation(eps, cv, solidsMass, rho, solidsDensity, mf));
             AddEquation(new fsEpsFromMcAndQfEquation(eps, cv, mc, area, rho, solidsDensity, formationTime, qf));
 
             #endregion

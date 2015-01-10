@@ -70,6 +70,12 @@
     <Compile Include="Base Controls\OptionsDoubleTableAndCommentsCalculatorControl.designer.cs">
       <DependentUpon>OptionsDoubleTableAndCommentsCalculatorControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Base Controls\OptionsQuadraTableAndCommentsCalculatorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Base Controls\OptionsQuadraTableAndCommentsCalculatorControl.Designer.cs">
+      <DependentUpon>OptionsQuadraTableAndCommentsCalculatorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Base Controls\OptionsSingleTableAndCommentsCalculatorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -216,6 +222,12 @@
     </Compile>
     <Compile Include="CalculationProcessor\CalculationProcessor.cs" />
     <Compile Include="CalculationProcessor\ParametersGroup.cs" />
+    <Compile Include="DeliquoringAnalysisAndSimulationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DeliquoringAnalysisAndSimulationControl.Designer.cs">
+      <DependentUpon>DeliquoringAnalysisAndSimulationControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="DensityConcentrationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -302,6 +314,10 @@
       <DependentUpon>OptionsDoubleTableAndCommentsCalculatorControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Base Controls\OptionsQuadraTableAndCommentsCalculatorControl.resx">
+      <DependentUpon>OptionsQuadraTableAndCommentsCalculatorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Base Controls\OptionsSingleTableAndCommentsCalculatorControl.resx">
       <DependentUpon>OptionsSingleTableAndCommentsCalculatorControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -347,6 +363,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CakeWashOutContentControl.resx">
       <DependentUpon>CakeWashOutContentControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeliquoringAnalysisAndSimulationControl.resx">
+      <DependentUpon>DeliquoringAnalysisAndSimulationControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DensityConcentrationControl.resx">

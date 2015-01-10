@@ -89,6 +89,8 @@ namespace Units
         public static fsUnit SquaredMeterPerPascalPerSecond = new fsUnit("m2/(Pa s)", 1);
         public static fsUnit SquaredSantiMeterPerBarPerMinute = new fsUnit("cm2/(bar min)", 1e-10 / 6);
 
+        public static fsUnit CelsiusDegree = new fsUnit("°C", 1);
+
         #endregion
 
         public static fsUnit UnitFromText(string unitName)

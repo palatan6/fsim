@@ -1,4 +1,5 @@
-﻿using Units;
+﻿using System;
+using Units;
 
 namespace Parameters
 {
@@ -64,6 +65,9 @@ namespace Parameters
         public static fsParameterIdentifier PracticalCakePermeability =
             new fsParameterIdentifier("K", "Practical Cake Permeability", fsCharacteristic.PracticalCakePermeability);
 
+        public static fsParameterIdentifier DeliquoringStepKParameter = 
+            new fsParameterIdentifier("K", "No information", fsCharacteristic.NoUnits);
+
         public static fsParameterIdentifier FilterArea =
             new fsParameterIdentifier("A", "Filter Area", fsCharacteristic.Area);
 
@@ -87,6 +91,12 @@ namespace Parameters
         public static fsParameterIdentifier PressureDifference =
             new fsParameterIdentifier("Dp", "Pressure Difference", fsCharacteristic.Pressure);
 
+        public static fsParameterIdentifier Dp_f =
+            new fsParameterIdentifier("Dp_f", "Pressure Difference", fsCharacteristic.Pressure);
+
+        public static fsParameterIdentifier Dp_d =
+            new fsParameterIdentifier("Dp_d", "Pressure Difference", fsCharacteristic.Pressure);
+
         public static fsParameterIdentifier CycleTime =
             new fsParameterIdentifier("tc", "Cycle Time", fsCharacteristic.Time);
 
@@ -104,6 +114,9 @@ namespace Parameters
 
         public static fsParameterIdentifier ResidualTime =
             new fsParameterIdentifier("tr", "Residual Time", fsCharacteristic.Time);
+
+        public static fsParameterIdentifier DeliquoringTime =
+            new fsParameterIdentifier("td", "Deliquoring Time", fsCharacteristic.Time);
 
         public static fsParameterIdentifier CakeHeight =
             new fsParameterIdentifier("hc", "Cake Height", fsCharacteristic.CakeHeight);
@@ -125,6 +138,9 @@ namespace Parameters
 
         public static fsParameterIdentifier FiltrateMass =
             new fsParameterIdentifier("Mf", "Fitrate Mass", fsCharacteristic.Mass);
+
+        public static fsParameterIdentifier FiltrateMassD =
+            new fsParameterIdentifier("Mfd", "Fitrate Mass D", fsCharacteristic.Mass);
 
         public static fsParameterIdentifier LiquidMassInSuspension =
             new fsParameterIdentifier("Ml", "Liquid Mass in Suspension", fsCharacteristic.Mass);
@@ -149,6 +165,9 @@ namespace Parameters
 
         public static fsParameterIdentifier FiltrateVolume =
             new fsParameterIdentifier("Vf", "Fitrate Volume", fsCharacteristic.Volume);
+
+        public static fsParameterIdentifier FiltrateVolumeD =
+            new fsParameterIdentifier("Vfd", "Fitrate Volume D", fsCharacteristic.Volume);
 
         public static fsParameterIdentifier SuspensionMassFlowrate =
             new fsParameterIdentifier("Qmsus", fsCharacteristic.MassFlowrate);
@@ -228,8 +247,8 @@ namespace Parameters
         public static fsParameterIdentifier qmf =
             new fsParameterIdentifier("qmf", fsCharacteristic.SpecificMassFlowrate);
 
-        public static fsParameterIdentifier SurfaceTensionLiquidInCake = 
-            new fsParameterIdentifier("sigma", "Surface Tension Liquid in Cake", fsCharacteristic.SurfaceTension);
+        public static fsParameterIdentifier SurfaceTensionLiquidInCake =
+            new fsParameterIdentifier(Convert.ToChar(0x3c3).ToString(), "Surface Tension Liquid in Cake", fsCharacteristic.SurfaceTension);
 
         public static fsParameterIdentifier StandardCapillaryPressure =
             new fsParameterIdentifier("pke_st", "Standard Capillary Pressure", fsCharacteristic.Pressure);
@@ -268,6 +287,9 @@ namespace Parameters
         public static fsParameterIdentifier WashLiquidViscosity =
             new fsParameterIdentifier("eta_w", "Wash Liquid Viscosity", fsCharacteristic.Viscosity);
 
+        public static fsParameterIdentifier GasLiquidViscosity =
+            new fsParameterIdentifier(Convert.ToChar(0x3B7) + "_g", "Gas Liquid Viscosity", fsCharacteristic.Viscosity);
+
         #endregion
 
         #region Densities
@@ -298,6 +320,9 @@ namespace Parameters
 
         public static fsParameterIdentifier WashLiquidDensity =
             new fsParameterIdentifier("rho_w", "Wash Liquid Density", fsCharacteristic.Density);
+
+        public static fsParameterIdentifier Rho_Bulk =
+            new fsParameterIdentifier("rho_bulk", fsCharacteristic.Density);
 
         #endregion;
 
@@ -682,6 +707,49 @@ namespace Parameters
 
         public static fsParameterIdentifier UnderflowSolidsConcentration =
             new fsParameterIdentifier("Cu", fsCharacteristic.SolidsConcentration);
+
+        public static fsParameterIdentifier Theta =
+            new fsParameterIdentifier(Convert.ToChar(0x3B8).ToString(), fsCharacteristic.Temperature);
+
+        public static fsParameterIdentifier Ad1 =
+           new fsParameterIdentifier("ad1", fsCharacteristic.NoUnits);
+
+        public static fsParameterIdentifier Ad2 = 
+            new fsParameterIdentifier("ad2", fsCharacteristic.NoUnits);
+
+        public static fsParameterIdentifier Ag1 =
+            new fsParameterIdentifier("ag1", fsCharacteristic.NoUnits);
+
+        public static fsParameterIdentifier Ag2 =
+            new fsParameterIdentifier("ag2", fsCharacteristic.NoUnits);
+
+        public static fsParameterIdentifier Ag3 =
+            new fsParameterIdentifier("ag3", fsCharacteristic.NoUnits);
+
+        #endregion
+
+        #region Gas
+
+        public static fsParameterIdentifier Qgi =
+            new fsParameterIdentifier("Qgi", fsCharacteristic.VolumeFlowrate);
+
+        public static fsParameterIdentifier Qgt =
+            new fsParameterIdentifier("Qgt", fsCharacteristic.VolumeFlowrate);
+
+        public static fsParameterIdentifier GasVolume =
+            new fsParameterIdentifier("Vg", fsCharacteristic.Volume);
+
+        public static fsParameterIdentifier SpecificGasVolume =
+            new fsParameterIdentifier("vg", fsCharacteristic.SpecificVolume);
+
+        public static fsParameterIdentifier SpecificGasConsumption =
+            new fsParameterIdentifier("vg", fsCharacteristic.WashRatioWv);
+
+        public static fsParameterIdentifier qgi =
+            new fsParameterIdentifier("qgi", fsCharacteristic.Speed);
+
+        public static fsParameterIdentifier qgt =
+            new fsParameterIdentifier("qgt", fsCharacteristic.Speed);
 
         #endregion
     }

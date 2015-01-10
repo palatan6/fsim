@@ -39,6 +39,7 @@ namespace Equations
         protected override void InitFormulas()
         {
             AddFormula(eps, PorosityFormula);
+            AddFormula(ms, MsFormula);
         }
 
         #region Formulas
@@ -46,6 +47,11 @@ namespace Equations
         private void PorosityFormula()
         {
             eps.Value = 1 - ms.Value / (A.Value * rhos.Value * hc.Value);
+        }
+
+        private void MsFormula()
+        {
+            ms.Value = (1 - eps.Value)*A.Value*rhos.Value*hc.Value;
         }
 
         #endregion

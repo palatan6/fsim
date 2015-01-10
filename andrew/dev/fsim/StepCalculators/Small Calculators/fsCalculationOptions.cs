@@ -1,13 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace StepCalculators
 {
     public class fsCalculationOptions
     {
+        public enum fsDeliquoringModeOption
+        {
+            [Description("Analysis Mode")]
+            AnalysisModeCalculations,
+            [Description("Simulation Mode")]
+            SimulationModeCalculations
+        }
+
+        public enum fsFormationModeOption
+        {
+            [Description("Analysis Mode")]
+            AnalysisModeCalculations,
+            [Description("Simulation Mode")]
+            SimulationModeCalculations,
+            [Description("Hidden")]
+            HiddenModeCalculations
+        }
+
+        public enum fsGasModeOption
+        {
+            [Description("Analysis Mode")]
+            AnalysisModeCalculations,
+            [Description("Simulation Mode")]
+            SimulationModeCalculations,
+            [Description("Hidden")]
+            HiddenModeCalculations
+        }
+
         public enum fsFiltersKindOption
         {
             [Description("Batch Filters")]

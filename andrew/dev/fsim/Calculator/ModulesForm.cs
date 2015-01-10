@@ -152,7 +152,10 @@ namespace Calculator
                                                            new fsCakeMoistureContentFromCakeSaturationControl()),
                                                        new KeyValuePair<string, fsCalculatorControl>(
                                                            "Capillary Pressure pke from Cake Permeability/Resistance",
-                                                           new fsPkeFromPcRcControl())
+                                                           new fsPkeFromPcRcControl()),
+                                                       new KeyValuePair<string, fsCalculatorControl>(
+                                                           "Deliquoring Analysis And Simulation", 
+                                                           new fsDeliquoringAnalysisAndSimulation())
                                                    });
             AddGroupToTree("Cake Washing", node.Nodes, new[]
                                                {   new KeyValuePair<string, fsCalculatorControl>(

@@ -241,6 +241,41 @@ namespace CalculatorModules
             return group;
         }
 
+        protected void AddGroupsToUI(fsParametersWithValuesTable dataGrid, fsParametersGroup[] formationGroups,fsParametersGroup[] deliqGroups,fsParametersGroup[] gasGroups)
+        {
+            if (formationGroups == null)
+                return;
+
+            var colors = new[]
+                             {
+                                 Color.FromArgb(255, 255, 230),
+                                 Color.FromArgb(255, 230, 255)
+                             };
+
+            dataGrid.Rows.Clear();
+            int j = 0;
+            for (int i = 0; i < formationGroups.Length; ++i)
+            {
+                AddGroupToUI(dataGrid, formationGroups[i], colors[j % colors.Length]);
+                SetGroupInput(formationGroups[i], true);
+                ++j;
+            }
+
+            for (int i = 0; i < deliqGroups.Length; ++i)
+            {
+                AddGroupToUI(dataGrid, deliqGroups[i], colors[j % colors.Length]);
+                SetGroupInput(deliqGroups[i], true);
+                ++j;
+            }
+
+            //for (int i = 0; i < gasGroups.Length; ++i)
+            {
+                //AddGroupToUI(dataGrid, gasGroups[i], colors[i % colors.Length]);
+               // SetGroupInput(gasGroups[i], true);
+                //++j;
+            }
+        }
+
         protected void AddGroupsToUI(fsParametersWithValuesTable dataGrid, fsParametersGroup[] groups)
         {
             if (groups == null)

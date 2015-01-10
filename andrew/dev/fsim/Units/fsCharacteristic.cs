@@ -305,6 +305,14 @@ namespace Units
             }
         );
 
+        public static fsCharacteristic Temperature = new fsCharacteristic(
+            "Temperature",
+            new[]
+            {
+                fsUnit.CelsiusDegree
+            }
+        );
+
         #endregion
     }
 }
