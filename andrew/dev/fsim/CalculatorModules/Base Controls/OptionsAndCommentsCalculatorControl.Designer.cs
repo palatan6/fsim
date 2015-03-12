@@ -165,7 +165,7 @@ namespace CalculatorModules
         private System.Windows.Forms.Panel leftPanel;
         protected System.Windows.Forms.Panel leftTopPanel;
         private System.Windows.Forms.Panel rightPanel;
-        protected System.Windows.Forms.Panel calculationOptionsPanel;
+        public System.Windows.Forms.Panel calculationOptionsPanel;
         private System.Windows.Forms.Panel showHideDiagramPanel;
         private System.Windows.Forms.Button showHideCommnetsButton;
         private System.Windows.Forms.SplitContainer splitContainer1;

@@ -88,6 +88,18 @@
     <Compile Include="Base Controls\OptionsSingleTableWithPanelAndCommentsCalculatorControl.Designer.cs">
       <DependentUpon>OptionsSingleTableWithPanelAndCommentsCalculatorControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cake Formation Analysis\CakeFormationAnalysisBaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Formation Analysis\CakeFormationAnalysisBaseControl.Designer.cs">
+      <DependentUpon>CakeFormationAnalysisBaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Formation Analysis\CakeFormationContinuousFiltersAnalysisControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Formation Analysis\CakeFormationContinuousFiltersAnalysisControl.Designer.cs">
+      <DependentUpon>CakeFormationContinuousFiltersAnalysisControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cake Fromation\BeltFilterWithReversibleTrayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -190,10 +202,10 @@
     <Compile Include="Cake Fromation\Other Filters Controls\RotaryPressureFilters.Designer.cs">
       <DependentUpon>RotaryPressureFilters.cs</DependentUpon>
     </Compile>
-    <Compile Include="CakeFormationAnalysisControl.cs">
+    <Compile Include="Cake Formation Analysis\CakeFormationAnalysisControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CakeFormationAnalysisControl.Designer.cs">
+    <Compile Include="Cake Formation Analysis\CakeFormationAnalysisControl.Designer.cs">
       <DependentUpon>CakeFormationAnalysisControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CakeMoistureContentFromCakeSaturationControl.cs">
@@ -222,6 +234,12 @@
     </Compile>
     <Compile Include="CalculationProcessor\CalculationProcessor.cs" />
     <Compile Include="CalculationProcessor\ParametersGroup.cs" />
+    <Compile Include="Cake Formation Analysis\CakeFormationBatchFiltersAnalysisControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Formation Analysis\CakeFormationBatchFiltersAnalysisControl.Designer.cs">
+      <DependentUpon>CakeFormationBatchFiltersAnalysisControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeliquoringAnalysisAndSimulationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -233,6 +251,12 @@
     </Compile>
     <Compile Include="DensityConcentrationControl.designer.cs">
       <DependentUpon>DensityConcentrationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cake Formation Analysis\fsCakeFormationAnalysisOvermoduleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cake Formation Analysis\fsCakeFormationAnalysisOvermoduleControl.Designer.cs">
+      <DependentUpon>fsCakeFormationAnalysisOvermoduleControl.cs</DependentUpon>
     </Compile>
     <Compile Include="fsMisc.cs" />
     <Compile Include="Hydrocyclone\HydrocycloneControl.cs">
@@ -306,6 +330,10 @@
     <Compile Include="User Controls\Help Dialogs\fsYAxisParameterWithChecking.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Base Controls\CalculatorControl.resx">
+      <DependentUpon>CalculatorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Base Controls\OptionsAndCommentsCalculatorControl.resx">
       <DependentUpon>OptionsAndCommentsCalculatorControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -324,6 +352,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Base Controls\OptionsSingleTableWithPanelAndCommentsCalculatorControl.resx">
       <DependentUpon>OptionsSingleTableWithPanelAndCommentsCalculatorControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cake Formation Analysis\CakeFormationAnalysisBaseControl.resx">
+      <DependentUpon>CakeFormationAnalysisBaseControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cake Formation Analysis\CakeFormationContinuousFiltersAnalysisControl.resx">
+      <DependentUpon>CakeFormationContinuousFiltersAnalysisControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\BeltFilterWithReversibleTrayControl.resx">
@@ -346,7 +382,7 @@
     <EmbeddedResource Include="Cake Fromation\Other Filters Controls\CommonCakeFormationControl.resx">
       <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CakeFormationAnalysisControl.resx">
+    <EmbeddedResource Include="Cake Formation Analysis\CakeFormationAnalysisControl.resx">
       <DependentUpon>CakeFormationAnalysisControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CakeMoistureContentFromCakeSaturationControl.resx">
@@ -365,12 +401,20 @@
       <DependentUpon>CakeWashOutContentControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cake Formation Analysis\CakeFormationBatchFiltersAnalysisControl.resx">
+      <DependentUpon>CakeFormationBatchFiltersAnalysisControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeliquoringAnalysisAndSimulationControl.resx">
       <DependentUpon>DeliquoringAnalysisAndSimulationControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DensityConcentrationControl.resx">
       <DependentUpon>DensityConcentrationControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cake Formation Analysis\fsCakeFormationAnalysisOvermoduleControl.resx">
+      <DependentUpon>fsCakeFormationAnalysisOvermoduleControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Hydrocyclone\HydrocycloneControl.resx">

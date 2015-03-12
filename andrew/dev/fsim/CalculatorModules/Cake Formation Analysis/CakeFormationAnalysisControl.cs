@@ -139,7 +139,7 @@ namespace CalculatorModules.Cake_Fromation
             SetDefaultValue(fsParameterIdentifier.Ne, new fsValue(0));
             SetDefaultValue(fsParameterIdentifier.FilterMediumResistanceHce, new fsValue(0));
             SetDefaultValue(fsParameterIdentifier.CakeCompressibility, new fsValue(0));
-            SetDefaultValue(fsParameterIdentifier.FiltrateMass, new fsValue(0.187)); 
+            SetDefaultValue(fsParameterIdentifier.FiltrateMass, new fsValue(0.187));
         }
 
         protected override void InitializeDefaultDiagrams()

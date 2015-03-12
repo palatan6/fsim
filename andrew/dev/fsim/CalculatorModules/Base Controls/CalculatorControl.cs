@@ -20,6 +20,9 @@ namespace CalculatorModules
         protected Dictionary<Type, Enum> CalculationOptions = new Dictionary<Type, Enum>();
         protected Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> Values { get; private set; }
 
+        public Dictionary<fsCharacteristic, fsUnit> CharacteristicWithCurrentUnits = new Dictionary<fsCharacteristic, fsUnit>();
+        public List<fsCalculatorControl> SubCalculatorControls = new List<fsCalculatorControl>();
+
         #endregion
 
         #region UI data
@@ -33,6 +36,7 @@ namespace CalculatorModules
 
         #endregion
 
+        public bool isDataLoadedFromFile;
 
         #region CalculatorControl Initialization
 
@@ -46,6 +50,29 @@ namespace CalculatorModules
         }
 
         void CalculatorControlLoad(object sender, EventArgs e)
+        {
+            InitializeCalculatorContorl();
+        }
+
+        public virtual void AplySelectedCalculatorSettings()
+        {
+            AplyCurrentCalculatorControlUnits();
+        }
+
+        public void LoadCurrentUnits()
+        {
+            
+        }
+
+        protected void AplyCurrentCalculatorControlUnits()
+        {
+            foreach (var unit in CharacteristicWithCurrentUnits)
+            {
+                unit.Key.CurrentUnit = unit.Value;
+            }
+        }
+
+        public void Initialize()
         {
             InitializeCalculatorContorl();
         }
@@ -108,6 +135,15 @@ namespace CalculatorModules
         }
 
         protected void SetDefaultValue(fsParameterIdentifier identifier, fsValue value)
+        {
+            if (Values.ContainsKey(identifier))
+            {
+                ParameterToGroup[identifier].Representator = identifier;
+                Values[identifier].Value = value;
+            }
+        }
+
+        public void SetParamatersValue(fsParameterIdentifier identifier, fsValue value)
         {
             if (Values.ContainsKey(identifier))
             {
@@ -218,6 +254,11 @@ namespace CalculatorModules
         }
 
         public fsParametersGroup AddGroup(params fsParameterIdentifier[] parameters)
+        {
+            return AddGroup(false, parameters);
+        }
+
+        public fsParametersGroup AddGroup(string name,params fsParameterIdentifier[] parameters)
         {
             return AddGroup(false, parameters);
         }
@@ -356,7 +397,7 @@ namespace CalculatorModules
             CellToParameter.Add(dataGridViewCell, parameter);
         }
 
-        protected void Recalculate()
+        public void Recalculate()
         {
             fsCalculationProcessor.ProcessCalculatorParameters(Values, ParameterToGroup, Calculators);
         }
@@ -430,6 +471,35 @@ namespace CalculatorModules
             return involvedParameters;
         }
 
+        virtual public List<fsParametersGroup> GetGroups()
+        {
+            return Groups;
+        }
+
+        public Dictionary<fsParameterIdentifier, fsSimulationModuleParameter> GetInvolvedParametersWithValue()
+        {
+            return Values;
+        }
+
+        public List<Control> GetCurrentCalculationOptions()
+        {
+            List<Control> comboBoxes = new List<Control>();
+
+            foreach (var comboBox in ControlToCalculationOption.Keys)
+            {
+                comboBoxes.Add(comboBox);
+            }
+
+            return comboBoxes;
+        }
+
+        public Dictionary<fsCharacteristic, fsUnit> GetUnits()
+        {
+            Dictionary<fsCharacteristic, fsUnit> characteristicWithCurrentUnits = new Dictionary<fsCharacteristic, fsUnit>(CharacteristicWithCurrentUnits);
+
+            return characteristicWithCurrentUnits;
+        }
+
         #endregion
 
         #region Methods to change/update view of the module
@@ -437,6 +507,28 @@ namespace CalculatorModules
         public virtual void SetUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
         {
             StopGridsEdit();
+
+            CharacteristicWithCurrentUnits = dictionary;
+
+            foreach (fsParameterIdentifier identifier in Values.Keys)
+            {
+                fsSimulationModuleParameter parameter = Values[identifier];
+                if (dictionary.ContainsKey(identifier.MeasurementCharacteristic))
+                {
+                    parameter.Unit = dictionary[identifier.MeasurementCharacteristic];
+                    DataGridViewCell valueCell = ParameterToCell[identifier];
+                    DataGridViewCell unitsCell = valueCell.DataGridView[valueCell.ColumnIndex - 1, valueCell.RowIndex];
+                    unitsCell.Value = parameter.Unit.Name;
+                    valueCell.Value = parameter.GetValueInUnits();
+                }
+            }
+        }
+
+        public virtual void LoadUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
+        {
+            StopGridsEdit();
+
+            CharacteristicWithCurrentUnits = dictionary;
 
             foreach (fsParameterIdentifier identifier in Values.Keys)
             {

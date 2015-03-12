@@ -7,6 +7,9 @@ namespace SmallCalculator2
 {
     public partial class fsUnitsDialog : Form
     {
+        private int SmallFormHeight = 460;
+        private int BigFormHeight = 650;
+
         public Dictionary<fsCharacteristic, fsUnit> Characteristics
         {
             get { return fsUnitsControl1.Characteristics; }
@@ -36,6 +39,19 @@ namespace SmallCalculator2
         private void ParametersDisplayCheckedChanged(object sender, EventArgs e)
         {
             fsUnitsControl1.ShowHideSecondaryCharacteristics(showSecondaryCheckbox.Checked);
+            ExpandForm(showSecondaryCheckbox.Checked);
+        }
+
+        private void ExpandForm(bool isToExpand)
+        {
+            if (isToExpand)
+            {
+                Height = BigFormHeight; 
+            }
+            else
+            {
+                Height = SmallFormHeight;
+            }
         }
     }
 }

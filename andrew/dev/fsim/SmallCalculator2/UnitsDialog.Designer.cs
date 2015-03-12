@@ -41,7 +41,7 @@
             this.fsUnitsControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fsUnitsControl1.Location = new System.Drawing.Point(0, 0);
             this.fsUnitsControl1.Name = "fsUnitsControl1";
-            this.fsUnitsControl1.Size = new System.Drawing.Size(318, 257);
+            this.fsUnitsControl1.Size = new System.Drawing.Size(318, 350);
             this.fsUnitsControl1.TabIndex = 1;
             // 
             // panel1
@@ -50,7 +50,7 @@
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 257);
+            this.panel1.Location = new System.Drawing.Point(0, 350);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(318, 72);
             this.panel1.TabIndex = 3;
@@ -92,7 +92,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 329);
+            this.ClientSize = new System.Drawing.Size(318, 422);
             this.Controls.Add(this.fsUnitsControl1);
             this.Controls.Add(this.panel1);
             this.Name = "fsUnitsDialog";

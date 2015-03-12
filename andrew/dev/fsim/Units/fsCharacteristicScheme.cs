@@ -55,7 +55,14 @@ namespace Units
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.MassFlowrate, fsUnit.KiloGrammePerMin),
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.VolumeFlowrate, fsUnit.LiterPerMinute),
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificMassFlowrate, fsUnit.KiloGrammePerSquaredMeterPerMin),
-                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificVolumeFlowrate, fsUnit.LiterPerSquaredMeterPerMin)
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificVolumeFlowrate, fsUnit.LiterPerSquaredMeterPerMin),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Time, fsUnit.Hour),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.MachineGeometryLength, fsUnit.Meter), 
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Pressure,fsUnit.Bar), 
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Viscosity, fsUnit.PascalSecond), 
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Density,fsUnit.KiloGrammePerCubicMeter), 
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SurfaceTension,fsUnit.NewtonPerMeter),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.CakeWashOutContent, fsUnit.GrammeOverKilogram)
                 });
 
         #endregion
