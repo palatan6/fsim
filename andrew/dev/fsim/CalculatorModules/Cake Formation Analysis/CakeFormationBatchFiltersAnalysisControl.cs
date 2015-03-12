@@ -91,7 +91,7 @@ namespace CalculatorModules.Cake_Fromation
                                  cakeFormationAndCharacterGroup,
                                  hceGroup,                                 
                                  ncGroup,
-                                 neGroup,
+                                 neGroup
                              };
 
             var colors = new[]
@@ -164,10 +164,10 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void UpdateUIFromData()
         {
-            var DefaultSimuationOption =
+            var defaultSimuationOption =
                 (fsCalculationOptions.fsSimulationsOption)
                 CalculationOptions[typeof(fsCalculationOptions.fsSimulationsOption)];
-            bool isDefaultSimulationCalculation = DefaultSimuationOption == fsCalculationOptions.fsSimulationsOption.DefaultSimulationsCalculations;
+            bool isDefaultSimulationCalculation = defaultSimuationOption == fsCalculationOptions.fsSimulationsOption.DefaultSimulationsCalculations;
 
             ParameterToCell[fsParameterIdentifier.CakePermeability].OwningRow.Visible = !isDefaultSimulationCalculation;
             ParameterToCell[fsParameterIdentifier.CakeResistance].OwningRow.Visible = !isDefaultSimulationCalculation;
@@ -175,14 +175,14 @@ namespace CalculatorModules.Cake_Fromation
             ParameterToCell[fsParameterIdentifier.FilterMediumResistanceHce].OwningRow.Visible = !isDefaultSimulationCalculation;
             ParameterToCell[fsParameterIdentifier.FilterMediumResistanceRm].OwningRow.Visible = !isDefaultSimulationCalculation;
 
-            bool isMrSimulationOption = DefaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MediumResistanceSimulationsCalculations;
+            bool isMrSimulationOption = defaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MediumResistanceSimulationsCalculations;
 
             ParameterToCell[fsParameterIdentifier.CakePermeability0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
             ParameterToCell[fsParameterIdentifier.CakeResistance0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
             ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
             ParameterToCell[fsParameterIdentifier.CakeCompressibility].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
 
-            bool isMrAndCcSimulationOption = DefaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MediumResistanceAndCakeCompressibilitySimulationsCalculations;
+            bool isMrAndCcSimulationOption = defaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MediumResistanceAndCakeCompressibilitySimulationsCalculations;
 
             ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;
             ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;
