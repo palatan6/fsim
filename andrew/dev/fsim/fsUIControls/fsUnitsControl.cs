@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Units;
@@ -13,6 +14,9 @@ namespace fsUIControls
 
         private readonly Dictionary<fsCharacteristic, ComboBox> m_characteristicToComboBox =
             new Dictionary<fsCharacteristic, ComboBox>();
+
+        private readonly Dictionary<ComboBox, fsCharacteristic> m_comboBoxTocharacteristic =
+            new Dictionary<ComboBox, fsCharacteristic>();
 
         private readonly Dictionary<fsCharacteristic, Label> m_characteristicToLabel =
             new Dictionary<fsCharacteristic, Label>();
@@ -123,6 +127,7 @@ namespace fsUIControls
                 characteristicControls.Add(new KeyValuePair<Label, ComboBox>(characteristicLabel, unitsComboBox));
                 m_characteristicToComboBox[characteristic] = unitsComboBox;
                 m_characteristicToLabel[characteristic] = characteristicLabel;
+                m_comboBoxTocharacteristic.Add(unitsComboBox, characteristic);
             }
 
             int currentHeight = 8;
@@ -133,6 +138,12 @@ namespace fsUIControls
 
                 unitsComboBox.Parent = unitsPanel;
                 unitsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                if (GetSecondaryCharacteristics().Contains(m_comboBoxTocharacteristic[unitsComboBox]))
+                {
+                    unitsComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+                    unitsComboBox.DrawItem +=(unitsComboBox_DrawItem);
+                }
+                
                 unitsComboBox.Location = new Point(unitsPanel.Width - sizeAfterCombobox - unitsComboBox.Width,
                                                    currentHeight);
                 unitsComboBox.SelectedValueChanged += UnitChanged;
@@ -144,6 +155,32 @@ namespace fsUIControls
 
                 currentHeight += 32;
             }
+        }
+
+        private void unitsComboBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            float size = 8;
+            Font myFont;
+            FontFamily family = FontFamily.GenericSansSerif;
+
+            ComboBox cb = sender as ComboBox;
+            List<string> itemsText = new List<string>();
+
+            foreach (var item in cb.Items)
+            {
+                itemsText.Add(item.ToString());
+            }
+
+            // Draw the background of the item.
+            e.DrawBackground();
+
+            // Draw each string in the array, using a different size, color, 
+            // and font for each item.
+            myFont = new Font(family, size, FontStyle.Regular);
+            e.Graphics.DrawString(itemsText[e.Index], myFont, Brushes.Black, new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height));
+
+            // Draw the focus rectangle if the mouse hovers over an item.
+            e.DrawFocusRectangle();
         }
 
         private void UnitChanged(object sender, EventArgs e)

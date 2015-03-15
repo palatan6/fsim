@@ -226,6 +226,36 @@
     <Compile Include="CakePorossityControl.designer.cs">
       <DependentUpon>CakePorossityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CakePorossity\CakePorossityBaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityBaseControl.Designer.cs">
+      <DependentUpon>CakePorossityBaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityPlainAreaControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityPlainAreaControl.designer.cs">
+      <DependentUpon>CakePorossityPlainAreaControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityOvermoduleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityOvermoduleControl.Designer.cs">
+      <DependentUpon>CakePorossityOvermoduleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityConvexControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityConvexControl.designer.cs">
+      <DependentUpon>CakePorossityConvexControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityConcaveControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CakePorossity\CakePorossityConcaveControl.designer.cs">
+      <DependentUpon>CakePorossityConcaveControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CakeWashOutContentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -395,6 +425,26 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CakePorossityControl.resx">
       <DependentUpon>CakePorossityControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakePorossity\CakePorossityBaseControl.resx">
+      <DependentUpon>CakePorossityBaseControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakePorossity\CakePorossityPlainAreaControl.resx">
+      <DependentUpon>CakePorossityPlainAreaControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakePorossity\CakePorossityOvermoduleControl.resx">
+      <DependentUpon>CakePorossityOvermoduleControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakePorossity\CakePorossityConvexControl.resx">
+      <DependentUpon>CakePorossityConvexControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CakePorossity\CakePorossityConcaveControl.resx">
+      <DependentUpon>CakePorossityConcaveControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CakeWashOutContentControl.resx">

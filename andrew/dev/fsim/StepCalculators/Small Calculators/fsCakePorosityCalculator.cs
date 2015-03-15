@@ -71,7 +71,7 @@ namespace StepCalculators
 
         public enum fsMachineTypeOption
         {
-            [Description("Plane Area ")]
+            [Description("Plane Area")]
             PlainArea,
             [Description("Convex Area (Candle Filters)")]
             ConvexCylindric,

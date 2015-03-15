@@ -113,6 +113,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CalculatorModules\CalculatorModules.csproj">
+      <Project>{932508DA-54C6-4ADD-ACB6-D19F1C7BBE45}</Project>
+      <Name>CalculatorModules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Parameters\Parameters.csproj">
       <Project>{67A1D000-12E6-439C-BC89-23C4059BC855}</Project>
       <Name>Parameters</Name>

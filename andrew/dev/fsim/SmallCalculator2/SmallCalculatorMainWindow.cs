@@ -8,7 +8,6 @@ using System.IO;
 using System.Windows.Forms;
 using CalculatorModules;
 using CalculatorModules.Base_Controls;
-using CalculatorModules.Cake_Fromation;
 using Parameters;
 using Units;
 using Value;
@@ -61,8 +60,8 @@ namespace SmallCalculator2
                                                   new KeyValuePair<string, fsCalculatorControl>(
                                                       "Filter Cake & Suspension Relations", new fsMsusAndHcControl()),
                                                   new KeyValuePair<string, fsCalculatorControl>("Cake Porosity from Test Data",
-                                                                                                new fsCakePorossityControl
-                                                                                                    ()),
+                                                                                                new CakePorossityOvermoduleControl
+                                                                                                    ()),  
                                                   new KeyValuePair<string, fsCalculatorControl>(
                                                       "Cake Permeability/Resistance and Cake Compressibility",
                                                       new fsPermeabilityControl())
@@ -72,7 +71,6 @@ namespace SmallCalculator2
                                                      new KeyValuePair<string, fsCalculatorControl>(
                                                          "Calculations Cake Formation", new fsLaboratoryFiltrationTime()),
                                                      new KeyValuePair<string,fsCalculatorControl>(
-                                                         //"Cake Formation Analysis", new CakeFormationAnalysisControl())
                                                          "Cake Formation Analysis", new fsCakeFormationAnalysisOvermoduleControl())
                                                  });
             AddGroupToTree("Cake Deliquoring", new[]
@@ -466,7 +464,6 @@ namespace SmallCalculator2
             }
             catch (Exception ex) { if (ex != null) ex = null; }
 
-            //foreach (fsCharacteristic characteristic in characteristics)
             foreach (var unit in module.GetUnits())
             {
                 try

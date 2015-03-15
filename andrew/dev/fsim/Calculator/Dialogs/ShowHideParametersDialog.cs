@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using CalculatorModules;
 using Parameters;
 
 namespace Calculator.Dialogs
@@ -31,9 +32,9 @@ namespace Calculator.Dialogs
         #endregion
 
 
-        internal void InvolveParameters(Dictionary<fsParameterIdentifier, bool> involvedParameters)
+        internal void InvolveParameters(Dictionary<fsParameterIdentifier, bool> involvedParameters, List<fsParametersGroup> groups)
         {
-            fsParametersCheckBoxesTree1.InitializeTree(involvedParameters);
+            fsParametersCheckBoxesTree1.InitializeTree(involvedParameters, groups);
         }
 
         internal Dictionary<fsParameterIdentifier, bool> GetParametersToShowAndHide()

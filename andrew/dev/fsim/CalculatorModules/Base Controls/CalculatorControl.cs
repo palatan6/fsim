@@ -59,11 +59,6 @@ namespace CalculatorModules
             AplyCurrentCalculatorControlUnits();
         }
 
-        public void LoadCurrentUnits()
-        {
-            
-        }
-
         protected void AplyCurrentCalculatorControlUnits()
         {
             foreach (var unit in CharacteristicWithCurrentUnits)
