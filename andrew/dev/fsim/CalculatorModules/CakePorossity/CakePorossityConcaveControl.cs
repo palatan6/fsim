@@ -218,6 +218,18 @@ namespace CalculatorModules
             m_calculator.MachineTypeOption = fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric;
         }
 
+        public CakePorossityConcaveControl(ComboBox filtersCombobox)
+            : base(filtersCombobox)
+        {
+            InitializeComponent();
+            m_calculator.MachineTypeOption = fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric;
+        }
+
+        protected override void InitializeUnits()
+        {
+            SetUnits(fsCharacteristicScheme.IndustrialScale.CharacteristicToUnit);
+        }
+
         #region Routine Methods
 
         protected override void UpdateGroupsInputInfoFromCalculationOptions()

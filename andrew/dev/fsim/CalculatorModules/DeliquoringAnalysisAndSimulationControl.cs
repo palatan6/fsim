@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 using System.Windows.Forms;
 using CalculatorModules.Base_Controls;
 using Parameters;
@@ -11,6 +11,28 @@ namespace CalculatorModules
 {
     public sealed partial class fsDeliquoringAnalysisAndSimulation : OptionsQuadraTableAndCommentsCalculatorControl
     {
+
+        #region Filter Type Option
+
+        private enum fsFilterTypes
+        {
+            [Description("Belt Filters With Reversible Trays")] BeltFiltersWithReversibleTraysFilterType,
+            [Description("Indexing Belt Filters")] IndexingBeltFiltersFilterType,
+            [Description("Belt Filters (modular)")] BeltFiltersModularFilterType,
+            [Description("Belt Filters (non modular)")] BeltFiltersNonModularFilterType,
+            [Description("Vacuum Drum Filters")] VacuumDrumFiltersFilterType,
+            [Description("Vacuum Disc Filters")] VacuumDiscFiltersFilterType,
+            [Description("Vacuum Pan Filters")] VacuumPanFiltersFilterType,
+            [Description("Rotary Pressure Filters")] RotaryPressureFiltersFilterType,
+            [Description("Vacuum Batch Filters")] VacuumBatchFiltersFilterType,
+            [Description("Pressure Batch Filters")] PressureBatchFiltersFilterType,
+            [Description("Laboratory Vacuum Filter")] LaboratoryVacuumFilterFilterType,
+            [Description("Laboratory Pressure Filter")] LaboratoryPressureFilterFilterType,
+            [Description("Laboratory Leaf Filter")] LaboratoryLeafFilterFilterType
+        }
+
+        #endregion
+
         public fsDeliquoringAnalysisAndSimulation()
         {
             InitializeComponent();
@@ -45,7 +67,7 @@ namespace CalculatorModules
             Values[fsParameterIdentifier.FilterMediumResistanceHce].Value = new fsValue(2e-3);
             Values[fsParameterIdentifier.SurfaceTensionLiquidInCake].Value = new fsValue(70e-3);
             Values[fsParameterIdentifier.StandardCapillaryPressure].Value = new fsValue(0.25e5);
-            Values[fsParameterIdentifier.SpecificResidualTime].Value = new fsValue(10e-2);
+            Values[fsParameterIdentifier.CakeResidualSaturationSr].Value = new fsValue(10e-2);
             Values[fsParameterIdentifier.Ad2].Value = new fsValue(5);
             Values[fsParameterIdentifier.Theta].Value = new fsValue(20);
             Values[fsParameterIdentifier.GasLiquidViscosity].Value = new fsValue(0.02e-3);
@@ -53,10 +75,15 @@ namespace CalculatorModules
             Values[fsParameterIdentifier.Ag3].Value = new fsValue(0.3);
 
             Values[fsParameterIdentifier.FilterArea].Value = new fsValue(20e-4);
+            Values[fsParameterIdentifier.ls].Value = new fsValue(10e-4);
+            Values[fsParameterIdentifier.l_over_b].Value = new fsValue(2);
+            Values[fsParameterIdentifier.TechnicalTime].Value = new fsValue(2);
+            Values[fsParameterIdentifier.lambda].Value = new fsValue(0.1);
             Values[fsParameterIdentifier.Dp_f].Value = new fsValue(2e5);
             Values[fsParameterIdentifier.Dp_d].Value = new fsValue(2e5);
             Values[fsParameterIdentifier.CakeHeight].Value = new fsValue(30e-3);
             Values[fsParameterIdentifier.SolidsMass].Value = new fsValue(23e-3);
+            Values[fsParameterIdentifier.SpecificFiltrationTime].Value = new fsValue(0.25);
             Values[fsParameterIdentifier.FiltrationTime].Value = new fsValue(20);
             Values[fsParameterIdentifier.DeliquoringTime].Value = new fsValue(60);
             Values[fsParameterIdentifier.CakeMoistureContentRf].Value = new fsValue(43.6e-2);
@@ -65,7 +92,7 @@ namespace CalculatorModules
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
         {
-            return new Control[] { materialParametersDataGrid, dataGrid, cbDeliqModeComboBox, cbFormationModeComboBox, cbGasModeComboBox };
+            return new Control[] { materialParametersDataGrid, dataGrid, cbDeliqModeComboBox, cbFormationModeComboBox, cbGasModeComboBox, cbFilterTypesComboBox };
         }
 
         #region Routine Methods
@@ -101,11 +128,11 @@ namespace CalculatorModules
             if (calculationOption == fsCalculationOptions.fsFormationModeOption.AnalysisModeCalculations)
             {
 
-                fsParametersGroup densitiesGroup = AddGroup(
+                fsParametersGroup densitiesGroup = AddGroup("Densities",
                     fsParameterIdentifier.SolidsDensity,
                     fsParameterIdentifier.SuspensionDensity);
 
-                fsParametersGroup concentrationGroup = AddGroup(
+                fsParametersGroup concentrationGroup = AddGroup("Concentrations",
                     fsParameterIdentifier.SuspensionSolidsMassFraction,
                     fsParameterIdentifier.SuspensionSolidsVolumeFraction,
                     fsParameterIdentifier.SuspensionSolidsConcentration);
@@ -120,7 +147,7 @@ namespace CalculatorModules
             }
             if (calculationOption == fsCalculationOptions.fsFormationModeOption.SimulationModeCalculations)
             {
-                fsParametersGroup densitiesGroup = AddGroup(
+                fsParametersGroup densitiesGroup = AddGroup("Densities",
                     fsParameterIdentifier.SolidsDensity,
                     fsParameterIdentifier.SuspensionDensity);
 
@@ -189,22 +216,90 @@ namespace CalculatorModules
         private fsParametersGroup[] MakeFormationMachiningGroups()
         {
             var calculationOption = (fsCalculationOptions.fsFormationModeOption)CalculationOptions[typeof(fsCalculationOptions.fsFormationModeOption)];
+            var filterType = (fsFilterTypes) CalculationOptions[typeof (fsFilterTypes)];
 
-            fsParametersGroup aGroup = AddGroup(
-              fsParameterIdentifier.FilterArea);
-
-            var machineGroups = new[]
+            var machiningGroups = new List<fsParametersGroup>();
+            
+            fsParametersGroup aGroup = new fsParametersGroup(false);
+            if (filterType == fsFilterTypes.BeltFiltersWithReversibleTraysFilterType ||
+                filterType == fsFilterTypes.IndexingBeltFiltersFilterType)
             {
-                aGroup
-            };
+                aGroup = AddGroup(
+                    fsParameterIdentifier.FilterArea,
+                    fsParameterIdentifier.MachineWidth);
+
+                fsParametersGroup lsGroup = AddGroup(
+                    fsParameterIdentifier.ls);
+
+                fsParametersGroup loverbGroup = AddGroup(
+                    fsParameterIdentifier.l_over_b,
+                    fsParameterIdentifier.ns,
+                    fsParameterIdentifier.ls_over_b,
+                    fsParameterIdentifier.FilterLength);
+
+                fsParametersGroup ttechGroup = AddGroup(
+                    fsParameterIdentifier.TechnicalTime,
+                    fsParameterIdentifier.StandardTechnicalTime);
+
+                fsParametersGroup lambdaGroup = AddGroup(
+                    fsParameterIdentifier.lambda);
+
+                machiningGroups = new List<fsParametersGroup>
+                {
+                    aGroup,
+                    lsGroup,
+                    loverbGroup,
+                    ttechGroup,
+                    lambdaGroup
+                };
+            }
+            else
+            {
+                aGroup = AddGroup(fsParameterIdentifier.FilterArea);
+
+                machiningGroups = new List<fsParametersGroup>
+                {
+                    aGroup
+                };
+            }
 
             if (calculationOption == fsCalculationOptions.fsFormationModeOption.AnalysisModeCalculations)
             {
                 fsParametersGroup dpfGroup = AddGroup(
                     fsParameterIdentifier.Dp_f);
+                machiningGroups.Add(dpfGroup);
 
-                fsParametersGroup tfGroup = AddGroup(
-                    fsParameterIdentifier.FiltrationTime);
+                if (filterType == fsFilterTypes.BeltFiltersWithReversibleTraysFilterType ||
+                    filterType == fsFilterTypes.IndexingBeltFiltersFilterType)
+                {
+                    fsParametersGroup sfGroup = AddGroup(
+                        fsParameterIdentifier.SpecificFiltrationTime,
+                        fsParameterIdentifier.nsf,
+                        fsParameterIdentifier.ResidualTime,
+                        fsParameterIdentifier.SpecificResidualTime
+                        );
+
+                    fsParametersGroup tcGroup = AddGroup(
+                        fsParameterIdentifier.FiltrationTime,
+                        fsParameterIdentifier.CycleTime,
+                        fsParameterIdentifier.RotationalSpeed,
+                        fsParameterIdentifier.u,
+                        fsParameterIdentifier.IndexingTime);
+
+                    machiningGroups.AddRange(new List<fsParametersGroup>
+                    {
+                        sfGroup,
+                        tcGroup
+                    });
+                }
+                else
+                {
+                    fsParametersGroup tfGroup = AddGroup(
+                        fsParameterIdentifier.FiltrationTime);
+
+                    machiningGroups.Add(tfGroup);
+                }
+                
 
                 fsParametersGroup msGroup = AddGroup(
                     fsParameterIdentifier.SolidsMass,
@@ -230,14 +325,19 @@ namespace CalculatorModules
                     fsParameterIdentifier.CakeResistance0,
                     fsParameterIdentifier.CakeResistanceAlpha0);
 
-                machineGroups = new[]
+                machiningGroups.AddRange(new List<fsParametersGroup>
                 {
-                    aGroup,
-                    dpfGroup,
-                    tfGroup,
                     msGroup,
                     hcGroup
-                };
+                });
+
+                if (filterType == fsFilterTypes.VacuumPanFiltersFilterType)
+                {
+                    fsParametersGroup hc0Group = AddGroup(
+                    fsParameterIdentifier.CakeHeight0);
+
+                    machiningGroups.Add(hc0Group);
+                }
             }
             if (calculationOption == fsCalculationOptions.fsFormationModeOption.SimulationModeCalculations)
             {
@@ -260,12 +360,11 @@ namespace CalculatorModules
                     fsParameterIdentifier.qf
                     );
 
-                machineGroups = new[]
-                {
-                    aGroup,
+                machiningGroups.AddRange(new List<fsParametersGroup>
+                {   
                     dpfGroup,
                     tfGroup
-                };
+                });
             }
             if (calculationOption == fsCalculationOptions.fsFormationModeOption.HiddenModeCalculations)
             {
@@ -274,12 +373,12 @@ namespace CalculatorModules
                     fsParameterIdentifier.SolidsMass,
                     fsParameterIdentifier.SpecificSolidsMass);
 
-                machineGroups = new[]
-                {
-                    aGroup,
+                machiningGroups.Add(
                     hcGroup
-                };
+                );
             }
+
+            var machineGroups = machiningGroups.ToArray();
 
             for (int i = 0; i < machineGroups.Length; ++i)
             {
@@ -296,41 +395,42 @@ namespace CalculatorModules
             var gasCalculationOption =
                 (fsCalculationOptions.fsGasModeOption) CalculationOptions[typeof (fsCalculationOptions.fsGasModeOption)];
 
-            fsParametersGroup ncGroup = AddGroup(
-                fsParameterIdentifier.CakeCompressibility);
+                fsParametersGroup ncGroup = AddGroup(
+                    fsParameterIdentifier.CakeCompressibility);
 
-            fsParametersGroup hceGroup = AddGroup(
-                fsParameterIdentifier.FilterMediumResistanceHce,
-                fsParameterIdentifier.FilterMediumResistanceRm);
+                fsParametersGroup hceGroup = AddGroup(
+                    fsParameterIdentifier.FilterMediumResistanceHce,
+                    fsParameterIdentifier.FilterMediumResistanceRm);
 
-            fsParametersGroup sigmaGroup = AddGroup(
-                fsParameterIdentifier.SurfaceTensionLiquidInCake);
+                fsParametersGroup sigmaGroup = AddGroup(
+                    fsParameterIdentifier.SurfaceTensionLiquidInCake);
 
-            fsParametersGroup pkeGroup = AddGroup(
-                fsParameterIdentifier.StandardCapillaryPressure,
-                fsParameterIdentifier.CapillaryPressure);
+                fsParametersGroup pkeGroup = AddGroup(
+                    fsParameterIdentifier.StandardCapillaryPressure,
+                    fsParameterIdentifier.CapillaryPressure);
 
-            fsParametersGroup srGroup = AddGroup(
-                fsParameterIdentifier.SpecificResidualTime);
+                fsParametersGroup srGroup = AddGroup(
+                    fsParameterIdentifier.CakeResidualSaturationSr);
 
-            fsParametersGroup ad2Group = AddGroup(
-                fsParameterIdentifier.Ad2);
+                fsParametersGroup ad2Group = AddGroup(
+                    fsParameterIdentifier.Ad2);
 
+            var materialGroups = new List<fsParametersGroup>();
 
-
-            var materialGroups = new List<fsParametersGroup>
+            if (deliqCalculationOption == fsCalculationOptions.fsDeliquoringModeOption.AnalysisModeCalculations)
             {
-                ncGroup,
-                hceGroup,
-                sigmaGroup,
-                pkeGroup,
-                srGroup,
-                ad2Group,
-            };
-
+                materialGroups = new List<fsParametersGroup>
+                {
+                    ncGroup,
+                    hceGroup,
+                    sigmaGroup,
+                    pkeGroup,
+                    srGroup,
+                    ad2Group,
+                };
+            }
             if (deliqCalculationOption == fsCalculationOptions.fsDeliquoringModeOption.SimulationModeCalculations)
             {
-
                 fsParametersGroup ad1Group = AddGroup(
                     fsParameterIdentifier.Ad1);
 
@@ -346,30 +446,39 @@ namespace CalculatorModules
                 };
             }
 
-            fsParametersGroup tettaGroup = AddGroup(
-                        fsParameterIdentifier.Theta);
-
-            fsParametersGroup etagGroup = AddGroup(
-                fsParameterIdentifier.GasLiquidViscosity); //name?
-
-            fsParametersGroup ag2Group = AddGroup(
-                fsParameterIdentifier.Ag2);
-
-            fsParametersGroup ag3Group = AddGroup(
-                fsParameterIdentifier.Ag3);
-
-            if (gasCalculationOption == fsCalculationOptions.fsGasModeOption.AnalysisModeCalculations)
+            if (gasCalculationOption == fsCalculationOptions.fsGasModeOption.ShowModeCalculations)
             {
-                materialGroups.AddRange(new List<fsParametersGroup> { tettaGroup, etagGroup, ag2Group, ag3Group });
-            }
-            else if (gasCalculationOption == fsCalculationOptions.fsGasModeOption.SimulationModeCalculations)
-            {
-                fsParametersGroup ag1Group = AddGroup(
-                   fsParameterIdentifier.Ag1);
+                fsParametersGroup tettaGroup = AddGroup(
+                    fsParameterIdentifier.Theta);
 
-                materialGroups.AddRange(new List<fsParametersGroup> { tettaGroup, etagGroup, ag1Group, ag2Group, ag3Group });
-            }
+                fsParametersGroup etagGroup = AddGroup(
+                    fsParameterIdentifier.GasLiquidViscosity); //name?
 
+                fsParametersGroup ag2Group = AddGroup(
+                    fsParameterIdentifier.Ag2);
+
+                fsParametersGroup ag3Group = AddGroup(
+                    fsParameterIdentifier.Ag3);
+
+                if (deliqCalculationOption == fsCalculationOptions.fsDeliquoringModeOption.AnalysisModeCalculations)
+                {
+                    materialGroups.AddRange(new List<fsParametersGroup> {tettaGroup, etagGroup, ag2Group, ag3Group});
+                }
+                else if (deliqCalculationOption == fsCalculationOptions.fsDeliquoringModeOption.SimulationModeCalculations)
+                {
+                    fsParametersGroup ag1Group = AddGroup(
+                        fsParameterIdentifier.Ag1);
+
+                    materialGroups.AddRange(new List<fsParametersGroup>
+                    {
+                        tettaGroup,
+                        etagGroup,
+                        ag1Group,
+                        ag2Group,
+                        ag3Group
+                    });
+                }
+            }
             var groupsArray =  materialGroups.ToArray();
 
             for (int i = 0; i < groupsArray.Length; ++i)
@@ -387,6 +496,8 @@ namespace CalculatorModules
             var gasCalculationOption =
                 (fsCalculationOptions.fsGasModeOption)CalculationOptions[typeof(fsCalculationOptions.fsGasModeOption)];
 
+            var filterType = (fsFilterTypes) CalculationOptions[typeof (fsFilterTypes)];
+
             fsParametersGroup dpdGroup = AddGroup(
                 fsParameterIdentifier.Dp_d);
 
@@ -398,141 +509,121 @@ namespace CalculatorModules
             if (deliqCalculationOption == fsCalculationOptions.fsDeliquoringModeOption.AnalysisModeCalculations)
             {
 
-                fsParametersGroup tdGroup = AddGroup(
+                if (filterType == fsFilterTypes.BeltFiltersWithReversibleTraysFilterType ||
+                    filterType == fsFilterTypes.IndexingBeltFiltersFilterType)
+                {
+                    fsParametersGroup tdGroup = AddGroup(
+                    fsParameterIdentifier.DeliquoringTime,
+                    fsParameterIdentifier.sd,
+                    fsParameterIdentifier.nsd,
+                    fsParameterIdentifier.DeliquoringStepKParameter);
+
+                    groupsList.Add(tdGroup);
+                }
+                else
+                {
+                    fsParametersGroup tdGroup = AddGroup(
                     fsParameterIdentifier.DeliquoringTime,
                     fsParameterIdentifier.DeliquoringStepKParameter);
 
-                groupsList.Add(tdGroup);
+                    groupsList.Add(tdGroup);
+                }
 
-                switch (gasCalculationOption)
+                if (gasCalculationOption == fsCalculationOptions.fsGasModeOption.ShowModeCalculations)
                 {
-                    case fsCalculationOptions.fsGasModeOption.AnalysisModeCalculations:
+                    fsParametersGroup rfGroup = AddGroup(
+                        fsParameterIdentifier.CakeMoistureContentRf,
+                        fsParameterIdentifier.CakeSaturation,
+                        fsParameterIdentifier.FiltrateMassD,
+                        fsParameterIdentifier.FiltrateVolumeD,
+                        fsParameterIdentifier.DryCakeMass,
+                        fsParameterIdentifier.LiquidMassInSuspension,
+                        fsParameterIdentifier.DeliquoringVolume,
+                        fsParameterIdentifier.Rho_Bulk,
+                        fsParameterIdentifier.Qmfd,
+                        fsParameterIdentifier.Qmftd,
+                        fsParameterIdentifier.Qfd,
+                        fsParameterIdentifier.Qftd,
+                        fsParameterIdentifier.Qmcd,
+                        fsParameterIdentifier.Qld,
+                        fsParameterIdentifier.Qmld,
+                        fsParameterIdentifier.qmfd,
+                        fsParameterIdentifier.qmftd,
+                        fsParameterIdentifier.qfd,
+                        fsParameterIdentifier.qftd,
+                        fsParameterIdentifier.qmcd,
+                        fsParameterIdentifier.qld,
+                        fsParameterIdentifier.qmld,
+                        fsParameterIdentifier.Ad1);
 
-                        fsParametersGroup rfGroup = AddGroup(
-                            fsParameterIdentifier.CakeMoistureContentRf,
-                            fsParameterIdentifier.CakeSaturation,
-                            fsParameterIdentifier.FiltrateMassD,
-                            fsParameterIdentifier.FiltrateVolumeD,
-                            fsParameterIdentifier.DryCakeMass,
-                            fsParameterIdentifier.LiquidMassInSuspension,
-                            fsParameterIdentifier.Rho_Bulk,
-                            fsParameterIdentifier.Ad1);
+                    fsParametersGroup qgiGroup = AddGroup(
+                        fsParameterIdentifier.Qgi,
+                        fsParameterIdentifier.Qg,
+                        fsParameterIdentifier.Qgt,
+                        fsParameterIdentifier.qg,
+                        fsParameterIdentifier.qgi,
+                        fsParameterIdentifier.qgt,
+                        fsParameterIdentifier.GasVolume,
+                        fsParameterIdentifier.SpecificGasConsumption,
+                        fsParameterIdentifier.Ag1);
 
-                        fsParametersGroup qgiGroup = AddGroup(
-                            fsParameterIdentifier.Qgi,
-                            fsParameterIdentifier.Qgt,
-                            fsParameterIdentifier.GasVolume,
-                            fsParameterIdentifier.SpecificGasConsumption,
-                            fsParameterIdentifier.qgi,
-                            fsParameterIdentifier.qgt,
-                            fsParameterIdentifier.Ag1);
+                    groupsList.AddRange(new List<fsParametersGroup> {rfGroup, qgiGroup});
+                }
 
-                        groupsList.AddRange(new List<fsParametersGroup> {rfGroup, qgiGroup});
-                        break;
+                if (gasCalculationOption == fsCalculationOptions.fsGasModeOption.HiddenModeCalculations)
+                {
+                    fsParametersGroup rfGroup = AddGroup(
+                        fsParameterIdentifier.CakeMoistureContentRf,
+                        fsParameterIdentifier.CakeSaturation,
+                        fsParameterIdentifier.FiltrateMassD,
+                        fsParameterIdentifier.FiltrateVolumeD,
+                        fsParameterIdentifier.DryCakeMass,
+                        fsParameterIdentifier.LiquidMassInSuspension,
+                        fsParameterIdentifier.Rho_Bulk,
+                        fsParameterIdentifier.Ad1);
 
-                    case fsCalculationOptions.fsGasModeOption.SimulationModeCalculations:
-
-                        rfGroup = AddGroup(
-                            fsParameterIdentifier.CakeMoistureContentRf,
-                            fsParameterIdentifier.CakeSaturation,
-                            fsParameterIdentifier.FiltrateMassD,
-                            fsParameterIdentifier.FiltrateVolumeD,
-                            fsParameterIdentifier.DryCakeMass,
-                            fsParameterIdentifier.LiquidMassInSuspension,
-                            fsParameterIdentifier.Rho_Bulk,
-                            fsParameterIdentifier.Ad1,
-                            fsParameterIdentifier.Qgi,
-                            fsParameterIdentifier.Qgt,
-                            fsParameterIdentifier.GasVolume,
-                            fsParameterIdentifier.SpecificGasConsumption,
-                            fsParameterIdentifier.qgi,
-                            fsParameterIdentifier.qgt);
-
-                        groupsList.Add(rfGroup);
-                        break;
-
-                    case fsCalculationOptions.fsGasModeOption.HiddenModeCalculations:
-
-                        rfGroup = AddGroup(
-                            fsParameterIdentifier.CakeMoistureContentRf,
-                            fsParameterIdentifier.CakeSaturation,
-                            fsParameterIdentifier.FiltrateMassD,
-                            fsParameterIdentifier.FiltrateVolumeD,
-                            fsParameterIdentifier.DryCakeMass,
-                            fsParameterIdentifier.LiquidMassInSuspension,
-                            fsParameterIdentifier.Rho_Bulk,
-                            fsParameterIdentifier.Ad1);
-
-                        groupsList.Add(rfGroup);
-                        break;
+                    groupsList.Add(rfGroup);
                 }
             }
 
             if (deliqCalculationOption == fsCalculationOptions.fsDeliquoringModeOption.SimulationModeCalculations)
             {
-                switch (gasCalculationOption)
+                if (gasCalculationOption == fsCalculationOptions.fsGasModeOption.ShowModeCalculations)
                 {
-                    case fsCalculationOptions.fsGasModeOption.AnalysisModeCalculations:
+                    fsParametersGroup tdGroup = AddGroup(
+                        fsParameterIdentifier.DeliquoringTime,
+                        fsParameterIdentifier.DeliquoringStepKParameter,
+                        fsParameterIdentifier.CakeMoistureContentRf,
+                        fsParameterIdentifier.CakeSaturation,
+                        fsParameterIdentifier.FiltrateVolumeD,
+                        fsParameterIdentifier.FiltrateMassD,
+                        fsParameterIdentifier.DryCakeMass,
+                        fsParameterIdentifier.LiquidMassInSuspension,
+                        fsParameterIdentifier.Qgi,
+                        fsParameterIdentifier.Qgt,
+                        fsParameterIdentifier.qgi,
+                        fsParameterIdentifier.qgt,
+                        fsParameterIdentifier.GasVolume,
+                        fsParameterIdentifier.SpecificGasConsumption);
 
-                        fsParametersGroup tdGroup = AddGroup(
-                            fsParameterIdentifier.DeliquoringTime,
-                            fsParameterIdentifier.DeliquoringStepKParameter,
-                            fsParameterIdentifier.CakeMoistureContentRf,
-                            fsParameterIdentifier.CakeSaturation,
-                            fsParameterIdentifier.FiltrateVolumeD,
-                            fsParameterIdentifier.FiltrateMassD,
-                            fsParameterIdentifier.DryCakeMass,
-                            fsParameterIdentifier.LiquidMassInSuspension,
-                            fsParameterIdentifier.Rho_Bulk);
+                    groupsList.Add(tdGroup);
+                }
 
-                        fsParametersGroup qgiGroup = AddGroup(
-                            fsParameterIdentifier.Qgi,
-                            fsParameterIdentifier.Qgt,
-                            fsParameterIdentifier.qgi,
-                            fsParameterIdentifier.qgt,
-                            fsParameterIdentifier.GasVolume,
-                            fsParameterIdentifier.SpecificGasConsumption,
-                            fsParameterIdentifier.Ag1);
+                if (gasCalculationOption == fsCalculationOptions.fsGasModeOption.HiddenModeCalculations)
+                {
 
-                        groupsList.AddRange(new List<fsParametersGroup> { tdGroup, qgiGroup });
-                        break;
+                    fsParametersGroup tdGroup = AddGroup(
+                        fsParameterIdentifier.DeliquoringTime,
+                        fsParameterIdentifier.DeliquoringStepKParameter,
+                        fsParameterIdentifier.CakeMoistureContentRf,
+                        fsParameterIdentifier.CakeSaturation,
+                        fsParameterIdentifier.FiltrateVolumeD,
+                        fsParameterIdentifier.FiltrateMassD,
+                        fsParameterIdentifier.DryCakeMass,
+                        fsParameterIdentifier.LiquidMassInSuspension,
+                        fsParameterIdentifier.Rho_Bulk);
 
-                    case fsCalculationOptions.fsGasModeOption.SimulationModeCalculations:
-
-                        tdGroup = AddGroup(
-                            fsParameterIdentifier.DeliquoringTime,
-                            fsParameterIdentifier.DeliquoringStepKParameter,
-                            fsParameterIdentifier.CakeMoistureContentRf,
-                            fsParameterIdentifier.CakeSaturation,
-                            fsParameterIdentifier.FiltrateVolumeD,
-                            fsParameterIdentifier.FiltrateMassD,
-                            fsParameterIdentifier.DryCakeMass,
-                            fsParameterIdentifier.LiquidMassInSuspension,
-                            fsParameterIdentifier.Qgi,
-                            fsParameterIdentifier.Qgt,
-                            fsParameterIdentifier.qgi,
-                            fsParameterIdentifier.qgt,
-                            fsParameterIdentifier.GasVolume,
-                            fsParameterIdentifier.SpecificGasConsumption);
-
-                        groupsList.Add(tdGroup);
-                        break;
-
-                    case fsCalculationOptions.fsGasModeOption.HiddenModeCalculations:
-
-                        tdGroup = AddGroup(
-                            fsParameterIdentifier.DeliquoringTime,
-                            fsParameterIdentifier.DeliquoringStepKParameter,
-                            fsParameterIdentifier.CakeMoistureContentRf,
-                            fsParameterIdentifier.CakeSaturation,
-                            fsParameterIdentifier.FiltrateVolumeD,
-                            fsParameterIdentifier.FiltrateMassD,
-                            fsParameterIdentifier.DryCakeMass,
-                            fsParameterIdentifier.LiquidMassInSuspension,
-                            fsParameterIdentifier.Rho_Bulk);
-
-                        groupsList.Add(tdGroup);
-                        break;
+                    groupsList.Add(tdGroup);
                 }
             }
 
@@ -560,8 +651,12 @@ namespace CalculatorModules
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsFormationModeOption), cbFormationModeComboBox);
 
             fsMisc.FillList(cbGasModeComboBox.Items, typeof(fsCalculationOptions.fsGasModeOption));
-            EstablishCalculationOption(fsCalculationOptions.fsGasModeOption.AnalysisModeCalculations);
+            EstablishCalculationOption(fsCalculationOptions.fsGasModeOption.ShowModeCalculations);
             AssignCalculationOptionAndControl(typeof(fsCalculationOptions.fsGasModeOption), cbGasModeComboBox);
+
+            fsMisc.FillList(cbFilterTypesComboBox.Items, typeof(fsFilterTypes));
+            EstablishCalculationOption(fsFilterTypes.BeltFiltersWithReversibleTraysFilterType);
+            AssignCalculationOptionAndControl(typeof(fsFilterTypes), cbFilterTypesComboBox);
         }
 
         protected override void UpdateUIFromData()

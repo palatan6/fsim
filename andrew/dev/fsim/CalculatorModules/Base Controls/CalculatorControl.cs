@@ -23,6 +23,8 @@ namespace CalculatorModules
         public Dictionary<fsCharacteristic, fsUnit> CharacteristicWithCurrentUnits = new Dictionary<fsCharacteristic, fsUnit>();
         public List<fsCalculatorControl> SubCalculatorControls = new List<fsCalculatorControl>();
 
+        public fsCalculatorControl CurrentSubControl;
+
         #endregion
 
         #region UI data
@@ -33,6 +35,8 @@ namespace CalculatorModules
         protected Dictionary<Control, Type> ControlToCalculationOption = new Dictionary<Control, Type>();
         protected Dictionary<fsParameterIdentifier, DataGridViewCell> ParameterToCell { get; private set; }
         protected Dictionary<DataGridViewCell, fsParameterIdentifier> CellToParameter { get; private set; }
+
+        private string CommentText;
 
         #endregion
 
@@ -114,7 +118,7 @@ namespace CalculatorModules
 
         protected virtual void InitializeUnits()
         {
-            SetUnits(fsCharacteristicScheme.PilotIndustrialScale.CharacteristicToUnit);
+            SetUnits(fsCharacteristicScheme.LaboratoryScale.CharacteristicToUnit);
         }
 
         #endregion
@@ -456,18 +460,29 @@ namespace CalculatorModules
             }
         }
 
-        virtual public Dictionary<fsParameterIdentifier, bool> GetInvolvedParametersWithVisibleStatus()
+        public virtual Dictionary<fsParameterIdentifier, bool> GetInvolvedParametersWithVisibleStatus()
         {
             var involvedParameters = new Dictionary<fsParameterIdentifier, bool>();
+
             foreach (var pair in ParameterToCell)
             {
                 involvedParameters.Add(pair.Key, pair.Value.OwningRow.Visible);
             }
+
             return involvedParameters;
         }
 
         virtual public List<fsParametersGroup> GetGroups()
         {
+            return Groups;
+        }
+
+        public List<fsParametersGroup> GetCurrentGroups()
+        {
+            if (SubCalculatorControls.Count > 0)
+            {
+                return CurrentSubControl.GetCurrentGroups();
+            }
             return Groups;
         }
 
@@ -517,6 +532,7 @@ namespace CalculatorModules
                     valueCell.Value = parameter.GetValueInUnits();
                 }
             }
+            AplyCurrentCalculatorControlUnits();
         }
 
         public virtual void LoadUnits(Dictionary<fsCharacteristic, fsUnit> dictionary)
@@ -546,6 +562,16 @@ namespace CalculatorModules
         }
 
         #endregion
+
+        public virtual void SetCommentsText(string text)
+        {
+            CommentText = text;
+        }
+
+        public virtual string GetCommentsText()
+        {
+            return CommentText;
+        }
 
         #region Methods to change internal data
 

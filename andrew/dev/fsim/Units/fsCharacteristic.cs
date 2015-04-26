@@ -71,7 +71,10 @@
                 fsUnit.Meter,
                 fsUnit.DeciMeter,
                 fsUnit.SantiMeter,
-                fsUnit.MilliMeter
+                fsUnit.MilliMeter,
+                fsUnit.Inch,
+                fsUnit.Foot,
+                fsUnit.Yard
             }
         );
 
@@ -81,6 +84,7 @@
                 fsUnit.SquareSantiMeter,
                 fsUnit.SquareDeciMeter,
                 fsUnit.SquareMeter,
+                fsUnit.SquareFeet
             }
         );
 
@@ -88,7 +92,11 @@
             "Pressure",
             new[] {
                 fsUnit.Bar,
-                fsUnit.Pascal
+                fsUnit.Pascal,
+                fsUnit.mmHg,
+                fsUnit.Torr,
+                fsUnit.inHg,
+                fsUnit.psi
             }
         );
 
@@ -179,7 +187,8 @@
             new[] {
                 fsUnit.Gramme,
                 fsUnit.KiloGramme,
-                fsUnit.Ton
+                fsUnit.Ton,
+                fsUnit.Pound
             }
         );
 
@@ -195,7 +204,9 @@
             new[] {
                 fsUnit.MilliLiter,
                 fsUnit.Liter,
-                fsUnit.CubicMeter
+                fsUnit.CubicMeter,
+                fsUnit.CubicFeet,
+                fsUnit.CubicYards
             }
         );
 
@@ -213,7 +224,10 @@
                 fsUnit.KiloGrammePerSec,
                 fsUnit.KiloGrammePerMin,
                 fsUnit.KiloGrammePerHour,
-                fsUnit.TonPerHour
+                fsUnit.TonPerHour,
+                fsUnit.PoundPerSecond,
+                fsUnit.PoundPerMinutes,
+                fsUnit.PoundPerHour
             }
         );
 
@@ -225,7 +239,13 @@
                 fsUnit.CubicMeterPerHour,
                 fsUnit.LiterPerSecond,
                 fsUnit.LiterPerMinute,
-                fsUnit.LiterPerHour
+                fsUnit.LiterPerHour,
+                fsUnit.CubicFeetPerSecond,
+                fsUnit.CubicFeetPerMinute,
+                fsUnit.CubicFeetPerHour,
+                fsUnit.CubicYardsPerSecond,
+                fsUnit.CubicYardsPerMinutes,
+                fsUnit.CubicYardsPerHour
             }
         );
 
@@ -235,6 +255,12 @@
                 fsUnit.KiloGrammePerSquaredMeterPerSec,
                 fsUnit.KiloGrammePerSquaredMeterPerMin,
                 fsUnit.KiloGrammePerSquaredMeterPerHour,
+                fsUnit.PoundPerSquaredFeetPerSecond,
+                fsUnit.PoundPerSquaredFeetPerMinute,
+                fsUnit.PoundPerSquaredFeetPerHour,
+                fsUnit.PoundPerSquaredMeterPerSecond,
+                fsUnit.PoundPerSquaredMeterPerMinute,
+                fsUnit.PoundPerSquaredMeterPerHour
             }
         );
 
@@ -244,6 +270,18 @@
                 fsUnit.LiterPerSquaredMeterPerSec,
                 fsUnit.LiterPerSquaredMeterPerMin,
                 fsUnit.LiterPerSquaredMeterPerHour,
+                fsUnit.CubicFeetPerSquaredMeterPerSecond,
+                fsUnit.CubicFeetPerSquaredMeterPerMinute,
+                fsUnit.CubicFeetPerSquaredMeterPerHour,
+                fsUnit.CubicFeetPerSquaredFeetPerSecond,
+                fsUnit.CubicFeetPerSquaredFeetPerMinute,
+                fsUnit.CubicFeetPerSquaredFeetPerHour,
+                fsUnit.CubicYardsPerSquaredMeterPerSecond,
+                fsUnit.CubicYardsPerSquaredMeterPerMinute,
+                fsUnit.CubicYardsPerSquaredMeterPerHour,
+                fsUnit.CubicYardsPerSquaredFeetPerSecond,
+                fsUnit.CubicYardsPerSquaredFeetPerMinute,
+                fsUnit.CubicYardsPerSquaredFeetPerHour
             }
         );
 

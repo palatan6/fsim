@@ -34,6 +34,7 @@
             this.cbFormationModeComboBox = new System.Windows.Forms.ComboBox();
             this.gasLabel = new System.Windows.Forms.Label();
             this.cbGasModeComboBox = new System.Windows.Forms.ComboBox();
+            this.cbFilterTypesComboBox = new System.Windows.Forms.ComboBox();
             this.tablesSplitContainer.Panel2.SuspendLayout();
             this.tablesSplitContainer.SuspendLayout();
             this.leftTopPanel.SuspendLayout();
@@ -43,50 +44,51 @@
             // 
             // ResultsTable
             // 
-            this.ResultsTable.Size = new System.Drawing.Size(150, 131);
+            this.ResultsTable.Size = new System.Drawing.Size(150, 127);
             // 
             // InputsTable
             // 
-            this.InputsTable.Size = new System.Drawing.Size(150, 178);
+            this.InputsTable.Size = new System.Drawing.Size(150, 173);
             // 
             // tablesSplitContainer
             // 
-            this.tablesSplitContainer.Size = new System.Drawing.Size(329, 718);
+            this.tablesSplitContainer.Size = new System.Drawing.Size(329, 700);
             this.tablesSplitContainer.SplitterDistance = 158;
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(167, 718);
+            this.dataGrid.Size = new System.Drawing.Size(167, 700);
             // 
             // materialParametersDataGrid
             // 
-            this.materialParametersDataGrid.Size = new System.Drawing.Size(156, 357);
+            this.materialParametersDataGrid.Size = new System.Drawing.Size(156, 348);
             // 
             // leftTopPanel
             // 
-            this.leftTopPanel.Size = new System.Drawing.Size(329, 72);
+            this.leftTopPanel.Size = new System.Drawing.Size(329, 90);
             // 
             // calculationOptionsPanel
             // 
+            this.calculationOptionsPanel.Controls.Add(this.cbFilterTypesComboBox);
             this.calculationOptionsPanel.Controls.Add(this.gasLabel);
             this.calculationOptionsPanel.Controls.Add(this.cbGasModeComboBox);
             this.calculationOptionsPanel.Controls.Add(this.formationLabel);
             this.calculationOptionsPanel.Controls.Add(this.cbFormationModeComboBox);
             this.calculationOptionsPanel.Controls.Add(this.deliqLabel);
             this.calculationOptionsPanel.Controls.Add(this.cbDeliqModeComboBox);
-            this.calculationOptionsPanel.Size = new System.Drawing.Size(278, 72);
+            this.calculationOptionsPanel.Size = new System.Drawing.Size(278, 90);
             // 
             // tablesPanel
             // 
-            this.tablesPanel.Location = new System.Drawing.Point(0, 72);
-            this.tablesPanel.Size = new System.Drawing.Size(329, 718);
+            this.tablesPanel.Location = new System.Drawing.Point(0, 90);
+            this.tablesPanel.Size = new System.Drawing.Size(329, 700);
             // 
             // cbDeliqModeComboBox
             // 
             this.cbDeliqModeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbDeliqModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDeliqModeComboBox.FormattingEnabled = true;
-            this.cbDeliqModeComboBox.Location = new System.Drawing.Point(112, 29);
+            this.cbDeliqModeComboBox.Location = new System.Drawing.Point(112, 46);
             this.cbDeliqModeComboBox.Name = "cbDeliqModeComboBox";
             this.cbDeliqModeComboBox.Size = new System.Drawing.Size(160, 21);
             this.cbDeliqModeComboBox.TabIndex = 0;
@@ -95,7 +97,7 @@
             // 
             this.deliqLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.deliqLabel.AutoSize = true;
-            this.deliqLabel.Location = new System.Drawing.Point(16, 32);
+            this.deliqLabel.Location = new System.Drawing.Point(16, 49);
             this.deliqLabel.Name = "deliqLabel";
             this.deliqLabel.Size = new System.Drawing.Size(93, 13);
             this.deliqLabel.TabIndex = 1;
@@ -105,7 +107,7 @@
             // 
             this.formationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.formationLabel.AutoSize = true;
-            this.formationLabel.Location = new System.Drawing.Point(23, 11);
+            this.formationLabel.Location = new System.Drawing.Point(23, 28);
             this.formationLabel.Name = "formationLabel";
             this.formationLabel.Size = new System.Drawing.Size(86, 13);
             this.formationLabel.TabIndex = 3;
@@ -116,7 +118,7 @@
             this.cbFormationModeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbFormationModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFormationModeComboBox.FormattingEnabled = true;
-            this.cbFormationModeComboBox.Location = new System.Drawing.Point(112, 8);
+            this.cbFormationModeComboBox.Location = new System.Drawing.Point(112, 25);
             this.cbFormationModeComboBox.Name = "cbFormationModeComboBox";
             this.cbFormationModeComboBox.Size = new System.Drawing.Size(160, 21);
             this.cbFormationModeComboBox.TabIndex = 2;
@@ -125,7 +127,7 @@
             // 
             this.gasLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.gasLabel.AutoSize = true;
-            this.gasLabel.Location = new System.Drawing.Point(50, 53);
+            this.gasLabel.Location = new System.Drawing.Point(50, 70);
             this.gasLabel.Name = "gasLabel";
             this.gasLabel.Size = new System.Drawing.Size(59, 13);
             this.gasLabel.TabIndex = 5;
@@ -136,10 +138,20 @@
             this.cbGasModeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbGasModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGasModeComboBox.FormattingEnabled = true;
-            this.cbGasModeComboBox.Location = new System.Drawing.Point(112, 50);
+            this.cbGasModeComboBox.Location = new System.Drawing.Point(112, 67);
             this.cbGasModeComboBox.Name = "cbGasModeComboBox";
             this.cbGasModeComboBox.Size = new System.Drawing.Size(160, 21);
             this.cbGasModeComboBox.TabIndex = 4;
+            // 
+            // cbFilterTypesComboBox
+            // 
+            this.cbFilterTypesComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbFilterTypesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFilterTypesComboBox.FormattingEnabled = true;
+            this.cbFilterTypesComboBox.Location = new System.Drawing.Point(112, 4);
+            this.cbFilterTypesComboBox.Name = "cbFilterTypesComboBox";
+            this.cbFilterTypesComboBox.Size = new System.Drawing.Size(160, 21);
+            this.cbFilterTypesComboBox.TabIndex = 6;
             // 
             // fsDeliquoringAnalysisAndSimulation
             // 
@@ -165,5 +177,6 @@
         private System.Windows.Forms.ComboBox cbFormationModeComboBox;
         private System.Windows.Forms.Label gasLabel;
         private System.Windows.Forms.ComboBox cbGasModeComboBox;
+        private System.Windows.Forms.ComboBox cbFilterTypesComboBox;
     }
 }

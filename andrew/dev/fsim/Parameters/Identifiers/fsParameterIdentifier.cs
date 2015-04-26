@@ -118,8 +118,14 @@ namespace Parameters
         public static fsParameterIdentifier DeliquoringTime =
             new fsParameterIdentifier("td", "Deliquoring Time", fsCharacteristic.Time);
 
+        public static fsParameterIdentifier IndexingTime =
+            new fsParameterIdentifier("t", "Indexing Time", fsCharacteristic.Time);
+
         public static fsParameterIdentifier CakeHeight =
             new fsParameterIdentifier("hc", "Cake Height", fsCharacteristic.CakeHeight);
+
+        public static fsParameterIdentifier CakeHeight0 =
+            new fsParameterIdentifier("hc0", "Cake Height 0", fsCharacteristic.CakeHeight);
 
         public static fsParameterIdentifier WetCakeMass =
             new fsParameterIdentifier("Mcw", "Wet Cake Mass", fsCharacteristic.Mass);
@@ -168,6 +174,9 @@ namespace Parameters
 
         public static fsParameterIdentifier FiltrateVolumeD =
             new fsParameterIdentifier("Vfd", "Fitrate Volume D", fsCharacteristic.Volume);
+
+        public static fsParameterIdentifier DeliquoringVolume =
+            new fsParameterIdentifier("Vld", "Deliquoring Volume", fsCharacteristic.Volume);
 
         public static fsParameterIdentifier SuspensionMassFlowrate =
             new fsParameterIdentifier("Qmsus", fsCharacteristic.MassFlowrate);
@@ -223,6 +232,12 @@ namespace Parameters
         public static fsParameterIdentifier nsr =
             new fsParameterIdentifier("nsr", "Segment number for residual steps", fsCharacteristic.NoUnits);
 
+        public static fsParameterIdentifier nsd =
+            new fsParameterIdentifier("nsd", "Segment number for deliquoring steps", fsCharacteristic.NoUnits);
+
+        public static fsParameterIdentifier sd =
+            new fsParameterIdentifier("sd", "???", fsCharacteristic.Concentration);
+
         public static fsParameterIdentifier qsust =
             new fsParameterIdentifier("qsus,t", fsCharacteristic.SpecificVolumeFlowrate);
 
@@ -246,6 +261,48 @@ namespace Parameters
 
         public static fsParameterIdentifier qmf =
             new fsParameterIdentifier("qmf", fsCharacteristic.SpecificMassFlowrate);
+
+        public static fsParameterIdentifier Qmfd =
+            new fsParameterIdentifier("Qmfd", fsCharacteristic.MassFlowrate);
+
+        public static fsParameterIdentifier Qmftd =
+            new fsParameterIdentifier("Qmftd", fsCharacteristic.MassFlowrate);
+
+        public static fsParameterIdentifier Qfd =
+            new fsParameterIdentifier("Qfd", fsCharacteristic.VolumeFlowrate);
+
+        public static fsParameterIdentifier Qftd =
+            new fsParameterIdentifier("Qftd", fsCharacteristic.VolumeFlowrate);
+
+        public static fsParameterIdentifier Qmcd =
+            new fsParameterIdentifier("Qmcd", fsCharacteristic.MassFlowrate);
+
+        public static fsParameterIdentifier Qld =
+            new fsParameterIdentifier("Qld", fsCharacteristic.VolumeFlowrate);
+
+        public static fsParameterIdentifier Qmld =
+            new fsParameterIdentifier("Qmld", fsCharacteristic.MassFlowrate);
+
+        public static fsParameterIdentifier qmfd =
+            new fsParameterIdentifier("qmfd", fsCharacteristic.SpecificMassFlowrate);
+
+        public static fsParameterIdentifier qmftd =
+            new fsParameterIdentifier("qmftd", fsCharacteristic.SpecificMassFlowrate);
+
+        public static fsParameterIdentifier qfd =
+            new fsParameterIdentifier("qfd", fsCharacteristic.SpecificVolumeFlowrate);
+
+        public static fsParameterIdentifier qftd =
+            new fsParameterIdentifier("qftd", fsCharacteristic.SpecificVolumeFlowrate);
+
+        public static fsParameterIdentifier qmcd =
+            new fsParameterIdentifier("qmcd", fsCharacteristic.SpecificMassFlowrate);
+
+        public static fsParameterIdentifier qld =
+            new fsParameterIdentifier("qld", fsCharacteristic.SpecificVolumeFlowrate);
+
+        public static fsParameterIdentifier qmld =
+            new fsParameterIdentifier("qmld", fsCharacteristic.SpecificMassFlowrate);
 
         public static fsParameterIdentifier SurfaceTensionLiquidInCake =
             new fsParameterIdentifier(Convert.ToChar(0x3c3).ToString(), "Surface Tension Liquid in Cake", fsCharacteristic.SurfaceTension);
@@ -489,6 +546,9 @@ namespace Parameters
 
         public static fsParameterIdentifier CakeSaturationSw0 =
             new fsParameterIdentifier("Sw0", "Cake Saturation When Starting Cake Washing", fsCharacteristic.Concentration);
+
+        public static fsParameterIdentifier CakeResidualSaturationSr =
+            new fsParameterIdentifier("Sr", "Residual Cake Saturation", fsCharacteristic.Concentration);
 
         public static fsParameterIdentifier CakeMoistureContent =
             new fsParameterIdentifier("RF", "Cake Moisture Content", fsCharacteristic.Concentration);
@@ -736,6 +796,9 @@ namespace Parameters
         public static fsParameterIdentifier Qgt =
             new fsParameterIdentifier("Qgt", fsCharacteristic.VolumeFlowrate);
 
+        public static fsParameterIdentifier Qg =
+            new fsParameterIdentifier("Qg", fsCharacteristic.VolumeFlowrate);
+
         public static fsParameterIdentifier GasVolume =
             new fsParameterIdentifier("Vg", fsCharacteristic.Volume);
 
@@ -750,6 +813,9 @@ namespace Parameters
 
         public static fsParameterIdentifier qgt =
             new fsParameterIdentifier("qgt", fsCharacteristic.Speed);
+
+        public static fsParameterIdentifier qg =
+            new fsParameterIdentifier("qg", fsCharacteristic.Speed);
 
         #endregion
     }

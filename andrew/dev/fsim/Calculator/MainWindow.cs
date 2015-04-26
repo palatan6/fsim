@@ -169,7 +169,7 @@ namespace Calculator
         private void showHideParametersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new fsShowHideParametersDialog();
-            form.InvolveParameters(GetCurrentActiveModule().GetInvolvedParametersWithVisibleStatus());
+            form.InvolveParameters(GetCurrentActiveModule().GetInvolvedParametersWithVisibleStatus(), GetCurrentActiveModule().GetGroups());
             form.ShowDialog();
             Dictionary<fsParameterIdentifier, bool> parametersToShowAndHide = form.GetParametersToShowAndHide();
             GetCurrentActiveModule().ShowAndHideParameters(parametersToShowAndHide);
