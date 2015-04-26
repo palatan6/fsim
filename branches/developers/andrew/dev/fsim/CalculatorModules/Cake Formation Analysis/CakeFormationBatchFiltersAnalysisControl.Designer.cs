@@ -49,16 +49,15 @@
             this.tablesPanel.Location = new System.Drawing.Point(0, 72);
             this.tablesPanel.Size = new System.Drawing.Size(329, 728);
             // 
-            // Temp
+            // CakeFormationBatchFiltersAnalysisControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "Temp";
+            this.Name = "CakeFormationBatchFiltersAnalysisControl";
             this.Size = new System.Drawing.Size(329, 800);
             this.leftTopPanel.ResumeLayout(false);
             this.tablesPanel.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
         #endregion

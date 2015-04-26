@@ -12,12 +12,20 @@ namespace CalculatorModules
     public partial class fsCakeFormationAnalysisOvermoduleControl : fsCalculatorControl
     {
         private readonly Dictionary<string, CakeFormationAnalysisBaseControl> m_moduleNameToControl = new Dictionary<string, CakeFormationAnalysisBaseControl>();
-        private CakeFormationAnalysisBaseControl m_currentCalculatorControl;
+        private CakeFormationAnalysisBaseControl m_currentControl;
+        private CakeFormationAnalysisBaseControl m_currentCalculatorControl {
+            get { return m_currentControl; }
+            set
+            {
+                m_currentControl = value;
+                CurrentSubControl = m_currentControl;
+            }
+        }
 
         protected override void InitializeCalculators()
         {
             AddCalculatorControl(new CakeFormationBatchFiltersAnalysisControl(), "Batch Filters");
-            AddCalculatorControl(new CakeFormationContinuousFiltersAnalysisControl(), "Continuous Filters");
+            AddCalculatorControl(new CakeFormationContinuousFilters(), "Continuous Filters");
         }
 
         protected override void InitializeCalculationOptionsUIControls()
@@ -59,6 +67,16 @@ namespace CalculatorModules
         {
             CharacteristicWithCurrentUnits = dictionary;
             m_currentCalculatorControl.SetUnits(dictionary);
+        }
+
+        public override void SetCommentsText(string text)
+        {
+            m_currentCalculatorControl.SetCommentsText(text);
+        }
+
+        public override string GetCommentsText()
+        {
+            return m_currentCalculatorControl.GetCommentsText();
         }
 
         public override void AplySelectedCalculatorSettings()

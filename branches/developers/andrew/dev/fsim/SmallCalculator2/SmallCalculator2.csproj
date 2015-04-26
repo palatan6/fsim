@@ -70,6 +70,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommentsWindow.Designer.cs">
+      <DependentUpon>CommentsWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaverLoader.cs" />
+    <Compile Include="ShowHideParametersDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowHideParametersDialog.Designer.cs">
+      <DependentUpon>ShowHideParametersDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="SmallCalculatorMainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +91,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CommentsWindow.resx">
+      <DependentUpon>CommentsWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowHideParametersDialog.resx">
+      <DependentUpon>ShowHideParametersDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="SmallCalculatorMainWindow.resx">
       <DependentUpon>SmallCalculatorMainWindow.cs</DependentUpon>
       <SubType>Designer</SubType>

@@ -17,6 +17,16 @@ namespace CalculatorModules
             Kind = fsParametersGroupKind.MachiningSettingsParameters;
         }
 
+        public fsParametersGroup(bool isOnlyCalcuated, string name)
+        {
+            Parameters = new List<fsParameterIdentifier>();
+            Representator = null;
+            IsInput = false;
+            IsOnlyCalculated = isOnlyCalcuated;
+            Kind = fsParametersGroupKind.MachiningSettingsParameters;
+            Name = name;
+        }
+
         public fsParametersGroup(fsParametersGroup other)
         {
             Parameters = new List<fsParameterIdentifier>(other.Parameters);
@@ -58,5 +68,7 @@ namespace CalculatorModules
         }
 
         public fsParametersGroupKind Kind { get; set; }
+
+        public string Name { get; private set; }
     }
 }

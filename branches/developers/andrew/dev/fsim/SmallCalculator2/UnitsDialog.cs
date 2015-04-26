@@ -36,11 +36,6 @@ namespace SmallCalculator2
             DialogResult = DialogResult.OK;
             Close();
         }
-        private void ParametersDisplayCheckedChanged(object sender, EventArgs e)
-        {
-            fsUnitsControl1.ShowHideSecondaryCharacteristics(showSecondaryCheckbox.Checked);
-            ExpandForm(showSecondaryCheckbox.Checked);
-        }
 
         private void ExpandForm(bool isToExpand)
         {

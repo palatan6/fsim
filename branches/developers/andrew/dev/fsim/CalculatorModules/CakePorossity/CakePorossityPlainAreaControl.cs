@@ -4,7 +4,6 @@ using CalculatorModules.Cake_Formation_Analysis;
 using Parameters;
 using StepCalculators;
 using System.Windows.Forms;
-using Units;
 using Value;
 
 namespace CalculatorModules
@@ -13,12 +12,7 @@ namespace CalculatorModules
     {
         protected override void InitializeGroups()
         {
-            //fsParametersGroup machineDiameterGroup = AddGroup(fsParameterIdentifier.MachineDiameter);
-            fsParametersGroup areaBGroup = AddGroup(/*fsParameterIdentifier.MachineWidth,
-                                                    fsParameterIdentifier.WidthOverDiameterRatio,*/
-                                                    fsParameterIdentifier.FilterArea
-                                                                                      );
-            //fsParametersGroup filterElementDiameterGroup = AddGroup(fsParameterIdentifier.FilterElementDiameter);
+            fsParametersGroup areaBGroup = AddGroup(fsParameterIdentifier.FilterArea);
             fsParametersGroup cakeHeightGroup = AddGroup(fsParameterIdentifier.CakeHeight);
             fsParametersGroup wetGroup = AddGroup(fsParameterIdentifier.WetCakeMass);
             fsParametersGroup dryGroup = AddGroup(fsParameterIdentifier.DryCakeMass);
@@ -29,9 +23,7 @@ namespace CalculatorModules
 
             var groups = new[]
                              {
-                                 //machineDiameterGroup,
                                  areaBGroup,
-                                 //filterElementDiameterGroup,
                                  cakeHeightGroup,
                                  wetGroup,
                                  dryGroup,
@@ -57,10 +49,6 @@ namespace CalculatorModules
 
             SetRowColor(dataGrid, ParameterToCell[fsParameterIdentifier.FilterArea].RowIndex,
                         Color.FromArgb(255, 230, 230));
-            //SetRowColor(dataGrid, ParameterToCell[fsParameterIdentifier.MachineWidth].RowIndex,
-            //            Color.FromArgb(255, 230, 230));
-            //SetRowColor(dataGrid, ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].RowIndex,
-            //            Color.FromArgb(255, 230, 230));
         }
 
         protected override void InitializeCalculationOptionsUIControls()
@@ -72,10 +60,6 @@ namespace CalculatorModules
             fsMisc.FillList(saltContentComboBox.Items, typeof(fsCakePorosityCalculator.fsSaltContentOption));
             AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsSaltContentOption), saltContentComboBox);
             EstablishCalculationOption(fsCakePorosityCalculator.fsSaltContentOption.Neglected);
-
-            //fsMisc.FillList(machineTypeComboBox.Items, typeof(fsCakePorosityCalculator.fsMachineTypeOption));
-            //AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsMachineTypeOption), machineTypeComboBox);
-            //EstablishCalculationOption(fsCakePorosityCalculator.fsMachineTypeOption.PlainArea);
         }
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
@@ -220,6 +204,11 @@ namespace CalculatorModules
             InitializeComponent();
         }
 
+        public CakePorossityPlainAreaControl(ComboBox filtersCombobox) : base(filtersCombobox)
+        {
+            InitializeComponent();
+        }
+
         #region Routine Methods
 
         protected override void UpdateGroupsInputInfoFromCalculationOptions()
@@ -234,26 +223,17 @@ namespace CalculatorModules
             m_calculator.SaltContentOption =
                 (fsCakePorosityCalculator.fsSaltContentOption)
                 CalculationOptions[typeof (fsCakePorosityCalculator.fsSaltContentOption)];
-            //m_calculator.MachineTypeOption =
-            //    (fsCakePorosityCalculator.fsMachineTypeOption)
-            //    CalculationOptions[typeof (fsCakePorosityCalculator.fsMachineTypeOption)];
             m_calculator.RebuildEquationsList();
         }
 
         protected override void UpdateUIFromData()
         {
+            base.UpdateUIFromData();
+            
             var saturationOption =
-                (fsCakePorosityCalculator.fsSaturationOption)
-                CalculationOptions[typeof (fsCakePorosityCalculator.fsSaturationOption)];
-            if (saturationOption == fsCakePorosityCalculator.fsSaturationOption.NotSaturatedCake)
-            {
-                //machineTypeComboBox.Enabled = true;
-            }
-            if (saturationOption == fsCakePorosityCalculator.fsSaturationOption.SaturatedCake)
-            {
-                //machineTypeComboBox.Enabled = false;
-            }
-
+                   (fsCakePorosityCalculator.fsSaturationOption)
+                   CalculationOptions[typeof(fsCakePorosityCalculator.fsSaturationOption)];
+            
             var saltContentOption =
                 (fsCakePorosityCalculator.fsSaltContentOption)
                 CalculationOptions[typeof (fsCakePorosityCalculator.fsSaltContentOption)];

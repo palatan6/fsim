@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Reflection.Emit;
 
 namespace Units
 {
@@ -13,11 +11,22 @@ namespace Units
 
         public double Coefficient { get; private set; }
 
+        public bool IsUsUnit { get; private set; }
+
         public fsUnit(string name, double coefficient)
             : this()
         {
             Name = name;
             Coefficient = coefficient;
+            IsUsUnit = false;
+        }
+
+        public fsUnit(string name, double coefficient, bool isUsUnit)
+            : this()
+        {
+            Name = name;
+            Coefficient = coefficient;
+            IsUsUnit = isUsUnit;
         }
 
         #endregion
@@ -90,6 +99,65 @@ namespace Units
         public static fsUnit SquaredSantiMeterPerBarPerMinute = new fsUnit("cm2/(bar min)", 1e-10 / 6);
 
         public static fsUnit CelsiusDegree = new fsUnit("°C", 1);
+
+        const double PoundFactor = 0.45359237;
+        const double InchFactor = 0.0254;
+        const double FootFactor = InchFactor * 12;
+        const double YardFactor = FootFactor * 3;
+        const double mmHgFactor = 133.3224;
+        const double PsiFactor = 6894.8;
+
+        public static fsUnit Pound = new fsUnit("lb", PoundFactor, true);
+        public static fsUnit CubicFeet = new fsUnit("ft3", Math.Pow(FootFactor, 3), true);
+        public static fsUnit CubicYards = new fsUnit("yd3", Math.Pow(YardFactor, 3), true);
+        public static fsUnit SquareFeet = new fsUnit("ft2", Math.Pow(FootFactor, 2), true);
+        public static fsUnit Inch = new fsUnit("in", InchFactor, true);
+        public static fsUnit Foot = new fsUnit("ft", FootFactor, true);
+        public static fsUnit Yard = new fsUnit("yd", YardFactor, true);
+        public static fsUnit mmHg = new fsUnit("mmHg", mmHgFactor, true);
+        public static fsUnit Torr = new fsUnit("Torr", mmHgFactor, true);
+        public static fsUnit inHg = new fsUnit("inHg", mmHgFactor*1000*InchFactor, true);
+        public static fsUnit psi = new fsUnit("psi", PsiFactor, true);
+        public static fsUnit CubicFeetPerSecond = new fsUnit("ft3/s", Math.Pow(FootFactor, 3), true);
+        public static fsUnit CubicFeetPerMinute = new fsUnit("ft3/min", Math.Pow(FootFactor, 3)/60, true);
+        public static fsUnit CubicFeetPerHour = new fsUnit("ft3/h", Math.Pow(FootFactor, 3)/3600, true);
+        public static fsUnit CubicYardsPerSecond = new fsUnit("yd3/s", Math.Pow(YardFactor, 3), true);
+        public static fsUnit CubicYardsPerMinutes = new fsUnit("yd3/min", Math.Pow(YardFactor, 3)/60, true);
+        public static fsUnit CubicYardsPerHour = new fsUnit("yd3/h", Math.Pow(YardFactor, 3)/3600, true);
+        public static fsUnit PoundPerSecond = new fsUnit("lb/s", PoundFactor, true);
+        public static fsUnit PoundPerMinutes = new fsUnit("lb/min", PoundFactor/60, true);
+        public static fsUnit PoundPerHour = new fsUnit("lb/h", PoundFactor/3600, true);
+        public static fsUnit PoundPerSquaredMeter = new fsUnit("lb/m2", PoundFactor, true);
+        public static fsUnit PoundPerSquaredFoot = new fsUnit("lb/ft2", PoundFactor/Math.Pow(FootFactor, 2), true);
+        public static fsUnit CubicFeetPerSquaredMeter = new fsUnit("ft3/m2", Math.Pow(FootFactor, 3), true);
+        public static fsUnit CubicFeetPerSquaredFeet = new fsUnit("ft3/ft2", FootFactor, true);
+        public static fsUnit CubicYardsPerSquaredMeter = new fsUnit("yd3/m2", Math.Pow(YardFactor, 3), true);
+        public static fsUnit CubicFeetPerSquaredMeterPerHour = new fsUnit("ft3/m2h", Math.Pow(FootFactor, 3)/3600, true);
+        public static fsUnit CubicFeetPerSquaredMeterPerMinute = new fsUnit("ft3/m2min", Math.Pow(FootFactor, 3)/60,
+            true);
+        public static fsUnit CubicFeetPerSquaredMeterPerSecond = new fsUnit("ft3/m2s", Math.Pow(FootFactor, 3), true);
+        public static fsUnit CubicFeetPerSquaredFeetPerHour = new fsUnit("ft3/ft2h", FootFactor/3600, true);
+        public static fsUnit CubicFeetPerSquaredFeetPerMinute = new fsUnit("ft3/ft2min", FootFactor/60, true);
+        public static fsUnit CubicFeetPerSquaredFeetPerSecond = new fsUnit("ft3/ft2s", FootFactor, true);
+        public static fsUnit CubicYardsPerSquaredMeterPerHour = new fsUnit("yd3/m2h", Math.Pow(YardFactor, 3)/3600, true);
+        public static fsUnit CubicYardsPerSquaredMeterPerMinute = new fsUnit("yd3/m2min", Math.Pow(YardFactor, 3)/60,
+            true);
+        public static fsUnit CubicYardsPerSquaredMeterPerSecond = new fsUnit("yd3/m2s", Math.Pow(YardFactor, 3), true);
+        public static fsUnit CubicYardsPerSquaredFeetPerHour = new fsUnit("yd3/ft2h",
+            Math.Pow(YardFactor, 3)/Math.Pow(FootFactor, 2)/3600, true);
+        public static fsUnit CubicYardsPerSquaredFeetPerMinute = new fsUnit("yd3/ft2min",
+            Math.Pow(YardFactor, 3)/Math.Pow(FootFactor, 2)/60, true);
+        public static fsUnit CubicYardsPerSquaredFeetPerSecond = new fsUnit("yd3/ft2s",
+            Math.Pow(YardFactor, 3)/Math.Pow(FootFactor, 2), true);
+        public static fsUnit PoundPerSquaredFeetPerHour = new fsUnit("lb/ft2h", PoundFactor/Math.Pow(FootFactor, 2)/3600,
+            true);
+        public static fsUnit PoundPerSquaredFeetPerMinute = new fsUnit("lb/ft2min",
+            PoundFactor/Math.Pow(FootFactor, 2)/60, true);
+        public static fsUnit PoundPerSquaredFeetPerSecond = new fsUnit("lb/ft2s", PoundFactor/Math.Pow(FootFactor, 2),
+            true);
+        public static fsUnit PoundPerSquaredMeterPerHour = new fsUnit("lb/m2h", PoundFactor/3600, true);
+        public static fsUnit PoundPerSquaredMeterPerMinute = new fsUnit("lb/m2min", PoundFactor/60, true);
+        public static fsUnit PoundPerSquaredMeterPerSecond = new fsUnit("lb/m2s", PoundFactor, true);
 
         #endregion
 

@@ -39,7 +39,7 @@
             this.tablesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablesPanel.Location = new System.Drawing.Point(0, 0);
             this.tablesPanel.Name = "tablesPanel";
-            this.tablesPanel.Size = new System.Drawing.Size(263, 439);
+            this.tablesPanel.Size = new System.Drawing.Size(263, 795);
             this.tablesPanel.TabIndex = 0;
             // 
             // filtrationOptionBox
@@ -47,7 +47,7 @@
             this.filtrationOptionBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.filtrationOptionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filtrationOptionBox.FormattingEnabled = true;
-            this.filtrationOptionBox.Location = new System.Drawing.Point(87, 18);
+            this.filtrationOptionBox.Location = new System.Drawing.Point(75, 48);
             this.filtrationOptionBox.Name = "filtrationOptionBox";
             this.filtrationOptionBox.Size = new System.Drawing.Size(160, 21);
             this.filtrationOptionBox.TabIndex = 1;
@@ -59,7 +59,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tablesPanel);
             this.Name = "fsCakeFormationAnalysisOvermoduleControl";
-            this.Size = new System.Drawing.Size(263, 439);
+            this.Size = new System.Drawing.Size(263, 795);
             this.tablesPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

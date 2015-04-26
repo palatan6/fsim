@@ -83,11 +83,13 @@
     <Compile Include="Cake Washing\fsMwfVcWfEquation.cs" />
     <Compile Include="Cake Washing\fsWfTwEquation.cs" />
     <Compile Include="Cake Washing\fsXstarDnWfEquation.cs" />
+    <Compile Include="fsBFromAAndLoverBEquation.cs" />
     <Compile Include="fsEpsFromMcAndHcEquation.cs" />
     <Compile Include="fsEpsFromMsusAndHcEquation.cs" />
     <Compile Include="fsEpsFromVsusAndHcEquation.cs" />
     <Compile Include="fsKfromCvAndEpsEquation.cs" />
     <Compile Include="fsKFromTdEquation.cs" />
+    <Compile Include="fsKFromVgEquation.cs" />
     <Compile Include="fsMcFromMsAndEpsEquation.cs" />
     <Compile Include="fsPcFromHcAndEtaAndDpAndTfAndKEquation.cs" />
     <Compile Include="fsQgiFromAg1Equation.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="fsSFromAd1Equation.cs" />
     <Compile Include="fsSFromMcdEquation.cs" />
     <Compile Include="fsSFromRhoBulkEquation.cs" />
+    <Compile Include="fsTTechFromTTech0andLambdaEquation.cs" />
     <Compile Include="Hydrocyclone\fsCOverflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsCUnderflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsDFromxRed50QnDuOverDEquation.cs" />

@@ -94,11 +94,11 @@
     <Compile Include="Cake Formation Analysis\CakeFormationAnalysisBaseControl.Designer.cs">
       <DependentUpon>CakeFormationAnalysisBaseControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cake Formation Analysis\CakeFormationContinuousFiltersAnalysisControl.cs">
+    <Compile Include="Cake Formation Analysis\CakeFormationContinuousFilters.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Cake Formation Analysis\CakeFormationContinuousFiltersAnalysisControl.Designer.cs">
-      <DependentUpon>CakeFormationContinuousFiltersAnalysisControl.cs</DependentUpon>
+    <Compile Include="Cake Formation Analysis\CakeFormationContinuousFilters.Designer.cs">
+      <DependentUpon>CakeFormationContinuousFilters.cs</DependentUpon>
     </Compile>
     <Compile Include="Cake Fromation\BeltFilterWithReversibleTrayControl.cs">
       <SubType>UserControl</SubType>
@@ -388,8 +388,8 @@
       <DependentUpon>CakeFormationAnalysisBaseControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cake Formation Analysis\CakeFormationContinuousFiltersAnalysisControl.resx">
-      <DependentUpon>CakeFormationContinuousFiltersAnalysisControl.cs</DependentUpon>
+    <EmbeddedResource Include="Cake Formation Analysis\CakeFormationContinuousFilters.resx">
+      <DependentUpon>CakeFormationContinuousFilters.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\BeltFilterWithReversibleTrayControl.resx">

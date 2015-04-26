@@ -36,6 +36,7 @@ namespace Equations
         protected override void InitFormulas()
         {
             AddFormula(m_pke, PkeFormula);
+            AddFormula(m_pkest, PkestFormula);
         }
 
         #region Formulas
@@ -45,6 +46,13 @@ namespace Equations
             const double sigmaSt = 72e-3;
             const double PcSt = 1e-13;
             m_pke.Value = m_pkest.Value * m_sigma.Value / sigmaSt * fsValue.Sqrt(PcSt / m_pc.Value);
+        }
+
+        private void PkestFormula()
+        {
+            const double sigmaSt = 72e-3;
+            const double PcSt = 1e-13;
+            m_pkest.Value = m_pke.Value /(m_sigma.Value / sigmaSt * fsValue.Sqrt(PcSt / m_pc.Value));
         }
 
         #endregion

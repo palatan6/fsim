@@ -41,5 +41,30 @@ namespace Calculator.Dialogs
         {
             return fsParametersCheckBoxesTree1.GetParametersToShowAndHide();
         }
+
+        private void fsShowHideParametersDialog_Load(object sender, EventArgs e)
+        {
+            ResizeWindowToFitAllTreeNodes();
+        }
+
+        void ResizeWindowToFitAllTreeNodes()
+        {
+            int neededHeight = fsParametersCheckBoxesTree1.GetNodeHieght() * fsParametersCheckBoxesTree1.GetNodesNumber();
+
+            int maxHeight = Convert.ToInt32(Screen.GetWorkingArea(this).Height * 0.8);
+
+            int newControlHeight;
+
+            if (neededHeight > fsParametersCheckBoxesTree1.Height)
+            {
+                newControlHeight = neededHeight - fsParametersCheckBoxesTree1.Height;
+                Height += newControlHeight + 8;
+
+                if (Height > maxHeight)
+                {
+                    Height = maxHeight;
+                }
+            }
+        }
     }
 }

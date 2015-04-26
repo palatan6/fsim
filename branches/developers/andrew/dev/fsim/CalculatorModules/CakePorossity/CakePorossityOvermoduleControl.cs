@@ -11,13 +11,22 @@ namespace CalculatorModules
     public partial class CakePorossityOvermoduleControl : fsCalculatorControl
     {
         private readonly Dictionary<string, CakePorossityBaseControl> m_moduleNameToControl = new Dictionary<string, CakePorossityBaseControl>();
-        private CakePorossityBaseControl m_currentCalculatorControl;
+        private CakePorossityBaseControl m_currentControl;
+        private CakePorossityBaseControl m_currentCalculatorControl
+        {
+            get { return m_currentControl; }
+            set
+            {
+                m_currentControl = value;
+                CurrentSubControl = m_currentControl;
+            }
+        }
 
         protected override void InitializeCalculators()
         {
-            AddCalculatorControl(new CakePorossityPlainAreaControl(), fsMisc.GetEnumDescription(fsCakePorosityCalculator.fsMachineTypeOption.PlainArea));
-            AddCalculatorControl(new CakePorossityConvexControl(), fsMisc.GetEnumDescription(fsCakePorosityCalculator.fsMachineTypeOption.ConvexCylindric));
-            AddCalculatorControl(new CakePorossityConcaveControl(), fsMisc.GetEnumDescription(fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric));
+            AddCalculatorControl(new CakePorossityPlainAreaControl(filtrationOptionBox), fsMisc.GetEnumDescription(fsCakePorosityCalculator.fsMachineTypeOption.PlainArea));
+            AddCalculatorControl(new CakePorossityConvexControl(filtrationOptionBox), fsMisc.GetEnumDescription(fsCakePorosityCalculator.fsMachineTypeOption.ConvexCylindric));
+            AddCalculatorControl(new CakePorossityConcaveControl(filtrationOptionBox), fsMisc.GetEnumDescription(fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric));
         }
 
         protected override void InitializeCalculationOptionsUIControls()
@@ -59,6 +68,16 @@ namespace CalculatorModules
         {
             CharacteristicWithCurrentUnits = dictionary;
             m_currentCalculatorControl.SetUnits(dictionary);
+        }
+
+        public override void SetCommentsText(string text)
+        {
+            m_currentCalculatorControl.SetCommentsText(text);
+        }
+
+        public override string GetCommentsText()
+        {
+            return m_currentCalculatorControl.GetCommentsText();
         }
 
         public override void AplySelectedCalculatorSettings()

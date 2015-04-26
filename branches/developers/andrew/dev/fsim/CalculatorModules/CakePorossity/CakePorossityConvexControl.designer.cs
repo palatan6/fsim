@@ -53,7 +53,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "CakePorossityPlainAreaControl";
+            this.Name = "CakePorossityConvexControl";
             this.Size = new System.Drawing.Size(371, 366);
             this.leftTopPanel.ResumeLayout(false);
             this.tablesPanel.ResumeLayout(false);

@@ -59,6 +59,70 @@ namespace fsUIControls
                        };
         }
 
+        #region CharacteristicsGrouping
+
+        static IEnumerable<fsCharacteristic> GetMassAndVolumeList()
+        {
+            return new[]
+            {
+                fsCharacteristic.Mass,
+                fsCharacteristic.Volume
+            };
+        }
+
+        static IEnumerable<fsCharacteristic> GetDensityViscosityPressureList()
+        {
+            return new[]
+            {
+                fsCharacteristic.Density,
+                fsCharacteristic.Viscosity,
+                fsCharacteristic.Pressure
+            };
+        }
+
+        static IEnumerable<fsCharacteristic> GetUnsortedList()
+        {
+            return new[]
+            {
+                fsCharacteristic.SurfaceTension,
+                fsCharacteristic.CakeWashOutContent
+            };
+        }
+
+        static IEnumerable<fsCharacteristic> GetFlowrateList()
+        {
+            return new[]
+            {
+                fsCharacteristic.MassFlowrate,
+                fsCharacteristic.VolumeFlowrate,
+                fsCharacteristic.SpecificMassFlowrate,
+                fsCharacteristic.SpecificVolumeFlowrate
+            };
+        }
+
+        static IEnumerable<fsCharacteristic> GetLengthAreaTimeFrequencyList()
+        {
+            return new[]
+            {
+                fsCharacteristic.MachineGeometryLength,
+                fsCharacteristic.Area,
+                fsCharacteristic.Time,
+                fsCharacteristic.Frequency
+            };
+        }
+
+        private Dictionary<string, IEnumerable<fsCharacteristic>> _grousWithParametersLists = new Dictionary
+            <string, IEnumerable<fsCharacteristic>>
+        {
+            {"Mass and Volume", GetMassAndVolumeList()},
+            {"Density, Viscosity, Pressure", GetDensityViscosityPressureList()},
+            {"Unsorted", GetUnsortedList()},
+            {"Flow Rate", GetFlowrateList()},
+            {"Length, Area, Time, Frequency", GetLengthAreaTimeFrequencyList()},
+        };
+
+        #endregion
+
         private void InitializeShemeBox()
         {
             schemeBox.Items.Add(CustomSchemeTitle);
@@ -68,41 +132,83 @@ namespace fsUIControls
             {
                 var scheme = ((fsCharacteristicScheme)field.GetValue(null));
                 schemeBox.Items.Add(scheme.Name);
+                splitButtonMenu.Items.Add(scheme.Name);
             }
         }
 
         private void UnitsDialogLoad(object sender, EventArgs e)
         {
             InitializeUnitsPanel();
-            ShowHideSecondaryCharacteristics(false);
+            TryToFindMatchedScheme();
         }
 
         public void ShowHideSecondaryCharacteristics(bool isVisible)
         {
-            foreach (fsCharacteristic characteristic in GetSecondaryCharacteristics())
+            m_schemeApplyingInProcess = true;
+            foreach (fsCharacteristic characteristic in allCharacteristics())
             {
-                m_characteristicToComboBox[characteristic].Visible = isVisible;
-                m_characteristicToLabel[characteristic].Visible = isVisible;
+                ComboBox combo = m_characteristicToComboBox[characteristic];
+                string currentSelectedItem = combo.Text;
+                combo.Items.Clear();
+                foreach (fsUnit unit in characteristic.Units)
+                {
+                    if (!unit.IsUsUnit || isVisible)
+                    {
+                        combo.Items.Add(unit.Name);
+                    }
+                }
+                
+                combo.Text = currentSelectedItem;
+
+                if (combo.Text.Length<=0)
+                {
+                    combo.Text = combo.Items[0].ToString();
+                }
             }
+            m_schemeApplyingInProcess = false;
         }
 
-        private void InitializeUnitsPanel()
+        bool isShowUsUnits()
+        {
+            bool showUsUnits = false;
+            foreach (var characteristic in allCharacteristics())
+            {
+                if (characteristic.CurrentUnit.IsUsUnit)
+                {
+                    showUsUnits = true;
+                    showUsUnitsCheckbox.CheckedChanged -= showUsUnitsCheckbox_CheckedChanged;
+                    showUsUnitsCheckbox.Checked = true;
+                    showUsUnitsCheckbox.CheckedChanged += showUsUnitsCheckbox_CheckedChanged;
+                    break;
+                }
+            }
+            return showUsUnits;
+        }
+
+        List<fsCharacteristic> allCharacteristics()
         {
             IEnumerable<fsCharacteristic> primaryCharacteristics = GetPrimaryCharacteristics();
             IEnumerable<fsCharacteristic> secondaryCharacteristics = GetSecondaryCharacteristics();
 
-            var allCharacteristics = new List<fsCharacteristic>();
-            allCharacteristics.AddRange(primaryCharacteristics);
-            allCharacteristics.AddRange(secondaryCharacteristics);
+            var AllCharacteristics = new List<fsCharacteristic>();
+            AllCharacteristics.AddRange(primaryCharacteristics);
+            AllCharacteristics.AddRange(secondaryCharacteristics);
+
+            return AllCharacteristics;
+        }
+
+        private void InitializeUnitsPanel()
+        {
+            
 
             var characteristicControls = new List<KeyValuePair<Label, ComboBox>>();
 
             const int sizeBeforeLabel = 8;
             const int sizeFromLabelToCombobox = 16;
-            const int sizeAfterCombobox = 24;
+            const int sizeAfterCombobox = 10;
             rightPanel.Width = 0;
 
-            foreach (fsCharacteristic characteristic in allCharacteristics)
+            foreach (fsCharacteristic characteristic in allCharacteristics())
             {
                 var characteristicLabel = new Label {Text = characteristic.Name, AutoSize = true, Parent = unitsPanel};
 
@@ -110,7 +216,11 @@ namespace fsUIControls
 
                 foreach (fsUnit unit in characteristic.Units)
                 {
-                    unitsComboBox.Items.Add(unit.Name);
+                    if (!unit.IsUsUnit || isShowUsUnits())
+                    {
+                        unitsComboBox.Items.Add(unit.Name);
+                    }
+                    
                 }
                 unitsComboBox.Text = characteristic.CurrentUnit.Name;
 
@@ -130,57 +240,55 @@ namespace fsUIControls
                 m_comboBoxTocharacteristic.Add(unitsComboBox, characteristic);
             }
 
-            int currentHeight = 8;
-            foreach (var pair in characteristicControls)
-            {
-                Label characteristicLabel = pair.Key;
-                ComboBox unitsComboBox = pair.Value;
+            const int groupBoxWidth = 300;
+            int groupBoxTopX = 8;
+            int groupBoxTopY = 8;
+            foreach (var groupName in _grousWithParametersLists.Keys)
+            {   
+                GroupBox gb = new GroupBox();
+                gb.Text = groupName;
+                gb.Parent = unitsPanel;
+                gb.Top = groupBoxTopY;
+                gb.Left = groupBoxTopX;
+                gb.Width = groupBoxWidth;
 
-                unitsComboBox.Parent = unitsPanel;
-                unitsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-                if (GetSecondaryCharacteristics().Contains(m_comboBoxTocharacteristic[unitsComboBox]))
+                int currentHeight = 15;
+                int lastComboboxBottom=0;
+                foreach (var pair in characteristicControls)
                 {
-                    unitsComboBox.DrawMode = DrawMode.OwnerDrawFixed;
-                    unitsComboBox.DrawItem +=(unitsComboBox_DrawItem);
+                    if (!_grousWithParametersLists[groupName].Contains(m_comboBoxTocharacteristic[pair.Value]))
+                    {
+                        continue;
+                    }
+
+                    Label characteristicLabel = pair.Key;
+                    ComboBox unitsComboBox = pair.Value;
+
+                    unitsComboBox.Parent = gb;
+                    unitsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                    
+                    unitsComboBox.Location = new Point(gb.Width - sizeAfterCombobox - unitsComboBox.Width,
+                        currentHeight);
+
+                    unitsComboBox.SelectedValueChanged += UnitChanged;
+
+                    characteristicLabel.Parent = gb;
+                    characteristicLabel.Location =
+                        new Point(unitsComboBox.Location.X - sizeFromLabelToCombobox - characteristicLabel.Width,
+                            currentHeight + 4);
+
+                    currentHeight += 32;
+                    lastComboboxBottom = unitsComboBox.Bottom;
                 }
-                
-                unitsComboBox.Location = new Point(unitsPanel.Width - sizeAfterCombobox - unitsComboBox.Width,
-                                                   currentHeight);
-                unitsComboBox.SelectedValueChanged += UnitChanged;
+                gb.Height = lastComboboxBottom + 10;
+                groupBoxTopY += gb.Height + 6;
 
-                characteristicLabel.Parent = unitsPanel;
-                characteristicLabel.Location =
-                    new Point(unitsComboBox.Location.X - sizeFromLabelToCombobox - characteristicLabel.Width,
-                              currentHeight + 4);
-
-                currentHeight += 32;
+                if (groupName == "Unsorted")
+                {
+                    groupBoxTopX += groupBoxWidth + 8;
+                    groupBoxTopY = 8;
+                }
             }
-        }
-
-        private void unitsComboBox_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            float size = 8;
-            Font myFont;
-            FontFamily family = FontFamily.GenericSansSerif;
-
-            ComboBox cb = sender as ComboBox;
-            List<string> itemsText = new List<string>();
-
-            foreach (var item in cb.Items)
-            {
-                itemsText.Add(item.ToString());
-            }
-
-            // Draw the background of the item.
-            e.DrawBackground();
-
-            // Draw each string in the array, using a different size, color, 
-            // and font for each item.
-            myFont = new Font(family, size, FontStyle.Regular);
-            e.Graphics.DrawString(itemsText[e.Index], myFont, Brushes.Black, new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height));
-
-            // Draw the focus rectangle if the mouse hovers over an item.
-            e.DrawFocusRectangle();
         }
 
         private void UnitChanged(object sender, EventArgs e)
@@ -224,6 +332,59 @@ namespace fsUIControls
                 m_characteristicToComboBox[pair.Key].Text = pair.Value.Name;
             }
             m_schemeApplyingInProcess = false;
+        }
+
+        private void splitButtonMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string selectedScheme = e.ClickedItem.ToString();
+
+            Type type = typeof(fsCharacteristicScheme);
+            foreach (FieldInfo field in type.GetFields())
+            {
+                var scheme = ((fsCharacteristicScheme)field.GetValue(null));
+                if (selectedScheme == scheme.Name)
+                {
+                    Save();
+                    scheme.SetCharacteristics( Characteristics);
+                }
+            }
+
+            schemeBox.SelectedItem = selectedScheme;
+        }
+
+        private void TryToFindMatchedScheme()
+        {
+            Save();
+
+            string schemeName="";
+
+            foreach (FieldInfo field in typeof(fsCharacteristicScheme).GetFields())
+            {                
+                var scheme = ((fsCharacteristicScheme)field.GetValue(null));
+                bool characteristicsMatched = true;
+
+                foreach (var characteristic in Characteristics.Keys)
+                {
+                    if (scheme.CharacteristicToUnit[characteristic].Name != Characteristics[characteristic].Name)
+                    {
+                        characteristicsMatched = false;
+                        break;
+                    }
+                }
+
+                if (characteristicsMatched)
+                {
+                    schemeName = scheme.Name;
+                    break;
+                }
+            }
+
+            schemeBox.SelectedItem = schemeName;
+        }
+
+        private void showUsUnitsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            ShowHideSecondaryCharacteristics(showUsUnitsCheckbox.Checked);
         }
     }
 }

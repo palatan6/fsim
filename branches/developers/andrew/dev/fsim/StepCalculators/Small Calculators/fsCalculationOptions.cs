@@ -18,17 +18,15 @@ namespace StepCalculators
             AnalysisModeCalculations,
             [Description("Simulation Mode")]
             SimulationModeCalculations,
-            [Description("Hidden")]
+            [Description("Hide")]
             HiddenModeCalculations
         }
 
         public enum fsGasModeOption
         {
-            [Description("Analysis Mode")]
-            AnalysisModeCalculations,
-            [Description("Simulation Mode")]
-            SimulationModeCalculations,
-            [Description("Hidden")]
+            [Description("Show")]
+            ShowModeCalculations,
+            [Description("Hide")]
             HiddenModeCalculations
         }
 

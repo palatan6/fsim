@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Media;
+using System.Windows.Forms;
 
 namespace fsUIControls
 {
@@ -8,6 +10,7 @@ namespace fsUIControls
         {
             CheckBoxes = true;
             AfterCheck += TreeViewAfterCheck;
+            NodeMouseClick += fsCheckBoxesTreeView_NodeMouseClick;
         }
 
         private bool m_isTreeUpdating = false;
@@ -32,7 +35,59 @@ namespace fsUIControls
                 CheckSubtree(node, e.Node.Checked);
             }
             UpdateParentCheckStatus(e.Node.Parent);
+
+            GrayNodeIfItsLastChecked(e.Node);
+
             m_isTreeUpdating = false;
+        }
+
+        void GrayNodeIfItsLastChecked(TreeNode node)
+        {
+            if (node.Parent != null)
+            {
+                var parentNode = node.Parent;
+                int checkedCount = 0;
+
+                TreeNode lastCheckedNode= new TreeNode();
+
+                foreach (TreeNode childeNode in parentNode.Nodes)
+                {
+                    if (childeNode.Checked)
+                    {
+                        ++checkedCount;
+                        lastCheckedNode = childeNode;
+                    }
+
+                    childeNode.ForeColor = Color.Black;
+                }
+
+                if (checkedCount==1)
+                {
+                    lastCheckedNode.ForeColor = Color.Gray;
+                }
+            }
+        }
+
+        private void fsCheckBoxesTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) // avoid all treeNodes unchecked in sud tree
+        {
+            if (e.Node.Parent != null)
+            {
+                var parentNode = e.Node.Parent;
+                bool isAllUnchecked = true;
+                foreach (TreeNode childeNode in parentNode.Nodes)
+                {
+                    if (childeNode != e.Node && childeNode.Checked)
+                    {
+                        isAllUnchecked = false;
+                    }
+                }
+
+                if (isAllUnchecked)
+                {
+                    e.Node.Checked = true;
+                    SystemSounds.Hand.Play();
+                }
+            }
         }
 
         private void UpdateParentCheckStatus(TreeNode treeNode)
@@ -51,6 +106,5 @@ namespace fsUIControls
             treeNode.Checked = checkedCount == treeNode.Nodes.Count;
             UpdateParentCheckStatus(treeNode.Parent);
         }
-
     }
 }

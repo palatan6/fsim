@@ -62,6 +62,11 @@ namespace Calculator
             return m_calculatorControl.GetInvolvedParametersWithVisibleStatus();
         }
 
+        internal List<fsParametersGroup> GetGroups()
+        {
+            return m_calculatorControl.GetGroups();
+        }
+
         #endregion
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Parameters;
+using CalculatorModules;
 
 namespace fsUIControls
 {
@@ -18,67 +14,32 @@ namespace fsUIControls
         public fsParametersCheckBoxesTree()
         {
             InitializeComponent();
-
         }
 
         #region Tree Initialization
 
-        public void InitializeTree(Dictionary<fsParameterIdentifier, bool> involvedParametersWithCheckStatus)
+        public void InitializeTree(Dictionary<fsParameterIdentifier, bool> involvedParametersWithCheckStatus,List<fsParametersGroup> groups)
         {
             m_involvedParametersWithCheckStatus = involvedParametersWithCheckStatus;
 
             treeView1.Nodes.Clear();
 
-            AddGroupToTree("Densities", treeView1.Nodes,
-                new[]
+            foreach (var group in groups)
+            {
+                if (group.Parameters.Count > 1)
                 {
-                    fsParameterIdentifier.MotherLiquidDensity,
-                    fsParameterIdentifier.LiquidDensity,
-                    fsParameterIdentifier.SolidsDensity,
-                    fsParameterIdentifier.SuspensionDensity
-                });
 
-            AddGroupToTree("Concentrations", treeView1.Nodes,
-                new[]
-                {
-                    fsParameterIdentifier.SuspensionSolidsMassFraction,
-                    fsParameterIdentifier.SuspensionSolidsVolumeFraction,
-                    fsParameterIdentifier.SuspensionSolidsConcentration
-                });
-
-            AddGroupToTree("eps0, kappa0 (Dp = 1)", treeView1.Nodes,
-                new[]
-                {
-                    fsParameterIdentifier.Ne,
-                    fsParameterIdentifier.CakePorosity0,
-                    fsParameterIdentifier.Kappa0,
-                    fsParameterIdentifier.DryCakeDensity0
-                });
-
-            AddGroupToTree("eps, kappa", treeView1.Nodes,
-                new[]
-                {
-                    fsParameterIdentifier.CakePorosity,
-                    fsParameterIdentifier.Kappa,
-                    fsParameterIdentifier.DryCakeDensity
-                });
-
-            AddGroupToTree("Pc0, rc0, alpha0", treeView1.Nodes,
-                new[]
-                {
-                    fsParameterIdentifier.CakePermeability0,
-                    fsParameterIdentifier.CakeResistance0,
-                    fsParameterIdentifier.CakeResistanceAlpha0
-                });
-            AddGroupToTree("n, tc, tr", treeView1.Nodes,
-                new[]
-                {
-                    fsParameterIdentifier.NumberOfCyclones,                
-                    fsParameterIdentifier.RotationalSpeed,
-                    fsParameterIdentifier.ResidualTime
-                });
+                    AddGroupToTree(group.Parameters[0].Name + " Group", treeView1.Nodes,
+                        group.Parameters);
+                }
+            }
 
             treeView1.ExpandAll();
+
+            if (treeView1.Nodes.Count<1)
+            {
+                label1.Visible = true;
+            }
         }
 
         private void AddGroupToTree(
@@ -92,11 +53,12 @@ namespace fsUIControls
             {
                 if (m_involvedParametersWithCheckStatus.ContainsKey(parameterIdentifier))
                 {
-                    TreeNode leaf = groupNode.Nodes.Add(parameterIdentifier.ToString());
+                    TreeNode leaf = groupNode.Nodes.Add(parameterIdentifier.Name);
                     if (m_involvedParametersWithCheckStatus[parameterIdentifier])
                     {
                         leaf.Checked = true;
                         ++checkedLeafsCount;
+                        GrayNodeIfItsLastChecked(leaf);
                     }
                     m_leafsToParameters.Add(leaf, parameterIdentifier);
                 }
@@ -105,6 +67,33 @@ namespace fsUIControls
             {
                 groupNode.Checked = groupNode.Nodes.Count == checkedLeafsCount;
                 treeNodeCollection.Add(groupNode);
+            }
+        }
+
+        void GrayNodeIfItsLastChecked(TreeNode node)
+        {
+            if (node.Parent != null)
+            {
+                var parentNode = node.Parent;
+                int checkedCount = 0;
+
+                TreeNode lastCheckedNode = new TreeNode();
+
+                foreach (TreeNode childeNode in parentNode.Nodes)
+                {
+                    if (childeNode.Checked)
+                    {
+                        ++checkedCount;
+                        lastCheckedNode = childeNode;
+                    }
+
+                    childeNode.ForeColor = Color.Black;
+                }
+
+                if (checkedCount == 1)
+                {
+                    lastCheckedNode.ForeColor = Color.Gray;
+                }
             }
         }
 
@@ -135,6 +124,14 @@ namespace fsUIControls
             }
         }
 
+        public int GetNodesNumber()
+        {
+            return treeView1.GetNodeCount(true);
+        }
 
+        public int GetNodeHieght()
+        {
+            return treeView1.ItemHeight;
+        }
     }
 }

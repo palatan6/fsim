@@ -33,6 +33,7 @@ namespace Equations.Belt_Filters_with_Reversible_Trays
         {
             AddFormula(m_sf, SfFormula);
             AddFormula(m_tf, TfFormula);
+            AddFormula(m_tc, TcFormula);
         }
 
         #region Formulas
@@ -45,6 +46,11 @@ namespace Equations.Belt_Filters_with_Reversible_Trays
         private void TfFormula()
         {
             m_tf.Value = m_sf.Value * (m_tc.Value - m_ns.Value * m_ttech.Value);
+        }
+
+        private void TcFormula()
+        {
+            m_tc.Value = m_tf.Value / m_sf.Value + m_ns.Value * m_ttech.Value;
         }
 
         #endregion
