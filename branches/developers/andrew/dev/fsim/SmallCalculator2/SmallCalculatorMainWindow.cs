@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Calculator.Dialogs;
 using CalculatorModules;
 using CalculatorModules.Base_Controls;
+using Microsoft.Win32;
 using Parameters;
 using Units;
 using Value;
@@ -34,6 +35,28 @@ namespace SmallCalculator2
         public fsSmallCalculatorMainWindow()
         {
             InitializeComponent();
+
+            object regValue = Registry.GetValue(
+                @"HKEY_CURRENT_USER\Software\NICIFOS\FiltratonCalculator",
+                "LastFile",
+                "");
+
+            string filePath;
+
+            if (regValue!=null)
+            {
+                filePath = regValue.ToString();
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    CurrentFilePath = filePath;
+                }
+            }
+        }
+
+        public fsSmallCalculatorMainWindow(string filePath)
+        {
+            InitializeComponent();
+            CurrentFilePath = filePath;
         }
 
         #endregion
@@ -95,6 +118,11 @@ namespace SmallCalculator2
 
             treeView1.ExpandAll();
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0];
+
+            if (!string.IsNullOrEmpty(CurrentFilePath))
+            {
+                OpenMdbFileFromPath(CurrentFilePath);
+            }
         }
 
         private void AddGroupToTree(string nodeName,
@@ -1149,13 +1177,22 @@ namespace SmallCalculator2
 
         private void fsSmallCalculatorMainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult res = MessageBox.Show("Do you want to save data before exit?", "Exit Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            //DialogResult res = MessageBox.Show("Do you want to save data before exit?", "Exit Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-            if (res == DialogResult.Yes)
-                saveToolStripMenuItem_Click(sender, new EventArgs());
+            //if (res == DialogResult.Yes)
+            //    saveToolStripMenuItem_Click(sender, new EventArgs());
 
-            if (res == DialogResult.Cancel)
-                e.Cancel = true;
+            //if (res == DialogResult.Cancel)
+            //    e.Cancel = true;
+
+            if (!string.IsNullOrEmpty(CurrentFilePath))
+            {
+                Registry.SetValue(
+                    @"HKEY_CURRENT_USER\Software\NICIFOS\FiltratonCalculator",
+                    "LastFile",
+                    CurrentFilePath,
+                    RegistryValueKind.String);
+            }
         }
     }
 }

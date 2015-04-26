@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace SmallCalculator2
@@ -11,9 +12,21 @@ namespace SmallCalculator2
         [STAThread]
         static void Main()
         {
+            string[] args = Environment.GetCommandLineArgs();
+            
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new fsSmallCalculatorMainWindow());
+
+            if (args.Length > 1)
+            {
+                Application.Run(new fsSmallCalculatorMainWindow(args[1]));
+            }
+            else
+            {
+                Application.Run(new fsSmallCalculatorMainWindow());
+            }
+
         }
     }
 }
