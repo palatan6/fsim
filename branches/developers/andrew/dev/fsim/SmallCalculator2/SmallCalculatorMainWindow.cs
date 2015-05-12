@@ -10,8 +10,10 @@ using System.Windows.Forms;
 using Calculator.Dialogs;
 using CalculatorModules;
 using CalculatorModules.Base_Controls;
+using fsUIControls;
 using Microsoft.Win32;
 using Parameters;
+using SmallCalculator2.Properties;
 using Units;
 using Value;
 
@@ -27,6 +29,8 @@ namespace SmallCalculator2
         public fsCalculatorControl SelectedCalculatorControl { get; private set; }
 
         private string CurrentFilePath;
+        private string ProgramNameCaption = "Filtration Calculator";
+        private bool isSomethingChanged;
 
         #endregion
 
@@ -43,7 +47,7 @@ namespace SmallCalculator2
 
             string filePath;
 
-            if (regValue!=null)
+            if (regValue != null && File.Exists(regValue.ToString()))
             {
                 filePath = regValue.ToString();
                 if (!string.IsNullOrEmpty(filePath))
@@ -51,12 +55,16 @@ namespace SmallCalculator2
                     CurrentFilePath = filePath;
                 }
             }
+
+            fsParametersWithValuesTable.SomethingChanged += EnableSaveButtons;
         }
 
         public fsSmallCalculatorMainWindow(string filePath)
         {
             InitializeComponent();
             CurrentFilePath = filePath;
+
+            fsParametersWithValuesTable.SomethingChanged += EnableSaveButtons;
         }
 
         #endregion
@@ -71,6 +79,8 @@ namespace SmallCalculator2
 
         private void Form1Load(object sender, EventArgs e)
         {
+            LoadWindowSettings();
+
             AddGroupToTree("Suspension", new[]
                                              {
                                                  new KeyValuePair<string, fsCalculatorControl>(
@@ -83,7 +93,7 @@ namespace SmallCalculator2
             AddGroupToTree("Filter Cake", new[]
                                               {
                                                   new KeyValuePair<string, fsCalculatorControl>(
-                                                      "Filter Cake & Suspension Relations", new fsMsusAndHcControl()),
+                                                      "Filter Cake & Suspension Relations", new MsusAndHcOverModuleControl()),
                                                   new KeyValuePair<string, fsCalculatorControl>("Cake Porosity from Test Data",
                                                                                                 new CakePorossityOvermoduleControl
                                                                                                     ()),  
@@ -149,6 +159,47 @@ namespace SmallCalculator2
             treeNode.Nodes.Add(moduleName).NodeFont = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular);
         }
 
+        void LoadWindowSettings()
+        {
+            if (Settings.Default.WindowLocation != null)
+            {
+                Location = Settings.Default.WindowLocation;
+            }
+
+            if (Settings.Default.WindowSize != null)
+            {
+                Size = Settings.Default.WindowSize;
+            }
+
+            if (Settings.Default.WindowMaximizedState != null && Settings.Default.WindowMaximizedState)
+            {
+                WindowState = FormWindowState.Maximized;
+            }
+           
+        }
+
+        void SaveWindowSettings()
+        {
+            Settings.Default.WindowMaximizedState = false;
+            if (WindowState == FormWindowState.Normal)
+            {
+                Settings.Default.WindowSize = Size;
+                Settings.Default.WindowLocation = Location;
+            }
+            else
+            {
+                if (WindowState == FormWindowState.Maximized)
+                {
+                    Settings.Default.WindowMaximizedState = true;
+                }
+
+                Settings.Default.WindowSize = RestoreBounds.Size;
+                Settings.Default.WindowLocation = RestoreBounds.Location;
+            }
+
+            Settings.Default.Save();
+        }
+
         #endregion
 
         #region Events
@@ -184,7 +235,7 @@ namespace SmallCalculator2
         {
             int neededHeight = module.Height;
 
-            int maxHeight = Convert.ToInt32(Screen.GetWorkingArea(this).Height * 0.8);
+            int maxHeight = Convert.ToInt32(Screen.GetWorkingArea(this).Height);
 
             int newControlHeight;
 
@@ -206,12 +257,49 @@ namespace SmallCalculator2
             unitsDialog.ShowDialog();
             if (unitsDialog.DialogResult == DialogResult.OK)
             {
+                Dictionary<fsCharacteristic, fsUnit> oldUnits = SelectedCalculatorControl.GetUnits();
+
                 SelectedCalculatorControl.SetUnits(unitsDialog.Characteristics);
-                foreach (var unit in unitsDialog.Characteristics)
+
+                foreach (KeyValuePair<fsCharacteristic, fsUnit> oldPair in oldUnits)
                 {
-                    //unit.Key.CurrentUnit = unit.Value;
+                    foreach (KeyValuePair<fsCharacteristic, fsUnit> newPair in unitsDialog.Characteristics)
+                    {
+                        if (oldPair.Key.Name == newPair.Key.Name && oldPair.Value.Name != newPair.Value.Name)
+                        {
+                            EnableSaveButtons();
+                        }
+                    }
                 }
             }
+        }
+
+        private void EnableSaveButtons()
+        {
+            saveFileToolStripMenuItem.Enabled = true;
+            saveToolStripMenuItem.Enabled = true;
+
+            if (!string.IsNullOrEmpty(CurrentFilePath))
+            {
+                ProgramNameCaption = "* Filtration Calculator";
+                SetCurrentFileNameAndCaption(CurrentFilePath); 
+            }
+
+            isSomethingChanged = true;
+        }
+
+        private void DisableSaveButtons()
+        {
+            saveFileToolStripMenuItem.Enabled = false;
+            saveToolStripMenuItem.Enabled = false;
+
+            if (!string.IsNullOrEmpty(CurrentFilePath))
+            {
+                ProgramNameCaption = "Filtration Calculator";
+                SetCurrentFileNameAndCaption(CurrentFilePath);
+            }
+
+            isSomethingChanged = false;
         }
 
         #endregion
@@ -244,6 +332,10 @@ namespace SmallCalculator2
             public const string ShowHideTableName = "ShowHide";
             public const string ShowHideParameterNameColumnName = "ParameterName";
             public const string ShowHideValueColumnName = "Value";
+
+            public const string HiddenParametersTableName = "HiddenParameters";
+            public const string ShowHideHiddenParameterNameColumnName = "HiddenParameterName";
+            public const string ShowHideHiddenValueColumnName = "HiddenValue";
         }
 
         public void SetCurrentFileNameAndCaption(string newFileName)
@@ -255,7 +347,7 @@ namespace SmallCalculator2
             {
                 currentFileName = CurrentFilePath.Remove(0, CurrentFilePath.LastIndexOf('\\') + 1);
 
-                Text = "Filtration Calculator";
+                Text = ProgramNameCaption;
                 Text = currentFileName + " - " + Text;
             }
         }
@@ -265,12 +357,17 @@ namespace SmallCalculator2
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
             saveFileDialog1.Filter = "Filtration Calculator data files(*.fcd)|*.fcd";
-            
             saveFileDialog1.RestoreDirectory = true;
+
+            if (!string.IsNullOrEmpty(CurrentFilePath))
+            {
+                saveFileDialog1.FileName = CurrentFilePath.Remove(0, CurrentFilePath.LastIndexOf('\\') + 1);
+            }
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 CreateDataBaseAndConnectToIt(saveFileDialog1.FileName);
+                DisableSaveButtons();
             }
         }
 
@@ -283,6 +380,7 @@ namespace SmallCalculator2
             }
 
             CreateDataBaseAndConnectToIt(CurrentFilePath);
+            DisableSaveButtons();
         }
 
         private void CreateDataBaseAndConnectToIt(string path)
@@ -313,6 +411,7 @@ namespace SmallCalculator2
                     SaveModulesCalculationOptions(module);
                     CreateTableForCurrentSelectedUnits(module);
                     CreateTableForModulesShowHide(module);
+                    CreateTableForModulesHiddenParameters(module);
                 }
 
                 if (module.SubCalculatorControls.Count > 0)
@@ -327,6 +426,7 @@ namespace SmallCalculator2
                             SaveModulesCalculationOptions(subModule);
                             CreateTableForCurrentSelectedUnits(subModule);
                             CreateTableForModulesShowHide(subModule);
+                            CreateTableForModulesHiddenParameters(subModule);
                         }
                     }
                 }
@@ -714,6 +814,53 @@ namespace SmallCalculator2
             }
         }
 
+        private void CreateTableForModulesHiddenParameters(fsCalculatorControl module)
+        {
+            string tableName = module.Name + SavingTags.HiddenParametersTableName;
+            string parameterColumnName = SavingTags.ShowHideHiddenParameterNameColumnName;
+            string valueColumnName = SavingTags.ShowHideHiddenValueColumnName;
+
+            try
+            {
+                string commandString = String.Format("DROP TABLE [{0}]", tableName);
+                using (OleDbCommand cmd = new OleDbCommand(commandString, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) { if (ex != null) ex = null; }
+
+            try
+            {
+                string commandString = String.Format("CREATE TABLE [{0}] ([{1}] STRING, [{2}] STRING);", tableName, parameterColumnName, valueColumnName);
+                using (OleDbCommand cmd = new OleDbCommand(commandString, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) { if (ex != null) ex = null; }
+
+            foreach (var parameter in module.GetHiddenParameters())
+            {
+                try
+                {
+                    string commandString = String.Format("Insert into [{0}] ([{1}], [{2}]) VALUES ('{3}', '{4}')",
+                        tableName, parameterColumnName, valueColumnName,
+                        parameter.Key.FullName + parameter.Key.Name, parameter.Value);
+                    using (
+                        OleDbCommand cmd =
+                            new OleDbCommand(commandString, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex != null) ex = null;
+                }
+            }
+        }
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -725,6 +872,7 @@ namespace SmallCalculator2
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 OpenMdbFileFromPath(openFileDialog1.FileName);
+                DisableSaveButtons();
             }
         }
 
@@ -734,7 +882,7 @@ namespace SmallCalculator2
 
             if (!File.Exists(DBPath))
             {
-                MessageBox.Show("Error! File missing!");
+                //MessageBox.Show("Error! File missing!");
             }
 
             // connect to DB
@@ -765,6 +913,7 @@ namespace SmallCalculator2
                         LoadCurrentSelectedUnits(subModule);
                         LoadModulesComments(subModule);
                         LoadModulesShowHide(subModule);
+                        LoadModulesHiddenParameters(subModule);
                     }
                 }
                 else
@@ -773,6 +922,7 @@ namespace SmallCalculator2
                     LoadCurrentSelectedUnits(module);
                     LoadModulesComments(module);
                     LoadModulesShowHide(module);
+                    LoadModulesHiddenParameters(module);
                 }
             }
             LoadUnitsShemes();
@@ -1114,6 +1264,42 @@ namespace SmallCalculator2
             module.ShowAndHideParameters(parametersWithShowHideValue);
         }
 
+        private void LoadModulesHiddenParameters(fsCalculatorControl module)
+        {
+            string tableName = module.Name + SavingTags.HiddenParametersTableName;
+            string parameterColumnName = SavingTags.ShowHideHiddenParameterNameColumnName;
+            string valueColumnName = SavingTags.ShowHideHiddenValueColumnName;
+
+            if (!isDBContainsTable(tableName))
+                return;
+
+            string commandString = String.Format("SELECT * FROM {0}", tableName);
+
+            adapter = new OleDbDataAdapter(commandString, conn);
+            new OleDbCommandBuilder(adapter);
+
+            dtMain = new DataTable();
+
+            adapter.Fill(dtMain);
+
+            Dictionary<fsParameterIdentifier, bool> parametersWithShowHideValue =
+                new Dictionary<fsParameterIdentifier, bool>();
+
+            foreach (var parameterShowHide in module.GetParametersList())
+            {
+                for (int i = 0; i < dtMain.Rows.Count; i++)
+                {
+                    if (dtMain.Rows[i][parameterColumnName].ToString() == parameterShowHide.FullName + parameterShowHide.Name)
+                    {
+                        bool value = Convert.ToBoolean(dtMain.Rows[i][valueColumnName].ToString());
+                        parametersWithShowHideValue.Add(parameterShowHide, value);
+                    }
+                }
+            }
+
+            module.SetHiddenParameters(parametersWithShowHideValue);
+        }
+
         private bool isDBContainsTable(string tableName)
         {
             bool tableFound = false;
@@ -1141,9 +1327,11 @@ namespace SmallCalculator2
         {
             m_modules.Clear();
             treeView1.Nodes.Clear();
-            Text = "Filtration Calculator";
+            Text = ProgramNameCaption;
             CurrentFilePath = "";
+            SaveWindowSettings();
             Form1Load(sender, e);
+            DisableSaveButtons();
         }
 
         private void commentsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1152,7 +1340,14 @@ namespace SmallCalculator2
             commentsDialog.ShowDialog(SelectedCalculatorControl);
             if (commentsDialog.DialogResult == DialogResult.OK)
             {
+                string oldComments = SelectedCalculatorControl.GetCommentsText() ?? "";
+
                 SelectedCalculatorControl.SetCommentsText(commentsDialog.GetText());
+
+                if (oldComments != SelectedCalculatorControl.GetCommentsText())
+                {
+                    EnableSaveButtons();
+                }
             }
         }
 
@@ -1165,8 +1360,23 @@ namespace SmallCalculator2
 
             if (form.DialogResult == DialogResult.OK)
             {
+                Dictionary<fsParameterIdentifier, bool> oldShowHide =
+                    SelectedCalculatorControl.GetInvolvedParametersWithVisibleStatus();
+
                 Dictionary<fsParameterIdentifier, bool> parametersToShowAndHide = form.GetParametersToShowAndHide();
                 SelectedCalculatorControl.ShowAndHideParameters(parametersToShowAndHide);
+
+                foreach (KeyValuePair<fsParameterIdentifier, bool> oldPair in oldShowHide)
+                {
+                    foreach (KeyValuePair<fsParameterIdentifier, bool> newPair in parametersToShowAndHide)
+                    {
+                        if (oldPair.Key == newPair.Key && oldPair.Value != newPair.Value)
+                        {
+                            EnableSaveButtons();
+                            return;
+                        }
+                    }
+                }
             }
         }
 
@@ -1175,16 +1385,39 @@ namespace SmallCalculator2
             Close();
         }
 
+        private void newFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newToolStripMenuItem_Click(sender, e);
+        }
+
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openToolStripMenuItem_Click(sender, e);
+        }
+
+        private void saveFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveToolStripMenuItem_Click(sender, e);
+        }
+
+        private void saveAsFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveAsToolStripMenuItem_Click(sender, e);
+        }
+
         private void fsSmallCalculatorMainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //DialogResult res = MessageBox.Show("Do you want to save data before exit?", "Exit Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (isSomethingChanged)
+            {
 
-            //if (res == DialogResult.Yes)
-            //    saveToolStripMenuItem_Click(sender, new EventArgs());
+                DialogResult res = MessageBox.Show("Do you want to save data before exit?", "Exit Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-            //if (res == DialogResult.Cancel)
-            //    e.Cancel = true;
+                if (res == DialogResult.Yes)
+                    saveToolStripMenuItem_Click(sender, new EventArgs());
 
+                if (res == DialogResult.Cancel)
+                    e.Cancel = true;
+            }
             if (!string.IsNullOrEmpty(CurrentFilePath))
             {
                 Registry.SetValue(
@@ -1193,6 +1426,8 @@ namespace SmallCalculator2
                     CurrentFilePath,
                     RegistryValueKind.String);
             }
+
+            SaveWindowSettings();
         }
     }
 }

@@ -115,6 +115,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -161,6 +162,19 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Resources\disk.png" />
+    <None Include="Resources\disk_multiple.png" />
+    <None Include="Resources\folder_open_16.png" />
+    <None Include="Resources\page_white.png" />
+    <None Include="Resources\file10.png" />
+    <None Include="Resources\floppy15.png" />
+    <None Include="Resources\folder265.png" />
+    <None Include="Resources\save31.png" />
+    <None Include="Resources\folder264.png" />
+    <None Include="Resources\open127.png" />
+    <None Include="Resources\open131.png" />
+    <None Include="Resources\saveAs.png" />
     <Content Include="SepEx.ico" />
   </ItemGroup>
   <ItemGroup>

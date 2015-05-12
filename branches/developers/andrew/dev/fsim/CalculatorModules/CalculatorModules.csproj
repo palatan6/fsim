@@ -288,6 +288,36 @@
     <Compile Include="Cake Formation Analysis\fsCakeFormationAnalysisOvermoduleControl.Designer.cs">
       <DependentUpon>fsCakeFormationAnalysisOvermoduleControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcBaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcBaseControl.Designer.cs">
+      <DependentUpon>MsusAndHcBaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcConcaveControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcConcaveControl.Designer.cs">
+      <DependentUpon>MsusAndHcConcaveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcConvexControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcConvexControl.Designer.cs">
+      <DependentUpon>MsusAndHcConvexControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcOverModuleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcOverModuleControl.Designer.cs">
+      <DependentUpon>MsusAndHcOverModuleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcPlainAreaControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Filter Cake And Suspension Relations\MsusAndHcPlainAreaControl.Designer.cs">
+      <DependentUpon>MsusAndHcPlainAreaControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="fsMisc.cs" />
     <Compile Include="Hydrocyclone\HydrocycloneControl.cs">
       <SubType>UserControl</SubType>
@@ -465,6 +495,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Formation Analysis\fsCakeFormationAnalysisOvermoduleControl.resx">
       <DependentUpon>fsCakeFormationAnalysisOvermoduleControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filter Cake And Suspension Relations\MsusAndHcBaseControl.resx">
+      <DependentUpon>MsusAndHcBaseControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filter Cake And Suspension Relations\MsusAndHcOverModuleControl.resx">
+      <DependentUpon>MsusAndHcOverModuleControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Hydrocyclone\HydrocycloneControl.resx">

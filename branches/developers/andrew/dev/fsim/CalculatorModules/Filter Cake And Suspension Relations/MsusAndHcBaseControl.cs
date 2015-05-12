@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
 using CalculatorModules.Base_Controls;
 using Parameters;
 using StepCalculators;
-using System.Windows.Forms;
 using Value;
 
 namespace CalculatorModules
 {
-    public sealed partial class fsMsusAndHcControl : fsOptionsSingleTableAndCommentsCalculatorControl
+    public partial class MsusAndHcBaseControl : fsOptionsSingleTableAndCommentsCalculatorControl
     {
         #region Calculation Data
 
-        private enum fsCalculationOption
+        protected enum fsCalculationOption
         {
             [Description("Densities")] DensitiesCalculated,
             [Description("Concentrations")] ConcentreationsCalculated,
@@ -30,11 +30,11 @@ namespace CalculatorModules
 
         #region Routine Data
 
-        private fsParametersGroup m_areaBGroup;
+        protected fsParametersGroup m_areaBGroup;
 
-        private readonly List<fsCalculator> m_concaveCylindricAreaCalculators = new List<fsCalculator>();
-        private readonly List<fsCalculator> m_convexCylindricAreaCalculators = new List<fsCalculator>();
-        private readonly List<fsCalculator> m_plainAreaCalculators = new List<fsCalculator>();
+        protected readonly List<fsCalculator> m_concaveCylindricAreaCalculators = new List<fsCalculator>();
+        protected readonly List<fsCalculator> m_convexCylindricAreaCalculators = new List<fsCalculator>();
+        protected readonly List<fsCalculator> m_plainAreaCalculators = new List<fsCalculator>();
 
         #endregion
 
@@ -107,9 +107,7 @@ namespace CalculatorModules
 
         protected override void InitializeCalculationOptionsUIControls()
         {
-            fsMisc.FillList(machineTypeComboBox.Items, typeof(fsCakePorosityCalculator.fsMachineTypeOption));
-            EstablishCalculationOption(fsCakePorosityCalculator.fsMachineTypeOption.PlainArea);
-            AssignCalculationOptionAndControl(typeof(fsCakePorosityCalculator.fsMachineTypeOption), machineTypeComboBox);
+            
 
             EstablishCalculationOption(fsCalculationOption.MassVolumeCalculated);
             FillCalculationComboBox();
@@ -120,9 +118,7 @@ namespace CalculatorModules
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
         {
-            return new Control[] { dataGrid,
-                                      machineTypeComboBox,
-                                      calculationOptionComboBox };
+            return new Control[] { dataGrid, calculationOptionComboBox };
         }
 
         protected override void InitializeParametersValues()
@@ -377,7 +373,7 @@ namespace CalculatorModules
             #endregion
         }
 
-        public fsMsusAndHcControl()
+        public MsusAndHcBaseControl()
         {
             InitializeComponent();
         }
@@ -386,39 +382,8 @@ namespace CalculatorModules
 
         private bool m_isBlockedCalculationOptionChanged;
 
-        private void FillCalculationComboBox()
+        protected virtual void FillCalculationComboBox()
         {
-            var machineTypeOption =
-                (fsCakePorosityCalculator.fsMachineTypeOption)
-                CalculationOptions[typeof (fsCakePorosityCalculator.fsMachineTypeOption)];
-            var restrictedOptions = new List<fsCalculationOption>();
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.PlainArea)
-            {
-                restrictedOptions.Add(fsCalculationOption.MachineDiameterCalculated);
-                restrictedOptions.Add(fsCalculationOption.FilterElementDiameterCalculated);
-            }
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.ConvexCylindric)
-            {
-                restrictedOptions.Add(fsCalculationOption.MachineDiameterCalculated);
-            }
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric)
-            {
-                restrictedOptions.Add(fsCalculationOption.FilterElementDiameterCalculated);
-            }
-
-            var calculationOption = (fsCalculationOption) CalculationOptions[typeof (fsCalculationOption)];
-            if (restrictedOptions.Contains(calculationOption))
-            {
-                EstablishCalculationOption(fsCalculationOption.MassVolumeCalculated);
-            }
-
-            fsMisc.FillList(calculationOptionComboBox.Items, typeof (fsCalculationOption));
-            foreach (fsCalculationOption restrictedOption in restrictedOptions)
-            {
-                calculationOptionComboBox.Items.Remove(fsMisc.GetEnumDescription(restrictedOption));
-            }
-            calculationOptionComboBox.Text =
-                fsMisc.GetEnumDescription((fsCalculationOption) CalculationOptions[typeof (fsCalculationOption)]);
         }
 
         protected override void UpdateGroupsInputInfoFromCalculationOptions()
@@ -473,80 +438,16 @@ namespace CalculatorModules
             base.CalculationOptionChanged(sender, e);
         }
 
-        protected override void UpdateUIFromData()
-        {
-            int rowHeight = dataGrid.RowHeight;
-
-            var machineTypeOption =
-                (fsCakePorosityCalculator.fsMachineTypeOption)
-                CalculationOptions[typeof (fsCakePorosityCalculator.fsMachineTypeOption)];
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.PlainArea)
-            {
-                //ParameterToCell[fsParameterIdentifier.MachineDiameter].OwningRow.Visible = false;
-                //ParameterToCell[fsParameterIdentifier.FilterElementDiameter].OwningRow.Visible = false;
-                //ParameterToCell[fsParameterIdentifier.MachineWidth].OwningRow.Visible = false;
-                //ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].OwningRow.Visible = false;
-
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.MachineDiameter].OwningRow,false);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.FilterElementDiameter].OwningRow,false);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.MachineWidth].OwningRow, false);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].OwningRow, false);
-
-                ParameterToCell[fsParameterIdentifier.MachineDiameter].OwningRow.Height = dataGrid.MinimumRowHeight;
-                ParameterToCell[fsParameterIdentifier.FilterElementDiameter].OwningRow.Height = dataGrid.MinimumRowHeight;
-                ParameterToCell[fsParameterIdentifier.MachineWidth].OwningRow.Height = dataGrid.MinimumRowHeight;
-                ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].OwningRow.Height = dataGrid.MinimumRowHeight;
-            }
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.ConvexCylindric)
-            {
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.MachineDiameter].OwningRow, false);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.FilterElementDiameter].OwningRow, true);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.MachineWidth].OwningRow, false);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].OwningRow, false);
-
-                ParameterToCell[fsParameterIdentifier.MachineDiameter].OwningRow.Height = dataGrid.MinimumRowHeight;
-                ParameterToCell[fsParameterIdentifier.FilterElementDiameter].OwningRow.Height = dataGrid.RowHeight;
-                ParameterToCell[fsParameterIdentifier.MachineWidth].OwningRow.Height = dataGrid.MinimumRowHeight;
-                ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].OwningRow.Height = dataGrid.MinimumRowHeight;
-            }
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric)
-            {
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.MachineDiameter].OwningRow,true);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.FilterElementDiameter].OwningRow, false);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.MachineWidth].OwningRow, true);
-                HideParameterRow(ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].OwningRow, true);
-
-                ParameterToCell[fsParameterIdentifier.MachineDiameter].OwningRow.Height = dataGrid.RowHeight;
-                ParameterToCell[fsParameterIdentifier.FilterElementDiameter].OwningRow.Height = dataGrid.MinimumRowHeight;
-                ParameterToCell[fsParameterIdentifier.MachineWidth].OwningRow.Height = dataGrid.RowHeight;
-                ParameterToCell[fsParameterIdentifier.WidthOverDiameterRatio].OwningRow.Height = dataGrid.RowHeight;
-            }
-
-            base.UpdateUIFromData();
-        }
-
-        protected override void UpdateEquationsFromCalculationOptions()
-        {
-            var machineTypeOption =
-                (fsCakePorosityCalculator.fsMachineTypeOption)
-                CalculationOptions[typeof (fsCakePorosityCalculator.fsMachineTypeOption)];
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.PlainArea)
-            {
-                Calculators = m_plainAreaCalculators;
-                m_areaBGroup.Representator = fsParameterIdentifier.FilterArea;
-            }
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.ConvexCylindric)
-            {
-                Calculators = m_convexCylindricAreaCalculators;
-                m_areaBGroup.Representator = fsParameterIdentifier.FilterArea;
-            }
-            if (machineTypeOption == fsCakePorosityCalculator.fsMachineTypeOption.ConcaveCylindric)
-            {
-                Calculators = m_concaveCylindricAreaCalculators;
-                m_areaBGroup.Representator = fsParameterIdentifier.FilterArea;
-            }
-        }
-
         #endregion
+
+        public Point GetFilterTypesComboBoxPosition()
+        {
+            int x = calculationOptionComboBox.Left;
+            int y = calculationOptionComboBox.Top - (label1.Top - label2.Top);
+
+            Point p = new Point(x, y);
+
+            return p;
+        }
     }
 }
