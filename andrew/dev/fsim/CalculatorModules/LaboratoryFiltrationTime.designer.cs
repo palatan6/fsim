@@ -34,7 +34,7 @@
             // 
             // dataGrid
             // 
-            this.dataGrid.Size = new System.Drawing.Size(279, 763);
+            this.dataGrid.Size = new System.Drawing.Size(279, 673);
             // 
             // leftTopPanel
             // 
@@ -47,14 +47,14 @@
             // tablesPanel
             // 
             this.tablesPanel.Location = new System.Drawing.Point(0, 37);
-            this.tablesPanel.Size = new System.Drawing.Size(279, 763);
+            this.tablesPanel.Size = new System.Drawing.Size(279, 673);
             // 
             // fsLaboratoryFiltrationTime
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "fsLaboratoryFiltrationTime";
-            this.Size = new System.Drawing.Size(279, 800);
+            this.Size = new System.Drawing.Size(279, 710);
             this.leftTopPanel.ResumeLayout(false);
             this.tablesPanel.ResumeLayout(false);
             this.ResumeLayout(false);

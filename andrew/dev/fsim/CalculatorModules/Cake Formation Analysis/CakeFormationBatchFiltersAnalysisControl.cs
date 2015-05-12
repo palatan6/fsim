@@ -31,9 +31,7 @@ namespace CalculatorModules.Cake_Fromation
             fsParametersGroup areaGroup = AddGroup(
                 fsParameterIdentifier.FilterArea);
             fsParametersGroup pressureGroup = AddGroup(
-                fsParameterIdentifier.PressureDifference);            
-            fsParametersGroup timeGroup = AddGroup(
-                fsParameterIdentifier.ResidualTime);
+                fsParameterIdentifier.PressureDifference);
             fsParametersGroup sfGroup = AddGroup(
                 fsParameterIdentifier.FiltrationTime);
             fsParametersGroup porosityGroup = AddGroup(
@@ -71,7 +69,7 @@ namespace CalculatorModules.Cake_Fromation
                 fsParameterIdentifier.PracticalCakePermeability);
             fsParametersGroup hceGroup = AddGroup(
                 fsParameterIdentifier.FilterMediumResistanceHce,
-                fsParameterIdentifier.FilterMediumResistanceRm);         
+                fsParameterIdentifier.FilterMediumResistanceRm);
             fsParametersGroup ncGroup = AddGroup(
                 fsParameterIdentifier.CakeCompressibility);
             fsParametersGroup neGroup = AddGroup(
@@ -85,7 +83,6 @@ namespace CalculatorModules.Cake_Fromation
                                  concentrationGroup,
                                  areaGroup,
                                  pressureGroup,                                 
-                                 timeGroup,
                                  sfGroup,
                                  porosityGroup,                                 
                                  cakeFormationAndCharacterGroup,
@@ -106,8 +103,6 @@ namespace CalculatorModules.Cake_Fromation
                 groups[i].SetIsInputFlag(true);
                 AddGroupToUI(dataGrid, groups[i], colors[i % colors.Length]);
             }
-
-            ParameterToCell[fsParameterIdentifier.ResidualTime].OwningRow.Visible = false;
         }
 
         protected override Control[] GetUIControlsToConnectWithDataUpdating()
@@ -164,33 +159,111 @@ namespace CalculatorModules.Cake_Fromation
 
         protected override void UpdateUIFromData()
         {
+            HideUnusedParametersDependingOnCalculationOption();
+
+            base.UpdateUIFromData();
+        }
+
+        void HideUnusedParametersDependingOnCalculationOption()
+        {
             var defaultSimuationOption =
                 (fsCalculationOptions.fsSimulationsOption)
                 CalculationOptions[typeof(fsCalculationOptions.fsSimulationsOption)];
             bool isDefaultSimulationCalculation = defaultSimuationOption == fsCalculationOptions.fsSimulationsOption.DefaultSimulationsCalculations;
 
-            ParameterToCell[fsParameterIdentifier.CakePermeability].OwningRow.Visible = !isDefaultSimulationCalculation;
-            ParameterToCell[fsParameterIdentifier.CakeResistance].OwningRow.Visible = !isDefaultSimulationCalculation;
-            ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha].OwningRow.Visible = !isDefaultSimulationCalculation;
-            ParameterToCell[fsParameterIdentifier.FilterMediumResistanceHce].OwningRow.Visible = !isDefaultSimulationCalculation;
-            ParameterToCell[fsParameterIdentifier.FilterMediumResistanceRm].OwningRow.Visible = !isDefaultSimulationCalculation;
+            //ParameterToCell[fsParameterIdentifier.CakePermeability].OwningRow.Visible = !isDefaultSimulationCalculation;
+            //ParameterToCell[fsParameterIdentifier.CakeResistance].OwningRow.Visible = !isDefaultSimulationCalculation;
+            //ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha].OwningRow.Visible = !isDefaultSimulationCalculation;
+            //ParameterToCell[fsParameterIdentifier.FilterMediumResistanceHce].OwningRow.Visible = !isDefaultSimulationCalculation;
+            //ParameterToCell[fsParameterIdentifier.FilterMediumResistanceRm].OwningRow.Visible = !isDefaultSimulationCalculation;
+            
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakePermeability].OwningRow, !isDefaultSimulationCalculation);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakeResistance].OwningRow, !isDefaultSimulationCalculation);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha].OwningRow, !isDefaultSimulationCalculation);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.FilterMediumResistanceHce].OwningRow, !isDefaultSimulationCalculation);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.FilterMediumResistanceRm].OwningRow, !isDefaultSimulationCalculation);
+
+            int isDefaultSimulationCalculationCoef = Convert.ToInt32(!isDefaultSimulationCalculation);
+            int rowHeight = ParameterToCell[fsParameterIdentifier.MotherLiquidViscosity].DataGridView.RowTemplate.Height;
+
+            ParameterToCell[fsParameterIdentifier.CakePermeability].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef;
+            ParameterToCell[fsParameterIdentifier.CakeResistance].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef;
+            ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef;
+            ParameterToCell[fsParameterIdentifier.FilterMediumResistanceHce].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef;
+            ParameterToCell[fsParameterIdentifier.FilterMediumResistanceRm].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef;
 
             bool isMrSimulationOption = defaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MediumResistanceSimulationsCalculations;
 
-            ParameterToCell[fsParameterIdentifier.CakePermeability0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
-            ParameterToCell[fsParameterIdentifier.CakeResistance0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
-            ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
-            ParameterToCell[fsParameterIdentifier.CakeCompressibility].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption;
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakePermeability0].OwningRow, !isDefaultSimulationCalculation &&
+                                                                                        !isMrSimulationOption);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakeResistance0].OwningRow, !isDefaultSimulationCalculation &&
+                                                                                        !isMrSimulationOption);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha0].OwningRow, !isDefaultSimulationCalculation &&
+                                                                                        !isMrSimulationOption);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakeCompressibility].OwningRow, !isDefaultSimulationCalculation &&
+                                                                                        !isMrSimulationOption);
+
+            int isMrSimulationOptionCoef = Convert.ToInt32(!isMrSimulationOption);
+
+            ParameterToCell[fsParameterIdentifier.CakePermeability0].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef *
+                                                                                        isMrSimulationOptionCoef;
+            ParameterToCell[fsParameterIdentifier.CakeResistance0].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef *
+                                                                                        isMrSimulationOptionCoef;
+            ParameterToCell[fsParameterIdentifier.CakeResistanceAlpha0].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef *
+                                                                                        isMrSimulationOptionCoef;
+            ParameterToCell[fsParameterIdentifier.CakeCompressibility].OwningRow.Height = rowHeight *
+                                                                                        isDefaultSimulationCalculationCoef *
+                                                                                        isMrSimulationOptionCoef;
 
             bool isMrAndCcSimulationOption = defaultSimuationOption == fsCalculationOptions.fsSimulationsOption.MediumResistanceAndCakeCompressibilitySimulationsCalculations;
 
-            ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;
-            ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;
-            ParameterToCell[fsParameterIdentifier.Kappa0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;
-            ParameterToCell[fsParameterIdentifier.CakeMoistureContentRf0].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;
-            ParameterToCell[fsParameterIdentifier.Ne].OwningRow.Visible = !isDefaultSimulationCalculation && !isMrSimulationOption && !isMrAndCcSimulationOption;
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow,
+                !isDefaultSimulationCalculation &&
+                !isMrSimulationOption && !isMrAndCcSimulationOption);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow,
+                !isDefaultSimulationCalculation &&
+                !isMrSimulationOption && !isMrAndCcSimulationOption);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.Kappa0].OwningRow,
+                !isDefaultSimulationCalculation &&
+                !isMrSimulationOption && !isMrAndCcSimulationOption);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.CakeMoistureContentRf0].OwningRow,
+                !isDefaultSimulationCalculation &&
+                !isMrSimulationOption && !isMrAndCcSimulationOption);
+            HideParameterRow(ParameterToCell[fsParameterIdentifier.Ne].OwningRow,
+                !isDefaultSimulationCalculation &&
+                !isMrSimulationOption && !isMrAndCcSimulationOption);
 
-            base.UpdateUIFromData();
+            int isMrAndCcSimulationOptionCoef = Convert.ToInt32(!isMrAndCcSimulationOption);
+
+            ParameterToCell[fsParameterIdentifier.CakePorosity0].OwningRow.Height = rowHeight *
+                                                                                    isDefaultSimulationCalculationCoef *
+                                                                                    isMrAndCcSimulationOptionCoef *
+                                                                                    isMrSimulationOptionCoef;
+            ParameterToCell[fsParameterIdentifier.DryCakeDensity0].OwningRow.Height = rowHeight *
+                                                                                    isDefaultSimulationCalculationCoef *
+                                                                                    isMrAndCcSimulationOptionCoef *
+                                                                                    isMrSimulationOptionCoef;
+            ParameterToCell[fsParameterIdentifier.Kappa0].OwningRow.Height = rowHeight *
+                                                                                    isDefaultSimulationCalculationCoef *
+                                                                                    isMrAndCcSimulationOptionCoef *
+                                                                                    isMrSimulationOptionCoef;
+            ParameterToCell[fsParameterIdentifier.CakeMoistureContentRf0].OwningRow.Height = rowHeight *
+                                                                                    isDefaultSimulationCalculationCoef *
+                                                                                    isMrAndCcSimulationOptionCoef *
+                                                                                    isMrSimulationOptionCoef;
+            ParameterToCell[fsParameterIdentifier.Ne].OwningRow.Height = rowHeight *
+                                                                                    isDefaultSimulationCalculationCoef *
+                                                                                    isMrAndCcSimulationOptionCoef *
+                                                                                    isMrSimulationOptionCoef;
+            
         }
     }
 }

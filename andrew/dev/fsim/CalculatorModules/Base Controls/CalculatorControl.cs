@@ -36,6 +36,8 @@ namespace CalculatorModules
         protected Dictionary<fsParameterIdentifier, DataGridViewCell> ParameterToCell { get; private set; }
         protected Dictionary<DataGridViewCell, fsParameterIdentifier> CellToParameter { get; private set; }
 
+        Dictionary<DataGridViewRow, bool> hiddenRows = new Dictionary<DataGridViewRow, bool>();
+
         private string CommentText;
 
         #endregion
@@ -466,7 +468,11 @@ namespace CalculatorModules
 
             foreach (var pair in ParameterToCell)
             {
-                involvedParameters.Add(pair.Key, pair.Value.OwningRow.Visible);
+                if (pair.Value.OwningRow.Height > pair.Value.DataGridView.RowTemplate.MinimumHeight)
+                {
+                    involvedParameters.Add(pair.Key, pair.Value.OwningRow.Visible);
+                }
+                
             }
 
             return involvedParameters;
@@ -508,6 +514,72 @@ namespace CalculatorModules
             Dictionary<fsCharacteristic, fsUnit> characteristicWithCurrentUnits = new Dictionary<fsCharacteristic, fsUnit>(CharacteristicWithCurrentUnits);
 
             return characteristicWithCurrentUnits;
+        }
+
+        public void HideParameterRow(DataGridViewRow row, bool isHide)
+        {
+            if (!isHide)
+            {
+                if (!hiddenRows.ContainsKey(row))
+                {
+                    hiddenRows.Add(row, row.Visible);
+                    HideHiddenRows();
+                }
+            }
+            else
+            {
+                if (hiddenRows.ContainsKey(row))
+                {
+                    row.Visible = hiddenRows[row];
+                    hiddenRows.Remove(row);
+                }
+            }
+        }
+
+        void HideHiddenRows()
+        {
+            foreach (KeyValuePair<DataGridViewRow, bool> hiddenRow in hiddenRows)
+            {
+                hiddenRow.Key.Visible = false;
+            }
+        }
+
+        public Dictionary<fsParameterIdentifier, bool> GetHiddenParameters()
+        {
+            Dictionary<fsParameterIdentifier, bool> dict = new Dictionary<fsParameterIdentifier, bool>();
+
+            foreach (KeyValuePair<DataGridViewRow, bool> pair in hiddenRows)
+            {
+                foreach (KeyValuePair<fsParameterIdentifier, DataGridViewCell> ptc in ParameterToCell)
+                {
+                    if (ptc.Value.OwningRow == pair.Key)
+                    {
+                        dict[ptc.Key] = pair.Value;
+                    }
+                }
+            }
+
+            return dict;
+        }
+
+        public List<fsParameterIdentifier> GetParametersList()
+        {
+            List< fsParameterIdentifier> list = new List<fsParameterIdentifier>();
+
+            foreach (fsParameterIdentifier pi in ParameterToCell.Keys)
+            {
+                list.Add(pi);
+            }
+            return list;
+        }
+
+        public void SetHiddenParameters(Dictionary<fsParameterIdentifier, bool> parametersWithBool)
+        {
+            hiddenRows.Clear();
+            foreach (KeyValuePair<fsParameterIdentifier, bool> pair in parametersWithBool)
+            {
+                hiddenRows[ParameterToCell[pair.Key].OwningRow] = pair.Value;
+            }
         }
 
         #endregion

@@ -85,7 +85,7 @@
             this.Controls.Add(this.fsParametersCheckBoxesTree1);
             this.Controls.Add(this.panel1);
             this.Name = "fsShowHideParametersDialog";
-            this.Text = "ShowHideParametersDialog";
+            this.Text = "Show/Hide Parameters";
             this.Load += new System.EventHandler(this.fsShowHideParametersDialog_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

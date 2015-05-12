@@ -81,7 +81,7 @@
             this.Controls.Add(this.fsUnitsControl1);
             this.Controls.Add(this.panel1);
             this.Name = "fsUnitsDialog";
-            this.Text = "UnitsDialog";
+            this.Text = "Units Settings";
             this.ResumeLayout(false);
 
         }

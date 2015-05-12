@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace fsUIControls
@@ -17,10 +11,21 @@ namespace fsUIControls
 
             #region Assign CellValueChangedByUser
 
-            this.fmDataGrid1.CellValueChangedByUser += ProcessThisValueChangedByUser;
-            this.fmDataGrid1.RowTemplate.Height = 16;
+            fmDataGrid1.CellValueChangedByUser += ProcessThisValueChangedByUser;
+            fmDataGrid1.RowTemplate.Height = 16;
+            fmDataGrid1.RowTemplate.MinimumHeight = 2;
 
             #endregion
+        }
+
+        public int MinimumRowHeight
+        {
+            get { return fmDataGrid1.RowTemplate.MinimumHeight; }
+        }
+
+        public int RowHeight
+        {
+            get { return fmDataGrid1.RowTemplate.Height; }
         }
 
         public DataGridViewRowCollection Rows
@@ -35,11 +40,18 @@ namespace fsUIControls
 
         public event DataGridViewCellEventHandler CellValueChangedByUser;
 
+        public static event Action SomethingChanged;
+
         private void ProcessThisValueChangedByUser(object sender, DataGridViewCellEventArgs e)
         {
             if (CellValueChangedByUser != null)
             {
                 CellValueChangedByUser(sender, e);
+            }
+
+            if (SomethingChanged!= null)
+            {
+                SomethingChanged();
             }
         }
     }
