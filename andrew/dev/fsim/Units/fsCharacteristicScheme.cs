@@ -43,7 +43,9 @@ namespace Units
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Viscosity, fsUnit.MilliPascalSecond), 
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Density,fsUnit.KiloGrammePerCubicMeter), 
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SurfaceTension,fsUnit.MilliNewtonPerMeter),
-                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.CakeWashOutContent, fsUnit.GrammeOverKilogram)
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.CakeWashOutContent, fsUnit.GrammeOverKilogram),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificMass, fsUnit.GrammePerSquaredCentimeter),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificVolume, fsUnit.MilliLiterPerSquaredCentimeter)
                 });
 
         public static readonly fsCharacteristicScheme IndustrialScale =
@@ -64,7 +66,9 @@ namespace Units
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Viscosity, fsUnit.MilliPascalSecond), 
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Density,fsUnit.KiloGrammePerCubicMeter), 
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SurfaceTension,fsUnit.MilliNewtonPerMeter),
-                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.CakeWashOutContent, fsUnit.GrammeOverKilogram)
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.CakeWashOutContent, fsUnit.GrammeOverKilogram),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificMass, fsUnit.KiloGrammePerSquaredMeter),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificVolume, fsUnit.LiterPerSquaredMeter)
                 });
 
         public static fsCharacteristicScheme PilotScale =
@@ -85,7 +89,9 @@ namespace Units
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Viscosity, fsUnit.MilliPascalSecond), 
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.Density,fsUnit.KiloGrammePerCubicMeter), 
                     new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SurfaceTension,fsUnit.MilliNewtonPerMeter),
-                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.CakeWashOutContent, fsUnit.GrammeOverKilogram)
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.CakeWashOutContent, fsUnit.GrammeOverKilogram),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificMass, fsUnit.KiloGrammePerSquaredMeter),
+                    new KeyValuePair<fsCharacteristic, fsUnit>(fsCharacteristic.SpecificVolume, fsUnit.CubicMeterPerSquaredMeter)
                 });
 
         #endregion

@@ -44,7 +44,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(538, 326);
+            this.button2.Location = new System.Drawing.Point(538, 394);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
@@ -55,7 +55,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(457, 326);
+            this.button1.Location = new System.Drawing.Point(457, 394);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -68,14 +68,14 @@
             this.fsUnitsControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fsUnitsControl1.Location = new System.Drawing.Point(0, 0);
             this.fsUnitsControl1.Name = "fsUnitsControl1";
-            this.fsUnitsControl1.Size = new System.Drawing.Size(624, 361);
+            this.fsUnitsControl1.Size = new System.Drawing.Size(624, 429);
             this.fsUnitsControl1.TabIndex = 1;
             // 
             // fsUnitsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 361);
+            this.ClientSize = new System.Drawing.Size(624, 429);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.fsUnitsControl1);

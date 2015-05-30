@@ -424,6 +424,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\BeltFilterWithReversibleTrayControl.resx">
       <DependentUpon>BeltFilterWithReversibleTrayControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\CakeFormationBaseControl.resx">
       <DependentUpon>CakeFormationBaseControl.cs</DependentUpon>
@@ -431,9 +432,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\CakeFormationOvermoduleControl.resx">
       <DependentUpon>CakeFormationOvermoduleControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\ContinuousModularBeltFilterControl.resx">
       <DependentUpon>ContinuousModularBeltFilterControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\ContinuousNonModularBeltFilterControl.resx">
       <DependentUpon>ContinuousNonModularBeltFilterControl.cs</DependentUpon>
@@ -441,9 +444,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Fromation\Other Filters Controls\CommonCakeFormationControl.resx">
       <DependentUpon>CommonCakeFormationControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Cake Formation Analysis\CakeFormationAnalysisControl.resx">
       <DependentUpon>CakeFormationAnalysisControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CakeMoistureContentFromCakeSaturationControl.resx">
       <DependentUpon>CakeMoistureContentFromCakeSaturationControl.cs</DependentUpon>
@@ -501,9 +506,20 @@
       <DependentUpon>MsusAndHcBaseControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Filter Cake And Suspension Relations\MsusAndHcConcaveControl.resx">
+      <DependentUpon>MsusAndHcConcaveControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filter Cake And Suspension Relations\MsusAndHcConvexControl.resx">
+      <DependentUpon>MsusAndHcConvexControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Filter Cake And Suspension Relations\MsusAndHcOverModuleControl.resx">
       <DependentUpon>MsusAndHcOverModuleControl.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filter Cake And Suspension Relations\MsusAndHcPlainAreaControl.resx">
+      <DependentUpon>MsusAndHcPlainAreaControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Hydrocyclone\HydrocycloneControl.resx">
       <DependentUpon>HydrocycloneControl.cs</DependentUpon>

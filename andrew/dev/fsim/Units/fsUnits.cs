@@ -90,7 +90,15 @@ namespace Units
         public static fsUnit Ten13PerSquareMeter = new fsUnit("10+13m-2", 1e13);
         public static fsUnit Ten10MeterPerKiloGramme = new fsUnit("10+10m/kg", 1e10);
         public static fsUnit Ten10PerMeter = new fsUnit("10^10/m", 1e10);
+        public static fsUnit GrammePerSquaredCentimeter = new fsUnit("g/cm2", 1e-3 / 1e-4);
+        public static fsUnit KiloGrammePerSquaredDeciMeter = new fsUnit("kg/dm2", 1 / 1e-2);
         public static fsUnit KiloGrammePerSquaredMeter = new fsUnit("kg/m2", 1);
+        public static fsUnit TonsPerSquaredMeter = new fsUnit("t/m2", 1e3);
+        public static fsUnit MilliLiterPerSquaredCentimeter = new fsUnit("ml/cm2", 1e-6 / 1e-4);
+        public static fsUnit LiterPerSquaredCentimeter = new fsUnit("l/cm2", 1e-3 / 1e-4);
+        public static fsUnit CubicMeterPerSquaredCentimeter = new fsUnit("m3/cm2", 1 / 1e-4);
+        public static fsUnit LiterPerSquaredDecimeter = new fsUnit("l/dm2", 1e-3 / 1e-2);
+        public static fsUnit CubicMeterPerSquaredDecimeter = new fsUnit("m3/dm2", 1 / 1e-2);
         public static fsUnit CubicMeterPerSquaredMeter = new fsUnit("m3/m2", 1);
         public static fsUnit LiterPerSquaredMeter = new fsUnit("l/m2", 1e-3);
         public static fsUnit LiterPerKiloGramme = new fsUnit("l/kg", 1.0e-3);
@@ -129,8 +137,10 @@ namespace Units
         public static fsUnit PoundPerHour = new fsUnit("lb/h", PoundFactor/3600, true);
         public static fsUnit PoundPerSquaredMeter = new fsUnit("lb/m2", PoundFactor, true);
         public static fsUnit PoundPerSquaredFoot = new fsUnit("lb/ft2", PoundFactor/Math.Pow(FootFactor, 2), true);
+        public static fsUnit TonsPerSquaredFoot = new fsUnit("t/ft2", 1e3 / Math.Pow(FootFactor, 2), true);
         public static fsUnit CubicFeetPerSquaredMeter = new fsUnit("ft3/m2", Math.Pow(FootFactor, 3), true);
         public static fsUnit CubicFeetPerSquaredFeet = new fsUnit("ft3/ft2", FootFactor, true);
+        public static fsUnit CubicYardsPerSquaredFeet = new fsUnit("yd3/ft2", Math.Pow(FootFactor, 3) / Math.Pow(FootFactor, 2), true);
         public static fsUnit CubicYardsPerSquaredMeter = new fsUnit("yd3/m2", Math.Pow(YardFactor, 3), true);
         public static fsUnit CubicFeetPerSquaredMeterPerHour = new fsUnit("ft3/m2h", Math.Pow(FootFactor, 3)/3600, true);
         public static fsUnit CubicFeetPerSquaredMeterPerMinute = new fsUnit("ft3/m2min", Math.Pow(FootFactor, 3)/60,

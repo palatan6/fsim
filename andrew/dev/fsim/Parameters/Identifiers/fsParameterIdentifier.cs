@@ -145,6 +145,9 @@ namespace Parameters
         public static fsParameterIdentifier FiltrateMass =
             new fsParameterIdentifier("Mf", "Fitrate Mass", fsCharacteristic.Mass);
 
+        public static fsParameterIdentifier SpecificFiltrateMass =
+            new fsParameterIdentifier("mf", "Specific fitrate mass", fsCharacteristic.SpecificMass);
+
         public static fsParameterIdentifier FiltrateMassD =
             new fsParameterIdentifier("Mfd", "Fitrate Mass D", fsCharacteristic.Mass);
 
@@ -157,11 +160,17 @@ namespace Parameters
         public static fsParameterIdentifier CakeMass =
             new fsParameterIdentifier("Mc", "Cake Mass", fsCharacteristic.Mass);
 
+        public static fsParameterIdentifier SpecificCakeMass =
+            new fsParameterIdentifier("mc", "Specific cake mass", fsCharacteristic.SpecificMass);
+
         public static fsParameterIdentifier SpecificSolidsMass =
             new fsParameterIdentifier("ms", "Specific solids mass", fsCharacteristic.SpecificMass);
 
         public static fsParameterIdentifier SolidsVolume =
             new fsParameterIdentifier("Vs", "Solids Volume", fsCharacteristic.Volume);
+
+        public static fsParameterIdentifier SpecificSolidsVolume =
+            new fsParameterIdentifier("vs", "Specific solids volume", fsCharacteristic.SpecificVolume);
 
         public static fsParameterIdentifier SuspensionVolume =
             new fsParameterIdentifier("Vsus", "Suspension Volume", fsCharacteristic.Volume);
@@ -171,6 +180,9 @@ namespace Parameters
 
         public static fsParameterIdentifier FiltrateVolume =
             new fsParameterIdentifier("Vf", "Fitrate Volume", fsCharacteristic.Volume);
+
+        public static fsParameterIdentifier SpecificFiltrateVolume =
+            new fsParameterIdentifier("vf", "Specific fitrate volume", fsCharacteristic.SpecificVolume);
 
         public static fsParameterIdentifier FiltrateVolumeD =
             new fsParameterIdentifier("Vfd", "Fitrate Volume D", fsCharacteristic.Volume);
@@ -326,6 +338,8 @@ namespace Parameters
             new fsParameterIdentifier("eps0", "Cake Porosity for Dp0 = 1 bar", fsCharacteristic.Concentration);
 
         public static fsParameterIdentifier Kappa0 = new fsParameterIdentifier("kappa0");
+
+        public static fsParameterIdentifier Kappam = new fsParameterIdentifier("kappa_m", fsCharacteristic.Density);
 
         public static fsParameterIdentifier Ne =
             new fsParameterIdentifier("ne", "Cake Volume Reduction Factor", fsCharacteristic.NoUnits);
@@ -533,11 +547,20 @@ namespace Parameters
         public static fsParameterIdentifier CakeVolume =
             new fsParameterIdentifier("Vc", "Cake Volume", fsCharacteristic.Volume);
 
+        public static fsParameterIdentifier SpecificCakeVolume =
+            new fsParameterIdentifier("vc", "Specific cake volume", fsCharacteristic.SpecificVolume);
+
         public static fsParameterIdentifier LiquidVolumeInCake =
             new fsParameterIdentifier("Vlc", "Liquid Volume In The Cake", fsCharacteristic.Volume);
 
+        public static fsParameterIdentifier SpecificLiquidVolumeInCake =
+            new fsParameterIdentifier("vlc", "Spec cake liquid volume", fsCharacteristic.SpecificVolume);
+
         public static fsParameterIdentifier LiquidMassInCake =
             new fsParameterIdentifier("Mlc", "Liquid Mass In The Cake", fsCharacteristic.Mass);
+
+        public static fsParameterIdentifier SpecificLiquidMassInCake =
+            new fsParameterIdentifier("mlc", "Spacific cake liquid mass", fsCharacteristic.SpecificMass);
 
         #endregion
 

@@ -28,8 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.leftTopPanel.SuspendLayout();
+            this.calculationOptionsPanel.SuspendLayout();
+            this.tablesPanel.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // dataGrid
+            // 
+            this.dataGrid.Size = new System.Drawing.Size(315, 637);
+            // 
+            // leftTopPanel
+            // 
+            this.leftTopPanel.Size = new System.Drawing.Size(315, 72);
+            // 
+            // tablesPanel
+            // 
+            this.tablesPanel.Size = new System.Drawing.Size(315, 637);
+            // 
+            // MsusAndHcConcaveControl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "MsusAndHcConcaveControl";
+            this.Size = new System.Drawing.Size(315, 709);
+            this.leftTopPanel.ResumeLayout(false);
+            this.calculationOptionsPanel.ResumeLayout(false);
+            this.calculationOptionsPanel.PerformLayout();
+            this.tablesPanel.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

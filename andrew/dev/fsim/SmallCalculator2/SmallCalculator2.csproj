@@ -168,12 +168,8 @@
     <None Include="Resources\folder_open_16.png" />
     <None Include="Resources\page_white.png" />
     <None Include="Resources\file10.png" />
-    <None Include="Resources\floppy15.png" />
-    <None Include="Resources\folder265.png" />
     <None Include="Resources\save31.png" />
-    <None Include="Resources\folder264.png" />
     <None Include="Resources\open127.png" />
-    <None Include="Resources\open131.png" />
     <None Include="Resources\saveAs.png" />
     <Content Include="SepEx.ico" />
   </ItemGroup>
