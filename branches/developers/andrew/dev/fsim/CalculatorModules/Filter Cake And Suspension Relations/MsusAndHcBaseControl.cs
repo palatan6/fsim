@@ -17,7 +17,7 @@ namespace CalculatorModules
         protected enum fsCalculationOption
         {
             [Description("Densities")] DensitiesCalculated,
-            [Description("Concentrations")] ConcentreationsCalculated,
+            [Description("Susp Solids Content")] ConcentreationsCalculated,
             [Description("Porosity / Kappa")] PorosityKappaCalculated,
             [Description("Machine Diameter")] MachineDiameterCalculated,
             [Description("Filter Element Diameter")] FilterElementDiameterCalculated,
@@ -107,8 +107,6 @@ namespace CalculatorModules
 
         protected override void InitializeCalculationOptionsUIControls()
         {
-            
-
             EstablishCalculationOption(fsCalculationOption.MassVolumeCalculated);
             FillCalculationComboBox();
 

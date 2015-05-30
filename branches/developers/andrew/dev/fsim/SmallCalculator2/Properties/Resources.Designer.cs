@@ -81,13 +81,6 @@ namespace SmallCalculator2.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap floppy15 {
-            get {
-                object obj = ResourceManager.GetObject("floppy15", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap folder_open_16 {
             get {
                 object obj = ResourceManager.GetObject("folder_open_16", resourceCulture);
@@ -95,30 +88,9 @@ namespace SmallCalculator2.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap folder264 {
-            get {
-                object obj = ResourceManager.GetObject("folder264", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap folder265 {
-            get {
-                object obj = ResourceManager.GetObject("folder265", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap open127 {
             get {
                 object obj = ResourceManager.GetObject("open127", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap open131 {
-            get {
-                object obj = ResourceManager.GetObject("open131", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

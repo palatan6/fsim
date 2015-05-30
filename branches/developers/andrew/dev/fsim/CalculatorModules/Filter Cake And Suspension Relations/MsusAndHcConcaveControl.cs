@@ -31,7 +31,12 @@ namespace CalculatorModules.Filter_Cake_And_Suspension_Relations
                 fsParameterIdentifier.SuspensionSolidsConcentration);
             fsParametersGroup epsKappaGroup = AddGroup(
                 fsParameterIdentifier.CakePorosity,
-                fsParameterIdentifier.Kappa);
+                fsParameterIdentifier.Kappa,
+                fsParameterIdentifier.Kappam,
+                fsParameterIdentifier.DryCakeDensity,
+                fsParameterIdentifier.CakeWetDensity,
+                fsParameterIdentifier.CakeMoistureContent,
+                fsParameterIdentifier.CakeSolidsContentCmc);
             fsParametersGroup machineDiameterGroup = AddGroup(
                 fsParameterIdentifier.MachineDiameter);
             m_areaBGroup = AddGroup(
@@ -41,9 +46,27 @@ namespace CalculatorModules.Filter_Cake_And_Suspension_Relations
             fsParametersGroup cakeHeightGroup = AddGroup(
                 fsParameterIdentifier.CakeHeight);
             fsParametersGroup massVolumeGroup = AddGroup(
+                fsParameterIdentifier.SuspensionMass,
                 fsParameterIdentifier.SuspensionVolume,
-                fsParameterIdentifier.SuspensionMass);
-
+                fsParameterIdentifier.FiltrateMass,
+                fsParameterIdentifier.FiltrateVolume,
+                fsParameterIdentifier.CakeMass,
+                fsParameterIdentifier.CakeVolume,
+                fsParameterIdentifier.SolidsMass,
+                fsParameterIdentifier.SolidsVolume,
+                fsParameterIdentifier.LiquidMassInCake,
+                fsParameterIdentifier.LiquidVolumeInCake,
+                fsParameterIdentifier.SpecificSuspensionMass,
+                fsParameterIdentifier.SpecificSuspensionVolume,
+                fsParameterIdentifier.SpecificFiltrateMass,
+                fsParameterIdentifier.SpecificFiltrateVolume,
+                fsParameterIdentifier.SpecificCakeMass,
+                fsParameterIdentifier.SpecificCakeVolume,
+                fsParameterIdentifier.SpecificSolidsMass,
+                fsParameterIdentifier.SpecificSolidsVolume,
+                fsParameterIdentifier.SpecificLiquidMassInCake,
+                fsParameterIdentifier.SpecificLiquidVolumeInCake
+                );
             var groups = new[]
                              {
                                  filtrateGroup,

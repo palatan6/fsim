@@ -293,9 +293,9 @@ namespace SmallCalculator2
             saveFileToolStripMenuItem.Enabled = false;
             saveToolStripMenuItem.Enabled = false;
 
+            ProgramNameCaption = "Filtration Calculator";
             if (!string.IsNullOrEmpty(CurrentFilePath))
             {
-                ProgramNameCaption = "Filtration Calculator";
                 SetCurrentFileNameAndCaption(CurrentFilePath);
             }
 
@@ -1327,11 +1327,11 @@ namespace SmallCalculator2
         {
             m_modules.Clear();
             treeView1.Nodes.Clear();
-            Text = ProgramNameCaption;
             CurrentFilePath = "";
             SaveWindowSettings();
             Form1Load(sender, e);
             DisableSaveButtons();
+            Text = ProgramNameCaption;
         }
 
         private void commentsToolStripMenuItem_Click(object sender, EventArgs e)

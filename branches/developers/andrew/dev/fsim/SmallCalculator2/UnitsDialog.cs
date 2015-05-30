@@ -36,17 +36,5 @@ namespace SmallCalculator2
             DialogResult = DialogResult.OK;
             Close();
         }
-
-        private void ExpandForm(bool isToExpand)
-        {
-            if (isToExpand)
-            {
-                Height = BigFormHeight; 
-            }
-            else
-            {
-                Height = SmallFormHeight;
-            }
-        }
     }
 }

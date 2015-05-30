@@ -34,6 +34,8 @@ namespace fsUIControls
         {
             return new[]
                        {
+                           fsCharacteristic.SpecificMass,
+                           fsCharacteristic.SpecificVolume,
                            fsCharacteristic.Pressure,
                            fsCharacteristic.Viscosity,
                            fsCharacteristic.Density,
@@ -67,6 +69,15 @@ namespace fsUIControls
             {
                 fsCharacteristic.Mass,
                 fsCharacteristic.Volume
+            };
+        }
+
+        static IEnumerable<fsCharacteristic> GetSpecificMassAndVolumeList()
+        {
+            return new[]
+            {
+                fsCharacteristic.SpecificMass,
+                fsCharacteristic.SpecificVolume
             };
         }
 
@@ -115,6 +126,7 @@ namespace fsUIControls
             <string, IEnumerable<fsCharacteristic>>
         {
             {"Mass and Volume", GetMassAndVolumeList()},
+            {"Specific Mass and Volume", GetSpecificMassAndVolumeList()},
             {"Density, Viscosity, Pressure", GetDensityViscosityPressureList()},
             {"Unsorted", GetUnsortedList()},
             {"Flow Rate", GetFlowrateList()},

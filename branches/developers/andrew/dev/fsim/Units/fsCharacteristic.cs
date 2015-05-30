@@ -195,7 +195,12 @@
         public static fsCharacteristic SpecificMass = new fsCharacteristic(
             "Specific Mass",
             new[] {
-                fsUnit.KiloGrammePerSquaredMeter
+                fsUnit.GrammePerSquaredCentimeter,
+                fsUnit.KiloGrammePerSquaredDeciMeter,
+                fsUnit.KiloGrammePerSquaredMeter,
+                fsUnit.TonsPerSquaredMeter,
+                fsUnit.PoundPerSquaredFoot,
+                fsUnit.TonsPerSquaredFoot
             }
         );
 
@@ -213,8 +218,15 @@
         public static fsCharacteristic SpecificVolume = new fsCharacteristic(
             "Specific Volume",
             new[] {
+                fsUnit.MilliLiterPerSquaredCentimeter,
+                fsUnit.LiterPerSquaredCentimeter,
+                fsUnit.CubicMeterPerSquaredCentimeter,
+                fsUnit.LiterPerSquaredDecimeter,
+                fsUnit.CubicMeterPerSquaredDecimeter,
+                fsUnit.LiterPerSquaredMeter,
                 fsUnit.CubicMeterPerSquaredMeter,
-                fsUnit.LiterPerSquaredMeter
+                fsUnit.CubicFeetPerSquaredFeet,
+                fsUnit.CubicYardsPerSquaredFeet
             }
         );
 

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using Parameters;
-using StepCalculators;
 
 namespace CalculatorModules.Filter_Cake_And_Suspension_Relations
 {
@@ -31,14 +24,38 @@ namespace CalculatorModules.Filter_Cake_And_Suspension_Relations
                 fsParameterIdentifier.SuspensionSolidsConcentration);
             fsParametersGroup epsKappaGroup = AddGroup(
                 fsParameterIdentifier.CakePorosity,
-                fsParameterIdentifier.Kappa);
+                fsParameterIdentifier.Kappa,
+                fsParameterIdentifier.Kappam,
+                fsParameterIdentifier.DryCakeDensity,
+                fsParameterIdentifier.CakeWetDensity,
+                fsParameterIdentifier.CakeMoistureContent,
+                fsParameterIdentifier.CakeSolidsContentCmc);
             m_areaBGroup = AddGroup(
                 fsParameterIdentifier.FilterArea);
             fsParametersGroup cakeHeightGroup = AddGroup(
                 fsParameterIdentifier.CakeHeight);
             fsParametersGroup massVolumeGroup = AddGroup(
+                fsParameterIdentifier.SuspensionMass,
                 fsParameterIdentifier.SuspensionVolume,
-                fsParameterIdentifier.SuspensionMass);
+                fsParameterIdentifier.FiltrateMass,
+                fsParameterIdentifier.FiltrateVolume,
+                fsParameterIdentifier.CakeMass,
+                fsParameterIdentifier.CakeVolume,
+                fsParameterIdentifier.SolidsMass,
+                fsParameterIdentifier.SolidsVolume,
+                fsParameterIdentifier.LiquidMassInCake,
+                fsParameterIdentifier.LiquidVolumeInCake,
+                fsParameterIdentifier.SpecificSuspensionMass,
+                fsParameterIdentifier.SpecificSuspensionVolume,
+                fsParameterIdentifier.SpecificFiltrateMass,
+                fsParameterIdentifier.SpecificFiltrateVolume,
+                fsParameterIdentifier.SpecificCakeMass,
+                fsParameterIdentifier.SpecificCakeVolume,
+                fsParameterIdentifier.SpecificSolidsMass,
+                fsParameterIdentifier.SpecificSolidsVolume,
+                fsParameterIdentifier.SpecificLiquidMassInCake,
+                fsParameterIdentifier.SpecificLiquidVolumeInCake
+                );
 
             var groups = new[]
                              {

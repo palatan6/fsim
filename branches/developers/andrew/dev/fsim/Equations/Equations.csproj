@@ -87,6 +87,7 @@
     <Compile Include="fsEpsFromMcAndHcEquation.cs" />
     <Compile Include="fsEpsFromMsusAndHcEquation.cs" />
     <Compile Include="fsEpsFromVsusAndHcEquation.cs" />
+    <Compile Include="fsEpsKappaMCvEquation.cs" />
     <Compile Include="fsKfromCvAndEpsEquation.cs" />
     <Compile Include="fsKFromTdEquation.cs" />
     <Compile Include="fsKFromVgEquation.cs" />
@@ -98,6 +99,10 @@
     <Compile Include="fsSFromMcdEquation.cs" />
     <Compile Include="fsSFromRhoBulkEquation.cs" />
     <Compile Include="fsTTechFromTTech0andLambdaEquation.cs" />
+    <Compile Include="fsvcConcaveAreaEquation.cs" />
+    <Compile Include="fsvcConvexAreaEquation.cs" />
+    <Compile Include="fsvcFromMsusAndOthers.cs" />
+    <Compile Include="fsVSusFromEpsCvVc.cs" />
     <Compile Include="Hydrocyclone\fsCOverflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsCUnderflowEquation.cs" />
     <Compile Include="Hydrocyclone\fsDFromxRed50QnDuOverDEquation.cs" />
